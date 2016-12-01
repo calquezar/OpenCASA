@@ -30,7 +30,6 @@ public class OpenCASA_ implements PlugInFilter {
 
 	}
 
-
 	/**
 	 * Main method for debugging.
 	 *
