@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0
+		http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>net.imagej</groupId>
+		<artifactId>pom-imagej</artifactId>
+		<version>7.0.0</version>
+		<relativePath />
+	</parent>
+
+	<groupId>biozar</groupId>
+	<artifactId>OpenCASA_</artifactId>
+	<version>0.1.0-SNAPSHOT</version>
+
+	<name>plugins/OpenCASA_.jar</name>
+	<description>A Maven project implementing an ImageJ 1.x plugin for Sperm Analysis</description>
+
+	<developers>
+		<developer>
+			<id>calquezar</id>
+			<name>Carlos Alquezar</name>
+			<email>alquezar@unizar.es</email>
+			<url></url>
+			<organization>University of Zaragoza</organization>
+			<organizationUrl>http://unizar.es</organizationUrl>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>+1</timezone>
+		</developer>
+	</developers>
+
+	<properties>
+		<main-class>OpenCASA_</main-class>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>net.imagej</groupId>
+			<artifactId>ij</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-jar-plugin</artifactId>
+				<configuration>
+					<archive>
+						<manifest>
+							<mainClass>${main-class}</mainClass>
+						</manifest>
+					</archive>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<organization>
+		<name>University of Zaragoza</name>
+		<url>http://www.unizar.es</url>
+	</organization>
+</project>
