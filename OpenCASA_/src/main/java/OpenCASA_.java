@@ -1,9 +1,10 @@
 
 
+import gui.MainWindow;
 import ij.ImageJ;
 import ij.ImagePlus;
-import ij.plugin.filter.PlugInFilter;
-import ij.process.ImageProcessor;
+import ij.plugin.PlugIn;
+
 
 /**
  * OpenCASA
@@ -12,22 +13,13 @@ import ij.process.ImageProcessor;
  *
  * @author Biozar team
  */
-public class OpenCASA_ implements PlugInFilter {
+public class OpenCASA_ implements PlugIn {
 	protected ImagePlus image;
 
 	@Override
-	public int setup(String arg, ImagePlus imp) {
-		if (arg.equals("about")) {
-			return DONE;
-		}
+	public void run(String arg) {
 
-		image = imp;
-		return DOES_8G | DOES_16 | DOES_32 | DOES_RGB;
-	}
-
-	@Override
-	public void run(ImageProcessor ip) {
-
+		(new MainWindow()).show();
 	}
 
 	/**
