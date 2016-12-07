@@ -1,6 +1,7 @@
 
 
 import gui.MainWindow;
+import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
 import ij.plugin.PlugIn;
@@ -19,7 +20,7 @@ public class OpenCASA_ implements PlugIn {
 	@Override
 	public void run(String arg) {
 
-		(new MainWindow()).show();
+		(new MainWindow("OpenCASA")).show();
 	}
 
 	/**
@@ -38,9 +39,9 @@ public class OpenCASA_ implements PlugIn {
 		System.setProperty("plugins.dir", pluginsDir);
 
 		// start ImageJ
-		new ImageJ();
+		//new ImageJ();
 		
 		// run the plugin
-		//IJ.runPlugIn(clazz.getName(), "");
+		IJ.runPlugIn(clazz.getName(), "");
 	}
 }
