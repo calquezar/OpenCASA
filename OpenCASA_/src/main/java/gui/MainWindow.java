@@ -6,10 +6,13 @@ import java.awt.GraphicsConfiguration;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
+import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -55,7 +58,6 @@ public class MainWindow extends JFrame {
 		c.gridx = 0;
 		c.gridy = 0;
 		
-		//c.gridwidth = 3;
 		panel.add(motilityBtn, c);
 
 		JButton chemotaxisBtn = new JButton("Chemotaxis");
@@ -67,15 +69,36 @@ public class MainWindow extends JFrame {
 			}
 
 		} );
-		c.gridx = 2;
+		c.gridx = 1;
 		c.gridy = 0;
-		//c.gridwidth = 3;
+		
 		panel.add(chemotaxisBtn, c);
 		
-		JButton chemotilityBtn = new JButton("Chemotility");
-		chemotilityBtn.setBackground(new Color(255,153,153));
+		JButton viabilityBtn = new JButton("Viability");
+		viabilityBtn.setBackground(new Color(255,153,153));
 		//Add action listener
-		chemotilityBtn.addActionListener(new ActionListener() { 
+		viabilityBtn.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				
+			}
+
+		} );
+		c.gridx = 0;
+		c.gridy = 1;
+
+		try{
+			Image img = ImageIO.read(getClass().getResource("/viability.png"));
+			viabilityBtn.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+		    System.out.println(ex);
+		}
+		
+		panel.add(viabilityBtn, c);
+		
+		JButton morphometryBtn = new JButton("Morphometry");
+		morphometryBtn.setBackground(new Color(255,204,153));
+		//Add action listener
+		morphometryBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				
 			}
@@ -83,11 +106,11 @@ public class MainWindow extends JFrame {
 		} );
 		c.gridx = 1;
 		c.gridy = 1;
-		//c.gridwidth = 3;
+	
+		panel.add(morphometryBtn, c);
 		
-		panel.add(chemotilityBtn, c);
 		
-		this.setPreferredSize(new Dimension(500, 500));
+		this.setPreferredSize(new Dimension(400, 400));
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
 		this.pack();
