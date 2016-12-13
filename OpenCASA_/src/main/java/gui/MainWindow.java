@@ -24,16 +24,19 @@ public class MainWindow extends JFrame {
 	public MainWindow(GraphicsConfiguration gc) {
 		super(gc);
 		createGUI();
+		setLocationRelativeTo(null);
 	}
 
 	public MainWindow(String title) throws HeadlessException {
 		super(title);
 		createGUI();
+		setLocationRelativeTo(null);
 	}
 
 	public MainWindow(String title, GraphicsConfiguration gc) {
 		super(title, gc);
 		createGUI();
+		setLocationRelativeTo(null);
 	}
 	
 	
@@ -44,7 +47,7 @@ public class MainWindow extends JFrame {
 		//natural height, maximum width
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady=40;
+		c.ipady=0;
 		
 		JButton motilityBtn = new JButton("Motility");
 		motilityBtn.setBackground(new Color(229,255,204));
@@ -57,6 +60,14 @@ public class MainWindow extends JFrame {
 		} );
 		c.gridx = 0;
 		c.gridy = 0;
+		
+		try{
+//			Image img = ImageIO.read(getClass().getResource("/resources/motility.png"));
+			Image img = ImageIO.read(getClass().getResource("/motility.png"));
+			motilityBtn.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+		    System.out.println(ex);
+		}
 		
 		panel.add(motilityBtn, c);
 
@@ -71,6 +82,14 @@ public class MainWindow extends JFrame {
 		} );
 		c.gridx = 1;
 		c.gridy = 0;
+		
+		try{
+//			Image img = ImageIO.read(getClass().getResource("/resources/chemotaxis.png"));
+			Image img = ImageIO.read(getClass().getResource("/chemotaxis.png"));
+			chemotaxisBtn.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+		    System.out.println(ex);
+		}
 		
 		panel.add(chemotaxisBtn, c);
 		
@@ -87,6 +106,7 @@ public class MainWindow extends JFrame {
 		c.gridy = 1;
 
 		try{
+//			Image img = ImageIO.read(getClass().getResource("/resources/viability.png"));
 			Image img = ImageIO.read(getClass().getResource("/viability.png"));
 			viabilityBtn.setIcon(new ImageIcon(img));
 		} catch (Exception ex) {
@@ -107,10 +127,17 @@ public class MainWindow extends JFrame {
 		c.gridx = 1;
 		c.gridy = 1;
 	
+		try{
+//			Image img = ImageIO.read(getClass().getResource("/resources/Morphometry.png"));
+			Image img = ImageIO.read(getClass().getResource("/Morphometry.png"));
+			morphometryBtn.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {
+		    System.out.println(ex);
+		}		
 		panel.add(morphometryBtn, c);
 		
 		
-		this.setPreferredSize(new Dimension(400, 400));
+		this.setPreferredSize(new Dimension(600, 200));
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
 		this.pack();

@@ -4,6 +4,7 @@ import gui.MainWindow;
 import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
+import ij.gui.StackWindow;
 import ij.plugin.PlugIn;
 
 
@@ -21,6 +22,12 @@ public class OpenCASA_ implements PlugIn {
 	public void run(String arg) {
 
 		(new MainWindow("OpenCASA")).show();
+		
+		//ImagePlus img = IJ.openImage();
+		//img.show();
+		//StackWindow sw = (StackWindow) img.getWindow();
+		
+		
 	}
 
 	/**
