@@ -1,41 +1,27 @@
 
-
 import gui.MainWindow;
 import ij.IJ;
-import ij.ImageJ;
-import ij.ImagePlus;
-import ij.gui.StackWindow;
 import ij.plugin.PlugIn;
 
 
 /**
- * OpenCASA
- *
- * 
+ * OpenCASA - OpenSource software for Computer Assisted Sperm Analysis
  *
  * @author Biozar team
  */
 public class OpenCASA_ implements PlugIn {
-	protected ImagePlus image;
 
+	/**
+	 * This method overrides the superclass run's method. 
+	 * Start point of the plugin. 
+	 **/
 	@Override
 	public void run(String arg) {
-
-		(new MainWindow("OpenCASA")).show();
-		
-		//ImagePlus img = IJ.openImage();
-		//img.show();
-		//StackWindow sw = (StackWindow) img.getWindow();
-		
-		
+		(new MainWindow("OpenCASA")).setVisible(true);
 	}
 
 	/**
-	 * Main method for debugging.
-	 *
-	 * For debugging, it is convenient to have a method that starts ImageJ, loads an
-	 * image and calls the plugin, e.g. after setting breakpoints.
-	 *
+	 * Main method
 	 * @param args unused
 	 */
 	public static void main(String[] args) {

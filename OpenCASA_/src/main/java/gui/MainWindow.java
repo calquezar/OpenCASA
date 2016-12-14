@@ -7,7 +7,6 @@ import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
-import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -19,32 +18,51 @@ import javax.swing.JPanel;
 
 public class MainWindow extends JFrame {
 
-	public MainWindow() throws HeadlessException {createGUI();}
-	
+
+	/**
+	 * Constructor. This method doesn't get any argument. The main graphical user interface is created.
+	 * @throws HeadlessException
+	 */
+	public MainWindow() throws HeadlessException {
+		createGUI();
+		setLocationRelativeTo(null);
+	}
+	/**
+	 * Constructor. The main graphical user interface is created.
+	 * @param gc - GraphicsConfiguration is passed to superclass JFrame constructor.
+	 */
 	public MainWindow(GraphicsConfiguration gc) {
 		super(gc);
 		createGUI();
 		setLocationRelativeTo(null);
 	}
-
+	/**
+	 * Constructor. The main graphical user interface is created.
+	 * @param title - String that is used as title of the window.
+	 */
 	public MainWindow(String title) throws HeadlessException {
 		super(title);
 		createGUI();
 		setLocationRelativeTo(null);
 	}
-
+	/**
+	 * Constructor. The main graphical user interface is created.
+	 * @param title - String that is used as title of the window.
+	 * @param gc - GraphicsConfiguration is passed to superclass JFrame constructor.
+	 */
 	public MainWindow(String title, GraphicsConfiguration gc) {
 		super(title, gc);
 		createGUI();
 		setLocationRelativeTo(null);
 	}
 	
-	
+	/**
+	 * This method creates the main user interface.
+	 */
 	public void createGUI() {
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		//natural height, maximum width
 		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady=0;
@@ -65,10 +83,7 @@ public class MainWindow extends JFrame {
 //			Image img = ImageIO.read(getClass().getResource("/resources/motility.png"));
 			Image img = ImageIO.read(getClass().getResource("/motility.png"));
 			motilityBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {
-		    System.out.println(ex);
-		}
-		
+		} catch (Exception ex) {System.out.println(ex);}
 		panel.add(motilityBtn, c);
 
 		JButton chemotaxisBtn = new JButton("Chemotaxis");
@@ -87,10 +102,7 @@ public class MainWindow extends JFrame {
 //			Image img = ImageIO.read(getClass().getResource("/resources/chemotaxis.png"));
 			Image img = ImageIO.read(getClass().getResource("/chemotaxis.png"));
 			chemotaxisBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {
-		    System.out.println(ex);
-		}
-		
+		} catch (Exception ex) {System.out.println(ex);}
 		panel.add(chemotaxisBtn, c);
 		
 		JButton viabilityBtn = new JButton("Viability");
@@ -109,10 +121,7 @@ public class MainWindow extends JFrame {
 //			Image img = ImageIO.read(getClass().getResource("/resources/viability.png"));
 			Image img = ImageIO.read(getClass().getResource("/viability.png"));
 			viabilityBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {
-		    System.out.println(ex);
-		}
-		
+		} catch (Exception ex) {System.out.println(ex);}
 		panel.add(viabilityBtn, c);
 		
 		JButton morphometryBtn = new JButton("Morphometry");
@@ -131,11 +140,8 @@ public class MainWindow extends JFrame {
 //			Image img = ImageIO.read(getClass().getResource("/resources/Morphometry.png"));
 			Image img = ImageIO.read(getClass().getResource("/Morphometry.png"));
 			morphometryBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {
-		    System.out.println(ex);
-		}		
+		} catch (Exception ex) {System.out.println(ex);}		
 		panel.add(morphometryBtn, c);
-		
 		
 		this.setPreferredSize(new Dimension(600, 200));
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -143,5 +149,4 @@ public class MainWindow extends JFrame {
 		this.pack();
 		this.setVisible(true);
 	}
-
 }
