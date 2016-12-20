@@ -1,4 +1,4 @@
-package SpermAnalysis;
+package spermAnalysis;
 
 import java.awt.geom.Line2D;
 import java.util.List;

@@ -1,11 +1,11 @@
-package Utils;
+package utils;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import SpermAnalysis.Motility;
-import SpermAnalysis.Spermatozoon;
+import spermAnalysis.Motility;
+import spermAnalysis.Spermatozoon;
 
 public class TrackFilters {
 

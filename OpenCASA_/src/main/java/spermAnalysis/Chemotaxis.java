@@ -1,4 +1,4 @@
-package SpermAnalysis;
+package spermAnalysis;
 
 import java.util.ArrayList;
 import java.util.List;
