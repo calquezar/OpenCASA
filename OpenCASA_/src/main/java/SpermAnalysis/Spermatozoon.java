@@ -1,14 +1,15 @@
+package SpermAnalysis;
 
 
 public class Spermatozoon {
-
+	
 	/** @brief */
-	float	x;
-	float	y;
-	int	z;
-	int	trackNr;
-	boolean inTrack=false;
 	boolean flag=false;
+	public boolean inTrack=false;
+	public int	trackNr;
+	public float	x;
+	public float	y;
+	public int	z;
 	
 	/**
 	 * @param source - Spermatozoon to be copied
