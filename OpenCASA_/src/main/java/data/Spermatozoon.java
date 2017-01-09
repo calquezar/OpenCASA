@@ -4,7 +4,7 @@ package data;
 public class Spermatozoon {
 	
 	/** @brief */
-	boolean flag=false;
+	public boolean flag=false;
 	public boolean inTrack=false;
 	public int	trackNr;
 	public float	x;

@@ -16,6 +16,8 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import spermAnalysis.ChemotaxisAnalysis;
+
 public class MainWindow extends JFrame {
 
 
@@ -92,6 +94,8 @@ public class MainWindow extends JFrame {
 		chemotaxisBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				
+				ChemotaxisAnalysis ch = new ChemotaxisAnalysis();
+				ch.run();
 			}
 
 		} );

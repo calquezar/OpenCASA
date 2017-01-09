@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import data.Params;
 import data.Spermatozoon;
 import ij.IJ;
 
@@ -14,7 +15,7 @@ public class ChFunctions {
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return the Ratio-Q
 	 */
-	public static float calculateRatioQ(List theTracks,int decimationFactor, float angleDirection,float angleChemotaxis){
+	public static float calculateRatioQ(List theTracks){
 		
 		float trackNr=0; //Used to count total number of tracks
 		float tracksQ=0; //Number of tracks that satisfy condition Q
@@ -24,10 +25,10 @@ public class ChFunctions {
 		int nTracks = theTracks.size();
 		
 		//This operation is util when half of the chemotaxis' cone amplitude plus angle direction is greater than 360 degrees (270+100 for example)
-		float upperAngle = (float)(angleDirection + angleChemotaxis/2 + 360)%360;
+		float upperAngle = (float)(Params.angleDirection + Params.angleChemotaxis/2 + 360)%360;
 		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
 		// This operation is util when half of the chemotaxis' cone amplitude is greater than angle direction
-		float lowerAngle = (float)(angleDirection - angleChemotaxis/2 + 360)%360;
+		float lowerAngle = (float)(Params.angleDirection - Params.angleChemotaxis/2 + 360)%360;
 		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
 		
 		//float upperAngleNegativeDirection = ((float)Math.PI-upperAngle)%360;
@@ -40,9 +41,9 @@ public class ChFunctions {
 			
 			List track=(ArrayList) iT.next();
 			int nPoints = track.size();
-			for (int j = 0; j < (nPoints-decimationFactor); j++) {
+			for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
 				Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
-				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+decimationFactor);
+				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
 				float diffX = newSpermatozoon.x-oldSpermatozoon.x;
 				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
 				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI);
@@ -174,7 +175,7 @@ public class ChFunctions {
 	 * @param theTracks 2D-ArrayList that stores all the tracks
 	 * @return RatioSL
 	 */
-	public static float calculateRatioSL(List theTracks,float angleDirection,float angleChemotaxis){
+	public static float calculateRatioSL(List theTracks){
 		
 		float tracksQ=0; //Number of tracks that satisfy condition Q
 		float tracksNQ=0; //Number of tracks that not satisfy condition Q
@@ -182,10 +183,10 @@ public class ChFunctions {
 		int tracksCount=0;
 		
 		//This operation is util when half of the chemotaxis' cone amplitude plus angle direction is greater than 360 degrees (270+100 for example)
-		float upperAngle = (float)(angleDirection + angleChemotaxis/2 + 360)%360;
+		float upperAngle = (float)(Params.angleDirection + Params.angleChemotaxis/2 + 360)%360;
 		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
 		// This operation is util when half of the chemotaxis' cone amplitude is greater than angle direction
-		float lowerAngle = (float)(angleDirection - angleChemotaxis/2 + 360)%360;
+		float lowerAngle = (float)(Params.angleDirection - Params.angleChemotaxis/2 + 360)%360;
 		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
 		
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
