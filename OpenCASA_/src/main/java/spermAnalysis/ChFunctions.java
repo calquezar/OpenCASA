@@ -4,9 +4,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import data.Spermatozoon;
 import ij.IJ;
 
-public class Chemotaxis {
+public class ChFunctions {
 
 	/******************************************************/
 	/** Fuction to calculate the Ratio-Q

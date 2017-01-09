@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import spermAnalysis.Motility;
-import spermAnalysis.Spermatozoon;
+import spermAnalysis.MotFunctions;
+import data.Params;
+import data.Spermatozoon;
 
 public class TrackFilters {
 
+	static int countMotileSperm = 0;
+	static int countNonMotileSperm = 0;
+	
+	
 	/******************************************************/
 	/** Fuction to calculate the average path of all tracks using a moving average filter
 	 * @param theTracks 2D-ArrayList with all the tracks
@@ -71,11 +76,11 @@ public class TrackFilters {
 		Spermatozoon lastSpermatozoon = (Spermatozoon)track.get(nPoints-1);
 		float distance = lastSpermatozoon.distance(firstSpermatozoon);
 		
-		if (track.size() >= minTrackLength) {		
+		if (track.size() >= Params.minTrackLength) {		
 			List avgTrack = movingAverage(track);
-			float vap = Motility.vcl(avgTrack);
-			//Motility filter
-			if(vcl(track)>vclMin && (vap>0) && (distance>20)){
+			float vap = MotFunctions.vcl(avgTrack);
+			//MotFunctions filter
+			if(MotFunctions.vcl(track)>Params.vclMin && (vap>0) && (distance>20)){
 				//Update motile sperm count
 				countMotileSperm++;
 				return true;
@@ -114,16 +119,16 @@ public class TrackFilters {
 	public static List movingAverage (List track){
 		int nPoints = track.size();
 		List avgTrack = new ArrayList();
-		for (int j = wSize-1; j < nPoints; j++) {
+		for (int j = Params.wSize-1; j < nPoints; j++) {
 			int avgX = 0;
 			int avgY = 0;
-			for (int k=wSize-1;k>=0;k--){
+			for (int k=Params.wSize-1;k>=0;k--){
 				Spermatozoon aSpermatozoon = (Spermatozoon)track.get(j-k);
 				avgX += (int)aSpermatozoon.x;
 				avgY += (int)aSpermatozoon.y;
 			}
-			avgX = avgX/wSize;
-			avgY = avgY/wSize;
+			avgX = avgX/Params.wSize;
+			avgY = avgY/Params.wSize;
 			Spermatozoon newSpermatozoon = new Spermatozoon();
 			newSpermatozoon.x=(float)avgX;
 			newSpermatozoon.y=(float)avgY;

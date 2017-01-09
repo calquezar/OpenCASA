@@ -4,7 +4,10 @@ import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.ListIterator;
 
-public class Motility {
+import data.Params;
+import data.Spermatozoon;
+
+public class MotFunctions {
 
 	
 	/******************************************************/
@@ -42,15 +45,15 @@ public class Motility {
 	 * @param avgTrack - 
 	 * @return BCF (Hz)
 	 */	
-	public static float bcf(List track,List avgTrack,int bcf_shift, int wSize, int frameRate){
+	public static float bcf(List track,List avgTrack){
 		
 		int length = avgTrack.size();
 		int intersections=0;
 		// bcf_shift equal to 1 is not enougth to catch all beat-cross
-		for (int i=bcf_shift;i<length;i=i+1+bcf_shift){
-			Spermatozoon origP0 = (Spermatozoon)track.get(i-bcf_shift+wSize/2-1);
-			Spermatozoon origP1 = (Spermatozoon)track.get(i+wSize/2-1);
-			Spermatozoon avgP0 = (Spermatozoon)avgTrack.get(i-bcf_shift);
+		for (int i=Params.bcf_shift;i<length;i=i+1+Params.bcf_shift){
+			Spermatozoon origP0 = (Spermatozoon)track.get(i-Params.bcf_shift+Params.wSize/2-1);
+			Spermatozoon origP1 = (Spermatozoon)track.get(i+Params.wSize/2-1);
+			Spermatozoon avgP0 = (Spermatozoon)avgTrack.get(i-Params.bcf_shift);
 			Spermatozoon avgP1 = (Spermatozoon)avgTrack.get(i);
 			Line2D origLine = new Line2D.Float();
 			origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
@@ -61,7 +64,7 @@ public class Motility {
 			if(intersection)
 				intersections++;
 		}
-		float bcf_value = (float)intersections*frameRate/(float)length;
+		float bcf_value = (float)intersections*Params.frameRate/(float)length;
 		
 		return bcf_value;
 	}
@@ -93,7 +96,7 @@ public class Motility {
 	 * @param track - a track
 	 * @return VCL (um/second)
 	 */	
-	public static float vcl(List track,int microPerPixel,int frameRate){
+	public static float vcl(List track){
 		
 		int length = track.size();
 		ListIterator jT = track.listIterator();
@@ -105,9 +108,9 @@ public class Motility {
 			oldSpermatozoon = newSpermatozoon;
 		}	
 		//convert pixels to micrometers
-		distance = distance*(float)microPerPixel;
+		distance = distance*(float)Params.microPerPixel;
 	    // Seconds
-		float elapsedTime = (length-1)/frameRate;
+		float elapsedTime = (length-1)/Params.frameRate;
 		//return um/second
 		return distance/elapsedTime;
 	}
@@ -117,16 +120,16 @@ public class Motility {
 	 * @param track - a track
 	 * @return VSL (um/second)
 	 */	
-	public static float vsl(List track,int microPerPixel,int frameRate){
+	public static float vsl(List track){
 		int length = track.size();
 		Spermatozoon first = (Spermatozoon)track.get(1);
 		Spermatozoon last = (Spermatozoon)track.get(length-1);
 		//Distance (pixels)
 		float distance = last.distance(first);
 		//convert pixels to micrometers
-		distance = distance*(float)microPerPixel;
+		distance = distance*(float)Params.microPerPixel;
 	    // Seconds
-		float elapsedTime = (length-1)/frameRate;
+		float elapsedTime = (length-1)/Params.frameRate;
 		//return um/second
 		return distance/elapsedTime;
 	}

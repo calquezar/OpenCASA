@@ -1,4 +1,4 @@
-package spermAnalysis;
+package data;
 
 
 public class Spermatozoon {
