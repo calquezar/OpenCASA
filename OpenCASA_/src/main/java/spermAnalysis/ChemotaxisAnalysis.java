@@ -3,9 +3,9 @@ package spermAnalysis;
 import java.util.List;
 
 import data.Params;
+import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
-import ij.measure.ResultsTable;
 import utils.ImageProcessing;
 import utils.Output;
 import utils.TrackFilters;
@@ -16,8 +16,10 @@ public class ChemotaxisAnalysis {
 		
 	}
 	
-	public void run(){
+	public void run(MainWindow mw){
 		
+		
+		mw.setVisible(false);
 		final ImagePlus impOrig = IJ.openImage();
 		final ImagePlus imp = impOrig.duplicate();
 		impOrig.show();
@@ -56,15 +58,15 @@ public class ChemotaxisAnalysis {
 					xyCoordsOutput = Output.printXYCoords(theTracks);
 					IJ.saveString(xyCoordsOutput,"");		
 				}
-				// Motility results
-				ResultsTable motResults = Output.calculateMotility(theTracks);
-				if(Params.calcMotilityParameters){
-					motResults.show("Motility Resume");
-				}
-				if(Params.calcMeanMotilityParameters){
-					ResultsTable avgMotility = Output.calculateAverageMotility(theTracks.size());
-					avgMotility.show("Motility Average");
-				}
+//				// Motility results
+//				ResultsTable motResults = Output.calculateMotility(theTracks);
+//				if(Params.calcMotilityParameters){
+//					motResults.show("Motility Resume");
+//				}
+//				if(Params.calcMeanMotilityParameters){
+//					ResultsTable avgMotility = Output.calculateAverageMotility(theTracks.size());
+//					avgMotility.show("Motility Average");
+//				}
 				//To calculate Ratio-Q we have to decimate all tracks
 				List decimatedTracks = TrackFilters.decimateTracks(avgTracks,Params.decimationFactor);
 				// Chemotaxis ratios

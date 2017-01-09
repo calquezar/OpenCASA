@@ -20,7 +20,9 @@ import spermAnalysis.ChemotaxisAnalysis;
 
 public class MainWindow extends JFrame {
 
-
+	MainWindow mw;
+	ChemotaxisAnalysis ch = new ChemotaxisAnalysis();
+	
 	/**
 	 * Constructor. This method doesn't get any argument. The main graphical user interface is created.
 	 * @throws HeadlessException
@@ -28,6 +30,7 @@ public class MainWindow extends JFrame {
 	public MainWindow() throws HeadlessException {
 		createGUI();
 		setLocationRelativeTo(null);
+		mw = this;
 	}
 	/**
 	 * Constructor. The main graphical user interface is created.
@@ -37,6 +40,7 @@ public class MainWindow extends JFrame {
 		super(gc);
 		createGUI();
 		setLocationRelativeTo(null);
+		mw = this;
 	}
 	/**
 	 * Constructor. The main graphical user interface is created.
@@ -46,6 +50,7 @@ public class MainWindow extends JFrame {
 		super(title);
 		createGUI();
 		setLocationRelativeTo(null);
+		mw = this;
 	}
 	/**
 	 * Constructor. The main graphical user interface is created.
@@ -56,6 +61,7 @@ public class MainWindow extends JFrame {
 		super(title, gc);
 		createGUI();
 		setLocationRelativeTo(null);
+		mw = this;
 	}
 	
 	/**
@@ -93,9 +99,7 @@ public class MainWindow extends JFrame {
 		//Add action listener
 		chemotaxisBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				
-				ChemotaxisAnalysis ch = new ChemotaxisAnalysis();
-				ch.run();
+				ch.run(mw);
 			}
 
 		} );
