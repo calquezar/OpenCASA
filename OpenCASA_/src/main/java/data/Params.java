@@ -1,5 +1,7 @@
 package data;
 
+import ij.measure.ResultsTable;
+
 public class Params {
 	
 	public static double	pixelWidth=1.0;
@@ -34,14 +36,33 @@ public class Params {
 	//print the xy co-ordinates for all tracks?
 	public static boolean printXY = false;
 	//Calculate motility parameters
-	public static boolean calcMotilityParameters = false;
-	public static boolean calcMeanMotilityParameters = false;
+	public static boolean calcMotilityParameters = true;
+	public static boolean calcMeanMotilityParameters = true;
 	//Draw original trajectories
 	public static boolean drawOrigTrajectories = true;
 	//Draw original trajectories
 	public static boolean drawAvgTrajectories = true;
 	//Draw relative trajectories
 	public static boolean drawRelTrajectories = true;
+	
+	
+	//Motility variables
+	public static float total_vsl = 0;
+	public static float total_vcl = 0;
+	public static float total_vap = 0;
+	public static float total_lin = 0;
+	public static float total_wob = 0;
+	public static float total_str = 0;
+	public static float total_alhMean = 0;
+	public static float total_alhMax = 0;
+	public static float total_bcf = 0;
+	public static float total_dance = 0;
+	public static float total_mad = 0;
+	public static float countProgressiveSperm = 0;
+	public static int countMotileSperm = 0;
+	public static int countNonMotileSperm = 0;
+	
+	public static ResultsTable rTable = new ResultsTable();
 	
 	static void resetParams(){
 		minSize = 20;
@@ -63,5 +84,23 @@ public class Params {
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
 		drawRelTrajectories = true;
+		
+		//Motility variables
+	    total_vsl = 0;
+		total_vcl = 0;
+		total_vap = 0;
+		total_lin = 0;
+		total_wob = 0;
+		total_str = 0;
+		total_alhMean = 0;
+		total_alhMax = 0;
+		total_bcf = 0;
+		total_dance = 0;
+		total_mad = 0;
+		countProgressiveSperm = 0;
+		countMotileSperm = 0;
+		countNonMotileSperm = 0;
+	
+		rTable = new ResultsTable();
 	}
 }

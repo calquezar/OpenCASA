@@ -16,14 +16,14 @@ public class MotFunctions {
 	 * @param avgTrack - 
 	 * @return ALH (mean and max) (um/second)
 	 */	
-	public static float[] alh(List track,List avgTrack,int wSize,int microPerPixel){
+	public static float[] alh(List track,List avgTrack){
 		
 		int length = avgTrack.size();
 		float alh[] = new float[2];
 		float alhMax = 0;
 		float alhMean = 0;
 		for (int i=0;i<length;i++){
-			Spermatozoon origSpermatozoon = (Spermatozoon)track.get(i+wSize/2-1);
+			Spermatozoon origSpermatozoon = (Spermatozoon)track.get(i+Params.wSize/2-1);
 			Spermatozoon avgSpermatozoon = (Spermatozoon)avgTrack.get(i);
 			float distance = origSpermatozoon.distance(avgSpermatozoon);
 			alhMean+=distance;
@@ -33,8 +33,8 @@ public class MotFunctions {
 		//Mean value
 		alhMean=alhMean/length;
 		//convert pixels to micrometers
-		alh[0]=alhMean*(float)microPerPixel;
-		alh[1]=alhMax*(float)microPerPixel;
+		alh[0]=alhMean*(float)Params.microPerPixel;
+		alh[1]=alhMax*(float)Params.microPerPixel;
 		
 		return alh;
 	}
