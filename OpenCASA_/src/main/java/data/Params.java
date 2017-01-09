@@ -2,6 +2,8 @@ package data;
 
 public class Params {
 	
+	public static double	pixelWidth=1.0;
+	public static double pixelHeight=1.0;
 	/** @brief minimum sperm size */
 	public static float	minSize = 20;
 	//maximum sperm size

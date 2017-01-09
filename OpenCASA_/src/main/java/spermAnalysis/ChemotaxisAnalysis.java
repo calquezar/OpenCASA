@@ -16,7 +16,10 @@ public class ChemotaxisAnalysis {
 	
 	public void run(){
 		
-		ImagePlus imp = IJ.openImage();
+		ImagePlus impOrig = IJ.openImage();
+		ImagePlus imp = impOrig.duplicate();
+		
+		impOrig.show();
 		
 		ImageProcessing.convertToGrayscale(imp);
 		//************************************************************ 
@@ -57,13 +60,12 @@ public class ChemotaxisAnalysis {
 		//IJ.log("RatioQ: "+ratioQ);
 		float ratioSL = ChFunctions.calculateRatioSL(avgTracks);
 		
-		IJ.log("ratioSL: "+ratioSL);
 //		setQtResults(ratioQ,ratioSL,theTracks.size());
 //		rTable.show("Ratios Quimiotaxis");
 		//************************************************************ 
 		// * Draw tracks at each frame
 		//************************************************************
-//		draw(imp,theTracks,avgTracks,ratioQ,ratioSL);		
+		ImageProcessing.draw(impOrig,theTracks,avgTracks,ratioQ,ratioSL);		
 	}
 	
 	
