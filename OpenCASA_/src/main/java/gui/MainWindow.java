@@ -17,11 +17,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import spermAnalysis.ChemotaxisAnalysis;
+import spermAnalysis.MotilityAnalysis;
 
 public class MainWindow extends JFrame {
 
 	MainWindow mw;
-	ChemotaxisAnalysis ch = new ChemotaxisAnalysis();
+	ChemotaxisAnalysis ch;
+	MotilityAnalysis ma;
 	
 	/**
 	 * Constructor. This method doesn't get any argument. The main graphical user interface is created.
@@ -80,7 +82,8 @@ public class MainWindow extends JFrame {
 		//Add action listener
 		motilityBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				
+				ma = new MotilityAnalysis();
+				ma.run(mw);
 			}
 
 		} );
@@ -99,6 +102,7 @@ public class MainWindow extends JFrame {
 		//Add action listener
 		chemotaxisBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
+				ch = new ChemotaxisAnalysis();
 				ch.run(mw);
 			}
 
