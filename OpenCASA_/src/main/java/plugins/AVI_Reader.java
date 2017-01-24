@@ -42,7 +42,7 @@ import javax.imageio.ImageIO;
  * Version History:
  * 	 2017-01-24
  * 		  Commented line 275 to hide dialog. The parameters isVirtual, convertToGray and flipVertical 
- * 		  are set to false by default. The purpose of this is to automate the process of analyzing a directory
+ * 		  are set to 'false' by default. The purpose of this adaptation is to automate the process of analyzing directories
  *   2008-04-29
  *        based on a plugin by Daniel Marsh and Wayne Rasband;
  *        modifications by Michael Schmid
