@@ -262,8 +262,52 @@ public class ChFunctions {
 		Params.rTable.addValue("Filename",filename);
 	}
 
+	public static int[] countInstantDirections(List track){
+		
+		int nPos = 0;
+		int nNeg = 0;
+		
+		//This operation is util when half of the chemotaxis' cone amplitude plus angle direction is greater than 360 degrees (270+100 for example)
+		float upperAngle = (float)(Params.angleDirection + Params.angleChemotaxis/2 + 360)%360;
+		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
+		// This operation is util when half of the chemotaxis' cone amplitude is greater than angle direction
+		float lowerAngle = (float)(Params.angleDirection - Params.angleChemotaxis/2 + 360)%360;
+		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
+		
+		int nPoints = track.size();
+		for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
+			Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
+			Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
+			float diffX = newSpermatozoon.x-oldSpermatozoon.x;
+			float diffY = newSpermatozoon.y-oldSpermatozoon.y;
+			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI);
+			//IJ.log("angle: "+angle*180/Math.PI);
+			if(lowerAngle>upperAngle){
+				//Special case: for example, when chemotaxis cone is between first and fourth quadrant
+				if((angle<upperAngle)||(lowerAngle<angle))
+					nPos++;
+				else
+					nNeg++;
+			}
+			else{ 
+				if((angle<upperAngle)&&(lowerAngle<angle))
+					nPos++;
+				 else //if((angle>(upperAngle+120*Math.PI/180))&&(angle<(lowerAngle-120120*Math.PI/180)))
+					nNeg++;
+			}
+		}
+		
+		int[] results = new int[3];
+		results[0] = nPos;
+		results[1] = nNeg;
+		IJ.log("nPos: "+results[0]+"; nNeg: "+results[1]);
+		return results;
+	}
+	
 	
 //	public static float OddsRatio(){
+//		
+//		
 //		
 //	}
 	
