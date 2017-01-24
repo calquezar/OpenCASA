@@ -1,5 +1,8 @@
 package data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import ij.measure.ResultsTable;
 
 public class Params {
@@ -64,7 +67,16 @@ public class Params {
 	
 	public static ResultsTable rTable = new ResultsTable();
 	
-	static void resetParams(){
+	public static List controlTracks = new ArrayList();
+	public static List conditionTracks = new ArrayList();
+	
+//	public static int typeTrial = 0; // 0-Control; 1-chemotaxis(10pM);2-chemotaxis(100pM);3-chemotaxis(10nM)
+//	public static int nPlusControl = 0;
+//	public static int nMinusControl = 0;
+//	public static int nPlusCondition= 0;
+//	public static int nMinusCondition = 0;
+	
+	public static void resetParams(){
 		minSize = 20;
 		maxSize = 100;
 		minTrackLength = 50;
@@ -102,5 +114,14 @@ public class Params {
 		countNonMotileSperm = 0;
 	
 		rTable = new ResultsTable();
+		
+		controlTracks = new ArrayList();
+		conditionTracks = new ArrayList();
+		
+//		typeTrial = 0;
+//		nPlusControl = 0;
+//		nMinusControl = 0;
+//		nPlusCondition= 0;
+//		nMinusCondition = 0;		
 	}
 }

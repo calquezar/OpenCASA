@@ -1,5 +1,6 @@
 package plugins;
 
+import data.Params;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImageJ;
@@ -35,6 +36,9 @@ public class OpenCASA_ implements PlugIn {
 
 		// start ImageJ
 		new ImageJ();
+		
+		//Reset Parameters
+		Params.resetParams();
 		
 		// run the plugin
 		IJ.runPlugIn(clazz.getName(), "");

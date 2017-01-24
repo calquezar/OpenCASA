@@ -7,6 +7,7 @@ import java.util.ListIterator;
 import data.Params;
 import data.Spermatozoon;
 import ij.IJ;
+import ij.measure.ResultsTable;
 
 public class ChFunctions {
 
@@ -214,5 +215,56 @@ public class ChFunctions {
 		return ratioSL;
 
 	}
+	
+	/******************************************************/
+	/**
+	 * @param String filename
+	 * @return int - 0-Control; 1-chemotaxis(10pM);2-chemotaxis(100pM);3-chemotaxis(10nM)
+	 */	
+	public static int getTrialType(String filename){
+		//Format 2000-11-19-1234-Q-P-100pM-0-1
+		String[] parts = filename.split("-");
+		if(parts[4].equals("Q")){
+			if(parts[6].equals("10pM"))
+				return 1;
+			else if(parts[6].equals("100pM"))
+				return 2;
+			else if(parts[6].equals("10nM"))
+				return 3;
+			else return -1;
+		}else{
+			return 0;
+		}
+		
+	}
+	
+	public static void setQtResults(String filename,float ratioQ, float ratioSL, int nTracks){
+		
+		//Format 2000-11-19-1234-Q-P-100pM-0-1
+		String[] parts = filename.split("-");
+
+		Params.rTable.incrementCounter();	
+		Params.rTable.addValue("nTracks",nTracks);
+		Params.rTable.addValue("RatioQ",ratioQ);
+		Params.rTable.addValue("RatioSL",ratioSL);		
+		Params.rTable.addValue("Type",parts[4]);
+		if(parts[4].equals("Q")){
+			Params.rTable.addValue("Hormone",parts[5]);
+			Params.rTable.addValue("Concentration",parts[6]);
+		}else{
+			Params.rTable.addValue("Hormone","-");
+			Params.rTable.addValue("Concentration","-");
+		}
+		Params.rTable.addValue("Direction (Degrees)",Params.angleDirection);
+		Params.rTable.addValue("ArcChemotaxis (Degrees)",Params.angleChemotaxis);
+		Params.rTable.addValue("ID",parts[3]);
+		Params.rTable.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
+		Params.rTable.addValue("Filename",filename);
+	}
+
+	
+//	public static float OddsRatio(){
+//		
+//	}
 	
 }
