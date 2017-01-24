@@ -1,3 +1,4 @@
+package plugins;
 
 import gui.MainWindow;
 import ij.IJ;
