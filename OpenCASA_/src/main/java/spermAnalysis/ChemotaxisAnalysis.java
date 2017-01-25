@@ -184,8 +184,8 @@ public class ChemotaxisAnalysis {
 						
 						switch(trialType){
 						case 0: //Control
-//						case 1: //10pM
-						case 2: //100pM
+						case 1: //10pM
+//						case 2: //100pM
 //						case 3: //10nM
 							
 							AVI_Reader ar = new  AVI_Reader();
@@ -227,7 +227,7 @@ public class ChemotaxisAnalysis {
 			  String key= (String)k.next();
 			  Trial trial = (Trial)trials.get(key);
 			  System.out.println("key: "+key);
-			  double OR = ChFunctions.OR(trial,"p100pM");
+			  double OR = ChFunctions.OR(trial,"p10pM");
 			  if(OR>thControl)
 				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
 			  else

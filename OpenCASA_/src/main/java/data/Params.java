@@ -22,7 +22,7 @@ public class Params {
 	//Motility filter for motile and non motile sperm
 	public static int vclMin = 70;
 	//Decimation factor
-	public static int decimationFactor = 10;
+	public static int decimationFactor = 4;
 	//Angles used to clasify chemotactic trajectories
 	public static float angleDirection = 0; 
 	public static float angleChemotaxis = 90;

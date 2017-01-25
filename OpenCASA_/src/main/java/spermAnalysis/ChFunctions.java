@@ -322,7 +322,7 @@ public class ChFunctions {
 		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		List<Double> ORs = new ArrayList<Double>();
-		final int MAXINSTANGLES = 30000;
+		final int MAXINSTANGLES = 60000;
 		final int NUMSAMPLES = 1000;
 		
 		for(int i=0;i<NUMSAMPLES;i++){
