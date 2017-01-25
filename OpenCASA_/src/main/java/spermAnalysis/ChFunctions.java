@@ -1,11 +1,14 @@
 package spermAnalysis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
 import data.Spermatozoon;
+import data.Trial;
 import ij.IJ;
 import ij.measure.ResultsTable;
 
@@ -222,7 +225,8 @@ public class ChFunctions {
 	 * @return int - 0-Control; 1-chemotaxis(10pM);2-chemotaxis(100pM);3-chemotaxis(10nM)
 	 */	
 	public static int getTrialType(String filename){
-		//Format 2000-11-19-1234-Q-P-100pM-0-1
+		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
+		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
 		String[] parts = filename.split("-");
 		if(parts[4].equals("Q")){
 			if(parts[6].equals("10pM"))
@@ -236,6 +240,13 @@ public class ChFunctions {
 			return 0;
 		}
 		
+	}
+	
+	public static String getID(String filename){
+		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
+		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
+		String[] parts = filename.split("-");
+		return parts[3]+parts[0]+parts[1]+parts[2];
 	}
 	
 	public static void setQtResults(String filename,float ratioQ, float ratioSL, int nTracks){
@@ -300,15 +311,107 @@ public class ChFunctions {
 		int[] results = new int[3];
 		results[0] = nPos;
 		results[1] = nNeg;
-		IJ.log("nPos: "+results[0]+"; nNeg: "+results[1]);
+		//IJ.log("nPos: "+results[0]+"; nNeg: "+results[1]);
 		return results;
 	}
 	
 	
-//	public static float OddsRatio(){
-//		
-//		
-//		
-//	}
+	
+	public static double calculateORControlThreshold(){		
+		
+		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+		List<Double> ORs = new ArrayList<Double>();
+		final int MAXINSTANGLES = 30000;
+		final int NUMSAMPLES = 1000;
+		
+		for(int i=0;i<NUMSAMPLES;i++){
+			
+			System.out.println("Calculating Control Threshold. Shuffle "+i);
+//			System.out.println("Size of ORs: "+ORs.size());
+			
+			java.util.Collections.shuffle(Params.controlTracks);
+			//Calculate numerator's odds value
+			int count=0,index=0;
+			while((count<MAXINSTANGLES)&&(index<Params.controlTracks.size())){
+				int[] countInstDirections = countInstantDirections((List)Params.controlTracks.get(index));
+				numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+				numeratorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
+				count+=countInstDirections[0]+countInstDirections[1];
+				index++;
+			}
+//			System.out.println("numAngles Numerator: "+count);
+			
+			java.util.Collections.shuffle(Params.controlTracks);
+			//Calculate denominator's odds value
+			count=0;index=0;
+			while((count<MAXINSTANGLES)&&(index<Params.controlTracks.size())){
+				int[] countInstDirections = countInstantDirections((List)Params.controlTracks.get(index));
+				denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+				denominatorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
+				count+=countInstDirections[0]+countInstDirections[1];
+				index++;
+			}
+//			System.out.println("numAngles Denominator: "+count);
+//			System.out.println("Numerator Positive: "+numeratorValues[0] +"; Denominator Positive : "+ denominatorValues[0]+"; Numerator Negative: "+numeratorValues[1] +"; Denominator Negative : "+ denominatorValues[1]);
+			double numeratorRatio = numeratorValues[0]/numeratorValues[1];
+			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
+			double OddsRatio = numeratorRatio/denominatorRatio;
+			ORs.add(OddsRatio);
+		}
+		
+		Collections.sort(ORs);
+		//System.out.println(ORs.toString());
+		IJ.log(""+ORs.get((int) (NUMSAMPLES*0.95)));
+		return ORs.get((int) (NUMSAMPLES*0.95));
+	}
+	
+	public static double OR(Trial trial,String condition){
+		
+		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+//		final int MAXINSTANGLES = 30000;
+		
+		List controlTracks = trial.control;
+		List conditionTracks = new ArrayList();
+		if(condition.equals("p10pM"))
+			conditionTracks = trial.p10pM;
+		else if(condition.equals("p100pM"))
+			conditionTracks = trial.p100pM;
+		else if(condition.equals("p10nM"))
+			conditionTracks = trial.p10nM;
+		
+//		java.util.Collections.shuffle(Params.controlTracks);
+//		java.util.Collections.shuffle(Params.conditionTracks);
+		
+		int count=0,index=0;
+		//Control Ratio
+//		while((count<MAXINSTANGLES)&&(index<Params.controlTracks.size())){
+		while(index<controlTracks.size()){
+			int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
+			denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+			denominatorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
+//			count+=countInstDirections[0]+countInstDirections[1];
+			index++;
+		}
+		
+		//Condition Ratio
+		count=0;index=0;
+//		while((count<MAXINSTANGLES)&&(index<Params.conditionTracks.size())){
+		while(index<conditionTracks.size()){
+			int[] countInstDirections = countInstantDirections((List)conditionTracks.get(index));
+			numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+			numeratorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
+//			count+=countInstDirections[0]+countInstDirections[1];
+			index++;
+		}
+		
+		double numeratorRatio = numeratorValues[0]/numeratorValues[1];
+		double denominatorRatio = denominatorValues[0]/denominatorValues[1];
+		double OddsRatio = numeratorRatio/denominatorRatio;
+		
+		System.out.println("OR: "+OddsRatio+" ;nAngles: "+(numeratorValues[0]+numeratorValues[1]));
+		return OddsRatio;
+	}
 	
 }

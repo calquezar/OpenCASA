@@ -1,5 +1,8 @@
 package plugins;
 
+import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
+
 import data.Params;
 import gui.MainWindow;
 import ij.IJ;
@@ -26,8 +29,16 @@ public class OpenCASA_ implements PlugIn {
 	/**
 	 * Main method
 	 * @param args unused
+	 * @throws UnsupportedLookAndFeelException 
+	 * @throws IllegalAccessException 
+	 * @throws InstantiationException 
+	 * @throws ClassNotFoundException 
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
+		
+		 UIManager.setLookAndFeel(
+		            UIManager.getSystemLookAndFeelClassName());
+		 
 		// set the plugins.dir property to make the plugin appear in the Plugins menu
 		Class<?> clazz = OpenCASA_.class;
 		String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();

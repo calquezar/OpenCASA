@@ -1,11 +1,19 @@
 package spermAnalysis;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.JFileChooser;
 
 import data.Params;
+import data.Spermatozoon;
+import data.Trial;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
@@ -48,7 +56,7 @@ public class ChemotaxisAnalysis {
 	 * 
 	 * @param ImagePlus imp
 	 */
-	public void analyze(ImagePlus imp,String filename){
+	public List analyze(ImagePlus imp,String filename){
 		
 		System.out.println("converToGrayScale...");
  		ImageProcessing.convertToGrayscale(imp);
@@ -139,7 +147,7 @@ public class ChemotaxisAnalysis {
 //			avgMotility.show("Motility Average");
 //		}
 		
-		
+		return theTracks;
 	}
 	
 	/**
@@ -153,12 +161,15 @@ public class ChemotaxisAnalysis {
 		else 
 			return false;
 	}
+	
 	/**
 	 * 
 	 * @param MainWindow mw
 	 */
 	public void run(MainWindow mw){
 		mw.setVisible(false);
+		Map<String, Trial> trials = new HashMap<String, Trial>();	
+		
 		File[] listOfFiles = getFileNames();
 		if(listOfFiles!=null){
 			for (int i = 0; i < listOfFiles.length; i++) {
@@ -169,16 +180,36 @@ public class ChemotaxisAnalysis {
 						System.out.println("Loading video...");
 						
 						int trialType = ChFunctions.getTrialType(filename);
+						String trialID = ChFunctions.getID(filename);
+						
 						switch(trialType){
 						case 0: //Control
-						case 1: //10pM
-//						case 2: //100pM
+//						case 1: //10pM
+						case 2: //100pM
 //						case 3: //10nM
 							
 							AVI_Reader ar = new  AVI_Reader();
 							ar.run(directory+"\\"+listOfFiles[i].getName());
 							final ImagePlus imp = ar.getImagePlus();
-							new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
+							List t = analyze(imp,filename);
+							
+//							if(t==null)
+//								IJ.log("analyze devuelve NULL");
+							
+							Trial tr;
+							if(trials.get(trialID)!=null) 
+								tr = trials.get(trialID);
+							else 
+								tr = new Trial();
+							switch(trialType){
+								case 0: tr.control=t;break;
+								case 1: tr.p10pM=t;break;
+								case 2: tr.p100pM=t;break;
+								case 3: tr.p10nM=t;break;
+							}
+							trials.put(trialID, tr);
+
+							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
 						}
 
 					}else{
@@ -188,7 +219,20 @@ public class ChemotaxisAnalysis {
 			    } else if (listOfFiles[i].isDirectory()) {
 			    	System.out.println("Directory " + listOfFiles[i].getName());
 			    }
-		   }			
+		   }
+			
+		  double thControl = ChFunctions.calculateORControlThreshold();
+		  Set keySet = trials.keySet();
+		  for (Iterator k=keySet.iterator();k.hasNext();) {
+			  String key= (String)k.next();
+			  Trial trial = (Trial)trials.get(key);
+			  System.out.println("key: "+key);
+			  double OR = ChFunctions.OR(trial,"p100pM");
+			  if(OR>thControl)
+				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  else
+			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+		  }
 		}
 	}
 }
