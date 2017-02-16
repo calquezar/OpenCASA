@@ -361,7 +361,7 @@ public class ChFunctions {
 		}
 		
 		Collections.sort(ORs);
-		//System.out.println(ORs.toString());
+		System.out.println(ORs.toString());
 		IJ.log(""+ORs.get((int) (NUMSAMPLES*0.95)));
 		return ORs.get((int) (NUMSAMPLES*0.95));
 	}

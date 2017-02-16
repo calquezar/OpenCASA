@@ -10,9 +10,9 @@ public class Params {
 	public static double	pixelWidth=1.0;
 	public static double pixelHeight=1.0;
 	/** @brief minimum sperm size */
-	public static float	minSize = 20;
+	public static float	minSize = 10;
 	//maximum sperm size
-	public static float	maxSize = 100;
+	public static float	maxSize = 1000;
 	//minimum length of sperm track in frames
 	public static float 	minTrackLength = 50;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
