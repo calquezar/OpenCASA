@@ -1,7 +1,8 @@
 package data;
 
+import java.io.Serializable;
 
-public class Spermatozoon {
+public class Spermatozoon implements Serializable {
 	
 	/** @brief */
 	public boolean flag=false;

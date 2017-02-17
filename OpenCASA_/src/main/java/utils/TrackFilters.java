@@ -6,6 +6,7 @@ import java.util.ListIterator;
 
 import spermAnalysis.MotFunctions;
 import data.Params;
+import data.SList;
 import data.Spermatozoon;
 
 public class TrackFilters {
@@ -19,9 +20,9 @@ public class TrackFilters {
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return 2D-ArrayList with the averaged tracks
 	 */
-	public static List averageTracks (List theTracks){
+	public static SList averageTracks (SList theTracks){
 		
-		List avgTracks = new ArrayList();
+		SList avgTracks = new SList();
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			List aTrack=(ArrayList)iT.next();
 			List avgTrack = movingAverage(aTrack);
@@ -100,9 +101,9 @@ public class TrackFilters {
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return 2D-ArrayList with all the tracks that have passed the filter
 	 */
-	public static List filterTracks (List theTracks){
+	public static SList filterTracks (SList theTracks){
 		
-		List filteredTracks = new ArrayList();
+		SList filteredTracks = new SList();
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			List aTrack=(ArrayList)iT.next();
 			if(filterOneTrack(aTrack))

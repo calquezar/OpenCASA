@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
+import data.SList;
 import data.Spermatozoon;
 import ij.IJ;
 import ij.ImagePlus;
@@ -115,10 +116,10 @@ public class ImageProcessing implements Measurements {
 	 * @param spermatozoa 2D-ArrayList with all spermatozoa detected for each frame
 	 * @return 2D-ArrayList with all tracks detected
 	 */
-	public static List idenfityTracks(List[] spermatozoa,int nFrames){
+	public static SList idenfityTracks(List[] spermatozoa,int nFrames){
 		
 		//int nFrames = imp.getStackSize();
-		List theTracks = new ArrayList();
+		SList theTracks = new SList();
 		int trackCount=0;
 		
 		for (int i=0; i<=(nFrames-1); i++) {

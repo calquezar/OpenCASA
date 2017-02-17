@@ -1,10 +1,10 @@
 package data;
 
-import java.util.List;
+import java.io.Serializable;
 
-public class Trial {
-	public List control= null;
-	public List p10pM= null; // Progesterone 10pM
-	public List p100pM= null;
-	public List p10nM= null;
+public class Trial implements Serializable{
+	public SList control= null;
+	public SList p10pM= null; // Progesterone 10pM
+	public SList p100pM= null;
+	public SList p10nM= null;
 }

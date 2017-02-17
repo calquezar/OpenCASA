@@ -3,6 +3,7 @@ package spermAnalysis;
 import java.util.List;
 
 import data.Params;
+import data.SList;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
@@ -39,7 +40,7 @@ public class MotilityAnalysis {
 				// * Now assemble tracks out of the particle lists
 				// * Also record to which track a particle belongs in ArrayLists
 				//************************************************************
-				List theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
+				SList theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
 				//************************************************************ 
 				// * Filter the tracks list
 				// * (We have to filter the tracks list because not all of them are valid)

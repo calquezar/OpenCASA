@@ -49,8 +49,8 @@ public class ChemotaxisAnalysis {
 	 */
 	public File[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
-		//chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron"));
-		chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
+		chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\"));
+		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
 		chooser.setDialogTitle("choosertitle");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
@@ -87,7 +87,7 @@ public class ChemotaxisAnalysis {
 		// * Also record to which track a particle belongs in ArrayLists
 		//************************************************************
 		System.out.println("identifyTracks...");
-		List theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
+		SList theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
 		//************************************************************ 
 		// * Filter the tracks list
 		// * (We have to filter the tracks list because not all of them are valid)
@@ -98,7 +98,7 @@ public class ChemotaxisAnalysis {
 		// * Average the tracks 
 		//************************************************************
 		System.out.println("averageTracks...");
-		List avgTracks = TrackFilters.averageTracks(theTracks);	
+		SList avgTracks = TrackFilters.averageTracks(theTracks);	
 		//************************************************************ 
 		// * Calculate output
 		//************************************************************
@@ -159,7 +159,7 @@ public class ChemotaxisAnalysis {
 //			avgMotility.show("Motility Average");
 //		}
 		
-		return (SList)theTracks;
+		return theTracks;
 	}
 	
 	/**
@@ -184,123 +184,101 @@ public class ChemotaxisAnalysis {
 		mw.setVisible(false);
 		Map<String, Trial> trials = new HashMap<String, Trial>();	
 		
-		File[] listOfFiles = getFileNames();
-		if(listOfFiles!=null){
-			
-			for (int i = 0; i < listOfFiles.length; i++) {
-			    if (listOfFiles[i].isFile()) {
-			    	final String filename = listOfFiles[i].getName();
-					//System.out.println("File " + filename);
-					if(isAVI(filename)){
-						System.out.println("Loading video...");
-						
-						int trialType = ChFunctions.getTrialType(filename);
-						String trialID = ChFunctions.getID(filename);
-						
-						switch(trialType){
-						case 0: //Control
-						case 1: //10pM
-//						case 2: //100pM
-//						case 3: //10nM
-							
-							AVI_Reader ar = new  AVI_Reader();
-							ar.run(directory+"\\"+listOfFiles[i].getName());
-							final ImagePlus imp = ar.getImagePlus();
-							List t = analyze(imp,filename);
-							
-//							if(t==null)
-//								IJ.log("analyze devuelve NULL");
-							
-							Trial tr;
-							if(trials.get(trialID)!=null) 
-								tr = trials.get(trialID);
-							else 
-								tr = new Trial();
-							switch(trialType){
-								case 0: tr.control=t;break;
-								case 1: tr.p10pM=t;break;
-								case 2: tr.p100pM=t;break;
-								case 3: tr.p10nM=t;break;
-							}
-							trials.put(trialID, tr);
-
-							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
-						}
-
-					}else{
-						System.out.println("The file format is not AVI. Not analyzed");
-					}
-
-			    } else if (listOfFiles[i].isDirectory()) {
-			    	System.out.println("Directory " + listOfFiles[i].getName());
-			    }
-		   }
 		
-//		  double thControl = ChFunctions.calculateORControlThreshold();
-//		  Set keySet = trials.keySet();
-//		  for (Iterator k=keySet.iterator();k.hasNext();) {
-//			  String key= (String)k.next();
-//			  Trial trial = (Trial)trials.get(key);
-//			  System.out.println("key: "+key);
-//			  double OR = ChFunctions.OR(trial,"p10pM");
-//			  if(OR>thControl)
-//				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
-//			  else
-//			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
-//		  }
+//		//////////////////////////////////////////////
+		
+		
+//		File[] listOfFiles = getFileNames();
+//		if(listOfFiles!=null){
+//			
+//			for (int i = 0; i < listOfFiles.length; i++) {
+//			    if (listOfFiles[i].isFile()) {
+//			    	final String filename = listOfFiles[i].getName();
+//					//System.out.println("File " + filename);
+//					if(isAVI(filename)){
+//						System.out.println("Loading video...");
+//						
+//						int trialType = ChFunctions.getTrialType(filename);
+//						String trialID = ChFunctions.getID(filename);
+//						
+//						switch(trialType){
+//						case 0: //Control
+//						case 1: //10pM
+////						case 2: //100pM
+////						case 3: //10nM
+//							
+//							AVI_Reader ar = new  AVI_Reader();
+//							ar.run(directory+"\\"+listOfFiles[i].getName());
+//							final ImagePlus imp = ar.getImagePlus();
+//							SList t = analyze(imp,filename);
+//							
+////							if(t==null)
+////								IJ.log("analyze devuelve NULL");
+//							
+//							Trial tr;
+//							if(trials.get(trialID)!=null) 
+//								tr = trials.get(trialID);
+//							else 
+//								tr = new Trial();
+//							switch(trialType){
+//								case 0: tr.control=t;break;
+//								case 1: tr.p10pM=t;break;
+//								case 2: tr.p100pM=t;break;
+//								case 3: tr.p10nM=t;break;
+//							}
+//							trials.put(trialID, tr);
+//
+//							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
+//						}
+//
+//					}else{
+//						System.out.println("The file format is not AVI. Not analyzed");
+//					}
+//
+//			    } else if (listOfFiles[i].isDirectory()) {
+//			    	System.out.println("Directory " + listOfFiles[i].getName());
+//			    }
+//		   }
+		//////////////////////////////////////////////////////
+		  try {
+			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\trials.ser");
+			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
+			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
+		  } catch (Exception e) {
+		      e.printStackTrace();
+		  } 
+		//////////////////////////////////////////////////////
+		
+		  double thControl = ChFunctions.calculateORControlThreshold();
+		  Set keySet = trials.keySet();
+		  for (Iterator k=keySet.iterator();k.hasNext();) {
+			  String key= (String)k.next();
+			  Trial trial = (Trial)trials.get(key);
+			  System.out.println("key: "+key);
+			  double OR = ChFunctions.OR(trial,"p10pM");
+			  if(OR>thControl)
+				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  else
+			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+		  }
 		  
+			//////////////////////////////////////////////////////////////////
 		  
-		  //Sav trials object
-           try
-           {
-                  FileOutputStream fos =
-                     new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-                  ObjectOutputStream oos = new ObjectOutputStream(fos);
-                  oos.writeObject(trials);
-                  oos.close();
-                  fos.close();
-                  System.out.printf("Serialized HashMap data is saved in trials.ser");
-           }catch(IOException ioe)
-            {
-                  ioe.printStackTrace();
-            }
-	           
-	           
-//		  SList l = new SList();
-//		  SList l2 = new SList();
-//		  l2.add(3);
-//		  l.add(l2);
-//		  
-//		  ObjectOutputStream oos = null;
-//		  FileOutputStream fout = null;
-//		  try{
-//		      fout = new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\prueba2.ser", true);
-//		      oos = new ObjectOutputStream(fout);
-//		      oos.writeObject(l);
-//		  } catch (Exception ex) {
-//		      ex.printStackTrace();
-//		  } finally {
-//		      if(oos  != null){
-//		          oos.close();
-//		      } 
-//		  }
-//		  
-//		  ObjectInputStream objectinputstream = null;
-//		  try {
-//			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\prueba2.ser");
-//			  objectinputstream = new ObjectInputStream(streamIn);
-//		      SList readCase = (SList) objectinputstream.readObject();
-//		      SList sl = (SList)readCase.get(0);
-//		      System.out.println(""+sl.get(0));
-//		  } catch (Exception e) {
-//		      e.printStackTrace();
-//		  } finally {
-//		      if(objectinputstream != null){
-//		          objectinputstream .close();
-//		      } 
-//		  }
-		  
-		  
+		  //Save trials object
+//           try
+//           {
+//        	  FileOutputStream fos =
+//                     //new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
+//                  	 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\pocos\\trials.ser");
+//                  
+//			  ObjectOutputStream oos = new ObjectOutputStream(fos);
+//			  oos.writeObject(trials);
+//			  oos.close();
+//			  fos.close();
+//           }catch(IOException ioe)
+//           {
+//              ioe.printStackTrace();
+//           }
+           
 		}
 	}
-}
