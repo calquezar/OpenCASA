@@ -67,8 +67,8 @@ public class Params {
 	
 	public static ResultsTable rTable = new ResultsTable();
 	
-	public static List controlTracks = new ArrayList();
-	public static List conditionTracks = new ArrayList();
+	public static SList controlTracks = new SList();
+	public static SList conditionTracks = new SList();
 	
 //	public static int typeTrial = 0; // 0-Control; 1-chemotaxis(10pM);2-chemotaxis(100pM);3-chemotaxis(10nM)
 //	public static int nPlusControl = 0;
@@ -115,8 +115,8 @@ public class Params {
 	
 		rTable = new ResultsTable();
 		
-		controlTracks = new ArrayList();
-		conditionTracks = new ArrayList();
+		controlTracks = new SList();
+		conditionTracks = new SList();
 		
 //		typeTrial = 0;
 //		nPlusControl = 0;

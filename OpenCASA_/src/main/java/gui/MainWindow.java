@@ -9,6 +9,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,7 +106,15 @@ public class MainWindow extends JFrame {
 		chemotaxisBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				ch = new ChemotaxisAnalysis();
-				ch.run(mw);
+				try {
+					ch.run(mw);
+				} catch (IOException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				} catch (ClassNotFoundException e1) {
+					// TODO Auto-generated catch block
+					e1.printStackTrace();
+				}
 			}
 
 		} );

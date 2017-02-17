@@ -1,17 +1,28 @@
 package spermAnalysis;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
+import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
 
 import data.Params;
+import data.SList;
 import data.Spermatozoon;
 import data.Trial;
 import gui.MainWindow;
@@ -38,7 +49,8 @@ public class ChemotaxisAnalysis {
 	 */
 	public File[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron"));
+		//chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron"));
+		chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
 		chooser.setDialogTitle("choosertitle");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
@@ -56,7 +68,7 @@ public class ChemotaxisAnalysis {
 	 * 
 	 * @param ImagePlus imp
 	 */
-	public List analyze(ImagePlus imp,String filename){
+	public SList analyze(ImagePlus imp,String filename){
 		
 		System.out.println("converToGrayScale...");
  		ImageProcessing.convertToGrayscale(imp);
@@ -147,7 +159,7 @@ public class ChemotaxisAnalysis {
 //			avgMotility.show("Motility Average");
 //		}
 		
-		return theTracks;
+		return (SList)theTracks;
 	}
 	
 	/**
@@ -165,13 +177,16 @@ public class ChemotaxisAnalysis {
 	/**
 	 * 
 	 * @param MainWindow mw
+	 * @throws IOException 
+	 * @throws ClassNotFoundException 
 	 */
-	public void run(MainWindow mw){
+	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
 		Map<String, Trial> trials = new HashMap<String, Trial>();	
 		
 		File[] listOfFiles = getFileNames();
 		if(listOfFiles!=null){
+			
 			for (int i = 0; i < listOfFiles.length; i++) {
 			    if (listOfFiles[i].isFile()) {
 			    	final String filename = listOfFiles[i].getName();
@@ -220,19 +235,72 @@ public class ChemotaxisAnalysis {
 			    	System.out.println("Directory " + listOfFiles[i].getName());
 			    }
 		   }
-			
-		  double thControl = ChFunctions.calculateORControlThreshold();
-		  Set keySet = trials.keySet();
-		  for (Iterator k=keySet.iterator();k.hasNext();) {
-			  String key= (String)k.next();
-			  Trial trial = (Trial)trials.get(key);
-			  System.out.println("key: "+key);
-			  double OR = ChFunctions.OR(trial,"p10pM");
-			  if(OR>thControl)
-				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
-			  else
-			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
-		  }
+		
+//		  double thControl = ChFunctions.calculateORControlThreshold();
+//		  Set keySet = trials.keySet();
+//		  for (Iterator k=keySet.iterator();k.hasNext();) {
+//			  String key= (String)k.next();
+//			  Trial trial = (Trial)trials.get(key);
+//			  System.out.println("key: "+key);
+//			  double OR = ChFunctions.OR(trial,"p10pM");
+//			  if(OR>thControl)
+//				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+//			  else
+//			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+//		  }
+		  
+		  
+		  //Sav trials object
+           try
+           {
+                  FileOutputStream fos =
+                     new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
+                  ObjectOutputStream oos = new ObjectOutputStream(fos);
+                  oos.writeObject(trials);
+                  oos.close();
+                  fos.close();
+                  System.out.printf("Serialized HashMap data is saved in trials.ser");
+           }catch(IOException ioe)
+            {
+                  ioe.printStackTrace();
+            }
+	           
+	           
+//		  SList l = new SList();
+//		  SList l2 = new SList();
+//		  l2.add(3);
+//		  l.add(l2);
+//		  
+//		  ObjectOutputStream oos = null;
+//		  FileOutputStream fout = null;
+//		  try{
+//		      fout = new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\prueba2.ser", true);
+//		      oos = new ObjectOutputStream(fout);
+//		      oos.writeObject(l);
+//		  } catch (Exception ex) {
+//		      ex.printStackTrace();
+//		  } finally {
+//		      if(oos  != null){
+//		          oos.close();
+//		      } 
+//		  }
+//		  
+//		  ObjectInputStream objectinputstream = null;
+//		  try {
+//			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\prueba2.ser");
+//			  objectinputstream = new ObjectInputStream(streamIn);
+//		      SList readCase = (SList) objectinputstream.readObject();
+//		      SList sl = (SList)readCase.get(0);
+//		      System.out.println(""+sl.get(0));
+//		  } catch (Exception e) {
+//		      e.printStackTrace();
+//		  } finally {
+//		      if(objectinputstream != null){
+//		          objectinputstream .close();
+//		      } 
+//		  }
+		  
+		  
 		}
 	}
 }
