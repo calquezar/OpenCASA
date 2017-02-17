@@ -255,7 +255,7 @@ public class ChemotaxisAnalysis {
            {
         	  FileOutputStream fos =
                      //new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-                  	 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\pocos\\Trials40Control.ser");
+                  	 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
                   
 			  ObjectOutputStream oos = new ObjectOutputStream(fos);
 			  oos.writeObject(trials);
