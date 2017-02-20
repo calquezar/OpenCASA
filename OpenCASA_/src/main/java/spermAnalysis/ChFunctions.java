@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
+import data.SList;
 import data.Spermatozoon;
 import data.Trial;
 import ij.IJ;
@@ -322,7 +323,7 @@ public class ChFunctions {
 		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		List<Double> ORs = new ArrayList<Double>();
-		final int MAXINSTANGLES = 60000;
+		final int MAXINSTANGLES = 40000;
 		final int NUMSAMPLES = 1000;
 		
 		for(int i=0;i<NUMSAMPLES;i++){
@@ -361,7 +362,7 @@ public class ChFunctions {
 		}
 		
 		Collections.sort(ORs);
-		//System.out.println(ORs.toString());
+		System.out.println(ORs.toString());
 		IJ.log(""+ORs.get((int) (NUMSAMPLES*0.95)));
 		return ORs.get((int) (NUMSAMPLES*0.95));
 	}

@@ -188,100 +188,108 @@ public class ChemotaxisAnalysis {
 //		//////////////////////////////////////////////
 		
 		
-		File[] listOfFiles = getFileNames();
-		if(listOfFiles!=null){
-			
-			for (int i = 0; i < listOfFiles.length; i++) {
-			    if (listOfFiles[i].isFile()) {
-			    	final String filename = listOfFiles[i].getName();
-					//System.out.println("File " + filename);
-					if(isAVI(filename)){
-						System.out.println("Loading video...");
-						
-						int trialType = ChFunctions.getTrialType(filename);
-						String trialID = ChFunctions.getID(filename);
-						
-						switch(trialType){
-						case 0: //Control
-						case 1: //10pM
-//						case 2: //100pM
-//						case 3: //10nM
-							
-							AVI_Reader ar = new  AVI_Reader();
-							ar.run(directory+"\\"+listOfFiles[i].getName());
-							final ImagePlus imp = ar.getImagePlus();
-							SList t = analyze(imp,filename);
-							
-//							if(t==null)
-//								IJ.log("analyze devuelve NULL");
-							
-							Trial tr;
-							if(trials.get(trialID)!=null) 
-								tr = trials.get(trialID);
-							else 
-								tr = new Trial();
-							switch(trialType){
-								case 0: tr.control=t;break;
-								case 1: tr.p10pM=t;break;
-								case 2: tr.p100pM=t;break;
-								case 3: tr.p10nM=t;break;
-							}
-							trials.put(trialID, tr);
-
-							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
-						}
-
-					}else{
-						System.out.println("The file format is not AVI. Not analyzed");
-					}
-
-			    } else if (listOfFiles[i].isDirectory()) {
-			    	System.out.println("Directory " + listOfFiles[i].getName());
-			    }
-		   }
+//		File[] listOfFiles = getFileNames();
+//		if(listOfFiles!=null){
+//			
+//			for (int i = 0; i < listOfFiles.length; i++) {
+//			    if (listOfFiles[i].isFile()) {
+//			    	final String filename = listOfFiles[i].getName();
+//					//System.out.println("File " + filename);
+//					if(isAVI(filename)){
+//						System.out.println("Loading video...");
+//						
+//						int trialType = ChFunctions.getTrialType(filename);
+//						String trialID = ChFunctions.getID(filename);
+//						
+//						switch(trialType){
+//						case 0: //Control
+//						case 1: //10pM
+////						case 2: //100pM
+////						case 3: //10nM
+//							
+//							AVI_Reader ar = new  AVI_Reader();
+//							ar.run(directory+"\\"+listOfFiles[i].getName());
+//							final ImagePlus imp = ar.getImagePlus();
+//							SList t = analyze(imp,filename);
+//							
+////							if(t==null)
+////								IJ.log("analyze devuelve NULL");
+//							
+//							Trial tr;
+//							if(trials.get(trialID)!=null) 
+//								tr = trials.get(trialID);
+//							else 
+//								tr = new Trial();
+//							switch(trialType){
+//								case 0: tr.control=t;break;
+//								case 1: tr.p10pM=t;break;
+//								case 2: tr.p100pM=t;break;
+//								case 3: tr.p10nM=t;break;
+//							}
+//							trials.put(trialID, tr);
+//
+//							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
+//						}
+//
+//					}else{
+//						System.out.println("The file format is not AVI. Not analyzed");
+//					}
+//
+//			    } else if (listOfFiles[i].isDirectory()) {
+//			    	System.out.println("Directory " + listOfFiles[i].getName());
+//			    }
+//		   }
 		//////////////////////////////////////////////////////
 		// READING TRIALS FROM FILE
-//		  try {
-//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\trials.ser");
-//			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-//			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
-//		  } catch (Exception e) {
-//		      e.printStackTrace();
-//		  } 
+		  try {
+			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
+			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
+			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
+		  } catch (Exception e) {
+		      e.printStackTrace();
+		  } 
 			
+		  Set kSet = trials.keySet();
+		  for (Iterator k=kSet.iterator();k.hasNext();) {
+			  String key= (String)k.next();
+			  Trial trial = (Trial)trials.get(key);
+			  Params.controlTracks.addAll(trial.control);
+			  Params.controlTracks.addAll(trial.p10pM);
+		  }
+		  
 		  //////////////////////////////////////////////////////////////////
 		  //SERIALIZING TRIALS 
-           try
-           {
-        	  FileOutputStream fos =
-                     //new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-                  	 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
-                  
-			  ObjectOutputStream oos = new ObjectOutputStream(fos);
-			  oos.writeObject(trials);
-			  oos.close();
-			  fos.close();
-           }catch(IOException ioe)
-           {
-              ioe.printStackTrace();
-           }			
+//           try
+//           {
+//        	  FileOutputStream fos =
+//                     //new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
+//                  	 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
+//                  
+//			  ObjectOutputStream oos = new ObjectOutputStream(fos);
+//			  oos.writeObject(trials);
+//			  oos.close();
+//			  fos.close();
+//           }catch(IOException ioe)
+//           {
+//              ioe.printStackTrace();
+//           }			
 		//////////////////////////////////////////////////////
 		// OR RATIOS AND CHEMOTACIS ANALYSIS
-//		  double thControl = ChFunctions.calculateORControlThreshold();
-//		  Set keySet = trials.keySet();
-//		  for (Iterator k=keySet.iterator();k.hasNext();) {
-//			  String key= (String)k.next();
-//			  Trial trial = (Trial)trials.get(key);
-//			  System.out.println("key: "+key);
-//			  double OR = ChFunctions.OR(trial,"p10pM");
-//			  if(OR>thControl)
-//				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
-//			  else
-//			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
-//		  }
+		  double thControl = ChFunctions.calculateORControlThreshold();
+		  Set keySet = trials.keySet();
+		  for (Iterator k=keySet.iterator();k.hasNext();) {
+			  String key= (String)k.next();
+			  Trial trial = (Trial)trials.get(key);
+			  //System.out.println("key: "+key);
+			  double OR = ChFunctions.OR(trial,"p10pM");
+			  if(OR>thControl)
+				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  else
+			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+		  }
 		  
 
            
-		}
+		//}
 	}
 }
