@@ -337,7 +337,7 @@ public class ChFunctions {
 		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		List<Double> ORs = new ArrayList<Double>();
-		final int MAXINSTANGLES = 10000;//Params.controlTracks.size();
+		final int MAXINSTANGLES = 25000;//Params.controlTracks.size();
 		final int NUMSAMPLES = 1000;
 		
 		for(int i=0;i<NUMSAMPLES;i++){
@@ -350,9 +350,9 @@ public class ChFunctions {
 			int count=0,index=0;
 			while((count<MAXINSTANGLES)&&(index<Params.controlTracks.size())){
 				int[] countInstDirections = countInstantDirections((List)Params.controlTracks.get(index));
-				numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-				numeratorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
 				count+=countInstDirections[0]+countInstDirections[1];
+				numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+				numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);			        
 				index++;
 //				System.out.println("count Angles: "+count);
 //				System.out.println("index: "+index);
@@ -365,7 +365,7 @@ public class ChFunctions {
 			while((count<MAXINSTANGLES)&&(index<Params.controlTracks.size())){
 				int[] countInstDirections = countInstantDirections((List)Params.controlTracks.get(index));
 				denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-				denominatorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
+				denominatorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
 				count+=countInstDirections[0]+countInstDirections[1];
 				index++;
 			}
@@ -380,6 +380,11 @@ public class ChFunctions {
 		
 		Collections.sort(ORs);
 //		System.out.println(ORs.toString());
+//		System.out.println("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
+//		System.out.println("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
+//		System.out.println("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
+//		System.out.println("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
+//		System.out.println("p99: "+ORs.get((int) (NUMSAMPLES*0.99)));
 //		IJ.log("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
 //		IJ.log("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
 //		IJ.log("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
@@ -398,36 +403,40 @@ public class ChFunctions {
 		else if(condition.equals("p10nM"))
 			conditionTracks = trial.p10nM;
 		
-		java.util.Collections.shuffle(controlTracks);
-		java.util.Collections.shuffle(conditionTracks);
+//		java.util.Collections.shuffle(controlTracks);
+//		java.util.Collections.shuffle(conditionTracks);
 		
 		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		final int MAXINSTANGLES = 10000;		
 //		int MAXINSTANGLES = Math.min(controlTracks.size(),conditionTracks.size());
 		
+		System.out.println("controlTracks.size(): "+controlTracks.size());
 		int count=0,index=0;
 		//Control Ratio
-		while((count<MAXINSTANGLES)&&(index<controlTracks.size())){
-//		while(index<controlTracks.size()){
+//		while((count<MAXINSTANGLES)&&(index<controlTracks.size())){
+		while(index<controlTracks.size()){
 			int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
 			denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			denominatorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
-			count+=countInstDirections[0]+countInstDirections[1];
+			denominatorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
+//			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
-		
+		System.out.println("Count angles: "+denominatorValues[1]);
+		System.out.println("conditionTracks.size(): "+conditionTracks.size());
+
 		//Condition Ratio
 		count=0;index=0;
-		while((count<MAXINSTANGLES)&&(index<conditionTracks.size())){
-//		while(index<conditionTracks.size()){
+//		while((count<MAXINSTANGLES)&&(index<conditionTracks.size())){
+		while(index<conditionTracks.size()){
 			int[] countInstDirections = countInstantDirections((List)conditionTracks.get(index));
 			numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			numeratorValues[1]+=(double)countInstDirections[1]; //number of instantaneous angles in the opposite direction			        
-			count+=countInstDirections[0]+countInstDirections[1];
+			numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
+//			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
-		
+		System.out.println("Count angles: "+numeratorValues[1]);
+
 		double numeratorRatio = numeratorValues[0]/numeratorValues[1];
 		double denominatorRatio = denominatorValues[0]/denominatorValues[1];
 		double OddsRatio = numeratorRatio/denominatorRatio;

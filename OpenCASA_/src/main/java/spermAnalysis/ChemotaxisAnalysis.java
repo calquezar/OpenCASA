@@ -242,8 +242,8 @@ public class ChemotaxisAnalysis {
 		//////////////////////////////////////////////////////
 		// READING TRIALS FROM FILE
 		  try {
-			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
-//			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
+			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
 			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
 			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
 		  } catch (Exception e) {
@@ -275,7 +275,7 @@ public class ChemotaxisAnalysis {
 //              ioe.printStackTrace();
 //           }			
 		//////////////////////////////////////////////////////
-		// OR RATIOS AND CHEMOTACIS ANALYSIS
+		// OR RATIOS AND CHEMOTAXIS ANALYSIS
 		  double thControl = ChFunctions.calculateORControlThreshold();
 		  Set keySet = trials.keySet();
 		  for (Iterator k=keySet.iterator();k.hasNext();) {
@@ -284,10 +284,10 @@ public class ChemotaxisAnalysis {
 //			  System.out.println("key: "+key);
 			  double OR = ChFunctions.OR(trial,"p10pM");
 //			  IJ.log(OR+"");
-//			  if(OR>(1+thControl))
-//				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
-//			  else
-//			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  if(OR>(thControl))
+				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  else
+			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
 		  }
 		  
 
