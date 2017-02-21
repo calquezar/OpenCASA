@@ -340,7 +340,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		final int MAXINSTANGLES = Params.controlTracks.size();
-		final int NUMSAMPLES = 10000;
+		final int NUMSAMPLES = 1000;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -405,10 +405,11 @@ public class ChFunctions {
 		Collections.sort(ORs);
 //		System.out.println(ORs.toString());
 //		System.out.println("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
-//		System.out.println("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
-//		System.out.println("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
+		System.out.println("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
+		System.out.println("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
 		System.out.println("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
-//		System.out.println("p99: "+ORs.get((int) (NUMSAMPLES*0.99)));
+		System.out.println("p97: "+ORs.get((int) (NUMSAMPLES*0.97)));
+		System.out.println("p99: "+ORs.get((int) (NUMSAMPLES*0.99)));
 //		IJ.log("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
 //		IJ.log("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
 //		IJ.log("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
