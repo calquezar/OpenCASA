@@ -276,7 +276,7 @@ public class ChemotaxisAnalysis {
 //           }			
 		//////////////////////////////////////////////////////
 		// OR RATIOS AND CHEMOTAXIS ANALYSIS
-		  double thControl = ChFunctions.calculateORControlThreshold();
+		  double thControl = ChFunctions.calculateORControlThreshold(trials);
 		  Set keySet = trials.keySet();
 		  for (Iterator k=keySet.iterator();k.hasNext();) {
 			  String key= (String)k.next();
@@ -285,9 +285,9 @@ public class ChemotaxisAnalysis {
 			  double OR = ChFunctions.OR(trial,"p10pM");
 //			  IJ.log(OR+"");
 			  if(OR>(thControl))
-				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+				  IJ.log("POSITIVO: OR["+OR+"]");// - thControl["+thControl+"]");
 			  else
-			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  	  IJ.log("NEGATIVO: OR["+OR+"]");// - thControl["+thControl+"]");
 		  }
 		  
 
