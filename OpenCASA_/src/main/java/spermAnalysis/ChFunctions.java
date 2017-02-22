@@ -339,7 +339,7 @@ public class ChFunctions {
 	public static double calculateORControlThreshold(Map<String, Trial> trials){		
 		
 		List<Double> ORs = new ArrayList<Double>();
-		final int MAXINSTANGLES = Params.controlTracks.size();
+		final int MAXINSTANGLES = 30000;//Params.controlTracks.size();
 		final int NUMSAMPLES = 1000;
 		
 //		Set keySet = trials.keySet();
@@ -355,7 +355,7 @@ public class ChFunctions {
 			double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 			
 			System.out.println("Calculating Control Threshold. Shuffle "+i);
-			System.out.println("Params.controlTracks.size(): "+Params.controlTracks.size());
+//			System.out.println("Params.controlTracks.size(): "+Params.controlTracks.size());
 //			System.out.println("Size of ORs: "+ORs.size());
 			
 //			java.util.Collections.shuffle(cNumerator);
@@ -375,7 +375,7 @@ public class ChFunctions {
 //				System.out.println("count Angles: "+count);
 //				System.out.println("index: "+index);
 			}
-//			System.out.println("numAngles Numerator: "+count);
+			System.out.println("numAngles Numerator: "+count);
 			
 //			java.util.Collections.shuffle(cDenominator);
 //			String k1 = (String) cDenominator.get(0);
@@ -392,14 +392,14 @@ public class ChFunctions {
 				count+=countInstDirections[0]+countInstDirections[1];
 				index++;
 			}
-//			System.out.println("numAngles Denominator: "+count);
+			System.out.println("numAngles Denominator: "+count);
 //			System.out.println("Numerator Positive: "+numeratorValues[0] +"; Denominator Positive : "+ denominatorValues[0]+"; Numerator Negative: "+numeratorValues[1] +"; Denominator Negative : "+ denominatorValues[1]);
 			double numeratorRatio = numeratorValues[0]/numeratorValues[1];
 			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
 			double OddsRatio = numeratorRatio/denominatorRatio;
 			ORs.add(OddsRatio);
 			IJ.log(""+OddsRatio);
-//			System.out.println("keys: "+k0+"-"+k1);
+			System.out.println("OddsRatio: "+OddsRatio);
 		}
 		
 		Collections.sort(ORs);
