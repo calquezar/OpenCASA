@@ -242,7 +242,8 @@ public class ChemotaxisAnalysis {
 		//////////////////////////////////////////////////////
 		// READING TRIALS FROM FILE
 		  try {
-			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
+			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
 //			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
 			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
 			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
@@ -264,7 +265,9 @@ public class ChemotaxisAnalysis {
 //           {
 //        	  FileOutputStream fos =
 //                     //new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-//                  	 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
+//                  	 //new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
+//        	  		 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+//        	 
 //                  
 //			  ObjectOutputStream oos = new ObjectOutputStream(fos);
 //			  oos.writeObject(trials);
