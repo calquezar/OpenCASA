@@ -334,8 +334,6 @@ public class ChFunctions {
 		return results;
 	}
 	
-	
-	
 	public static double calculateORControlThreshold(Map<String, Trial> trials){		
 		
 		List<Double> ORs = new ArrayList<Double>();
