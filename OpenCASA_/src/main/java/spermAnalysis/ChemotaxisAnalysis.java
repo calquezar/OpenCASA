@@ -242,9 +242,9 @@ public class ChemotaxisAnalysis {
 		//////////////////////////////////////////////////////
 		// READING TRIALS FROM FILE
 		  try {
-//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
 //			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
-			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
 //			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
 			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
 			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
@@ -285,7 +285,7 @@ public class ChemotaxisAnalysis {
 		  for (Iterator k=keySet.iterator();k.hasNext();) {
 			  String key= (String)k.next();
 			  Trial trial = (Trial)trials.get(key);
-//			  System.out.println("key: "+key);
+			  System.out.println("key: "+key);
 			  double OR = ChFunctions.OR(trial,"p10pM");
 //			  IJ.log(OR+"");
 			  if(OR>(thControl))

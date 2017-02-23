@@ -314,7 +314,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		final int MAXINSTANGLES = 20000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 10000;
+		final int NUMSAMPLES = 100;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -406,7 +406,7 @@ public class ChFunctions {
 		
 		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
-		final int MAXINSTANGLES = 20000;		
+		final int MAXINSTANGLES = 200000;		
 //		int MAXINSTANGLES = Math.min(controlTracks.size(),conditionTracks.size());
 		
 //		System.out.println("controlTracks.size(): "+controlTracks.size());
@@ -420,7 +420,8 @@ public class ChFunctions {
 			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
-//		System.out.println("Count denominator angles: "+denominatorValues[1]);
+	
+		System.out.println("Count denominator angles: "+denominatorValues[1]);
 //		System.out.println("conditionTracks.size(): "+conditionTracks.size());
 
 //		java.util.Collections.shuffle(conditionTracks);
@@ -435,7 +436,7 @@ public class ChFunctions {
 			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
-//		System.out.println("Count numerator angles: "+numeratorValues[1]);
+		System.out.println("Count numerator angles: "+numeratorValues[1]);
 
 		double numeratorRatio = numeratorValues[0]/numeratorValues[1];
 		double denominatorRatio = denominatorValues[0]/denominatorValues[1];
