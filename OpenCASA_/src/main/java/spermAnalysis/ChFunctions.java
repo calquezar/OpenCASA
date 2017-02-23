@@ -314,7 +314,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		final int MAXINSTANGLES = 20000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 100;
+		final int NUMSAMPLES = 1000;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -406,7 +406,7 @@ public class ChFunctions {
 		
 		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
-		final int MAXINSTANGLES = 200000;		
+		final int MAXINSTANGLES = 20000;		
 //		int MAXINSTANGLES = Math.min(controlTracks.size(),conditionTracks.size());
 		
 //		System.out.println("controlTracks.size(): "+controlTracks.size());
