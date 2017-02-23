@@ -277,60 +277,35 @@ public class ChFunctions {
 		Params.rTable.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
 		Params.rTable.addValue("Filename",filename);
 	}
-
+	
 	public static int[] countInstantDirections(List track){
 		
 		int nPos = 0;
 		int nNeg = 0;
-		
-		//This operation is util when half of the chemotaxis' cone amplitude plus angle direction is greater than 360 degrees (270+100 for example)
-		float upperAngle = (float)(Params.angleDirection + Params.angleChemotaxis/2 + 360)%360;
-		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
-		// This operation is util when half of the chemotaxis' cone amplitude is greater than angle direction
-		float lowerAngle = (float)(Params.angleDirection - Params.angleChemotaxis/2 + 360)%360;
-		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
-		
-		float oppositeUpperAngle = (float) ((upperAngle+Math.PI)%(2*Math.PI));
-		float oppositeLowerAngle = (float) ((lowerAngle+Math.PI)%(2*Math.PI));
-		
-//		float oppAngleDirection = (float) ((oppositeUpperAngle+oppositeLowerAngle)*180/(2*Math.PI));
-		
-		
+		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);
 		int nPoints = track.size();
 		for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
 			Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
 			Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
 			float diffX = newSpermatozoon.x-oldSpermatozoon.x;
 			float diffY = newSpermatozoon.y-oldSpermatozoon.y;
-			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI);
-//			System.out.println(""+angle*180/Math.PI);
-			//IJ.log("angle: "+angle*180/Math.PI);
-			if(lowerAngle>upperAngle){
-				//Special case: for example, when chemotaxis cone is between first and fourth quadrant
-				if((angle<upperAngle)||(lowerAngle<angle))
-					nPos++;
-				else if((angle<oppositeUpperAngle)&&(angle>oppositeLowerAngle))
-					nNeg++;
+			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
+			angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+			if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
+				angle = -(2*Math.PI-angle);			
+			if(Math.abs(angle)<angleChemotaxis){
+				nPos++;
+//				System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Positive: "+angle*180/Math.PI);
 			}
-			else{ 
-				if((angle<upperAngle)&&(lowerAngle<angle))
-					nPos++;
-				else 
-					if(oppositeLowerAngle>oppositeUpperAngle){
-						if((angle<oppositeUpperAngle)||(oppositeLowerAngle<angle))
-							nNeg++;
-					}else{
-						if((angle<oppositeUpperAngle)&&(oppositeLowerAngle<angle))
-							nNeg++;
-					}
-			}		
+			else if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
+				nNeg++;
+//				System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Negative: "+angle*180/Math.PI);
+			}
 		}
-	
-		
 		int[] results = new int[3];
 		results[0] = nPos;
 		results[1] = nNeg;
-		//IJ.log("nPos: "+results[0]+"; nNeg: "+results[1]);
 		return results;
 	}
 	
@@ -338,7 +313,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		final int MAXINSTANGLES = 20000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 1000;
+		final int NUMSAMPLES = 10000;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -390,14 +365,14 @@ public class ChFunctions {
 				count+=countInstDirections[0]+countInstDirections[1];
 				index++;
 			}
-			System.out.println("numAngles Denominator: "+count);
+//			System.out.println("numAngles Denominator: "+count);
 //			System.out.println("Numerator Positive: "+numeratorValues[0] +"; Denominator Positive : "+ denominatorValues[0]+"; Numerator Negative: "+numeratorValues[1] +"; Denominator Negative : "+ denominatorValues[1]);
 			double numeratorRatio = numeratorValues[0]/numeratorValues[1];
 			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
 			double OddsRatio = numeratorRatio/denominatorRatio;
 			ORs.add(OddsRatio);
 			IJ.log(""+OddsRatio);
-			System.out.println("OddsRatio: "+OddsRatio);
+//			System.out.println("OddsRatio: "+OddsRatio);
 		}
 		
 		Collections.sort(ORs);
