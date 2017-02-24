@@ -314,7 +314,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		final int MAXINSTANGLES = 20000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 1000;
+		final int NUMSAMPLES = 10000;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
