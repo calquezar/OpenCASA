@@ -119,9 +119,9 @@ public class ChemotaxisAnalysis {
 					Params.conditionTracks.addAll(theTracks);
 					System.out.println("theTracks size: "+theTracks.size()+"; conditionTracks size: "+Params.conditionTracks.size());
 				break;
-//			case 2: //100pM
-//					Params.conditionTracks.addAll(theTracks);
-//				break;
+			case 2: //100pM
+					Params.conditionTracks.addAll(theTracks);
+				break;
 //			case 3:
 //					Params.conditionTracks.addAll(theTracks);
 //				break;
@@ -198,13 +198,14 @@ public class ChemotaxisAnalysis {
 //					if(isAVI(filename)){
 //						System.out.println("Loading video...");
 //						
+//						System.out.println("filename: "+filename);
 //						int trialType = ChFunctions.getTrialType(filename);
 //						String trialID = ChFunctions.getID(filename);
 //						
 //						switch(trialType){
 //						case 0: //Control
 //						case 1: //10pM
-////						case 2: //100pM
+//						case 2: //100pM
 ////						case 3: //10nM
 //							
 //							AVI_Reader ar = new  AVI_Reader();
@@ -223,7 +224,7 @@ public class ChemotaxisAnalysis {
 //							switch(trialType){
 //								case 0: tr.control=t;break;
 //								case 1: tr.p10pM=t;break;
-//								case 2: tr.p100pM=t;break;
+//								case 2: tr.p100pM=t; break;
 //								case 3: tr.p10nM=t;break;
 //							}
 //							trials.put(trialID, tr);
@@ -239,13 +240,14 @@ public class ChemotaxisAnalysis {
 //			    	System.out.println("Directory " + listOfFiles[i].getName());
 //			    }
 //		   }
-		//////////////////////////////////////////////////////
-		// READING TRIALS FROM FILE
+		////////////////////////////////////////////////////
+//		// READING TRIALS FROM FILE
 		  try {
-			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
 //			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
 //			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
 //			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
+			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Trials.ser");
 			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
 			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
 		  } catch (Exception e) {
@@ -257,18 +259,18 @@ public class ChemotaxisAnalysis {
 			  String key= (String)k.next();
 			  Trial trial = (Trial)trials.get(key);
 			  Params.controlTracks.addAll(trial.control);
-			  Params.conditionTracks.addAll(trial.p10pM);
+			  Params.conditionTracks.addAll(trial.p100pM);
 		  }
 		  
 		  //////////////////////////////////////////////////////////////////
-		  //SERIALIZING TRIALS 
+//		  SERIALIZING TRIALS 
 //           try
 //           {
 //        	  FileOutputStream fos =
-//                     //new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-//                  	 //new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
-//        	  		 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
-//        	 
+////                   new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
+////                   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
+////        	  	   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+//        	  		   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Nueva carpeta\\Trials.ser");
 //                  
 //			  ObjectOutputStream oos = new ObjectOutputStream(fos);
 //			  oos.writeObject(trials);
@@ -285,14 +287,15 @@ public class ChemotaxisAnalysis {
 		  for (Iterator k=keySet.iterator();k.hasNext();) {
 			  String key= (String)k.next();
 			  Trial trial = (Trial)trials.get(key);
-			  System.out.println("key: "+key);
+//			  System.out.println("key: "+key);
 			  double OR = ChFunctions.OR(trial,"p10pM");
 //			  IJ.log(OR+"");
 			  if(OR>(thControl))
-				  IJ.log("POSITIVO: OR["+OR+"]");// - thControl["+thControl+"]");
+				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
 			  else
-			  	  IJ.log("NEGATIVO: OR["+OR+"]");// - thControl["+thControl+"]");
+			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
 		  }
+           System.out.println("Finish");
 //		}
 	}
 }
