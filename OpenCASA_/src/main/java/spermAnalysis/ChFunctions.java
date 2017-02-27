@@ -314,7 +314,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		Params.MAXINSTANGLES = 30000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 10000;
+		final int NUMSAMPLES = 1000;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -424,7 +424,7 @@ public class ChFunctions {
 		}
 	
 		System.out.println("Count denominator angles: "+denominatorValues[1]);
-		System.out.println("conditionTracks.size(): "+conditionTracks.size());
+//		System.out.println("conditionTracks.size(): "+conditionTracks.size());
 
 //		java.util.Collections.shuffle(conditionTracks);
 
