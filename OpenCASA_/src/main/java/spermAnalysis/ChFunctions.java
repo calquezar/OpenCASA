@@ -314,7 +314,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 		Params.MAXINSTANGLES = 30000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 1000;
+		final int NUMSAMPLES = 10000;
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -418,7 +418,7 @@ public class ChFunctions {
 //		while(index<controlTracks.size()){
 			int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
 			denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			denominatorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
+			denominatorValues[1]+=(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
 			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
