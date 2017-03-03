@@ -10,11 +10,11 @@ public class Params {
 	public static double	pixelWidth=1.0;
 	public static double pixelHeight=1.0;
 	/** @brief minimum sperm size */
-	public static float	minSize = 10;
+	public static float	minSize = 20;
 	//maximum sperm size
-	public static float	maxSize = 1000;
+	public static float	maxSize = 200;
 	//minimum length of sperm track in frames
-	public static float 	minTrackLength = 50;
+	public static float 	minTrackLength = 15;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
 	public static float 	maxVelocity = 10;
 	//Window size for moving average method
@@ -27,7 +27,7 @@ public class Params {
 	public static float angleDirection = 0; 
 	public static float angleChemotaxis = 90;
 	// frame rate
-	public static float frameRate = 100;
+	public static float frameRate = 200;
 	//parameters used to compute BCF (equivalent to decimation factor)
 	public static int bcf_shift = 0;
 	// Parameter used to determine progressive motility sperm
@@ -79,15 +79,15 @@ public class Params {
 	
 	public static void resetParams(){
 		minSize = 20;
-		maxSize = 100;
-		minTrackLength = 50;
+		maxSize = 200;
+		minTrackLength = 15;
 		maxVelocity = 10;
 		wSize = 9;
 		vclMin = 70;
 		decimationFactor = 4;
 		angleDirection = 0; 
 		angleChemotaxis = 90;
-		frameRate = 100;
+		frameRate = 200;
 		bcf_shift = 0;
 		progressMotility = 80;
 		microPerPixel = 0.58;

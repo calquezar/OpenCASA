@@ -7,4 +7,5 @@ public class Trial implements Serializable{
 	public SList p10pM= null; // Progesterone 10pM
 	public SList p100pM= null;
 	public SList p10nM= null;
+	public int minSampleSize = -1;
 }

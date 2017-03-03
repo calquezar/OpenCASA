@@ -278,6 +278,34 @@ public class ChFunctions {
 		Params.rTable.addValue("Filename",filename);
 	}
 	
+	public static int calculateSampleSize (SList theTracks){
+		
+		int totalAngles = 0;
+		for (ListIterator iT=theTracks.listIterator();iT.hasNext();) {
+			List aTrack=(ArrayList) iT.next();
+			int[] instDirections = countInstantDirections(aTrack);
+			totalAngles+=instDirections[0]+instDirections[1];
+		}
+		return totalAngles;		
+	}
+	
+	public static void minSampleSize(Map<String, Trial> trials){
+		
+		Set keySet = trials.keySet();
+		List keys = new ArrayList();
+		keys.addAll(keySet);
+		int minimum = 999999999;
+		
+		for (ListIterator iT=keys.listIterator();iT.hasNext();) {
+			String k1 = (String) iT.next();
+			Trial t = (Trial)trials.get(k1);
+			if((t.minSampleSize<minimum)&&(t.minSampleSize>0))
+				minimum=t.minSampleSize;
+		}
+		Params.MAXINSTANGLES = minimum;
+	}
+	
+	
 	public static int[] countInstantDirections(List track){
 		
 		
@@ -313,8 +341,9 @@ public class ChFunctions {
 	public static double calculateORControlThreshold(Map<String, Trial> trials){		
 		
 		List<Double> ORs = new ArrayList<Double>();
-		Params.MAXINSTANGLES = 30000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 10000;
+//		Params.MAXINSTANGLES = 50000;//Params.controlTracks.size();
+		final int NUMSAMPLES = 1000;
+		
 		
 //		Set keySet = trials.keySet();
 //		List keys = new ArrayList();
@@ -325,10 +354,13 @@ public class ChFunctions {
 		
 		for(int i=0;i<NUMSAMPLES;i++){
 			
+			
 			double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 			double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
 			
 			System.out.println("Calculating Control Threshold. Shuffle "+i);
+			System.out.println("MAX INSTANT ANGLES: "+Params.MAXINSTANGLES);
+			
 //			System.out.println("Params.controlTracks.size(): "+Params.controlTracks.size());
 //			System.out.println("Size of ORs: "+ORs.size());
 			
@@ -393,7 +425,7 @@ public class ChFunctions {
 	
 	public static double OR(Trial trial,String condition){
 		
-//		Params.MAXINSTANGLES = 30000;
+//		Params.MAXINSTANGLES = 6500;
 		
 		SList controlTracks = trial.control;
 		SList conditionTracks = new SList();
@@ -418,7 +450,7 @@ public class ChFunctions {
 //		while(index<controlTracks.size()){
 			int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
 			denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			denominatorValues[1]+=(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
+			denominatorValues[1]+=(countInstDirections[0]+countInstDirections[1]); 	        
 			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
@@ -434,11 +466,11 @@ public class ChFunctions {
 //		while(index<conditionTracks.size()){
 			int[] countInstDirections = countInstantDirections((List)conditionTracks.get(index));
 			numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
+			numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);		        
 			count+=countInstDirections[0]+countInstDirections[1];
 			index++;
 		}
-//		System.out.println("Count numerator angles: "+numeratorValues[1]);
+		System.out.println("Count numerator angles: "+numeratorValues[1]);
 
 		double numeratorRatio = numeratorValues[0]/numeratorValues[1];
 		double denominatorRatio = denominatorValues[0]/denominatorValues[1];
