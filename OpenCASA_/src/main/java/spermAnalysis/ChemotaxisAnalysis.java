@@ -273,10 +273,10 @@ public class ChemotaxisAnalysis {
            {
         	  FileOutputStream fos =
 //                   new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-//                   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
-//        	  	   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
-//        	  		   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Nueva carpeta\\Trials.ser");
-        			  new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\videos quimiotaxis\\Jorge-Patri\\Analisis quimiotaxis Jorge y Patri\\Trials_1microM.ser");
+//                   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\10 por ciento 0_5 atraccion\\Trials4Control.ser");
+//        	  	     new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+        	  		 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Trials.ser");
+//        			 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\videos quimiotaxis\\Jorge-Patri\\Analisis quimiotaxis Jorge y Patri\\Trials_100pM.ser");
                   
 			  ObjectOutputStream oos = new ObjectOutputStream(fos);
 			  oos.writeObject(trials);
