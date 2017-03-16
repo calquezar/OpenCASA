@@ -27,7 +27,6 @@ public class MainWindow extends JFrame {
 	MainWindow mw;
 	ChemotaxisAnalysis ch;
 	MotilityAnalysis ma;
-	
 	/**
 	 * Constructor. This method doesn't get any argument. The main graphical user interface is created.
 	 * @throws HeadlessException
@@ -69,103 +68,57 @@ public class MainWindow extends JFrame {
 		mw = this;
 	}
 	
+	public JButton createButton(String label,int gridx,int gridy,Color background,String iconPath,JPanel panel){
+		
+		GridBagConstraints c = new GridBagConstraints();
+		c.weightx = 0.5;
+		c.fill = GridBagConstraints.HORIZONTAL;
+		c.ipady=0;
+		c.gridx = gridx;
+		c.gridy = gridy;
+		JButton btn = new JButton(label);
+		btn.setBackground(background);
+		try{
+//			Image img = ImageIO.read(getClass().getResource("/resources/motility.png"));
+			Image img = ImageIO.read(getClass().getResource(iconPath));
+			btn.setIcon(new ImageIcon(img));
+		} catch (Exception ex) {System.out.println(ex);}
+		panel.add(btn, c);
+		return btn;
+	}
 	/**
 	 * This method creates the main user interface.
 	 */
 	public void createGUI() {
 
 		JPanel panel = new JPanel(new GridBagLayout());
-		GridBagConstraints c = new GridBagConstraints();
-		c.weightx = 0.5;
-		c.fill = GridBagConstraints.HORIZONTAL;
-		c.ipady=0;
-		
-		JButton motilityBtn = new JButton("Motility");
-		motilityBtn.setBackground(new Color(229,255,204));
+		JButton motilityBtn = createButton("Motility",0,0,new Color(229,255,204),"/motility.png",panel);
 		//Add action listener
 		motilityBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				ma = new MotilityAnalysis();
 				ma.run(mw);
 			}
-
 		} );
-		c.gridx = 0;
-		c.gridy = 0;
-		
-		try{
-//			Image img = ImageIO.read(getClass().getResource("/resources/motility.png"));
-			Image img = ImageIO.read(getClass().getResource("/motility.png"));
-			motilityBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {System.out.println(ex);}
-		panel.add(motilityBtn, c);
-
-		JButton chemotaxisBtn = new JButton("Chemotaxis");
-		chemotaxisBtn.setBackground(new Color(204,229,255));
+		JButton chemotaxisBtn = createButton("Chemotaxis",1,0,new Color(204,229,255),"/chemotaxis.png",panel);
 		//Add action listener
 		chemotaxisBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				ch = new ChemotaxisAnalysis();
-				try {
-					ch.run(mw);
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (ClassNotFoundException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
+				try {ch.run(mw);} 
+				catch (Exception e1) {e1.printStackTrace();}
 			}
-
 		} );
-		c.gridx = 1;
-		c.gridy = 0;
-		
-		try{
-//			Image img = ImageIO.read(getClass().getResource("/resources/chemotaxis.png"));
-			Image img = ImageIO.read(getClass().getResource("/chemotaxis.png"));
-			chemotaxisBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {System.out.println(ex);}
-		panel.add(chemotaxisBtn, c);
-		
-		JButton viabilityBtn = new JButton("Viability");
-		viabilityBtn.setBackground(new Color(255,153,153));
+		JButton viabilityBtn = createButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
 		//Add action listener
 		viabilityBtn.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) { 
-				
-			}
-
+			public void actionPerformed(ActionEvent e) {}
 		} );
-		c.gridx = 0;
-		c.gridy = 1;
-
-		try{
-//			Image img = ImageIO.read(getClass().getResource("/resources/viability.png"));
-			Image img = ImageIO.read(getClass().getResource("/viability.png"));
-			viabilityBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {System.out.println(ex);}
-		panel.add(viabilityBtn, c);
-		
-		JButton morphometryBtn = new JButton("Morphometry");
-		morphometryBtn.setBackground(new Color(255,204,153));
+		JButton morphometryBtn = createButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
 		//Add action listener
 		morphometryBtn.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) { 
-				
-			}
-
+			public void actionPerformed(ActionEvent e) { }
 		} );
-		c.gridx = 1;
-		c.gridy = 1;
-	
-		try{
-//			Image img = ImageIO.read(getClass().getResource("/resources/Morphometry.png"));
-			Image img = ImageIO.read(getClass().getResource("/Morphometry.png"));
-			morphometryBtn.setIcon(new ImageIcon(img));
-		} catch (Exception ex) {System.out.println(ex);}		
-		panel.add(morphometryBtn, c);
-		
 		this.setPreferredSize(new Dimension(600, 200));
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
