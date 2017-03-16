@@ -67,7 +67,6 @@ public class MainWindow extends JFrame {
 		setLocationRelativeTo(null);
 		mw = this;
 	}
-	
 	public JButton createButton(String label,int gridx,int gridy,Color background,String iconPath,JPanel panel){
 		
 		GridBagConstraints c = new GridBagConstraints();
