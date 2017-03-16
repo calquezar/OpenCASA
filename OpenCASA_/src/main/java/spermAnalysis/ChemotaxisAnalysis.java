@@ -1,34 +1,23 @@
 package spermAnalysis;
 
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
-import java.util.Scanner;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
 
 import data.Params;
 import data.SList;
-import data.Spermatozoon;
 import data.Trial;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
-import ij.measure.ResultsTable;
 import plugins.AVI_Reader;
 import utils.ImageProcessing;
 import utils.Output;
@@ -184,7 +173,6 @@ public class ChemotaxisAnalysis {
 		mw.setVisible(false);
 		Map<String, Trial> trials = new HashMap<String, Trial>();	
 		
-		
 //		//////////////////////////////////////////////
 		
 		
@@ -305,7 +293,7 @@ public class ChemotaxisAnalysis {
 			  else
 			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
 		  }
-           System.out.println("Finish");
+          System.out.println("Finish");
 		}
 	}
 }
