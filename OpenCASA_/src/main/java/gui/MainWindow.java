@@ -91,14 +91,14 @@ public class MainWindow extends JFrame {
 	public void createGUI() {
 
 		JPanel panel = new JPanel(new GridBagLayout());
-		JButton motilityBtn = createButton("Motility",0,0,new Color(229,255,204),"/motility.png",panel);
-		//Add action listener
-		motilityBtn.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) { 
-				ma = new MotilityAnalysis();
-				ma.run(mw);
-			}
-		} );
+//		JButton motilityBtn = createButton("Motility",0,0,new Color(229,255,204),"/motility.png",panel);
+//		//Add action listener
+//		motilityBtn.addActionListener(new ActionListener() { 
+//			public void actionPerformed(ActionEvent e) { 
+//				ma = new MotilityAnalysis();
+//				ma.run(mw);
+//			}
+//		} );
 		JButton chemotaxisBtn = createButton("Chemotaxis",1,0,new Color(204,229,255),"/chemotaxis.png",panel);
 		//Add action listener
 		chemotaxisBtn.addActionListener(new ActionListener() { 
@@ -108,16 +108,16 @@ public class MainWindow extends JFrame {
 				catch (Exception e1) {e1.printStackTrace();}
 			}
 		} );
-		JButton viabilityBtn = createButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
-		//Add action listener
-		viabilityBtn.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) {}
-		} );
-		JButton morphometryBtn = createButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
-		//Add action listener
-		morphometryBtn.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) { }
-		} );
+//		JButton viabilityBtn = createButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
+//		//Add action listener
+//		viabilityBtn.addActionListener(new ActionListener() { 
+//			public void actionPerformed(ActionEvent e) {}
+//		} );
+//		JButton morphometryBtn = createButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
+//		//Add action listener
+//		morphometryBtn.addActionListener(new ActionListener() { 
+//			public void actionPerformed(ActionEvent e) { }
+//		} );
 		this.setPreferredSize(new Dimension(600, 200));
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
