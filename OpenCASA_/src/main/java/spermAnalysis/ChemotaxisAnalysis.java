@@ -185,6 +185,11 @@ public class ChemotaxisAnalysis {
 		Map<String, Trial> trials = new HashMap<String, Trial>();	
 		int n = selectDialog();
 		
+		if(n<0){
+			mw.setVisible(true);
+			return;			
+		}
+			
 //		//////////////////////////////////////////////
 //		File[] listOfFiles = getFileNames();
 //		if(listOfFiles==null || listOfFiles.length==0){
