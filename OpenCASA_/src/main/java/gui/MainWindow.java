@@ -17,6 +17,7 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import spermAnalysis.ChemotaxisAnalysis;
@@ -27,25 +28,7 @@ public class MainWindow extends JFrame {
 	MainWindow mw;
 	ChemotaxisAnalysis ch;
 	MotilityAnalysis ma;
-	/**
-	 * Constructor. This method doesn't get any argument. The main graphical user interface is created.
-	 * @throws HeadlessException
-	 */
-	public MainWindow() throws HeadlessException {
-		createGUI();
-		setLocationRelativeTo(null);
-		mw = this;
-	}
-	/**
-	 * Constructor. The main graphical user interface is created.
-	 * @param gc - GraphicsConfiguration is passed to superclass JFrame constructor.
-	 */
-	public MainWindow(GraphicsConfiguration gc) {
-		super(gc);
-		createGUI();
-		setLocationRelativeTo(null);
-		mw = this;
-	}
+	
 	/**
 	 * Constructor. The main graphical user interface is created.
 	 * @param title - String that is used as title of the window.
@@ -56,18 +39,8 @@ public class MainWindow extends JFrame {
 		setLocationRelativeTo(null);
 		mw = this;
 	}
-	/**
-	 * Constructor. The main graphical user interface is created.
-	 * @param title - String that is used as title of the window.
-	 * @param gc - GraphicsConfiguration is passed to superclass JFrame constructor.
-	 */
-	public MainWindow(String title, GraphicsConfiguration gc) {
-		super(title, gc);
-		createGUI();
-		setLocationRelativeTo(null);
-		mw = this;
-	}
-	public JButton createButton(String label,int gridx,int gridy,Color background,String iconPath,JPanel panel){
+
+	public void addButton(final String label,int gridx,int gridy,Color background,String iconPath,JPanel panel){
 		
 		GridBagConstraints c = new GridBagConstraints();
 		c.weightx = 0.5;
@@ -82,44 +55,34 @@ public class MainWindow extends JFrame {
 			Image img = ImageIO.read(getClass().getResource(iconPath));
 			btn.setIcon(new ImageIcon(img));
 		} catch (Exception ex) {System.out.println(ex);}
+		//Add action listener
+		btn.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				if(label.equals("Chemotaxis")){
+					ch = new ChemotaxisAnalysis();
+					try {ch.run(mw);} 
+					catch (Exception e1) {e1.printStackTrace();}
+				}else if(label.equals("Motility")){
+//					ma = new MotilityAnalysis();
+//					try{ma.run(mw);}
+//					catch(Exception e1){e1.printStackTrace();}
+				}
+			}
+		} );		
 		panel.add(btn, c);
-		return btn;
 	}
+	
 	/**
 	 * This method creates the main user interface.
 	 */
 	public void createGUI() {
-
-		JPanel panel = new JPanel(new GridBagLayout());
-//		JButton motilityBtn = createButton("Motility",0,0,new Color(229,255,204),"/motility.png",panel);
-//		//Add action listener
-//		motilityBtn.addActionListener(new ActionListener() { 
-//			public void actionPerformed(ActionEvent e) { 
-//				ma = new MotilityAnalysis();
-//				ma.run(mw);
-//			}
-//		} );
-		JButton chemotaxisBtn = createButton("Chemotaxis",1,0,new Color(204,229,255),"/chemotaxis.png",panel);
-		//Add action listener
-		chemotaxisBtn.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) { 
-				ch = new ChemotaxisAnalysis();
-				try {ch.run(mw);} 
-				catch (Exception e1) {e1.printStackTrace();}
-			}
-		} );
-//		JButton viabilityBtn = createButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
-//		//Add action listener
-//		viabilityBtn.addActionListener(new ActionListener() { 
-//			public void actionPerformed(ActionEvent e) {}
-//		} );
-//		JButton morphometryBtn = createButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
-//		//Add action listener
-//		morphometryBtn.addActionListener(new ActionListener() { 
-//			public void actionPerformed(ActionEvent e) { }
-//		} );
+		JPanel  panel = new JPanel(new GridBagLayout());
+		addButton("Motility",0,0,new Color(229,255,204),"/motility.png",panel);
+		addButton("Chemotaxis",1,0,new Color(204,229,255),"/chemotaxis.png",panel);
+		addButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
+		addButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
 		this.setPreferredSize(new Dimension(600, 200));
-		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setContentPane(panel);
 		this.pack();
 		this.setVisible(true);

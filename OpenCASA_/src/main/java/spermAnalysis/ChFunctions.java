@@ -307,8 +307,6 @@ public class ChFunctions {
 	
 	
 	public static int[] countInstantDirections(List track){
-		
-		
 		int nPos = 0;
 		int nNeg = 0;
 		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
@@ -342,7 +340,7 @@ public class ChFunctions {
 		
 		List<Double> ORs = new ArrayList<Double>();
 //		Params.MAXINSTANGLES = 50000;//Params.controlTracks.size();
-		final int NUMSAMPLES = 1000;
+		final int NUMSAMPLES = 10000;
 		
 		
 //		Set keySet = trials.keySet();

@@ -1,8 +1,10 @@
 package spermAnalysis;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -11,6 +13,7 @@ import java.util.Map;
 import java.util.Set;
 
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import data.Params;
 import data.SList;
@@ -36,9 +39,20 @@ public class ChemotaxisAnalysis {
 	 * 
 	 * @return File[]
 	 */
+	public void showDialog(){
+		Object[] options = {"RatioQ", "Bootstrapping"};
+		int n = JOptionPane.showOptionDialog(null,
+				"Which analysis do you want to apply to the data?",
+				"Choose one analysis",
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,     //do not use a custom Icon
+				options,  //the titles of buttons
+				options[0]); //default button title
+	}	
 	public File[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\"));
+		chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\"));
 		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
 		chooser.setDialogTitle("choosertitle");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -172,108 +186,110 @@ public class ChemotaxisAnalysis {
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
 		Map<String, Trial> trials = new HashMap<String, Trial>();	
-		
+		showDialog();
 //		//////////////////////////////////////////////
 		
-		
-		File[] listOfFiles = getFileNames();
-		if(listOfFiles!=null){
-			
-			for (int i = 0; i < listOfFiles.length; i++) {
-			    if (listOfFiles[i].isFile()) {
-			    	final String filename = listOfFiles[i].getName();
-					//System.out.println("File " + filename);
-					if(isAVI(filename)){
-						System.out.println("Loading video...");
-						
-						System.out.println("filename: "+filename);
-						int trialType = ChFunctions.getTrialType(filename);
-						String trialID = ChFunctions.getID(filename);
-						
-						switch(trialType){
-						case 0: //Control
-						case 1: //10pM
-						case 2: //100pM
-//						case 3: //10nM
-							
-							AVI_Reader ar = new  AVI_Reader();
-							ar.run(directory+"\\"+listOfFiles[i].getName());
-							final ImagePlus imp = ar.getImagePlus();
-							SList t = analyze(imp,filename);
-							
-//							if(t==null)
-//								IJ.log("analyze devuelve NULL");
-							
-							Trial tr;
-							if(trials.get(trialID)!=null) 
-								tr = trials.get(trialID);
-							else 
-								tr = new Trial();
-							switch(trialType){
-								case 0: tr.control=t;break;
-								case 1: tr.p10pM=t;break;
-								case 2: tr.p100pM=t; break;
-								case 3: tr.p10nM=t;break;
-							}
-							
-							int sampleSize = ChFunctions.calculateSampleSize(t);
-							if((tr.minSampleSize==-1)||(sampleSize<tr.minSampleSize))
-								tr.minSampleSize = sampleSize;
-							trials.put(trialID, tr);
-
-							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
-						}
-
-					}else{
-						System.out.println("The file format is not AVI. Not analyzed");
-					}
-
-			    } else if (listOfFiles[i].isDirectory()) {
-			    	System.out.println("Directory " + listOfFiles[i].getName());
-			    }
-		   }
-		////////////////////////////////////////////////////
-////		// READING TRIALS FROM FILE
-//		  try {
-////			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
-////			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\control\\Trials4Control.ser");
-////			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
-////			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
-////			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Trials.ser");
-//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\videos quimiotaxis\\Jorge-Patri\\Analisis quimiotaxis Jorge y Patri\\Trials_1microM.ser");
-//			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-//			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
-//		  } catch (Exception e) {
-//		      e.printStackTrace();
-//		  } 
+//		File[] listOfFiles = getFileNames();
+//		if(listOfFiles!=null){
 //			
-//		  Set kSet = trials.keySet();
-//		  for (Iterator k=kSet.iterator();k.hasNext();) {
-//			  String key= (String)k.next();
-//			  Trial trial = (Trial)trials.get(key);
-//			  Params.controlTracks.addAll(trial.control);
-//			  Params.conditionTracks.addAll(trial.p100pM);
-//		  }
+//			for (int i = 0; i < listOfFiles.length; i++) {
+//			    if (listOfFiles[i].isFile()) {
+//			    	final String filename = listOfFiles[i].getName();
+//					//System.out.println("File " + filename);
+//					if(isAVI(filename)){
+//						System.out.println("Loading video...");
+//						
+//						System.out.println("filename: "+filename);
+//						int trialType = ChFunctions.getTrialType(filename);
+//						String trialID = ChFunctions.getID(filename);
+//						
+//						switch(trialType){
+//						case 0: //Control
+//						case 1: //10pM
+//						case 2: //100pM
+////						case 3: //10nM
+//							
+//							AVI_Reader ar = new  AVI_Reader();
+//							ar.run(directory+"\\"+listOfFiles[i].getName());
+//							final ImagePlus imp = ar.getImagePlus();
+//							SList t = analyze(imp,filename);
+//							
+////							if(t==null)
+////								IJ.log("analyze devuelve NULL");
+//							
+//							Trial tr;
+//							if(trials.get(trialID)!=null){
+//								tr = trials.get(trialID);
+//								tr.ID = trialID;
+//							}
+//							else 
+//								tr = new Trial();
+//							switch(trialType){
+//								case 0: tr.control=t;break;
+//								case 1: tr.p10pM=t;break;
+//								case 2: tr.p100pM=t; break;
+//								case 3: tr.p10nM=t;break;
+//							}
+//							
+//							int sampleSize = ChFunctions.calculateSampleSize(t);
+//							if((tr.minSampleSize==-1)||(sampleSize<tr.minSampleSize))
+//								tr.minSampleSize = sampleSize;
+//							trials.put(trialID, tr);
+//
+//							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
+//						}
+//
+//					}else{
+//						System.out.println("The file format is not AVI. Not analyzed");
+//					}
+//
+//			    } else if (listOfFiles[i].isDirectory()) {
+//			    	System.out.println("Directory " + listOfFiles[i].getName());
+//			    }
+//		   }
+		////////////////////////////////////////////////////
+		// READING TRIALS FROM FILE
+		  try {
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\TrialsGIVF.ser");
+			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials40Control.ser");
+//			  FileInputStream streamIn = new FileInputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Simulation\\Trials40Control.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Trials.ser");
+//			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\videos quimiotaxis\\Jorge-Patri\\Analisis quimiotaxis Jorge y Patri\\Trials_1microM.ser");
+			  ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
+			  trials = (HashMap<String, Trial>) objectinputstream.readObject();
+		  } catch (Exception e) {
+		      e.printStackTrace();
+		  } 
+			
+		  Set kSet = trials.keySet();
+		  for (Iterator k=kSet.iterator();k.hasNext();) {
+			  String key= (String)k.next();
+			  Trial trial = (Trial)trials.get(key);
+			  Params.controlTracks.addAll(trial.control);
+			  Params.conditionTracks.addAll(trial.p10pM);
+		  }
 		  
 		  //////////////////////////////////////////////////////////////////
 //		  SERIALIZING TRIALS 
-           try
-           {
-        	  FileOutputStream fos =
-//                   new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
-//                   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\10 por ciento 0_5 atraccion\\Trials4Control.ser");
-//        	  	     new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
-        	  		 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\Trials.ser");
-//        			 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\videos quimiotaxis\\Jorge-Patri\\Analisis quimiotaxis Jorge y Patri\\Trials_100pM.ser");
-                  
-			  ObjectOutputStream oos = new ObjectOutputStream(fos);
-			  oos.writeObject(trials);
-			  oos.close();
-			  fos.close();
-           }catch(IOException ioe)
-           {
-              ioe.printStackTrace();
-           }
+//           try
+//           {
+//        	  FileOutputStream fos =
+////                   new FileOutputStream("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data\\Empty\\trials.ser");
+////                   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\C y Q\\10 por ciento 0_5 atraccion\\Trials.ser");
+//        	  	   new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Simulaciones\\Control\\Trials.ser");
+////        	  	     new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validacion Quiron\\20-12-2016\\todo\\1\\Trials.ser");
+////        	  		 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\TrialsGIVF.ser");
+////        			 new FileOutputStream("F:\\VIDEOS QUIMIOTAXIS\\videos quimiotaxis\\Jorge-Patri\\Analisis quimiotaxis Jorge y Patri\\Trials_100pM.ser");
+//                  
+//			  ObjectOutputStream oos = new ObjectOutputStream(fos);
+//			  oos.writeObject(trials);
+//			  oos.close();
+//			  fos.close();
+//           }catch(IOException ioe)
+//           {
+//              ioe.printStackTrace();
+//           }
 		//////////////////////////////////////////////////////
            
            //SETTING SAMPLE SIZE
@@ -286,14 +302,14 @@ public class ChemotaxisAnalysis {
 			  String key= (String)k.next();
 			  Trial trial = (Trial)trials.get(key);
 //			  System.out.println("key: "+key);
-			  double OR = ChFunctions.OR(trial,"p100pM");
+			  double OR = ChFunctions.OR(trial,"p10pM");
 //			  IJ.log(OR+"");
 			  if(OR>(thControl))
-				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"]");
+				  IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"] - ID: "+trial.ID);
 			  else
-			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"]");
+			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"] - ID: "+trial.ID);
 		  }
           System.out.println("Finish");
-		}
+//		}
 	}
 }
