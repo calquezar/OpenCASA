@@ -39,7 +39,7 @@ public class ChemotaxisAnalysis {
 	 * 
 	 * @return File[]
 	 */
-	public void showDialog(){
+	public int selectDialog(){
 		Object[] options = {"RatioQ", "Bootstrapping"};
 		int n = JOptionPane.showOptionDialog(null,
 				"Which analysis do you want to apply to the data?",
@@ -49,6 +49,7 @@ public class ChemotaxisAnalysis {
 				null,     //do not use a custom Icon
 				options,  //the titles of buttons
 				options[0]); //default button title
+		return n;
 	}	
 	public File[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
@@ -65,7 +66,7 @@ public class ChemotaxisAnalysis {
 		  return listOfFiles;	
 		}
 		return null;
-	}	
+	}
 	
 	/**
 	 * 
@@ -128,23 +129,19 @@ public class ChemotaxisAnalysis {
 //			case 3:
 //					Params.conditionTracks.addAll(theTracks);
 //				break;
-		}
-		
-		
-		
+		}		
 		
 		//To calculate Ratio-Q we have to decimate all tracks
-		System.out.println("decimateTracks...");
+//		System.out.println("decimateTracks...");
 		List decimatedTracks = TrackFilters.decimateTracks(avgTracks,Params.decimationFactor);
 		// Chemotaxis ratios
-		System.out.println("CalculateRatioQ...");
+//		System.out.println("CalculateRatioQ...");
 		float ratioQ = ChFunctions.calculateRatioQ(avgTracks);
-		System.out.println("calculateRatioSL...");
+//		System.out.println("calculateRatioSL...");
 		float ratioSL = ChFunctions.calculateRatioSL(avgTracks);
-		
-		System.out.println("setQtResults...");
+//		System.out.println("setQtResults...");
 		ChFunctions.setQtResults(filename,ratioQ,ratioSL,theTracks.size());
-		Params.rTable.show("Ratios Quimiotaxis");
+//		Params.rTable.show("Ratios Quimiotaxis");
 		//************************************************************ 
 		// * Draw tracks at each frame
 		//************************************************************
@@ -186,68 +183,70 @@ public class ChemotaxisAnalysis {
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
 		Map<String, Trial> trials = new HashMap<String, Trial>();	
-		showDialog();
-//		//////////////////////////////////////////////
+		int n = selectDialog();
 		
+//		//////////////////////////////////////////////
 //		File[] listOfFiles = getFileNames();
-//		if(listOfFiles!=null){
-//			
-//			for (int i = 0; i < listOfFiles.length; i++) {
-//			    if (listOfFiles[i].isFile()) {
-//			    	final String filename = listOfFiles[i].getName();
-//					//System.out.println("File " + filename);
-//					if(isAVI(filename)){
-//						System.out.println("Loading video...");
-//						
-//						System.out.println("filename: "+filename);
-//						int trialType = ChFunctions.getTrialType(filename);
-//						String trialID = ChFunctions.getID(filename);
-//						
-//						switch(trialType){
-//						case 0: //Control
-//						case 1: //10pM
-//						case 2: //100pM
+//		if(listOfFiles==null || listOfFiles.length==0){
+//			mw.setVisible(true);
+//			return;
+//		}
+//		for (int i = 0; i < listOfFiles.length; i++) {
+//		    if (listOfFiles[i].isFile()) {
+//		    	final String filename = listOfFiles[i].getName();
+//				//System.out.println("File " + filename);
+//				if(isAVI(filename)){
+//					System.out.println("Loading video...");
+//					
+//					System.out.println("filename: "+filename);
+//					int trialType = ChFunctions.getTrialType(filename);
+//					String trialID = ChFunctions.getID(filename);
+//					
+//					switch(trialType){
+//					case 0: //Control
+//					case 1: //10pM
+//					case 2: //100pM
 ////						case 3: //10nM
-//							
-//							AVI_Reader ar = new  AVI_Reader();
-//							ar.run(directory+"\\"+listOfFiles[i].getName());
-//							final ImagePlus imp = ar.getImagePlus();
-//							SList t = analyze(imp,filename);
-//							
+//						
+//						AVI_Reader ar = new  AVI_Reader();
+//						ar.run(directory+"\\"+listOfFiles[i].getName());
+//						final ImagePlus imp = ar.getImagePlus();
+//						SList t = analyze(imp,filename);
+//						
 ////							if(t==null)
 ////								IJ.log("analyze devuelve NULL");
-//							
-//							Trial tr;
-//							if(trials.get(trialID)!=null){
-//								tr = trials.get(trialID);
-//								tr.ID = trialID;
-//							}
-//							else 
-//								tr = new Trial();
-//							switch(trialType){
-//								case 0: tr.control=t;break;
-//								case 1: tr.p10pM=t;break;
-//								case 2: tr.p100pM=t; break;
-//								case 3: tr.p10nM=t;break;
-//							}
-//							
-//							int sampleSize = ChFunctions.calculateSampleSize(t);
-//							if((tr.minSampleSize==-1)||(sampleSize<tr.minSampleSize))
-//								tr.minSampleSize = sampleSize;
-//							trials.put(trialID, tr);
-//
-//							//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
+//						
+//						Trial tr;
+//						if(trials.get(trialID)!=null){
+//							tr = trials.get(trialID);
+//							tr.ID = trialID;
 //						}
+//						else 
+//							tr = new Trial();
+//						switch(trialType){
+//							case 0: tr.control=t;break;
+//							case 1: tr.p10pM=t;break;
+//							case 2: tr.p100pM=t; break;
+//							case 3: tr.p10nM=t;break;
+//						}
+//						
+//						int sampleSize = ChFunctions.calculateSampleSize(t);
+//						if((tr.minSampleSize==-1)||(sampleSize<tr.minSampleSize))
+//							tr.minSampleSize = sampleSize;
+//						trials.put(trialID, tr);
 //
-//					}else{
-//						System.out.println("The file format is not AVI. Not analyzed");
+//						//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
 //					}
 //
-//			    } else if (listOfFiles[i].isDirectory()) {
-//			    	System.out.println("Directory " + listOfFiles[i].getName());
-//			    }
-//		   }
-		////////////////////////////////////////////////////
+//				}else{
+//					System.out.println("The file format is not AVI. Not analyzed");
+//				}
+//
+//		    } else if (listOfFiles[i].isDirectory()) {
+//		    	System.out.println("Directory " + listOfFiles[i].getName());
+//		    }
+//	   }
+//		////////////////////////////////////////////////////
 		// READING TRIALS FROM FILE
 		  try {
 //			  FileInputStream streamIn = new FileInputStream("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\2017-02-24-V2\\TrialsGIVF.ser");
@@ -310,6 +309,7 @@ public class ChemotaxisAnalysis {
 			  	  IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"] - ID: "+trial.ID);
 		  }
           System.out.println("Finish");
-//		}
+		
+		mw.setVisible(true);
 	}
 }
