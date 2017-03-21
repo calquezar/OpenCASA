@@ -48,6 +48,8 @@ public class Chemotaxis {
 	
 	public void ratioQ(Map<String,Trial> trials){
 		
+		if(trials==null)
+			return;
 		Set keySet = trials.keySet();	
 		for (Iterator k=keySet.iterator();k.hasNext();) {
 			String key= (String)k.next();
