@@ -224,32 +224,6 @@ public class ChFunctions__ {
 
 	}
 	
-	/******************************************************/
-	/**
-	 * @param String filename
-	 * @return String type
-	 */	
-	public static String getTrialType(String filename){
-		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
-		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
-		String[] parts = filename.split("-");
-		if(parts[4].equals("Q")){
-			String hormone = parts[5];
-			String concentration = parts[6];
-			return hormone+concentration;
-		}else{
-			return "C"; //If It's not chemotaxis, then it's control
-		}
-	}
-	
-	public static String getID(String filename){
-		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
-		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
-		String[] parts = filename.split("-");
-		String type = getTrialType(filename);
-		return parts[0]+parts[1]+parts[2]+'-'+parts[3]+'-'+type;
-	}
-	
 	public static void setQtResults(String filename,float ratioQ, float ratioSL, int nTracks){
 		
 		//Format 2000-11-19-1234-Q-P-100pM-0-1

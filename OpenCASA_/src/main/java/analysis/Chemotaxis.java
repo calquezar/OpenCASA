@@ -48,6 +48,16 @@ public class Chemotaxis {
 	
 	public void ratioQ(Map<String,Trial> trials){
 		
+		Set keySet = trials.keySet();	
+		for (Iterator k=keySet.iterator();k.hasNext();) {
+			String key= (String)k.next();
+			Trial trial = (Trial)trials.get(key);
+		  	System.out.println("key: "+key);
+		  	float ratioQ = calculateRatioQ(trial.tracks);
+		  	float ratioSL = calculateRatioSL(trial.tracks);
+		  	setQResults(trial.source,ratioQ,ratioSL,trial.tracks.size());
+		}
+		Params.rTable.show("Results");
 	}
 	public void bootstrapping(Map<String,Trial> trials){
 		
@@ -113,11 +123,51 @@ public class Chemotaxis {
 		return ratioQ;
 	}
 	
+	/******************************************************/
+	/**
+	 * @param theTracks 2D-ArrayList that stores all the tracks
+	 * @return RatioSL
+	 */
+	public static float calculateRatioSL(List theTracks){
+		
+		float nPos=0; //Number of shifts in the chemoattractant direction
+		float nNeg=0; //Number of shifts in other direction
+		int trackNr=0;
+		int nTracks = theTracks.size();
+		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);		
+		float ratioSL = 0;
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			IJ.showProgress((double)trackNr/nTracks);
+			IJ.showStatus("Calculating RatioSL...");
+			trackNr++;
+			List aTrack=(ArrayList) iT.next();
+			Spermatozoon first = (Spermatozoon)aTrack.get(1);
+			Spermatozoon last = (Spermatozoon)aTrack.get(aTrack.size() - 1);
+			float diffX = last.x-first.x;
+			float diffY = last.y-first.y;
+			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
+			angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+			if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
+				angle = -(2*Math.PI-angle);			
+			if(Math.abs(angle)<angleChemotaxis)
+				nPos++;
+			else
+				nNeg++;			
+		}
+		if((nPos+nNeg)>0)
+			ratioSL = (nPos/(nPos+nNeg));
+		else
+			ratioSL=-1;
+		return ratioSL;
+	}
+	
 	public static void setQResults(String filename,float ratioQ, float ratioSL, int nTracks){
 		
-		String[] parts = filename.split("\\\\");//filename is given as an absolute path
-		parts = parts[parts.length-1].split(".");//Now it's necessary to remove the '.avi' extension
-		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
+//		System.out.println("filename: "+filename);
+		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
+//		System.out.println("parts[0]: "+parts[0]);
+//		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
 		
 		Params.rTable.incrementCounter();	
 		Params.rTable.addValue("nTracks",nTracks);
