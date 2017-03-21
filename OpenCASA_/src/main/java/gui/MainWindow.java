@@ -20,13 +20,14 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import spermAnalysis.ChemotaxisAnalysis;
-import spermAnalysis.MotilityAnalysis;
+import analysis.Chemotaxis;
+import analysis.ChemotaxisAnalysis;
+import analysis.MotilityAnalysis;
 
 public class MainWindow extends JFrame {
 
 	MainWindow mw;
-	ChemotaxisAnalysis ch;
+	Chemotaxis ch;
 	MotilityAnalysis ma;
 	
 	/**
@@ -59,7 +60,7 @@ public class MainWindow extends JFrame {
 		btn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				if(label.equals("Chemotaxis")){
-					ch = new ChemotaxisAnalysis();
+					ch = new Chemotaxis();
 					try {ch.run(mw);} 
 					catch (Exception e1) {e1.printStackTrace();}
 				}else if(label.equals("Motility")){

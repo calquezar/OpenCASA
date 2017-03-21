@@ -1,4 +1,4 @@
-package spermAnalysis;
+package analysis;
 
 import java.util.List;
 

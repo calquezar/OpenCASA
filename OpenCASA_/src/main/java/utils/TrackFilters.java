@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import spermAnalysis.MotFunctions;
+import analysis.MotFunctions;
 import data.Params;
 import data.SList;
 import data.Spermatozoon;

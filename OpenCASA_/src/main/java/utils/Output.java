@@ -3,11 +3,11 @@ package utils;
 import java.util.List;
 import java.util.ListIterator;
 
+import analysis.MotFunctions;
 import data.Params;
 import data.Spermatozoon;
 import ij.IJ;
 import ij.measure.ResultsTable;
-import spermAnalysis.MotFunctions;
 
 public class Output {
 

@@ -1,4 +1,4 @@
-package spermAnalysis;
+package analysis;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -35,10 +35,7 @@ public class ChemotaxisAnalysis {
 	 */
 	public ChemotaxisAnalysis(){}
 	
-	/**
-	 * 
-	 * @return File[]
-	 */
+
 	public int selectDialog(){
 		Object[] options = {"RatioQ", "Bootstrapping"};
 		int n = JOptionPane.showOptionDialog(null,
@@ -51,6 +48,11 @@ public class ChemotaxisAnalysis {
 				options[0]); //default button title
 		return n;
 	}	
+	
+	/**
+	 * 
+	 * @return File[]
+	 */	
 	public File[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
 		chooser.setCurrentDirectory(new java.io.File("F:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\"));
