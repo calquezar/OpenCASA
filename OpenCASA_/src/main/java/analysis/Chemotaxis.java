@@ -1,14 +1,28 @@
 package analysis;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
+import java.util.Set;
+
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import data.Params;
 import data.SList;
+import data.Spermatozoon;
 import data.Trial;
 import gui.MainWindow;
+import ij.IJ;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 import utils.Utils;
@@ -32,76 +46,95 @@ public class Chemotaxis {
 		return n;
 	}
 	
-	public void ratioQ(){
+	public void ratioQ(Map<String,Trial> trials){
 		
 	}
-	public void bootstrapping(){
+	public void bootstrapping(Map<String,Trial> trials){
 		
 	}
-	public Map<String, Trial> generateTrials(){
-		
-		Map<String, Trial> trials = new HashMap<String, Trial>();
-		String[] listOfFiles = Utils.getFileNames();
-		if(listOfFiles==null || listOfFiles.length==0){
-			return null;
-		}
-		for (int i = 0; i < listOfFiles.length; i++) {
-		    if (new File(listOfFiles[i]).isFile()) {
-		    	final String filename = listOfFiles[i];
-				if(Utils.isAVI(filename)){
-//					System.out.println("Loading video...");
-					int trialType = ChFunctions.getTrialType(filename);
-					String trialID = ChFunctions.getID(filename);
-					
-					switch(trialType){
-					case 0: //Control
-					case 1: //10pM
-					case 2: //100pM
-//						case 3: //10nM
-					AVI_Reader ar = new  AVI_Reader();
-					ar.run(filename);
-					final ImagePlus imp = ar.getImagePlus();
-					SList t = analyze(imp,filename);
 	
-					Trial tr;
-					if(trials.get(trialID)!=null){
-						tr = trials.get(trialID);
-						tr.ID = trialID;
-					}
-					else 
-						tr = new Trial();
-					switch(trialType){
-						case 0: tr.control=t;break;
-						case 1: tr.p10pM=t;break;
-						case 2: tr.p100pM=t; break;
-						case 3: tr.p10nM=t;break;
-					}
-					
-					int sampleSize = ChFunctions.calculateSampleSize(t);
-					if((tr.minSampleSize==-1)||(sampleSize<tr.minSampleSize))
-						tr.minSampleSize = sampleSize;
-					trials.put(trialID, tr);
-
-						//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
-					}
-				}
-				
-		    } else if (new File(listOfFiles[i]).isDirectory()) {}		    
-		    return trials;
-		}
-	}
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
+		Map<String,Trial> trials;
 		int n = analysisSelectionDialog();
 		if(n<0){
 			mw.setVisible(true);
 			return;			
 		}else
-			generateTrials();
+			trials = CommonAnalysis.generateTrials();
 		if(n==0)
-			ratioQ();
+			ratioQ(trials);
 		else if(n==1)
-			bootstrapping();
+			bootstrapping(trials);
 		mw.setVisible(true);
 	}
+	
+	/******************************************************/
+	/** Fuction to calculate the Ratio-Q
+	 * @param theTracks 2D-ArrayList with all the tracks
+	 * @return the Ratio-Q
+	 */
+	public static float calculateRatioQ(List theTracks){
+		
+		float nPos=0; //Number of shifts in the chemoattractant direction
+		float nNeg=0; //Number of shifts in other direction
+		int trackNr = 0; //Number of tracks
+		List angles = new ArrayList();
+		int nTracks = theTracks.size();
+		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);		
+		float ratioQ = 0;
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			IJ.showProgress((double)trackNr/nTracks);
+			IJ.showStatus("Calculating RatioQ...");
+			trackNr++;
+			List track=(ArrayList) iT.next();
+			int nPoints = track.size();
+			for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
+				Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
+				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
+				float diffX = newSpermatozoon.x-oldSpermatozoon.x;
+				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
+				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
+				angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+				if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
+					angle = -(2*Math.PI-angle);			
+				if(Math.abs(angle)<angleChemotaxis){
+					nPos++;
+				}
+				else //if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
+					nNeg++;
+				}
+		}
+		if((nPos+nNeg)>0)
+			ratioQ = (nPos/(nPos+nNeg)); // (nPos+nNeg) = Total number of shifts
+		else
+			ratioQ=-1;
+		return ratioQ;
+	}
+	
+	public static void setQResults(String filename,float ratioQ, float ratioSL, int nTracks){
+		
+		String[] parts = filename.split("\\\\");//filename is given as an absolute path
+		parts = parts[parts.length-1].split(".");//Now it's necessary to remove the '.avi' extension
+		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
+		
+		Params.rTable.incrementCounter();	
+		Params.rTable.addValue("nTracks",nTracks);
+		Params.rTable.addValue("RatioQ",ratioQ);
+		Params.rTable.addValue("RatioSL",ratioSL);		
+		Params.rTable.addValue("Type",parts[4]);
+		if(parts[4].equals("Q")){
+			Params.rTable.addValue("Hormone",parts[5]);
+			Params.rTable.addValue("Concentration",parts[6]);
+		}else{
+			Params.rTable.addValue("Hormone","-");
+			Params.rTable.addValue("Concentration","-");
+		}
+		Params.rTable.addValue("Direction (Degrees)",Params.angleDirection);
+		Params.rTable.addValue("ArcChemotaxis (Degrees)",Params.angleChemotaxis);
+		Params.rTable.addValue("ID",parts[3]);
+		Params.rTable.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
+		Params.rTable.addValue("Filename",filename);
+	}	
 }

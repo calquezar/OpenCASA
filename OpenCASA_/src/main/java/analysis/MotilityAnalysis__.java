@@ -12,9 +12,9 @@ import utils.ImageProcessing;
 import utils.Output;
 import utils.TrackFilters;
 
-public class MotilityAnalysis {
+public class MotilityAnalysis__ {
 	
-	public MotilityAnalysis(){
+	public MotilityAnalysis__(){
 		Params.drawRelTrajectories = false;
 	}
 

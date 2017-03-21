@@ -7,7 +7,7 @@ import java.util.ListIterator;
 import data.Params;
 import data.Spermatozoon;
 
-public class MotFunctions {
+public class MotFunctions__ {
 
 	
 	/******************************************************/

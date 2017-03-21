@@ -3,7 +3,7 @@ package utils;
 import java.util.List;
 import java.util.ListIterator;
 
-import analysis.MotFunctions;
+import analysis.MotFunctions__;
 import data.Params;
 import data.Spermatozoon;
 import ij.IJ;
@@ -69,13 +69,13 @@ public class Output {
 			List avgTrack = TrackFilters.movingAverage(aTrack);
 			float length = (float)aTrack.size();
 			// VSL
-			float vsl_value = MotFunctions.vsl(aTrack);
+			float vsl_value = MotFunctions__.vsl(aTrack);
 			Params.total_vsl+=vsl_value;
 			// VCL
-			float vcl_value =  MotFunctions.vcl(aTrack);
+			float vcl_value =  MotFunctions__.vcl(aTrack);
 			Params.total_vcl+=vcl_value;
 			// VAP is equivalent to calculate vcl from averaged track
-			float vap_value =  MotFunctions.vcl(avgTrack);
+			float vap_value =  MotFunctions__.vcl(avgTrack);
 			Params.total_vap+=vap_value;
 			// Linearity
 			float lin_value = (vsl_value/vcl_value)*100;
@@ -87,11 +87,11 @@ public class Output {
 			float str_value = (vsl_value/vap_value)*100;
 			Params.total_str+=str_value;
 			// Amplitude of lateral head
-			float alh_values[] =  MotFunctions.alh(aTrack,avgTrack);
+			float alh_values[] =  MotFunctions__.alh(aTrack,avgTrack);
 			Params.total_alhMean+=alh_values[0];
 			Params.total_alhMax+=alh_values[1];
 			// Beat-cross frequency
-			float bcf_value =  MotFunctions.bcf(aTrack,avgTrack);
+			float bcf_value =  MotFunctions__.bcf(aTrack,avgTrack);
 			Params.total_bcf+=bcf_value;
 			//Progressive motility
 			String progressMotility_value = "NO";
@@ -103,7 +103,7 @@ public class Output {
 			float dance_value =  vcl_value*alh_values[0];
 			Params.total_dance+=dance_value;
 			//MAD
-			float mad_value = MotFunctions.mad(aTrack);
+			float mad_value = MotFunctions__.mad(aTrack);
 			Params.total_mad+=mad_value;
 
 			rt.incrementCounter();

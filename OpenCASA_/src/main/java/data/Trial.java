@@ -4,9 +4,14 @@ import java.io.Serializable;
 
 public class Trial implements Serializable{
 	public String ID = "";
-	public SList control= null;
-	public SList p10pM= null; // Progesterone 10pM
-	public SList p100pM= null;
-	public SList p10nM= null;
-	public int minSampleSize = -1;
+	public String type = "";
+	public SList tracks= null;
+	
+	public Trial(){}
+	
+	public Trial(String ID, String type,SList t){
+		this.ID = ID;
+		this.type = type;
+		this.tracks = tracks;
+	}
 }
