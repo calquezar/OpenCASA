@@ -23,7 +23,7 @@ public class Motility {
 		Object[] options = {"File", "Directory"};
 		int n = JOptionPane.showOptionDialog(null,
 				"What do you want to analyze?",
-				"Choose one type os analysis...",
+				"Choose one analysis...",
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
 				null,     //do not use a custom Icon
@@ -49,24 +49,44 @@ public class Motility {
 		
 	}
 	
-	public void run(MainWindow mw){
-		mw.setVisible(false);
-		//Reset Parameters
-		Params.resetParams();
-		//Ask user which analysis wants to apply
-		int n = analysisSelectionDialog();
-		if(n<0){
-			mw.setVisible(true);
-			return;			
-		}
-		if(n==0)
-			analyzeFile();
-		else if(n==1){
-			//Create trials dictionary
-			Map<String,Trial> trials = CommonAnalysis.generateTrials("Motility");
-			analyzeDirectory(trials);
-		}
-		mw.setVisible(true);
+	/******************************************************/
+	/**
+	 * @param nTracks - 
+	 * @return 
+	 */	
+	public void calculateAverageMotility(ResultsTable rt,int nTracks){
+		
+		rt.incrementCounter();
+		float vsl_mean = Params.total_vsl/nTracks;
+		float vcl_mean = Params.total_vcl/nTracks;
+		float vap_mean = Params.total_vap/nTracks;
+		float lin_mean = Params.total_lin/nTracks;
+		float wob_mean = Params.total_wob/nTracks;
+		float str_mean = Params.total_str/nTracks;
+		float alhMean_mean = Params.total_alhMean/nTracks;
+		float alhMax_mean = Params.total_alhMax/nTracks;
+		float bcf_mean = Params.total_bcf/nTracks;
+		float dance_mean = Params.total_dance/nTracks;
+		float mad_mean = Params.total_mad/nTracks;
+		// % progressive Motile sperm
+		float progressiveMotPercent = Params.countProgressiveSperm/(float)nTracks;			
+		// % motility
+		float motility_value = (float)Params.countMotileSperm/((float)(Params.countMotileSperm+Params.countNonMotileSperm));
+		
+		rt.addValue("VSL Mean (um/s)",vsl_mean);
+		rt.addValue("VCL Mean (um/s)",vcl_mean);
+		rt.addValue("VAP Mean (um/s)",vap_mean);
+		rt.addValue("LIN Mean ",lin_mean);
+		rt.addValue("WOB Mean ",wob_mean);
+		rt.addValue("STR Mean ",str_mean);
+		rt.addValue("ALH_Mean Mean (um)",alhMean_mean);
+		rt.addValue("ALH_Max Mean (um)",alhMax_mean);
+		rt.addValue("BCF Mean (Hz)",bcf_mean);
+		rt.addValue("DANCE Mean (um^2/s)",dance_mean);
+		rt.addValue("MAD Mean (degrees)",mad_mean);
+		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
+		rt.addValue("Motility (%)",motility_value*100);
+		
 	}
 	
 	/******************************************************/
@@ -138,43 +158,23 @@ public class Motility {
 		}
 		return rt;
 	}
-	/******************************************************/
-	/**
-	 * @param nTracks - 
-	 * @return 
-	 */	
-	public void calculateAverageMotility(ResultsTable rt,int nTracks){
-		
-		rt.incrementCounter();
-		float vsl_mean = Params.total_vsl/nTracks;
-		float vcl_mean = Params.total_vcl/nTracks;
-		float vap_mean = Params.total_vap/nTracks;
-		float lin_mean = Params.total_lin/nTracks;
-		float wob_mean = Params.total_wob/nTracks;
-		float str_mean = Params.total_str/nTracks;
-		float alhMean_mean = Params.total_alhMean/nTracks;
-		float alhMax_mean = Params.total_alhMax/nTracks;
-		float bcf_mean = Params.total_bcf/nTracks;
-		float dance_mean = Params.total_dance/nTracks;
-		float mad_mean = Params.total_mad/nTracks;
-		// % progressive Motile sperm
-		float progressiveMotPercent = Params.countProgressiveSperm/(float)nTracks;			
-		// % motility
-		float motility_value = (float)Params.countMotileSperm/((float)(Params.countMotileSperm+Params.countNonMotileSperm));
-		
-		rt.addValue("VSL Mean (um/s)",vsl_mean);
-		rt.addValue("VCL Mean (um/s)",vcl_mean);
-		rt.addValue("VAP Mean (um/s)",vap_mean);
-		rt.addValue("LIN Mean ",lin_mean);
-		rt.addValue("WOB Mean ",wob_mean);
-		rt.addValue("STR Mean ",str_mean);
-		rt.addValue("ALH_Mean Mean (um)",alhMean_mean);
-		rt.addValue("ALH_Max Mean (um)",alhMax_mean);
-		rt.addValue("BCF Mean (Hz)",bcf_mean);
-		rt.addValue("DANCE Mean (um^2/s)",dance_mean);
-		rt.addValue("MAD Mean (degrees)",mad_mean);
-		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
-		rt.addValue("Motility (%)",motility_value*100);
-		
+	public void run(MainWindow mw){
+		mw.setVisible(false);
+		//Reset Parameters
+		Params.resetParams();
+		//Ask user which analysis wants to apply
+		int n = analysisSelectionDialog();
+		if(n<0){
+			mw.setVisible(true);
+			return;			
+		}
+		if(n==0)
+			analyzeFile();
+		else if(n==1){
+			//Create trials dictionary
+			Map<String,Trial> trials = CommonAnalysis.generateTrials("Motility");
+			analyzeDirectory(trials);
+		}
+		mw.setVisible(true);
 	}
 }

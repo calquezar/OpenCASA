@@ -22,11 +22,10 @@ public class Chemotaxis {
 	
 	public Chemotaxis() {}
 	
-	public int analysisSelectionDialog(){
-		Object[] options = {"RatioQ", "Bootstrapping"};
+	public int analysisSelectionDialog(Object[] options,String question,String title){
 		int n = JOptionPane.showOptionDialog(null,
-				"Which analysis do you want to apply to the data?",
-				"Choose one analysis",
+				question,
+				title,
 				JOptionPane.YES_NO_OPTION,
 				JOptionPane.QUESTION_MESSAGE,
 				null,     //do not use a custom Icon
@@ -141,18 +140,32 @@ public class Chemotaxis {
 		mw.setVisible(false);
 		//Reset Parameters
 		Params.resetParams();
-		//Ask user which analysis wants to apply
-		int n = analysisSelectionDialog();
-		if(n<0){
-			mw.setVisible(true);
-			return;			
+		//Ask if user wants to analyze a file or directory
+		Object[] options = {"File", "Directory"};
+		String question = "What do you want to analyze?";
+		String title = "Choose one analysis...";
+		int sel1 = analysisSelectionDialog(options,question,title);
+		if(sel1<0)
+			return;
+		else if(sel1==0){//File
+			
+		}else if(sel1==1){//Directory
+			//Ask user which analysis wants to apply
+			Object[] options2 = {"RatioQ", "Bootstrapping"};
+			question = "Which analysis do you want to apply to the data?";
+			title = "Choose one analysis";
+			int sel2 = analysisSelectionDialog(options2,question,title);
+			if(sel2<0){
+				mw.setVisible(true);
+				return;			
+			}
+			//Create trials dictionary
+			Map<String,Trial> trials = CommonAnalysis.generateTrials("Chemotaxis");
+			if(sel2==0)
+				ratioQ(trials);
+			else if(sel2==1)
+				bootstrapping(trials);			
 		}
-		//Create trials dictionary
-		Map<String,Trial> trials = CommonAnalysis.generateTrials("Chemotaxis");
-		if(n==0)
-			ratioQ(trials);
-		else if(n==1)
-			bootstrapping(trials);
 		mw.setVisible(true);
 	}
 	
