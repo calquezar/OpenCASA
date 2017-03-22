@@ -42,10 +42,6 @@ public class Params {
 	public static boolean drawOrigTrajectories = true;
 	//Draw original trajectories
 	public static boolean drawAvgTrajectories = true;
-	//Draw relative trajectories
-	public static boolean drawRelTrajectories = true;
-	
-//	public static ResultsTable rTable = new ResultsTable();
 	
 	public static SList controlTracks = new SList();
 	public static SList conditionTracks = new SList();
@@ -71,9 +67,6 @@ public class Params {
 		calcMeanMotilityParameters = false;
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
-		drawRelTrajectories = true;
-	
-//		rTable = new ResultsTable();
 		
 		controlTracks = new SList();
 		conditionTracks = new SList();	

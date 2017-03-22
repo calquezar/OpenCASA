@@ -210,14 +210,14 @@ public class Motility {
 		//Reset Parameters
 		Params.resetParams();
 		//Ask user which analysis wants to apply
-		int n = analysisSelectionDialog();
-		if(n<0){
+		int userSelection = analysisSelectionDialog();
+		if(userSelection<0){
 			mw.setVisible(true);
 			return;			
 		}
-		if(n==0)
+		if(userSelection==0)
 			analyzeFile();
-		else if(n==1)
+		else if(userSelection==1)
 			analyzeDirectory();
 		mw.setVisible(true);
 	}

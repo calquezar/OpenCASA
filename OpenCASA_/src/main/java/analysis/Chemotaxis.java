@@ -157,26 +157,28 @@ public class Chemotaxis {
 		Object[] options = {"File", "Directory"};
 		String question = "What do you want to analyze?";
 		String title = "Choose one analysis...";
-		int sel1 = analysisSelectionDialog(options,question,title);
-		if(sel1<0)
+		int userSelection1 = analysisSelectionDialog(options,question,title);
+		if( userSelection1<0){
+			mw.setVisible(true);
 			return;
-		else if(sel1==0){//File
+		}
+		else if( userSelection1==0){//File
 			analyzeFile();
-		}else if(sel1==1){//Directory
+		}else if( userSelection1==1){//Directory
 			//Ask user which analysis wants to apply
 			Object[] options2 = {"RatioQ", "Bootstrapping"};
 			question = "Which analysis do you want to apply to the data?";
 			title = "Choose one analysis...";
-			int sel2 = analysisSelectionDialog(options2,question,title);
-			if(sel2<0){
+			int  userSelection2 = analysisSelectionDialog(options2,question,title);
+			if(userSelection2<0){
 				mw.setVisible(true);
-				return;			
+				return;	
 			}
 			//Create trials dictionary
 			Map<String,Trial> trials = CommonAnalysis.extractTrials("Chemotaxis");
-			if(sel2==0)
+			if(userSelection2==0)
 				ratioQ(trials);
-			else if(sel2==1)
+			else if(userSelection2==1)
 				bootstrapping(trials);			
 		}
 		mw.setVisible(true);

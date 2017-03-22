@@ -7,11 +7,15 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
+import java.util.List;
+import java.util.ListIterator;
 import java.util.Map;
 
 import javax.swing.JFileChooser;
 
+import data.Spermatozoon;
 import data.Trial;
+import ij.IJ;
 
 public abstract class Utils {
 	
@@ -46,6 +50,50 @@ public abstract class Utils {
 			return false;
 	}
 	
+	/******************************************************/
+	/**
+	 * @param theTracks 2D-ArrayList with all the tracks
+	 * @return String with the results in tsv format (tab separated values)
+	 */
+	public static String printXYCoords(List theTracks){
+		int nTracks = theTracks.size();
+		//strings to print out all of the data gathered, point by point
+		String xyPts = " ";		
+		//initialize variables
+		double x1, y1, x2, y2;
+		int trackNr=0;
+		int displayTrackNr=0;
+		int line=1;
+		String output = "Line" + "\tTrack" + "\tRelative_Frame" + "\tX" + "\tY";
+		//loop through all sperm tracks
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			int frame = 0;
+			trackNr++;
+			IJ.showProgress((double)trackNr/nTracks);
+			IJ.showStatus("Analyzing Tracks...");
+			List bTrack=(List) iT.next();
+			//keeps track of the current track
+			displayTrackNr++;
+			ListIterator jT=bTrack.listIterator();
+			Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
+			Spermatozoon firstSpermatozoon=new Spermatozoon();
+			firstSpermatozoon.copy(oldSpermatozoon);
+			
+			//For each instant (Spermatozoon) in the track
+			String outputline = "";
+			for (;jT.hasNext();){ 
+				Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
+				xyPts = "\t"+displayTrackNr + "\t"+ frame + "\t" + (int)newSpermatozoon.x + "\t" + (int)newSpermatozoon.y;
+				frame++;
+				oldSpermatozoon=newSpermatozoon;
+				outputline += "\n" + line + xyPts;
+				line++;
+			}
+			output+=outputline;				
+		}
+		return output;
+	}
+
 	public static Map<String,Trial> readTrials(){
 		Map<String,Trial> trials = null;
 		try {
@@ -58,7 +106,6 @@ public abstract class Utils {
 		} catch (Exception e) {e.printStackTrace();}
 		return trials;
 	}
-
 	public static void saveTrials(Map<String,Trial> trials){
 	    
 		String filename = "";
@@ -95,6 +142,7 @@ public abstract class Utils {
 		}
 		return null;
 	}
+	
 	/**
 	 * @return String
 	 */	
@@ -109,5 +157,5 @@ public abstract class Utils {
 		  return folder.getAbsolutePath();	
 		}
 		return null;
-	}	
+	}
 }
