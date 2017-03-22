@@ -9,10 +9,10 @@ import data.Params;
 import data.SList;
 import data.Spermatozoon;
 
-public abstract class Filters {
+public abstract class SignalProcessing {
 
-	static int countMotileSperm = 0;
-	static int countNonMotileSperm = 0;
+//	static int countMotileSperm = 0;
+//	static int countNonMotileSperm = 0;
 	
 	
 	/******************************************************/

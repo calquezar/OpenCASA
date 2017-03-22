@@ -11,7 +11,7 @@ import gui.MessageWindow;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 import utils.ComputerVision;
-import utils.Filters;
+import utils.SignalProcessing;
 import utils.Utils;
 
 public abstract class CommonAnalysis {
@@ -44,7 +44,7 @@ public abstract class CommonAnalysis {
 		// * (We have to filter the tracks list because not all of them are valid)
 		//************************************************************
 		System.out.println("filterTracks...");
-		theTracks = Filters.filterTracks(theTracks);	
+		theTracks = SignalProcessing.filterTracks(theTracks);
 		return theTracks;
 	}
 	

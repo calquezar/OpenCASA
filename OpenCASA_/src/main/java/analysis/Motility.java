@@ -12,7 +12,7 @@ import data.Params;
 import data.Trial;
 import gui.MainWindow;
 import ij.measure.ResultsTable;
-import utils.Filters;
+import utils.SignalProcessing;
 import utils.Paint;
 
 public class Motility {
@@ -148,7 +148,7 @@ public class Motility {
 		//Calculate values for each track
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			List aTrack=(List)iT.next();
-			List avgTrack = Filters.movingAverage(aTrack);
+			List avgTrack = SignalProcessing.movingAverage(aTrack);
 			float length = (float)aTrack.size();
 			// VSL
 			float vsl_value = Kinematics.vsl(aTrack);

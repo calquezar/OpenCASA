@@ -15,7 +15,7 @@
 //import data.Trial;
 //import ij.IJ;
 //import ij.measure.ResultsTable;
-//import utils.Filters;
+//import utils.SignalProcessing;
 //
 //public class ChFunctions__ {
 //

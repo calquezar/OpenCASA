@@ -35,7 +35,7 @@ public abstract class Paint {
 		//Variables used to draw chemotactic cone
 		int trackNr=0;
 		int displayTrackNr=0;	
-		SList avgTracks = Filters.averageTracks(theTracks);
+		SList avgTracks = SignalProcessing.averageTracks(theTracks);
 		//Draw on each frame
 		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
 			IJ.showProgress((double)iFrame/nFrames);
@@ -216,7 +216,7 @@ public abstract class Paint {
 	 */
 	public static void drawChemotaxis(SList theTracks,float ratioQ,float ratioSL,int width,int height,String sampleID){
 
-		SList avgTracks = Filters.averageTracks(theTracks);
+		SList avgTracks = SignalProcessing.averageTracks(theTracks);
 		int upRes = 1;
 		String strPart;
 		//Variables used to draw chemotactic cone

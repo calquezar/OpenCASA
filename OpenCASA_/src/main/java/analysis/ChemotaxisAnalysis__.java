@@ -25,7 +25,7 @@ package analysis;
 //import plugins.AVI_Reader;
 //import utils.ComputerVision;
 //import utils.Output;
-//import utils.Filters;
+//import utils.SignalProcessing;
 //
 //public class ChemotaxisAnalysis {
 //	
@@ -100,12 +100,12 @@ package analysis;
 //		// * (We have to filter the tracks list because not all of them are valid)
 //		//************************************************************
 //		System.out.println("filterTracks...");
-//		theTracks = Filters.filterTracks(theTracks);
+//		theTracks = SignalProcessing.filterTracks(theTracks);
 //		//************************************************************
 //		// * Average the tracks 
 //		//************************************************************
 //		System.out.println("averageTracks...");
-//		SList avgTracks = Filters.averageTracks(theTracks);	
+//		SList avgTracks = SignalProcessing.averageTracks(theTracks);	
 //		//************************************************************ 
 //		// * Calculate output
 //		//************************************************************
@@ -136,7 +136,7 @@ package analysis;
 //		
 //		//To calculate Ratio-Q we have to decimate all tracks
 ////		System.out.println("decimateTracks...");
-//		List decimatedTracks = Filters.decimateTracks(avgTracks,Params.decimationFactor);
+//		List decimatedTracks = SignalProcessing.decimateTracks(avgTracks,Params.decimationFactor);
 //		// Chemotaxis ratios
 ////		System.out.println("CalculateRatioQ...");
 //		float ratioQ = ChFunctions__.calculateRatioQ(avgTracks);

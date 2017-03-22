@@ -10,7 +10,7 @@
 //import ij.measure.ResultsTable;
 //import utils.ComputerVision;
 //import utils.Output;
-//import utils.Filters;
+//import utils.SignalProcessing;
 //
 //public class MotilityAnalysis__ {
 //	
@@ -45,11 +45,11 @@
 //				// * Filter the tracks list
 //				// * (We have to filter the tracks list because not all of them are valid)
 //				//************************************************************
-//				theTracks = Filters.filterTracks(theTracks);
+//				theTracks = SignalProcessing.filterTracks(theTracks);
 //				//************************************************************
 //				// * Average the tracks 
 //				//************************************************************
-//				List avgTracks = Filters.averageTracks(theTracks);	
+//				List avgTracks = SignalProcessing.averageTracks(theTracks);	
 //				//************************************************************ 
 //				// * Calculate output
 //				//************************************************************
