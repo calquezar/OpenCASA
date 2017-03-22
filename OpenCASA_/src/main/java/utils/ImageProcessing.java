@@ -399,7 +399,7 @@ public class ImageProcessing implements Measurements {
 	 * @param ratioQ
 	 * @param ratioSL
 	 */
-	public static void drawChemotaxis(SList theTracks,float ratioQ,float ratioSL,int width,int height){
+	public static void drawChemotaxis(SList theTracks,float ratioQ,float ratioSL,int width,int height,String sampleID){
 
 		SList avgTracks = TrackFilters.averageTracks(theTracks);
 		int upRes = 1;
@@ -412,7 +412,7 @@ public class ImageProcessing implements Measurements {
 		ipRelTraj.fill();
 		//Draw cone used to clasify chemotactic trajectories
 		ipRelTraj.setColor(Color.green);
-		chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL);	
+		chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL,sampleID);	
 		
 		IJ.showStatus("Drawing Tracks...");
 	
@@ -451,7 +451,7 @@ public class ImageProcessing implements Measurements {
 	 * @param ratioQ 
 	 * @param ratioSL 
 	 */
-	public static void chemotaxisTemplate(ColorProcessor ip,int upRes,int numTracks,float ratioQ,float ratioSL){
+	public static void chemotaxisTemplate(ColorProcessor ip,int upRes,int numTracks,float ratioQ,float ratioSL,String sampleID){
 		// Alpha version of this method
 		ip.setLineWidth(4);
 		//center coords. of the cone used to clasify chemotactic trajectories
@@ -477,22 +477,30 @@ public class ImageProcessing implements Measurements {
 		ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		ip.moveTo(10, 30);
 		ip.setColor(Color.blue);
+		ip.drawString("Sample: ");		
+		ip.moveTo(70, 30);
+		ip.setColor(Color.black);
+		ip.drawString(sampleID);		
+		ip.moveTo(10, 50);
+		ip.setColor(Color.blue);
 		ip.drawString("Number of tracks: ");
-		ip.moveTo(135, 30);
+		ip.moveTo(135, 50);
 		ip.setColor(Color.black);
 		ip.drawString(""+numTracks);
-		ip.moveTo(10, 50);
+		ip.moveTo(10, 70);
 		ip.setColor(Color.red);
 		ip.drawString("Ratio-Q: ");
-		ip.moveTo(70, 50);
+		ip.moveTo(70, 70);
 		ip.setColor(Color.black);
 		ip.drawString(""+ratioQ*100+"%");
-		ip.moveTo(10, 70);
+		ip.moveTo(10, 90);
 		ip.setColor(new Color(34,146,234));
 		ip.drawString("Ratio-SL: ");
-		ip.moveTo(80, 70);
+		ip.moveTo(80, 90);
 		ip.setColor(Color.black);
 		ip.drawString(""+ratioSL*100+"%");
+		
+
 	}
 	
 	static int doOffset (int center, int maxSize, int displacement) {

@@ -10,6 +10,8 @@ public class Trial implements Serializable{
 	public String source = "";//the name of the source file
 	public SList tracks= null;
 	public ImagePlus imp = null;
+	public int width = 0;
+	public int height = 0;
 	
 	public Trial(){}
 	
@@ -25,5 +27,13 @@ public class Trial implements Serializable{
 		this.source = source;
 		this.tracks = t;
 		this.imp = imp;
+	}
+	public Trial(String ID, String type,String source,SList t,int width,int height){
+		this.ID = ID;
+		this.type = type;
+		this.source = source;
+		this.tracks = t;
+		this.width = width;
+		this.height = height;
 	}
 }

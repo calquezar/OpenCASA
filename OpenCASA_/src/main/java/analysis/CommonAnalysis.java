@@ -69,7 +69,7 @@ public abstract class CommonAnalysis {
 		SList t = analyze(imp);
 		Trial tr = null;
 		if(analysis.equals("Chemotaxis"))
-			tr = new Trial(trialID,trialType,filename,t);
+			tr = new Trial(trialID,trialType,filename,t,imp.getWidth(),imp.getHeight());
 		else if(analysis.equals("Motility"))
 			tr = new Trial(trialID,trialType,filename,t,imp);
 		return tr;

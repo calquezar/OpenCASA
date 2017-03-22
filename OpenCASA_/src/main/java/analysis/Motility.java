@@ -68,27 +68,34 @@ public class Motility {
 		Map<String,Trial> trials = CommonAnalysis.extractTrials("Motility");
 		if(trials==null)
 			return;
-		Set keySet = trials.keySet();	
+		Set keySet = trials.keySet();
+		ResultsTable rtIndividual = new ResultsTable();
+		ResultsTable rtAverage = new ResultsTable();
 		for (Iterator k=keySet.iterator();k.hasNext();) {
 			String key= (String)k.next();
 			Trial trial = (Trial)trials.get(key);
 			// Motility results
-			calculateMotility(trial.tracks);
-			calculateAverageMotility(Params.rTable,trial.tracks.size());
+			calculateMotility(rtIndividual,trial.tracks,trial.source);
+			calculateAverageMotility(rtAverage,trial.tracks.size(),trial.source);
 		}
-		Params.rTable.show("Results");
+		rtIndividual.show("Individual Motility");
+		rtAverage.show("Average Motility");
 	}
 	
 	public void analyzeFile(){
 		Trial trial = CommonAnalysis.extractTrial("Motility");
 		if(trial==null)
 			return;
-		calculateMotility(trial.tracks);
-		calculateAverageMotility(Params.rTable,trial.tracks.size());
+		ResultsTable rtIndividual = new ResultsTable();
+		calculateMotility(rtIndividual,trial.tracks,trial.source);
+		ResultsTable rtAverage = new ResultsTable();
+		calculateAverageMotility(rtAverage,trial.tracks.size(),trial.source);
 		//Draw trajectories
 		trial.imp.show();
 		ImageProcessing.draw(trial.imp, trial.tracks);
-		Params.rTable.show("Results");
+		rtIndividual.show("Individual Motility");
+		rtAverage.show("Average Motility");
+//		Params.rTable.show("Results");
 	}
 	
 	/******************************************************/
@@ -96,7 +103,7 @@ public class Motility {
 	 * @param nTracks - 
 	 * @return 
 	 */	
-	public void calculateAverageMotility(ResultsTable rt,int nTracks){
+	public void calculateAverageMotility(ResultsTable rt,int nTracks,String sampleID){
 		
 		rt.incrementCounter();
 		float vsl_mean = total_vsl/nTracks;
@@ -128,7 +135,7 @@ public class Motility {
 		rt.addValue("MAD Mean (degrees)",mad_mean);
 		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
 		rt.addValue("Motility (%)",motility_value*100);
-		
+		rt.addValue("SampleID", sampleID);
 	}
 	
 	/******************************************************/
@@ -136,9 +143,7 @@ public class Motility {
 	 * @param theTracks 2d-Array with all tracks
 	 * @return 
 	 */	
-	public ResultsTable calculateMotility(List theTracks){
-		
-		ResultsTable rt = new ResultsTable();
+	public void calculateMotility(ResultsTable rt,List theTracks,String sampleID){
 		
 		//Calculate values for each track
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
@@ -197,8 +202,8 @@ public class Motility {
 			rt.addValue("DANCE (um^2/s)",dance_value);
 			rt.addValue("MAD (degrees)",mad_value);
 			rt.addValue("Progress Motility",progressMotility_value);
+			rt.addValue("sampleID", sampleID);
 		}
-		return rt;
 	}
 	public void run(MainWindow mw){
 		mw.setVisible(false);

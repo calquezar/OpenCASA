@@ -15,6 +15,7 @@ import data.Spermatozoon;
 import data.Trial;
 import gui.MainWindow;
 import ij.IJ;
+import utils.ImageProcessing;
 
 public class Chemotaxis {
 
@@ -136,6 +137,16 @@ public class Chemotaxis {
 		Params.rTable.show("Results");
 	}
 	
+	public void analyzeFile(){
+		Trial trial = CommonAnalysis.extractTrial("Chemotaxis");
+		if(trial==null)
+			return;
+		//Draw trajectories
+		float ratioQ = calculateRatioQ(trial.tracks);
+		float ratioSL = calculateRatioSL(trial.tracks);
+		ImageProcessing.drawChemotaxis(trial.tracks,ratioQ,ratioSL,trial.width,trial.height,trial.source);
+	}
+	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
 		//Reset Parameters
@@ -148,7 +159,7 @@ public class Chemotaxis {
 		if(sel1<0)
 			return;
 		else if(sel1==0){//File
-			
+			analyzeFile();
 		}else if(sel1==1){//Directory
 			//Ask user which analysis wants to apply
 			Object[] options2 = {"RatioQ", "Bootstrapping"};
