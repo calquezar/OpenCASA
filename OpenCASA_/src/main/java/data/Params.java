@@ -45,7 +45,7 @@ public class Params {
 	//Draw relative trajectories
 	public static boolean drawRelTrajectories = true;
 	
-	public static ResultsTable rTable = new ResultsTable();
+//	public static ResultsTable rTable = new ResultsTable();
 	
 	public static SList controlTracks = new SList();
 	public static SList conditionTracks = new SList();
@@ -73,7 +73,7 @@ public class Params {
 		drawAvgTrajectories = true;
 		drawRelTrajectories = true;
 	
-		rTable = new ResultsTable();
+//		rTable = new ResultsTable();
 		
 		controlTracks = new SList();
 		conditionTracks = new SList();	

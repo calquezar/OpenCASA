@@ -15,6 +15,7 @@ import data.Spermatozoon;
 import data.Trial;
 import gui.MainWindow;
 import ij.IJ;
+import ij.measure.ResultsTable;
 import utils.ImageProcessing;
 
 public class Chemotaxis {
@@ -126,15 +127,16 @@ public class Chemotaxis {
 		if(trials==null)
 			return;
 		Set keySet = trials.keySet();	
+		ResultsTable rtRatios = new ResultsTable();
 		for (Iterator k=keySet.iterator();k.hasNext();) {
 			String key= (String)k.next();
 			Trial trial = (Trial)trials.get(key);
 		  	System.out.println("key: "+key);
 		  	float ratioQ = calculateRatioQ(trial.tracks);
 		  	float ratioSL = calculateRatioSL(trial.tracks);
-		  	setQResults(trial.source,ratioQ,ratioSL,trial.tracks.size());
+		  	setQResults(rtRatios,trial.source,ratioQ,ratioSL,trial.tracks.size());
 		}
-		Params.rTable.show("Results");
+		rtRatios.show("Chemotaxis results");
 	}
 	
 	public void analyzeFile(){
@@ -180,29 +182,29 @@ public class Chemotaxis {
 		mw.setVisible(true);
 	}
 	
-	public void setQResults(String filename,float ratioQ, float ratioSL, int nTracks){
+	public void setQResults(ResultsTable rt,String filename,float ratioQ, float ratioSL, int nTracks){
 		
 //		System.out.println("filename: "+filename);
 		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
 //		System.out.println("parts[0]: "+parts[0]);
 //		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
 		
-		Params.rTable.incrementCounter();	
-		Params.rTable.addValue("nTracks",nTracks);
-		Params.rTable.addValue("RatioQ",ratioQ);
-		Params.rTable.addValue("RatioSL",ratioSL);		
-		Params.rTable.addValue("Type",parts[4]);
+		rt.incrementCounter();	
+		rt.addValue("nTracks",nTracks);
+		rt.addValue("RatioQ",ratioQ);
+		rt.addValue("RatioSL",ratioSL);		
+		rt.addValue("Type",parts[4]);
 		if(parts[4].equals("Q")){
-			Params.rTable.addValue("Hormone",parts[5]);
-			Params.rTable.addValue("Concentration",parts[6]);
+			rt.addValue("Hormone",parts[5]);
+			rt.addValue("Concentration",parts[6]);
 		}else{
-			Params.rTable.addValue("Hormone","-");
-			Params.rTable.addValue("Concentration","-");
+			rt.addValue("Hormone","-");
+			rt.addValue("Concentration","-");
 		}
-		Params.rTable.addValue("Direction (Degrees)",Params.angleDirection);
-		Params.rTable.addValue("ArcChemotaxis (Degrees)",Params.angleChemotaxis);
-		Params.rTable.addValue("ID",parts[3]);
-		Params.rTable.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
-		Params.rTable.addValue("Filename",filename);
+		rt.addValue("Direction (Degrees)",Params.angleDirection);
+		rt.addValue("ArcChemotaxis (Degrees)",Params.angleChemotaxis);
+		rt.addValue("ID",parts[3]);
+		rt.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
+		rt.addValue("Filename",filename);
 	}	
 }
