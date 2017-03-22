@@ -45,34 +45,12 @@ public class Params {
 	//Draw relative trajectories
 	public static boolean drawRelTrajectories = true;
 	
-	
-	//Motility variables
-	public static float total_vsl = 0;
-	public static float total_vcl = 0;
-	public static float total_vap = 0;
-	public static float total_lin = 0;
-	public static float total_wob = 0;
-	public static float total_str = 0;
-	public static float total_alhMean = 0;
-	public static float total_alhMax = 0;
-	public static float total_bcf = 0;
-	public static float total_dance = 0;
-	public static float total_mad = 0;
-	public static float countProgressiveSperm = 0;
-	public static int countMotileSperm = 0;
-	public static int countNonMotileSperm = 0;
-	
 	public static ResultsTable rTable = new ResultsTable();
 	
 	public static SList controlTracks = new SList();
 	public static SList conditionTracks = new SList();
 	//Used to calculate OR ratios
 	public static int MAXINSTANGLES = 20000;
-//	public static int typeTrial = 0; // 0-Control; 1-chemotaxis(10pM);2-chemotaxis(100pM);3-chemotaxis(10nM)
-//	public static int nPlusControl = 0;
-//	public static int nMinusControl = 0;
-//	public static int nPlusCondition= 0;
-//	public static int nMinusCondition = 0;
 	
 	public static void resetParams(){
 		minSize = 20;
@@ -94,32 +72,10 @@ public class Params {
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
 		drawRelTrajectories = true;
-		
-		//Motility variables
-	    total_vsl = 0;
-		total_vcl = 0;
-		total_vap = 0;
-		total_lin = 0;
-		total_wob = 0;
-		total_str = 0;
-		total_alhMean = 0;
-		total_alhMax = 0;
-		total_bcf = 0;
-		total_dance = 0;
-		total_mad = 0;
-		countProgressiveSperm = 0;
-		countMotileSperm = 0;
-		countNonMotileSperm = 0;
 	
 		rTable = new ResultsTable();
 		
 		controlTracks = new SList();
-		conditionTracks = new SList();
-		
-//		typeTrial = 0;
-//		nPlusControl = 0;
-//		nMinusControl = 0;
-//		nPlusCondition= 0;
-//		nMinusCondition = 0;		
+		conditionTracks = new SList();	
 	}
 }

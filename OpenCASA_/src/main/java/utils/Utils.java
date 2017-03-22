@@ -20,7 +20,6 @@ public abstract class Utils {
 	 */	
 	public static String[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("C:\\VIDEOS QUIMIOTAXIS\\Validación voluntarios\\"));
 		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
 		chooser.setDialogTitle("Select a folder...");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
@@ -87,7 +86,6 @@ public abstract class Utils {
 	 */	
 	public static String selectFile(){
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("C:\\"));
 		chooser.setDialogTitle("Select a file...");
 		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);
@@ -102,7 +100,6 @@ public abstract class Utils {
 	 */	
 	public static String selectFolder(){
 		JFileChooser chooser = new JFileChooser();
-		chooser.setCurrentDirectory(new java.io.File("C:\\"));
 		chooser.setDialogTitle("Select a folder...");
 		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		chooser.setAcceptAllFileFilterUsed(false);

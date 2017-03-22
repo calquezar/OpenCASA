@@ -7,9 +7,7 @@ import java.util.ListIterator;
 import data.Params;
 import data.Spermatozoon;
 
-public class MotFunctions__ {
-
-	
+public class Kinematics {
 	/******************************************************/
 	/**
 	 * @param track - a track

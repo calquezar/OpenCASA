@@ -202,16 +202,13 @@ public class ImageProcessing implements Measurements {
 		}
 		return theTracks;
 	}
-	
 	/******************************************************/
 	/**
 	 * @param imp 
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @param avgTracks 2D-ArrayList with the averaged tracks
-	 * @param ratioQ
-	 * @param ratioSL
 	 */
-	public static void draw(ImagePlus imp,List theTracks,List avgTracks,float ratioQ,float ratioSL){
+	public static void draw(ImagePlus imp,SList theTracks){
 		int nFrames = imp.getStackSize();
 		ImageStack stack = imp.getStack();	
 		if (imp.getCalibration().scaled()) {
@@ -222,16 +219,8 @@ public class ImageProcessing implements Measurements {
 		String strPart;
 		//Variables used to draw chemotactic cone
 		int trackNr=0;
-		int displayTrackNr=0;
-		//We create another ImageProcesor to draw chemotactic cone and relative trajectories
-		ColorProcessor ipRelTraj = new ColorProcessor(imp.getWidth()*upRes, imp.getHeight()*upRes);
-		ipRelTraj.setColor(Color.white);
-		ipRelTraj.fill();
-		if(Params.drawRelTrajectories){
-			//Draw cone used to clasify chemotactic trajectories
-			ipRelTraj.setColor(Color.green);
-			drawChemotaxisResume(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL);	
-		}	
+		int displayTrackNr=0;	
+		SList avgTracks = TrackFilters.averageTracks(theTracks);
 		//Draw on each frame
 		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
 			IJ.showProgress((double)iFrame/nFrames);
@@ -241,7 +230,6 @@ public class ImageProcessing implements Measurements {
 			int color;
 		    int xHeight=stack.getHeight();
 		    int yWidth=stack.getWidth();
-	
 			ImageProcessor ip = stack.getProcessor(iFrame);		
 			ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
 			trackNr=0;
@@ -282,11 +270,6 @@ public class ImageProcessing implements Measurements {
 				//Variables used to 
 				Spermatozoon firstSpermatozoon = new Spermatozoon();
 				firstSpermatozoon.copy(oldSpermatozoon);
-				int xCenter = ip.getWidth()/2;
-				int yCenter = ip.getHeight()/2;
-				int xLast = xCenter;
-				int yLast = yCenter;
-				
 				for (;jT.hasNext();) {
 					Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
 					ip.setValue(color);
@@ -294,21 +277,170 @@ public class ImageProcessing implements Measurements {
 						ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
 						ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
 					}
-					if(Params.drawRelTrajectories){
-						ipRelTraj.setColor(Color.black);
-						ipRelTraj.moveTo(xLast,yLast);
-						xLast = (int)(newSpermatozoon.x-firstSpermatozoon.x+xCenter);
-						yLast = (int)(newSpermatozoon.y-firstSpermatozoon.y+yCenter);
-						ipRelTraj.lineTo(xLast*upRes, yLast*upRes);
-					}
 					oldSpermatozoon=newSpermatozoon;
 				}
-				ipRelTraj.drawOval(xLast-3,yLast,6,6);
 			}							
 		}
 		imp.updateAndRepaintWindow();
-		if(Params.drawRelTrajectories)
-			new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
+	}	
+//	/******************************************************/
+//	/**
+//	 * @param imp 
+//	 * @param theTracks 2D-ArrayList with all the tracks
+//	 * @param avgTracks 2D-ArrayList with the averaged tracks
+//	 * @param ratioQ
+//	 * @param ratioSL
+//	 */
+//	public static void draw(ImagePlus imp,List theTracks,List avgTracks,float ratioQ,float ratioSL){
+//		int nFrames = imp.getStackSize();
+//		ImageStack stack = imp.getStack();	
+//		if (imp.getCalibration().scaled()) {
+//			IJ.showMessage("MultiTracker", "Cannot display paths if image is spatially calibrated");
+//			return;
+//		}
+//		int upRes = 1;
+//		String strPart;
+//		//Variables used to draw chemotactic cone
+//		int trackNr=0;
+//		int displayTrackNr=0;
+//		//We create another ImageProcesor to draw chemotactic cone and relative trajectories
+//		ColorProcessor ipRelTraj = new ColorProcessor(imp.getWidth()*upRes, imp.getHeight()*upRes);
+//		ipRelTraj.setColor(Color.white);
+//		ipRelTraj.fill();
+//		if(Params.drawRelTrajectories){
+//			//Draw cone used to clasify chemotactic trajectories
+//			ipRelTraj.setColor(Color.green);
+//			chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL);	
+//		}	
+//		//Draw on each frame
+//		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
+//			IJ.showProgress((double)iFrame/nFrames);
+//			IJ.showStatus("Drawing Tracks...");
+//			int trackCount2=0;
+//			int trackCount3=0;
+//			int color;
+//		    int xHeight=stack.getHeight();
+//		    int yWidth=stack.getWidth();
+//	
+//			ImageProcessor ip = stack.getProcessor(iFrame);		
+//			ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
+//			trackNr=0;
+//			displayTrackNr=0;
+//			for (ListIterator iT=theTracks.listIterator();iT.hasNext();) {
+//				trackNr++;
+//				trackCount2++;
+//				List zTrack=(ArrayList) iT.next();
+//				displayTrackNr++;
+//				ListIterator jT=zTrack.listIterator();
+//				Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
+//				color = 150;
+//				trackCount3++;
+//				for (;jT.hasNext();) {
+//					Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
+//					ip.setValue(color);
+//					if(Params.drawOrigTrajectories){
+//						ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
+//						ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
+//					}
+//					oldSpermatozoon=newSpermatozoon;
+//					//Draw track numbers
+//					if(newSpermatozoon.z==iFrame){
+//						strPart=""+displayTrackNr;
+//						ip.setColor(Color.black);
+//						// we could do someboundary testing here to place the labels better when we are close to the edge
+//						ip.moveTo((int)(oldSpermatozoon.x/Params.pixelWidth+0),doOffset((int)(oldSpermatozoon.y/Params.pixelHeight),yWidth,5) );
+//						ip.drawString(strPart);
+//					}
+//				}					
+//			}
+//			//Draw average paths
+//			color=0;
+//			for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
+//				List zTrack=(ArrayList) iT.next();
+//				ListIterator jT=zTrack.listIterator();
+//				Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
+//				//Variables used to 
+//				Spermatozoon firstSpermatozoon = new Spermatozoon();
+//				firstSpermatozoon.copy(oldSpermatozoon);
+//				int xCenter = ip.getWidth()/2;
+//				int yCenter = ip.getHeight()/2;
+//				int xLast = xCenter;
+//				int yLast = yCenter;
+//				
+//				for (;jT.hasNext();) {
+//					Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
+//					ip.setValue(color);
+//					if(Params.drawAvgTrajectories){
+//						ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
+//						ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
+//					}
+//					if(Params.drawRelTrajectories){
+//						ipRelTraj.setColor(Color.black);
+//						ipRelTraj.moveTo(xLast,yLast);
+//						xLast = (int)(newSpermatozoon.x-firstSpermatozoon.x+xCenter);
+//						yLast = (int)(newSpermatozoon.y-firstSpermatozoon.y+yCenter);
+//						ipRelTraj.lineTo(xLast*upRes, yLast*upRes);
+//					}
+//					oldSpermatozoon=newSpermatozoon;
+//				}
+//				ipRelTraj.drawOval(xLast-3,yLast,6,6);
+//			}							
+//		}
+//		imp.updateAndRepaintWindow();
+//		if(Params.drawRelTrajectories)
+//			new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
+//	}
+	
+	/******************************************************/
+	/**
+	 * @param imp 
+	 * @param theTracks 2D-ArrayList with all the tracks
+	 * @param avgTracks 2D-ArrayList with the averaged tracks
+	 * @param ratioQ
+	 * @param ratioSL
+	 */
+	public static void drawChemotaxis(SList theTracks,float ratioQ,float ratioSL,int width,int height){
+
+		SList avgTracks = TrackFilters.averageTracks(theTracks);
+		int upRes = 1;
+		String strPart;
+		//Variables used to draw chemotactic cone
+		int displayTrackNr=0;
+		//We create another ImageProcesor to draw chemotactic cone and relative trajectories
+		ColorProcessor ipRelTraj = new ColorProcessor(width*upRes, height*upRes);
+		ipRelTraj.setColor(Color.white);
+		ipRelTraj.fill();
+		//Draw cone used to clasify chemotactic trajectories
+		ipRelTraj.setColor(Color.green);
+		chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL);	
+		
+		IJ.showStatus("Drawing Tracks...");
+	
+		//Draw average paths
+		int color = 0;
+		for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
+			List zTrack=(ArrayList) iT.next();
+			ListIterator jT=zTrack.listIterator();
+			Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
+			//Variables used to 
+			Spermatozoon firstSpermatozoon = new Spermatozoon();
+			firstSpermatozoon.copy(oldSpermatozoon);
+			int xCenter = width/2;
+			int yCenter = height/2;
+			int xLast = xCenter;
+			int yLast = yCenter;
+			for (;jT.hasNext();) {
+				Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
+				ipRelTraj.setColor(Color.black);
+				ipRelTraj.moveTo(xLast,yLast);
+				xLast = (int)(newSpermatozoon.x-firstSpermatozoon.x+xCenter);
+				yLast = (int)(newSpermatozoon.y-firstSpermatozoon.y+yCenter);
+				ipRelTraj.lineTo(xLast*upRes, yLast*upRes);
+				oldSpermatozoon=newSpermatozoon;
+			}
+			ipRelTraj.drawOval(xLast-3,yLast,6,6);
+		}
+		new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
 	}
 	
 	/******************************************************/
@@ -319,13 +451,12 @@ public class ImageProcessing implements Measurements {
 	 * @param ratioQ 
 	 * @param ratioSL 
 	 */
-	public static void drawChemotaxisResume(ColorProcessor ip,int upRes,int numTracks,float ratioQ,float ratioSL){
+	public static void chemotaxisTemplate(ColorProcessor ip,int upRes,int numTracks,float ratioQ,float ratioSL){
 		// Alpha version of this method
 		ip.setLineWidth(4);
 		//center coords. of the cone used to clasify chemotactic trajectories
 		int xCenter = ip.getWidth()/2;
 		int yCenter = ip.getHeight()/2;
-		
 		float upperAngle = (float)(Params.angleDirection + Params.angleChemotaxis/2 + 360)%360;
 		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
 		float lowerAngle = (float)(Params.angleDirection - Params.angleChemotaxis/2 + 360)%360;
@@ -341,10 +472,8 @@ public class ImageProcessing implements Measurements {
 		ip.lineTo((int)upperLineX*upRes, (int)upperLineY*upRes);		
 		ip.moveTo((int)xCenter*upRes, (int)yCenter*upRes);
 		ip.lineTo((int)lowerLineX*upRes, (int)lowerLineY*upRes);
-		
 		//Reses line width
 		ip.setLineWidth(1);
-		
 		ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		ip.moveTo(10, 30);
 		ip.setColor(Color.blue);

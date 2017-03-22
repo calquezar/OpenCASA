@@ -153,14 +153,14 @@ public class Chemotaxis {
 			//Ask user which analysis wants to apply
 			Object[] options2 = {"RatioQ", "Bootstrapping"};
 			question = "Which analysis do you want to apply to the data?";
-			title = "Choose one analysis";
+			title = "Choose one analysis...";
 			int sel2 = analysisSelectionDialog(options2,question,title);
 			if(sel2<0){
 				mw.setVisible(true);
 				return;			
 			}
 			//Create trials dictionary
-			Map<String,Trial> trials = CommonAnalysis.generateTrials("Chemotaxis");
+			Map<String,Trial> trials = CommonAnalysis.extractTrials("Chemotaxis");
 			if(sel2==0)
 				ratioQ(trials);
 			else if(sel2==1)

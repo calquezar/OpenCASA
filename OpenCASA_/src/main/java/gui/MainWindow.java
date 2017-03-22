@@ -2,6 +2,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -13,6 +14,8 @@ import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
@@ -61,7 +64,8 @@ public class MainWindow extends JFrame {
 					ma = new Motility();
 					try{ma.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
-				}
+				}else if(label.equals("Viability")){
+				}else if(label.equals("Morphometry")){}
 			}
 		} );		
 		panel.add(btn, c);

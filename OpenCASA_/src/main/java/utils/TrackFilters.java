@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import analysis.MotFunctions__;
+import analysis.Kinematics;
 import data.Params;
 import data.SList;
 import data.Spermatozoon;
@@ -79,9 +79,9 @@ public class TrackFilters {
 		
 		if (track.size() >= Params.minTrackLength) {		
 			List avgTrack = movingAverage(track);
-			float vap = MotFunctions__.vcl(avgTrack);
-			//MotFunctions__ filter
-			if(MotFunctions__.vcl(track)>Params.vclMin && (vap>0) && (distance>20)){
+			float vap = Kinematics.vcl(avgTrack);
+			//Kinematics filter
+			if(Kinematics.vcl(track)>Params.vclMin && (vap>0) && (distance>20)){
 				//Update motile sperm count
 				countMotileSperm++;
 				return true;

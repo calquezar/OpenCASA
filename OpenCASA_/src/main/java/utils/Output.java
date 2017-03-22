@@ -3,7 +3,7 @@ package utils;
 import java.util.List;
 import java.util.ListIterator;
 
-import analysis.MotFunctions__;
+import analysis.Kinematics;
 import data.Params;
 import data.Spermatozoon;
 import ij.IJ;

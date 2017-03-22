@@ -7,6 +7,7 @@ import java.util.Map;
 
 import data.SList;
 import data.Trial;
+import gui.MessageWindow;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 import utils.ImageProcessing;
@@ -18,7 +19,7 @@ public abstract class CommonAnalysis {
 	/**
 	 * @param ImagePlus imp
 	 */
-	public static SList analyze(ImagePlus imp,String filename){
+	public static SList analyze(ImagePlus imp){
 		
 		System.out.println("converToGrayScale...");
  		ImageProcessing.convertToGrayscale(imp);
@@ -47,7 +48,33 @@ public abstract class CommonAnalysis {
 		return theTracks;
 	}
 	
-	public static Map<String,Trial> generateTrials(String analysis){
+	public static Trial extractTrial(String analysis){
+		
+		String absoluteFilePath = Utils.selectFile();
+		if(absoluteFilePath==null)
+			return null;
+		String[] parts = absoluteFilePath.split("\\\\");
+		String filename = parts[parts.length-1];
+		String trialType = "";
+		String trialID = "";
+		if(analysis.equals("Chemotaxis")){
+			trialType = getTrialType(filename);
+			trialID = getID(filename);
+		}else if(analysis.equals("Motility"))
+			trialID = filename;
+		AVI_Reader ar = new  AVI_Reader();
+		ar.run(absoluteFilePath);
+		ImagePlus imp = ar.getImagePlus();
+		//Analyze the video
+		SList t = analyze(imp);
+		Trial tr = null;
+		if(analysis.equals("Chemotaxis"))
+			tr = new Trial(trialID,trialType,filename,t);
+		else if(analysis.equals("Motility"))
+			tr = new Trial(trialID,trialType,filename,t,imp);
+		return tr;
+	}
+	public static Map<String,Trial> extractTrials(String analysis){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
 		String[] listOfFiles = Utils.getFileNames();
@@ -70,9 +97,9 @@ public abstract class CommonAnalysis {
 					//Load video
 					AVI_Reader ar = new  AVI_Reader();
 					ar.run(absoluteFilePath);
-					final ImagePlus imp = ar.getImagePlus();
+					ImagePlus imp = ar.getImagePlus();
 					//Analyze the video
-					SList t = analyze(imp,filename);
+					SList t = analyze(imp);
 					Trial tr = new Trial(trialID,trialType,filename,t);
 					trials.put(trialID, tr);
 					//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();							
