@@ -1,8 +1,5 @@
 package data;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import ij.measure.ResultsTable;
 
 public class Params {

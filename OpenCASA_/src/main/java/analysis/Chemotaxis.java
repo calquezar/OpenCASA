@@ -1,31 +1,20 @@
 package analysis;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
 
-import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
 import data.Params;
-import data.SList;
 import data.Spermatozoon;
 import data.Trial;
 import gui.MainWindow;
 import ij.IJ;
-import ij.ImagePlus;
-import plugins.AVI_Reader;
-import utils.Utils;
 
 public class Chemotaxis {
 
@@ -46,47 +35,15 @@ public class Chemotaxis {
 		return n;
 	}
 	
-	public void ratioQ(Map<String,Trial> trials){
-		
-		if(trials==null)
-			return;
-		Set keySet = trials.keySet();	
-		for (Iterator k=keySet.iterator();k.hasNext();) {
-			String key= (String)k.next();
-			Trial trial = (Trial)trials.get(key);
-		  	System.out.println("key: "+key);
-		  	float ratioQ = calculateRatioQ(trial.tracks);
-		  	float ratioSL = calculateRatioSL(trial.tracks);
-		  	setQResults(trial.source,ratioQ,ratioSL,trial.tracks.size());
-		}
-		Params.rTable.show("Results");
-	}
 	public void bootstrapping(Map<String,Trial> trials){
 		
 	}
-	
-	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
-		mw.setVisible(false);
-		Map<String,Trial> trials;
-		int n = analysisSelectionDialog();
-		if(n<0){
-			mw.setVisible(true);
-			return;			
-		}else
-			trials = CommonAnalysis.generateTrials();
-		if(n==0)
-			ratioQ(trials);
-		else if(n==1)
-			bootstrapping(trials);
-		mw.setVisible(true);
-	}
-	
 	/******************************************************/
 	/** Fuction to calculate the Ratio-Q
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return the Ratio-Q
 	 */
-	public static float calculateRatioQ(List theTracks){
+	public float calculateRatioQ(List theTracks){
 		
 		float nPos=0; //Number of shifts in the chemoattractant direction
 		float nNeg=0; //Number of shifts in other direction
@@ -130,7 +87,7 @@ public class Chemotaxis {
 	 * @param theTracks 2D-ArrayList that stores all the tracks
 	 * @return RatioSL
 	 */
-	public static float calculateRatioSL(List theTracks){
+	public float calculateRatioSL(List theTracks){
 		
 		float nPos=0; //Number of shifts in the chemoattractant direction
 		float nNeg=0; //Number of shifts in other direction
@@ -164,7 +121,39 @@ public class Chemotaxis {
 		return ratioSL;
 	}
 	
-	public static void setQResults(String filename,float ratioQ, float ratioSL, int nTracks){
+	public void ratioQ(Map<String,Trial> trials){
+		
+		if(trials==null)
+			return;
+		Set keySet = trials.keySet();	
+		for (Iterator k=keySet.iterator();k.hasNext();) {
+			String key= (String)k.next();
+			Trial trial = (Trial)trials.get(key);
+		  	System.out.println("key: "+key);
+		  	float ratioQ = calculateRatioQ(trial.tracks);
+		  	float ratioSL = calculateRatioSL(trial.tracks);
+		  	setQResults(trial.source,ratioQ,ratioSL,trial.tracks.size());
+		}
+		Params.rTable.show("Results");
+	}
+	
+	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
+		mw.setVisible(false);
+		Map<String,Trial> trials;
+		int n = analysisSelectionDialog();
+		if(n<0){
+			mw.setVisible(true);
+			return;			
+		}else
+			trials = CommonAnalysis.generateTrials();
+		if(n==0)
+			ratioQ(trials);
+		else if(n==1)
+			bootstrapping(trials);
+		mw.setVisible(true);
+	}
+	
+	public void setQResults(String filename,float ratioQ, float ratioSL, int nTracks){
 		
 //		System.out.println("filename: "+filename);
 		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
