@@ -13,7 +13,7 @@ public abstract class SignalProcessing {
 
 //	static int countMotileSperm = 0;
 //	static int countNonMotileSperm = 0;
-	
+
 	
 	/******************************************************/
 	/** Fuction to calculate the average path of all tracks using a moving average filter
