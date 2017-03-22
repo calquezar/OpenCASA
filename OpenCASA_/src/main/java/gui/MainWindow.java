@@ -16,13 +16,13 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
-import analysis.MotilityAnalysis__;
+import analysis.Motility;
 
 public class MainWindow extends JFrame {
 
 	MainWindow mw;
 	Chemotaxis ch;
-	MotilityAnalysis__ ma;
+	Motility ma;
 	
 	/**
 	 * Constructor. The main graphical user interface is created.
@@ -58,9 +58,9 @@ public class MainWindow extends JFrame {
 					try {ch.run(mw);} 
 					catch (Exception e1) {e1.printStackTrace();}
 				}else if(label.equals("Motility")){
-//					ma = new MotilityAnalysis__();
-//					try{ma.run(mw);}
-//					catch(Exception e1){e1.printStackTrace();}
+					ma = new Motility();
+					try{ma.run(mw);}
+					catch(Exception e1){e1.printStackTrace();}
 				}
 			}
 		} );		

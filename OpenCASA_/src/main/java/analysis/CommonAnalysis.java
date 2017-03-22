@@ -47,7 +47,7 @@ public abstract class CommonAnalysis {
 		return theTracks;
 	}
 	
-	public static Map<String,Trial> generateTrials(){
+	public static Map<String,Trial> generateTrials(String analysis){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
 		String[] listOfFiles = Utils.getFileNames();
@@ -59,8 +59,14 @@ public abstract class CommonAnalysis {
 				if(Utils.isAVI(absoluteFilePath)){
 			    	String[] parts = absoluteFilePath.split("\\\\");
 					String filename = parts[parts.length-1];
-					String trialType = getTrialType(filename);
-					String trialID = getID(filename);
+					String trialType = "";
+					String trialID = "";
+					if(analysis.equals("Chemotaxis")){
+						trialType = getTrialType(filename);
+						trialID = getID(filename);
+					}else if(analysis.equals("Motility")){
+						trialID = filename;
+					}
 					//Load video
 					AVI_Reader ar = new  AVI_Reader();
 					ar.run(absoluteFilePath);

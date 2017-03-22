@@ -44,8 +44,6 @@ public class OpenCASA_ implements PlugIn {
 		System.setProperty("plugins.dir", pluginsDir);
 		// start ImageJ
 		new ImageJ();
-		//Reset Parameters
-		Params.resetParams();
 		// run the plugin
 		IJ.runPlugIn(clazz.getName(), "");
 	}

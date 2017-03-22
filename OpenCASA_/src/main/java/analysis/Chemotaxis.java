@@ -139,13 +139,16 @@ public class Chemotaxis {
 	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
-		Map<String,Trial> trials;
+		//Reset Parameters
+		Params.resetParams();
+		//Ask user which analysis wants to apply
 		int n = analysisSelectionDialog();
 		if(n<0){
 			mw.setVisible(true);
 			return;			
-		}else
-			trials = CommonAnalysis.generateTrials();
+		}
+		//Create trials dictionary
+		Map<String,Trial> trials = CommonAnalysis.generateTrials("Chemotaxis");
 		if(n==0)
 			ratioQ(trials);
 		else if(n==1)
