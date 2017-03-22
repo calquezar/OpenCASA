@@ -16,7 +16,7 @@ import data.Trial;
 import gui.MainWindow;
 import ij.IJ;
 import ij.measure.ResultsTable;
-import utils.ImageProcessing;
+import utils.Paint;
 
 public class Chemotaxis {
 
@@ -146,7 +146,7 @@ public class Chemotaxis {
 		//Draw trajectories
 		float ratioQ = calculateRatioQ(trial.tracks);
 		float ratioSL = calculateRatioSL(trial.tracks);
-		ImageProcessing.drawChemotaxis(trial.tracks,ratioQ,ratioSL,trial.width,trial.height,trial.source);
+		Paint.drawChemotaxis(trial.tracks,ratioQ,ratioSL,trial.width,trial.height,trial.source);
 	}
 	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{

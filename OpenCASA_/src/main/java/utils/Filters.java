@@ -9,7 +9,7 @@ import data.Params;
 import data.SList;
 import data.Spermatozoon;
 
-public class TrackFilters {
+public abstract class Filters {
 
 	static int countMotileSperm = 0;
 	static int countNonMotileSperm = 0;

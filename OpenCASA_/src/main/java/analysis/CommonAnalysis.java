@@ -10,8 +10,8 @@ import data.Trial;
 import gui.MessageWindow;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
-import utils.ImageProcessing;
-import utils.TrackFilters;
+import utils.ComputerVision;
+import utils.Filters;
 import utils.Utils;
 
 public abstract class CommonAnalysis {
@@ -22,29 +22,29 @@ public abstract class CommonAnalysis {
 	public static SList analyze(ImagePlus imp){
 		
 		System.out.println("converToGrayScale...");
- 		ImageProcessing.convertToGrayscale(imp);
+ 		ComputerVision.convertToGrayscale(imp);
 		//************************************************************ 
 		// * Automatic Thresholding
 		//************************************************************
  		System.out.println("thresholdStack...");
-		ImageProcessing.thresholdStack(imp);
+		ComputerVision.thresholdStack(imp);
 		//************************************************************ 
 		// * Record particle positions for each frame in an ArrayList
 		//************************************************************
 		System.out.println("detectSpermatozoa...");
-		List[] theParticles = ImageProcessing.detectSpermatozoa(imp);
+		List[] theParticles = ComputerVision.detectSpermatozoa(imp);
 		//************************************************************ 
 		// * Now assemble tracks out of the spermatozoa lists
 		// * Also record to which track a particle belongs in ArrayLists
 		//************************************************************
 		System.out.println("identifyTracks...");
-		SList theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
+		SList theTracks = ComputerVision.idenfityTracks(theParticles,imp.getStackSize());
 		//************************************************************ 
 		// * Filter the tracks list
 		// * (We have to filter the tracks list because not all of them are valid)
 		//************************************************************
 		System.out.println("filterTracks...");
-		theTracks = TrackFilters.filterTracks(theTracks);	
+		theTracks = Filters.filterTracks(theTracks);	
 		return theTracks;
 	}
 	

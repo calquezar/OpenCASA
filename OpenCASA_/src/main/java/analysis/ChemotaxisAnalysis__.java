@@ -23,9 +23,9 @@ package analysis;
 //import ij.IJ;
 //import ij.ImagePlus;
 //import plugins.AVI_Reader;
-//import utils.ImageProcessing;
+//import utils.ComputerVision;
 //import utils.Output;
-//import utils.TrackFilters;
+//import utils.Filters;
 //
 //public class ChemotaxisAnalysis {
 //	
@@ -78,34 +78,34 @@ package analysis;
 //	public SList analyze(ImagePlus imp,String filename){
 //		
 //		System.out.println("converToGrayScale...");
-// 		ImageProcessing.convertToGrayscale(imp);
+// 		ComputerVision.convertToGrayscale(imp);
 //		//************************************************************ 
 //		// * Auto-Threshold Video
 //		//************************************************************
 // 		System.out.println("thresholdStack...");
-//		ImageProcessing.thresholdStack(imp);
+//		ComputerVision.thresholdStack(imp);
 //		//************************************************************ 
 //		// * Record particle positions for each frame in an ArrayList
 //		//************************************************************
 //		System.out.println("detectSpermatozoa...");
-//		List[] theParticles = ImageProcessing.detectSpermatozoa(imp);
+//		List[] theParticles = ComputerVision.detectSpermatozoa(imp);
 //		//************************************************************ 
 //		// * Now assemble tracks out of the particle lists
 //		// * Also record to which track a particle belongs in ArrayLists
 //		//************************************************************
 //		System.out.println("identifyTracks...");
-//		SList theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
+//		SList theTracks = ComputerVision.idenfityTracks(theParticles,imp.getStackSize());
 //		//************************************************************ 
 //		// * Filter the tracks list
 //		// * (We have to filter the tracks list because not all of them are valid)
 //		//************************************************************
 //		System.out.println("filterTracks...");
-//		theTracks = TrackFilters.filterTracks(theTracks);
+//		theTracks = Filters.filterTracks(theTracks);
 //		//************************************************************
 //		// * Average the tracks 
 //		//************************************************************
 //		System.out.println("averageTracks...");
-//		SList avgTracks = TrackFilters.averageTracks(theTracks);	
+//		SList avgTracks = Filters.averageTracks(theTracks);	
 //		//************************************************************ 
 //		// * Calculate output
 //		//************************************************************
@@ -136,7 +136,7 @@ package analysis;
 //		
 //		//To calculate Ratio-Q we have to decimate all tracks
 ////		System.out.println("decimateTracks...");
-//		List decimatedTracks = TrackFilters.decimateTracks(avgTracks,Params.decimationFactor);
+//		List decimatedTracks = Filters.decimateTracks(avgTracks,Params.decimationFactor);
 //		// Chemotaxis ratios
 ////		System.out.println("CalculateRatioQ...");
 //		float ratioQ = ChFunctions__.calculateRatioQ(avgTracks);
@@ -148,7 +148,7 @@ package analysis;
 //		//************************************************************ 
 //		// * Draw tracks at each frame
 //		//************************************************************
-//		//ImageProcessing.draw(imp,theTracks,avgTracks,ratioQ,ratioSL);
+//		//ComputerVision.draw(imp,theTracks,avgTracks,ratioQ,ratioSL);
 //		System.out.println("Analysis finished for video: "+filename);
 //		
 //		

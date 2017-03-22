@@ -12,8 +12,8 @@ import data.Params;
 import data.Trial;
 import gui.MainWindow;
 import ij.measure.ResultsTable;
-import utils.ImageProcessing;
-import utils.TrackFilters;
+import utils.Filters;
+import utils.Paint;
 
 public class Motility {
 
@@ -92,7 +92,7 @@ public class Motility {
 		calculateAverageMotility(rtAverage,trial.tracks.size(),trial.source);
 		//Draw trajectories
 		trial.imp.show();
-		ImageProcessing.draw(trial.imp, trial.tracks);
+		Paint.draw(trial.imp, trial.tracks);
 		rtIndividual.show("Individual Motility");
 		rtAverage.show("Average Motility");
 //		Params.rTable.show("Results");
@@ -148,7 +148,7 @@ public class Motility {
 		//Calculate values for each track
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			List aTrack=(List)iT.next();
-			List avgTrack = TrackFilters.movingAverage(aTrack);
+			List avgTrack = Filters.movingAverage(aTrack);
 			float length = (float)aTrack.size();
 			// VSL
 			float vsl_value = Kinematics.vsl(aTrack);

@@ -8,9 +8,9 @@
 //import ij.IJ;
 //import ij.ImagePlus;
 //import ij.measure.ResultsTable;
-//import utils.ImageProcessing;
+//import utils.ComputerVision;
 //import utils.Output;
-//import utils.TrackFilters;
+//import utils.Filters;
 //
 //public class MotilityAnalysis__ {
 //	
@@ -27,29 +27,29 @@
 //		new Thread(new Runnable() {
 //		     public void run() {
 //		    	
-//		 		ImageProcessing.convertToGrayscale(imp);
+//		 		ComputerVision.convertToGrayscale(imp);
 //				//************************************************************ 
 //				// * Auto-Threshold Video
 //				//************************************************************
-//				ImageProcessing.thresholdStack(imp);
+//				ComputerVision.thresholdStack(imp);
 //				//************************************************************ 
 //				// * Record particle positions for each frame in an ArrayList
 //				//************************************************************
-//				List[] theParticles = ImageProcessing.detectSpermatozoa(imp);
+//				List[] theParticles = ComputerVision.detectSpermatozoa(imp);
 //				//************************************************************ 
 //				// * Now assemble tracks out of the particle lists
 //				// * Also record to which track a particle belongs in ArrayLists
 //				//************************************************************
-//				SList theTracks = ImageProcessing.idenfityTracks(theParticles,imp.getStackSize());
+//				SList theTracks = ComputerVision.idenfityTracks(theParticles,imp.getStackSize());
 //				//************************************************************ 
 //				// * Filter the tracks list
 //				// * (We have to filter the tracks list because not all of them are valid)
 //				//************************************************************
-//				theTracks = TrackFilters.filterTracks(theTracks);
+//				theTracks = Filters.filterTracks(theTracks);
 //				//************************************************************
 //				// * Average the tracks 
 //				//************************************************************
-//				List avgTracks = TrackFilters.averageTracks(theTracks);	
+//				List avgTracks = Filters.averageTracks(theTracks);	
 //				//************************************************************ 
 //				// * Calculate output
 //				//************************************************************
@@ -72,7 +72,7 @@
 //				//************************************************************ 
 //				// * Draw tracks at each frame
 //				//************************************************************
-//				ImageProcessing.draw(impOrig,theTracks,avgTracks,0,0);			    	 
+//				ComputerVision.draw(impOrig,theTracks,avgTracks,0,0);			    	 
 //		     }
 //		}).start();	
 //	}
