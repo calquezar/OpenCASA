@@ -43,8 +43,8 @@ public class Params {
 	//Draw original trajectories
 	public static boolean drawAvgTrajectories = true;
 	
-	public static SList controlTracks = new SList();
-	public static SList conditionTracks = new SList();
+//	public static SList controlTracks = new SList();
+//	public static SList conditionTracks = new SList();
 	//Used to calculate OR ratios
 	public static int MAXINSTANGLES = 20000;
 	
@@ -68,7 +68,7 @@ public class Params {
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
 		
-		controlTracks = new SList();
-		conditionTracks = new SList();	
+//		controlTracks = new SList();
+//		conditionTracks = new SList();	
 	}
 }

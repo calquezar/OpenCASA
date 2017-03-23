@@ -76,7 +76,7 @@ public abstract class Analyzer {
 		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
 		String[] parts = filename.split("-");
 		String type = getTrialType(filename);
-		return parts[0]+parts[1]+parts[2]+parts[3]+type;
+		return parts[0]+parts[1]+parts[2]+type+parts[3];
 	}
 	
 	public static Trial getTrialFromAVI(String analysis,String absoluteFilePath){
@@ -122,7 +122,7 @@ public abstract class Analyzer {
 		if(parts[4].equals("Q")){
 			String hormone = parts[5];
 			String concentration = parts[6];
-			return hormone+concentration;
+			return "Q"+hormone+concentration;
 		}else{
 			return "C"; //If It's not chemotaxis, then it's control
 		}
