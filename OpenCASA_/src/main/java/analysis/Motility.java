@@ -30,8 +30,6 @@ public class Motility {
 	private float total_dance = 0;
 	private float total_mad = 0;
 	private float countProgressiveSperm = 0;
-	private int countMotileSperm = 0;
-	private int countNonMotileSperm = 0;
 	
 	public Motility() {}
 
@@ -48,8 +46,6 @@ public class Motility {
 		total_dance = 0;
 		total_mad = 0;
 		countProgressiveSperm = 0;
-		countMotileSperm = 0;
-		countNonMotileSperm = 0;
 	}
 	public int analysisSelectionDialog(){
 		Object[] options = {"File", "Directory"};
@@ -65,7 +61,7 @@ public class Motility {
 	}
 	public void analyzeDirectory(){
 		//Create trials dictionary
-		Map<String,Trial> trials = CommonAnalysis.extractTrials("Motility");
+		Map<String,Trial> trials = CommonAnalysis.extractTrials("Motility-Directory");
 		if(trials==null)
 			return;
 		Set keySet = trials.keySet();
@@ -75,21 +71,21 @@ public class Motility {
 			String key= (String)k.next();
 			Trial trial = (Trial)trials.get(key);
 			// Motility results
-			calculateMotility(rtIndividual,trial.tracks,trial.source);
-			calculateAverageMotility(rtAverage,trial.tracks.size(),trial.source);
+			calculateMotility(rtIndividual,trial);
+			calculateAverageMotility(rtAverage,trial);
 		}
 		rtIndividual.show("Individual Motility");
 		rtAverage.show("Average Motility");
 	}
 	
 	public void analyzeFile(){
-		Trial trial = CommonAnalysis.extractTrial("Motility");
+		Trial trial = CommonAnalysis.extractTrial("Motility-File");
 		if(trial==null)
 			return;
 		ResultsTable rtIndividual = new ResultsTable();
-		calculateMotility(rtIndividual,trial.tracks,trial.source);
+		calculateMotility(rtIndividual,trial);
 		ResultsTable rtAverage = new ResultsTable();
-		calculateAverageMotility(rtAverage,trial.tracks.size(),trial.source);
+		calculateAverageMotility(rtAverage,trial);
 		//Draw trajectories
 		trial.imp.show();
 		Paint.draw(trial.imp, trial.tracks);
@@ -103,9 +99,10 @@ public class Motility {
 	 * @param nTracks - 
 	 * @return 
 	 */	
-	public void calculateAverageMotility(ResultsTable rt,int nTracks,String sampleID){
+	public void calculateAverageMotility(ResultsTable rt,Trial trial){
 		
-		rt.incrementCounter();
+		
+		float nTracks = trial.tracks.size();
 		float vsl_mean = total_vsl/nTracks;
 		float vcl_mean = total_vcl/nTracks;
 		float vap_mean = total_vap/nTracks;
@@ -120,8 +117,11 @@ public class Motility {
 		// % progressive Motile sperm
 		float progressiveMotPercent = countProgressiveSperm/(float)nTracks;			
 		// % motility
+		int countMotileSperm = trial.motileSperm[0];
+		int countNonMotileSperm = trial.motileSperm[1];
 		float motility_value = (float)countMotileSperm/((float)(countMotileSperm+countNonMotileSperm));
 		
+		rt.incrementCounter();
 		rt.addValue("VSL Mean (um/s)",vsl_mean);
 		rt.addValue("VCL Mean (um/s)",vcl_mean);
 		rt.addValue("VAP Mean (um/s)",vap_mean);
@@ -135,7 +135,7 @@ public class Motility {
 		rt.addValue("MAD Mean (degrees)",mad_mean);
 		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
 		rt.addValue("Motility (%)",motility_value*100);
-		rt.addValue("SampleID", sampleID);
+		rt.addValue("SampleID", trial.source);
 	}
 	
 	/******************************************************/
@@ -143,10 +143,10 @@ public class Motility {
 	 * @param theTracks 2d-Array with all tracks
 	 * @return 
 	 */	
-	public void calculateMotility(ResultsTable rt,List theTracks,String sampleID){
+	public void calculateMotility(ResultsTable rt,Trial trial){
 		
 		//Calculate values for each track
-		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+		for (ListIterator iT=trial.tracks.listIterator(); iT.hasNext();) {
 			List aTrack=(List)iT.next();
 			List avgTrack = SignalProcessing.movingAverage(aTrack);
 			float length = (float)aTrack.size();
@@ -202,7 +202,7 @@ public class Motility {
 			rt.addValue("DANCE (um^2/s)",dance_value);
 			rt.addValue("MAD (degrees)",mad_value);
 			rt.addValue("Progress Motility",progressMotility_value);
-			rt.addValue("sampleID", sampleID);
+			rt.addValue("sampleID", trial.source);
 		}
 	}
 	public void run(MainWindow mw){

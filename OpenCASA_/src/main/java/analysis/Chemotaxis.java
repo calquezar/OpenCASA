@@ -140,7 +140,7 @@ public class Chemotaxis {
 	}
 	
 	public void analyzeFile(){
-		Trial trial = CommonAnalysis.extractTrial("Chemotaxis");
+		Trial trial = CommonAnalysis.extractTrial("Chemotaxis-File");
 		if(trial==null)
 			return;
 		//Draw trajectories
@@ -175,7 +175,7 @@ public class Chemotaxis {
 				return;	
 			}
 			//Create trials dictionary
-			Map<String,Trial> trials = CommonAnalysis.extractTrials("Chemotaxis");
+			Map<String,Trial> trials = CommonAnalysis.extractTrials("Chemotaxis-Directory");
 			if(userSelection2==0)
 				ratioQ(trials);
 			else if(userSelection2==1)

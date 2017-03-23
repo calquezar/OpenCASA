@@ -63,50 +63,62 @@ public abstract class SignalProcessing {
 		}
 		return decimatedTracks;
 	}
-	
 	/******************************************************/
-	/**
-	 * @param track ArrayList that stores a track
-	 * @return true if the track passes the filter. Otherwise returns false.
-	 */
-	public static boolean filterOneTrack (List track){
-		//Length filter
+	public static int[] motilityTest(SList theTracks){
+		int motile = 0;
+		int nonMotile = 0;
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			List aTrack=(ArrayList)iT.next();
+			if( motilityTest(aTrack))
+				motile++;
+			else
+				nonMotile++;
+		}
+		int[] results = new int[2];
+		results[0] = motile;
+		results[1] = nonMotile;
+		return results;
+	}
+	/******************************************************/
+	public static boolean motilityTest(List track){
 		
 		int nPoints = track.size();
 		Spermatozoon firstSpermatozoon = (Spermatozoon)track.get(0);
 		Spermatozoon lastSpermatozoon = (Spermatozoon)track.get(nPoints-1);
 		float distance = lastSpermatozoon.distance(firstSpermatozoon);
-		
-		if (track.size() >= Params.minTrackLength) {		
-			List avgTrack = movingAverage(track);
-			float vap = Kinematics.vcl(avgTrack);
-			//Kinematics filter
-			if(Kinematics.vcl(track)>Params.vclMin && (vap>0) && (distance>20)){
-				//Update motile sperm count
-				countMotileSperm++;
-				return true;
-			}
-			else{
-				//Update non motile sperm count
-				countNonMotileSperm++;
-				return false;	
-			}
-		}
+		List avgTrack = movingAverage(track);
+		float vap = Kinematics.vcl(avgTrack)/Kinematics.vsl(avgTrack);
+		//Kinematics filter
+		if(Kinematics.vcl(track)>Params.vclMin && (distance>0) && (vap>0))
+			return true;
 		else
-			return false;
+			return false;	
 	}
-	
+
 	/******************************************************/
 	/**
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return 2D-ArrayList with all the tracks that have passed the filter
 	 */
-	public static SList filterTracks (SList theTracks){
-		
+	public static SList filterTracksByLength (SList theTracks){
 		SList filteredTracks = new SList();
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			List aTrack=(ArrayList)iT.next();
-			if(filterOneTrack(aTrack))
+			if(aTrack.size() >= Params.minTrackLength)
+				filteredTracks.add(aTrack);
+		}
+		return filteredTracks;
+	}
+	/******************************************************/
+	/**
+	 * @param theTracks 2D-ArrayList with all the tracks
+	 * @return 2D-ArrayList with all the tracks that have passed the filter
+	 */
+	public static SList filterTracksByMotility (SList theTracks){
+		SList filteredTracks = new SList();
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			List aTrack=(ArrayList)iT.next();
+			if(motilityTest(aTrack))
 				filteredTracks.add(aTrack);
 		}
 		return filteredTracks;
