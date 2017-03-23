@@ -14,7 +14,7 @@ import utils.ComputerVision;
 import utils.SignalProcessing;
 import utils.Utils;
 
-public abstract class CommonAnalysis {
+public abstract class Analyzer {
 
 	/**
 	 * @param ImagePlus imp
