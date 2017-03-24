@@ -19,61 +19,55 @@ import gui.MainWindow;
 import ij.IJ;
 import ij.measure.ResultsTable;
 import utils.Paint;
+import utils.Utils;
 
 public class Chemotaxis {
 
 //	private Map<String, Trial> trials = new HashMap<String, Trial>();
 	
-	public Chemotaxis() {}
-	
-	public int analysisSelectionDialog(Object[] options,String question,String title){
-		int n = JOptionPane.showOptionDialog(null,
-				question,
-				title,
-				JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				null,     //do not use a custom Icon
-				options,  //the titles of buttons
-				options[0]); //default button title
-		return n;
+	public int[] countAngles(SList theTracks){
+		
+		int[] angles = {0,0};
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			List aTrack=(ArrayList)iT.next();
+			int[] instantAngles = countInstantDirections(aTrack);
+			angles[0]+=instantAngles[0];
+			angles[1]+=instantAngles[1];
+		}
+		return angles;
 	}
 	
-	public void analyzeFile(){
-		Trial trial = Analyzer.extractTrial("Chemotaxis-File");
-		if(trial==null)
-			return;
-		//Draw trajectories
-		float ratioQ = calculateRatioQ(trial.tracks);
-		float ratioSL = calculateRatioSL(trial.tracks);
-		Paint.drawChemotaxis(trial.tracks,ratioQ,ratioSL,trial.width,trial.height,trial.source);
-	}
-	public void bootstrapping(Map<String,Trial> trials){
-		
-		//Calculate minimum sample size
-		minSampleSize(trials);
-		
-		Set keys = trials.keySet();
-		List controlKeys = getControlKeys(keys);
-		SList controlTracks = mergeControlTracks(controlKeys,trials);
-		double thControl = ORThreshold(controlTracks);
-		for (Iterator k=controlKeys.iterator();k.hasNext();) {
-			String control= (String)k.next();
-			List conditionsKeys = getRelatedConditions(keys, control);
-			for (Iterator cond = conditionsKeys.iterator(); cond.hasNext();) {
-				String condition = (String)cond.next();
-				double OR = OR(control,condition,trials)
-				String ID = control.substring(0,control.length()-3);
-				System.out.println("OR: "+OR);
-				if(OR>(thControl))
-					IJ.log("POSITIVO: OR["+OR+"] - thControl["+thControl+"] - ID: "+ID);
-				else
-				  	IJ.log("NEGATIVO: OR["+OR+"] - thControl["+thControl+"] - ID: "+ID);				
+	public int[] countInstantDirections(List track){
+		int nPos = 0;
+		int nNeg = 0;
+		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);
+		int nPoints = track.size();
+		for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
+			Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
+			Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
+			float diffX = newSpermatozoon.x-oldSpermatozoon.x;
+			float diffY = newSpermatozoon.y-oldSpermatozoon.y;
+			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
+			angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+			if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
+				angle = -(2*Math.PI-angle);			
+			if(Math.abs(angle)<angleChemotaxis){
+				nPos++;
+	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Positive: "+angle*180/Math.PI);
+			}
+			else if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
+				nNeg++;
+	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Negative: "+angle*180/Math.PI);
 			}
 		}
-		
+		int[] results = new int[3];
+		results[0] = nPos;
+		results[1] = nNeg;
+		return results;
 	}
 	
-	public static void minSampleSize(Map<String, Trial> trials){
+	public void minSampleSize(Map<String, Trial> trials){
 	
 		Set keySet = trials.keySet();
 		List keys = new ArrayList();
@@ -90,46 +84,172 @@ public class Chemotaxis {
 		}
 		Params.MAXINSTANGLES = minimum;
 	}
-	
-	public SList mergeControlTracks(List controlKeys, Map<String, Trial> trials){
+	public double OR(String control,String condition,Map<String,Trial> trials){
 		
-	  SList tracks = new SList();
-	  for (Iterator k=controlKeys.iterator();k.hasNext();) {
-		  String key= (String)k.next();
-		  Trial trial = (Trial)trials.get(key);
-		  tracks.addAll(trial.tracks);
-	  }		
-	  return tracks;
+		Trial trialControl = (Trial)trials.get(control);
+		SList controlTracks = trialControl.tracks;
+		Trial trialCondition = (Trial)trials.get(condition);
+		SList conditionTracks =  trialCondition.tracks;
+		
+		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+
+		int count=0,index=0;
+		//Control Ratio
+		while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
+//		while(index<controlTracks.size()){
+			int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
+			denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+			denominatorValues[1]+=(countInstDirections[0]+countInstDirections[1]); 	        
+			count+=countInstDirections[0]+countInstDirections[1];
+			index++;
+		}
+	
+//		System.out.println("Count denominator angles: "+denominatorValues[1]);
+	//	System.out.println("conditionTracks.size(): "+conditionTracks.size());
+	
+	//	java.util.Collections.shuffle(conditionTracks);
+	
+		//Condition Ratio
+		count=0;index=0;
+		while((count<Params.MAXINSTANGLES)&&(index<conditionTracks.size())){
+//		while(index<conditionTracks.size()){
+			int[] countInstDirections = countInstantDirections((List)conditionTracks.get(index));
+			numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+			numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);		        
+			count+=countInstDirections[0]+countInstDirections[1];
+			index++;
+		}
+//		System.out.println("Count numerator angles: "+numeratorValues[1]);
+	
+		double numeratorRatio = numeratorValues[0]/numeratorValues[1];
+		double denominatorRatio = denominatorValues[0]/denominatorValues[1];
+		double OddsRatio = numeratorRatio/denominatorRatio;
+		
+	//	System.out.println("OR: "+OddsRatio+" ;nAngles: "+(numeratorValues[0]+numeratorValues[1]));
+		return OddsRatio;
 	}
 	
-	public List getControlKeys(Set keySet){
-		List controlList = new ArrayList();
-		for (Iterator k=keySet.iterator();k.hasNext();) {
-			String id = (String)k.next();
-			//Key is in format:
-			//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
-			//	for control: YYYYMMDD-[ID]-C
-			String[] parts = id.split("-");
-			if(parts[parts.length-1].charAt(0)=='C') //Control identifier
-				controlList.add(id);
+	public double ORThreshold(SList controlTracks){
+	
+		List<Double> ORs = new ArrayList<Double>();
+//		final int NUMSAMPLES = 100;
+		
+		for(int i=0;i<Params.NUMSAMPLES;i++){
+			double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+			double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
+			
+			System.out.println("Calculating Control Threshold. Shuffle "+i);
+			System.out.println("MAX INSTANT ANGLES: "+Params.MAXINSTANGLES);
+			
+			java.util.Collections.shuffle(controlTracks);
+			//Calculate numerator's odds value
+			int count=0,index=0;
+			while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
+				int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
+				count+=countInstDirections[0]+countInstDirections[1];
+				numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+				numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);			        
+				index++;
+			}
+			java.util.Collections.shuffle(controlTracks);			
+			//Calculate denominator's odds value
+			count=0;index=0;
+			while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
+				int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
+				denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
+				denominatorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
+				count+=countInstDirections[0]+countInstDirections[1];
+				index++;
+			}
+			double numeratorRatio = numeratorValues[0]/numeratorValues[1];
+			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
+			double OddsRatio = numeratorRatio/denominatorRatio;
+			ORs.add(OddsRatio);
+//			IJ.log(""+OddsRatio);
+//			System.out.println("OddsRatio: "+OddsRatio);
 		}
-		return controlList;
+		
+		Collections.sort(ORs);
+	//	System.out.println(ORs.toString());
+	//	System.out.println("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
+//		System.out.println("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
+//		System.out.println("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
+//		System.out.println("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
+//		System.out.println("p97: "+ORs.get((int) (NUMSAMPLES*0.97)));
+//		System.out.println("p99: "+ORs.get((int) (NUMSAMPLES*0.99)));
+	//	IJ.log("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
+	//	IJ.log("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
+	//	IJ.log("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
+	//	IJ.log("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
+		return ORs.get((int) (Params.NUMSAMPLES*0.95));
 	}
-	public List getRelatedConditions(Set keySet,String controlKey){
-		List conditionsList = new ArrayList();
-		//Key is in format:
-		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
-		//	for control: YYYYMMDD-[ID]-C	
-		String id = controlKey.substring(0, controlKey.length()-2);
-		id = id+'Q';
-		for (Iterator k=keySet.iterator();k.hasNext();) {
-			String key = (String)k.next();
-			//  prefix: YYYYMMDD-[ID]-Q
-			String prefix = key.substring(0, id.length()-1);
-			if(id.equals(prefix)) //Control identifier
-				conditionsList.add(key);
+	
+	public Chemotaxis() {}
+	
+	public int analysisSelectionDialog(Object[] options,String question,String title){
+		int n = JOptionPane.showOptionDialog(null,
+				question,
+				title,
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,     //do not use a custom Icon
+				options,  //the titles of buttons
+				options[0]); //default button title
+		return n;
+	}
+	public void analyzeFile(){
+		Trial trial = Analyzer.extractTrial("Chemotaxis-File");
+		if(trial==null)
+			return;
+		//Draw trajectories
+		float ratioQ = calculateRatioQ(trial.tracks);
+		float ratioSL = calculateRatioSL(trial.tracks);
+		Paint.drawChemotaxis(trial.tracks,ratioQ,ratioSL,trial.width,trial.height,trial.source);
+	}
+	public void bootstrapping(Map<String,Trial> trials){
+		
+		ResultsTable rtRatios = new ResultsTable();
+		//Calculate minimum sample size
+		minSampleSize(trials);
+		Set keys = trials.keySet();
+		List controlKeys = getControlKeys(keys);
+		SList controlTracks = mergeControlTracks(controlKeys,trials);
+		//Setting maximum number of subsamples used by bootstrapping method
+		Params.NUMSAMPLES=controlKeys.size();
+		//Calculating OR threshold via subsampling
+		double thControl = ORThreshold(controlTracks);
+		for (Iterator k=controlKeys.iterator();k.hasNext();) {
+			String control= (String)k.next();
+			List conditionsKeys = getRelatedConditions(keys, control);
+			for (Iterator cond = conditionsKeys.iterator(); cond.hasNext();) {
+				String condition = (String)cond.next();
+				double OR = OR(control,condition,trials);
+				String filename = trials.get(condition).source;
+				String ID = trials.get(condition).ID;
+				setBootstrappingResults(rtRatios, OR, thControl, ID, filename);
+			}
 		}
-		return conditionsList;
+		rtRatios.show("Bootstrapping Results");
+	}
+	
+	public void setBootstrappingResults(ResultsTable rt,double OR,double th,String ID, String filename){
+		
+//		System.out.println("filename: "+filename);
+		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
+//		System.out.println("parts[0]: "+parts[0]);
+//		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
+		
+		rt.incrementCounter();
+		rt.addValue("ID",ID);
+		rt.addValue("OR",OR);
+		rt.addValue("Threshold",th);
+		if(OR>(th))
+			rt.addValue("Result","POSITIVE");
+		else
+			rt.addValue("Result","-");
+		rt.addValue("Type", Analyzer.getTrialType(filename));
+		rt.addValue("Filename",filename);
 	}
 	/******************************************************/
 	/** Fuction to calculate the Ratio-Q
@@ -214,6 +334,50 @@ public class Chemotaxis {
 		return ratioSL;
 	}
 	
+	public List getControlKeys(Set keySet){
+		List controlList = new ArrayList();
+		for (Iterator k=keySet.iterator();k.hasNext();) {
+			String id = (String)k.next();
+			//Key is in format:
+			//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
+			//	for control: YYYYMMDD-[ID]-C
+			String[] parts = id.split("-");
+			if(parts[parts.length-1].charAt(0)=='C') //Control identifier
+				controlList.add(id);
+		}
+		return controlList;
+	}
+	
+	public List getRelatedConditions(Set keySet,String controlKey){
+		List conditionsList = new ArrayList();
+		//Key is in format:
+		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
+		//	for control: YYYYMMDD-[ID]-C	
+		String id = controlKey.substring(0, controlKey.length()-2);
+		id = id+"-Q";
+		for (Iterator k=keySet.iterator();k.hasNext();) {
+			String key = (String)k.next();
+			if(key.length()>=id.length()){
+			//  prefix: YYYYMMDD-[ID]-Q
+				String prefix = key.substring(0, id.length());
+				if(id.equals(prefix)) //Control identifier
+					conditionsList.add(key);
+			}
+		}
+		return conditionsList;
+	}
+	
+	public SList mergeControlTracks(List controlKeys, Map<String, Trial> trials){
+		
+	  SList tracks = new SList();
+	  for (Iterator k=controlKeys.iterator();k.hasNext();) {
+		  String key= (String)k.next();
+		  Trial trial = (Trial)trials.get(key);
+		  tracks.addAll(trial.tracks);
+	  }		
+	  return tracks;
+	}
+	
 	public void ratioQ(Map<String,Trial> trials){
 		
 		if(trials==null)
@@ -258,7 +422,12 @@ public class Chemotaxis {
 				return;	
 			}
 			//Create trials dictionary
-			Map<String,Trial> trials = Analyzer.extractTrials("Chemotaxis-Directory");
+			Map<String,Trial> trials = Utils.readTrials(); //Analyzer.extractTrials("Chemotaxis-Directory");//
+			if(trials==null){
+				mw.setVisible(true);
+				return;
+			}
+//			Utils.saveTrials(trials);
 			if(userSelection2==0)
 				ratioQ(trials);
 			else if(userSelection2==1)
@@ -266,7 +435,6 @@ public class Chemotaxis {
 		}
 		mw.setVisible(true);
 	}
-	
 	public void setQResults(ResultsTable rt,String filename,float ratioQ, float ratioSL, int nTracks){
 		
 //		System.out.println("filename: "+filename);
@@ -291,147 +459,5 @@ public class Chemotaxis {
 		rt.addValue("ID",parts[3]);
 		rt.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
 		rt.addValue("Filename",filename);
-	}
-	
-	public static double ORThreshold(SList controlTracks){
-	
-		List<Double> ORs = new ArrayList<Double>();
-		final int NUMSAMPLES = 1000;
-		
-		for(int i=0;i<NUMSAMPLES;i++){
-			double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
-			double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
-			
-			System.out.println("Calculating Control Threshold. Shuffle "+i);
-			System.out.println("MAX INSTANT ANGLES: "+Params.MAXINSTANGLES);
-			
-			java.util.Collections.shuffle(controlTracks);
-			//Calculate numerator's odds value
-			int count=0,index=0;
-			while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
-				int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
-				count+=countInstDirections[0]+countInstDirections[1];
-				numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-				numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);			        
-				index++;
-			}
-			java.util.Collections.shuffle(controlTracks);			
-			//Calculate denominator's odds value
-			count=0;index=0;
-			while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
-				int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
-				denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-				denominatorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]); //number of instantaneous angles in the opposite direction			        
-				count+=countInstDirections[0]+countInstDirections[1];
-				index++;
-			}
-			double numeratorRatio = numeratorValues[0]/numeratorValues[1];
-			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
-			double OddsRatio = numeratorRatio/denominatorRatio;
-			ORs.add(OddsRatio);
-			IJ.log(""+OddsRatio);
-//			System.out.println("OddsRatio: "+OddsRatio);
-		}
-		
-		Collections.sort(ORs);
-	//	System.out.println(ORs.toString());
-	//	System.out.println("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
-		System.out.println("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
-		System.out.println("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
-		System.out.println("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
-		System.out.println("p97: "+ORs.get((int) (NUMSAMPLES*0.97)));
-		System.out.println("p99: "+ORs.get((int) (NUMSAMPLES*0.99)));
-	//	IJ.log("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
-	//	IJ.log("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
-	//	IJ.log("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
-	//	IJ.log("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
-		return ORs.get((int) (NUMSAMPLES*0.95));
-	}
-	
-	public static int[] countAngles(SList theTracks){
-		
-		int[] angles = {0,0};
-		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
-			List aTrack=(ArrayList)iT.next();
-			int[] instantAngles = countInstantDirections(aTrack);
-			angles[0]+=instantAngles[0];
-			angles[1]+=instantAngles[1];
-		}
-		return angles;
-	}
-	
-	public static int[] countInstantDirections(List track){
-		int nPos = 0;
-		int nNeg = 0;
-		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
-		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);
-		int nPoints = track.size();
-		for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
-			Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
-			Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
-			float diffX = newSpermatozoon.x-oldSpermatozoon.x;
-			float diffY = newSpermatozoon.y-oldSpermatozoon.y;
-			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
-			angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
-			if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
-				angle = -(2*Math.PI-angle);			
-			if(Math.abs(angle)<angleChemotaxis){
-				nPos++;
-	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Positive: "+angle*180/Math.PI);
-			}
-			else if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
-				nNeg++;
-	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Negative: "+angle*180/Math.PI);
-			}
-		}
-		int[] results = new int[3];
-		results[0] = nPos;
-		results[1] = nNeg;
-		return results;
-	}
-	public static double OR(String control,String condition,Map<String,Trial> trials){
-		
-		Trial trialControl = (Trial)trials.get(control);
-		SList controlTracks = trialControl.tracks;
-		Trial trialCondition = (Trial)trials.get(condition);
-		SList conditionTracks =  trialCondition.tracks;
-		
-		double[] numeratorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
-		double[] denominatorValues = new double[]{0.0,0.0}; //[0] - positive directions; [1] - negative directions
-
-		int count=0,index=0;
-		//Control Ratio
-		while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
-//		while(index<controlTracks.size()){
-			int[] countInstDirections = countInstantDirections((List)controlTracks.get(index));
-			denominatorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			denominatorValues[1]+=(countInstDirections[0]+countInstDirections[1]); 	        
-			count+=countInstDirections[0]+countInstDirections[1];
-			index++;
-		}
-	
-		System.out.println("Count denominator angles: "+denominatorValues[1]);
-	//	System.out.println("conditionTracks.size(): "+conditionTracks.size());
-	
-	//	java.util.Collections.shuffle(conditionTracks);
-	
-		//Condition Ratio
-		count=0;index=0;
-		while((count<Params.MAXINSTANGLES)&&(index<conditionTracks.size())){
-//		while(index<conditionTracks.size()){
-			int[] countInstDirections = countInstantDirections((List)conditionTracks.get(index));
-			numeratorValues[0]+=(double)countInstDirections[0]; //number of instantaneous angles in the positive direction
-			numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);		        
-			count+=countInstDirections[0]+countInstDirections[1];
-			index++;
-		}
-		System.out.println("Count numerator angles: "+numeratorValues[1]);
-	
-		double numeratorRatio = numeratorValues[0]/numeratorValues[1];
-		double denominatorRatio = denominatorValues[0]/denominatorValues[1];
-		double OddsRatio = numeratorRatio/denominatorRatio;
-		
-	//	System.out.println("OR: "+OddsRatio+" ;nAngles: "+(numeratorValues[0]+numeratorValues[1]));
-		return OddsRatio;
 	}	
 }

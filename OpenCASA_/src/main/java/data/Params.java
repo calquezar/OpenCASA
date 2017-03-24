@@ -11,7 +11,7 @@ public class Params {
 	//maximum sperm size
 	public static float	maxSize = 200;
 	//minimum length of sperm track in frames
-	public static float 	minTrackLength = 50;
+	public static float 	minTrackLength = 15;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
 	public static float 	maxVelocity = 10;
 	//Window size for moving average method
@@ -43,15 +43,14 @@ public class Params {
 	//Draw original trajectories
 	public static boolean drawAvgTrajectories = true;
 	
-//	public static SList controlTracks = new SList();
-//	public static SList conditionTracks = new SList();
 	//Used to calculate OR ratios
 	public static int MAXINSTANGLES = 20000;
+	public static int NUMSAMPLES = 100;
 	
 	public static void resetParams(){
 		minSize = 20;
 		maxSize = 200;
-		minTrackLength = 50;
+		minTrackLength = 15;
 		maxVelocity = 10;
 		wSize = 9;
 		vclMin = 70;
