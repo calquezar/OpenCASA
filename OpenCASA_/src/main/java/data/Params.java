@@ -67,8 +67,6 @@ public class Params {
 		calcMeanMotilityParameters = false;
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
-		
-//		controlTracks = new SList();
-//		conditionTracks = new SList();	
+
 	}
 }

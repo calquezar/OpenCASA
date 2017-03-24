@@ -76,7 +76,10 @@ public abstract class Analyzer {
 		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
 		String[] parts = filename.split("-");
 		String type = getTrialType(filename);
-		return parts[0]+parts[1]+parts[2]+type+parts[3];
+		// ID's format:
+		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
+		//	for control: YYYYMMDD-[ID]-C
+		return parts[0]+parts[1]+parts[2]+'-'+parts[3]+'-'+type;
 	}
 	
 	public static Trial getTrialFromAVI(String analysis,String absoluteFilePath){
