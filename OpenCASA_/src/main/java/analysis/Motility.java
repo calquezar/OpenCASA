@@ -122,6 +122,7 @@ public class Motility {
 		float motility_value = (float)countMotileSperm/((float)(countMotileSperm+countNonMotileSperm));
 		
 		rt.incrementCounter();
+		rt.addValue("Motile trajectories",nTracks);
 		rt.addValue("VSL Mean (um/s)",vsl_mean);
 		rt.addValue("VCL Mean (um/s)",vcl_mean);
 		rt.addValue("VAP Mean (um/s)",vap_mean);

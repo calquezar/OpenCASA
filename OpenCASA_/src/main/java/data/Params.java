@@ -36,8 +36,8 @@ public class Params {
 	//print the xy co-ordinates for all tracks?
 	public static boolean printXY = false;
 	//Calculate motility parameters
-	public static boolean calcMotilityParameters = true;
-	public static boolean calcMeanMotilityParameters = true;
+//	public static boolean calcMotilityParameters = true;
+//	public static boolean calcMeanMotilityParameters = true;
 	//Draw original trajectories
 	public static boolean drawOrigTrajectories = true;
 	//Draw original trajectories
@@ -68,12 +68,12 @@ public class Params {
 //		drawAvgTrajectories = true;
 
 		// GOAT
-		minSize = 3;
-		maxSize = 15;
-		minTrackLength = 15;
+		minSize = 100; //um^2
+		maxSize = 10000;//um^2
+		minTrackLength = 5;
 		maxVelocity = 10;
 		wSize = 2;
-		vclMin = 10;
+		vclMin = 1;
 		decimationFactor = 1;
 		angleDirection = 0; 
 		angleChemotaxis = 60;
@@ -82,8 +82,8 @@ public class Params {
 		progressMotility = 80;
 		microPerPixel = 0.58;
 		printXY = false;
-		calcMotilityParameters = false;
-		calcMeanMotilityParameters = false;
+//		calcMotilityParameters = false;
+//		calcMeanMotilityParameters = false;
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
 	}

@@ -79,10 +79,13 @@ public abstract class ComputerVision implements Measurements {
 		// Initialize results table
 		ResultsTable rt = new ResultsTable();
 		rt.reset();
-
+		
+		int minSize = (int) (Math.sqrt(Params.minSize)/Params.microPerPixel);
+		int maxSize = (int) (Math.sqrt(Params.maxSize)/Params.microPerPixel);
+		
 		// create storage for Spermatozoa positions
 		List[] spermatozoa = new ArrayList[nFrames];
-
+		
 		//************************************************************* 
 		//* Record spermatozoa positions for each frame in an ArrayList
 		//*************************************************************/
@@ -90,7 +93,7 @@ public abstract class ComputerVision implements Measurements {
 		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
 			spermatozoa[iFrame-1]=new ArrayList();
 			rt.reset();
-			ParticleAnalyzer pa = new ParticleAnalyzer(options, measurements, rt, Params.minSize, Params.maxSize);
+			ParticleAnalyzer pa = new ParticleAnalyzer(options, measurements, rt, minSize, maxSize);
 			pa.analyze(imp, stack.getProcessor(iFrame));
 			float[] sxRes = rt.getColumn(ResultsTable.X_CENTROID);
 			float[] syRes = rt.getColumn(ResultsTable.Y_CENTROID);
