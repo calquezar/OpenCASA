@@ -12,7 +12,7 @@ public class Kinematics {
 	/**
 	 * @param track - a track
 	 * @param avgTrack - 
-	 * @return ALH (mean and max) (um/second)
+	 * @return ALH (mean and max) (um)
 	 */	
 	public static float[] alh(List track,List avgTrack){
 		

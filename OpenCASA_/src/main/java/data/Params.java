@@ -48,16 +48,36 @@ public class Params {
 	public static int NUMSAMPLES = 100;
 	
 	public static void resetParams(){
-		minSize = 20;
-		maxSize = 200;
+//		minSize = 20;
+//		maxSize = 200;
+//		minTrackLength = 20;
+//		maxVelocity = 15;
+//		wSize = 5;
+//		vclMin = 50;
+//		decimationFactor = 5;
+//		angleDirection = 0; 
+//		angleChemotaxis = 60;
+//		frameRate = 100;
+//		bcf_shift = 0;
+//		progressMotility = 80;
+//		microPerPixel = 0.58;
+//		printXY = false;
+//		calcMotilityParameters = false;
+//		calcMeanMotilityParameters = false;
+//		drawOrigTrajectories = true;
+//		drawAvgTrajectories = true;
+
+		// GOAT
+		minSize = 3;
+		maxSize = 15;
 		minTrackLength = 15;
 		maxVelocity = 10;
-		wSize = 9;
-		vclMin = 70;
-		decimationFactor = 4;
+		wSize = 2;
+		vclMin = 10;
+		decimationFactor = 1;
 		angleDirection = 0; 
-		angleChemotaxis = 90;
-		frameRate = 100;
+		angleChemotaxis = 60;
+		frameRate = 25;
 		bcf_shift = 0;
 		progressMotility = 80;
 		microPerPixel = 0.58;
@@ -66,6 +86,5 @@ public class Params {
 		calcMeanMotilityParameters = false;
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
-
 	}
 }

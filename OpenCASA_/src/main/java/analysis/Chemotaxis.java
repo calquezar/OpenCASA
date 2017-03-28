@@ -216,7 +216,7 @@ public class Chemotaxis {
 		List controlKeys = getControlKeys(keys);
 		SList controlTracks = mergeControlTracks(controlKeys,trials);
 		//Setting maximum number of subsamples used by bootstrapping method
-		Params.NUMSAMPLES=controlKeys.size();
+		//Params.NUMSAMPLES=controlKeys.size();
 		//Calculating OR threshold via subsampling
 		double thControl = ORThreshold(controlTracks);
 		for (Iterator k=controlKeys.iterator();k.hasNext();) {
@@ -422,7 +422,8 @@ public class Chemotaxis {
 				return;	
 			}
 			//Create trials dictionary
-			Map<String,Trial> trials = Utils.readTrials(); //Analyzer.extractTrials("Chemotaxis-Directory");//
+			Map<String,Trial> trials = Utils.readTrials();//Analyzer.extractTrials("Chemotaxis-Directory");//
+			//Utils.saveTrials(trials);
 			if(trials==null){
 				mw.setVisible(true);
 				return;
