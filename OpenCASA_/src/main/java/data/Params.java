@@ -1,8 +1,13 @@
 package data;
 
+import java.util.prefs.*;
+
 import ij.measure.ResultsTable;
 
 public class Params {
+	
+	// declare my variable at the top of my Java class
+	private static Preferences prefs;
 	
 	public static double	pixelWidth=1.0;
 	public static double pixelHeight=1.0;
@@ -11,18 +16,18 @@ public class Params {
 	//maximum sperm size
 	public static float	maxSize = 200;
 	//minimum length of sperm track in frames
-	public static float 	minTrackLength = 15;
+	public static int 	minTrackLength = 15;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
 	public static float 	maxVelocity = 10;
 	//Window size for moving average method
 	public static int wSize = 9;
 	//Motility filter for motile and non motile sperm
-	public static int vclMin = 70;
+	public static float vclMin = 70;
 	//Decimation factor
 	public static int decimationFactor = 4;
 	//Angles used to clasify chemotactic trajectories
 	public static float angleDirection = 0; 
-	public static float angleChemotaxis = 90;
+	public static float angleAmplitude = 90;
 	// frame rate
 	public static float frameRate = 100;
 	//parameters used to compute BCF (equivalent to decimation factor)
@@ -32,7 +37,7 @@ public class Params {
 	//Micrometers per pixel
 	// 10x ==> 0.58
 	// 40x ==> 0.1455
-	public static double microPerPixel = 0.58; //10x ISAS
+	public static double micronPerPixel = 0.58; //10x ISAS
 	//print the xy co-ordinates for all tracks?
 	public static boolean printXY = false;
 	//Calculate motility parameters
@@ -56,11 +61,11 @@ public class Params {
 //		vclMin = 50;
 //		decimationFactor = 5;
 //		angleDirection = 0; 
-//		angleChemotaxis = 60;
+//		angleAmplitude = 60;
 //		frameRate = 100;
 //		bcf_shift = 0;
 //		progressMotility = 80;
-//		microPerPixel = 0.58;
+//		micronPerPixel = 0.58;
 //		printXY = false;
 //		calcMotilityParameters = false;
 //		calcMeanMotilityParameters = false;
@@ -76,15 +81,22 @@ public class Params {
 		vclMin = 1;
 		decimationFactor = 1;
 		angleDirection = 0; 
-		angleChemotaxis = 60;
+		angleAmplitude = 60;
 		frameRate = 25;
 		bcf_shift = 0;
 		progressMotility = 80;
-		microPerPixel = 0.58;
+		micronPerPixel = 0.58;
 		printXY = false;
 //		calcMotilityParameters = false;
 //		calcMeanMotilityParameters = false;
 		drawOrigTrajectories = true;
 		drawAvgTrajectories = true;
+	}
+	
+	public static void saveParams(){
+		
+		// create a Preferences instance (somewhere later in the code)
+		prefs = Preferences.userNodeForPackage(this.getClass());
+		
 	}
 }

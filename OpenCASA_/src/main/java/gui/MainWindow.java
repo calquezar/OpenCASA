@@ -26,6 +26,7 @@ public class MainWindow extends JFrame {
 	MainWindow mw;
 	Chemotaxis ch;
 	Motility ma;
+	SettingsWindow sw;
 	
 	/**
 	 * Constructor. The main graphical user interface is created.
@@ -34,7 +35,11 @@ public class MainWindow extends JFrame {
 	public MainWindow(String title) throws HeadlessException {
 		super(title);
 		createGUI();
-		setLocationRelativeTo(null);
+		this.setPreferredSize(new Dimension(600, 300));
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.pack();
+		this.setVisible(true);		
+		this.setLocationRelativeTo(null);
 		mw = this;
 	}
 
@@ -65,7 +70,14 @@ public class MainWindow extends JFrame {
 					try{ma.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Viability")){
-				}else if(label.equals("Morphometry")){}
+				}else if(label.equals("Morphometry")){
+				}else if(label.equals("Settings")){
+					if(sw==null || !sw.isVisible()){
+						sw = new SettingsWindow("Settings");
+						sw.run();
+					}
+				}
+				
 			}
 		} );		
 		panel.add(btn, c);
@@ -80,10 +92,8 @@ public class MainWindow extends JFrame {
 		addButton("Chemotaxis",1,0,new Color(204,229,255),"/chemotaxis.png",panel);
 		addButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
 		addButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
-		this.setPreferredSize(new Dimension(600, 200));
-		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		addButton("Settings",0,2,new Color(255,204,153),"/Settings.png",panel);
+		panel.setBackground(new Color(255,204,153));
 		this.setContentPane(panel);
-		this.pack();
-		this.setVisible(true);
 	}
 }

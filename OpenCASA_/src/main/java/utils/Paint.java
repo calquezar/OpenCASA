@@ -272,9 +272,9 @@ public abstract class Paint {
 		//center coords. of the cone used to clasify chemotactic trajectories
 		int xCenter = ip.getWidth()/2;
 		int yCenter = ip.getHeight()/2;
-		float upperAngle = (float)(Params.angleDirection + Params.angleChemotaxis/2 + 360)%360;
+		float upperAngle = (float)(Params.angleDirection + Params.angleAmplitude/2 + 360)%360;
 		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
-		float lowerAngle = (float)(Params.angleDirection - Params.angleChemotaxis/2 + 360)%360;
+		float lowerAngle = (float)(Params.angleDirection - Params.angleAmplitude/2 + 360)%360;
 		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
 		//Upper Line
 		int upperLineX = xCenter+(int)(1000*Math.cos(upperAngle));

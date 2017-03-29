@@ -41,7 +41,7 @@ public class Chemotaxis {
 		int nPos = 0;
 		int nNeg = 0;
 		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
-		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);
 		int nPoints = track.size();
 		for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
 			Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
@@ -54,11 +54,11 @@ public class Chemotaxis {
 				angle = -(2*Math.PI-angle);			
 			if(Math.abs(angle)<angleChemotaxis){
 				nPos++;
-	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Positive: "+angle*180/Math.PI);
+	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleAmplitude*180/Math.PI+"; Positive: "+angle*180/Math.PI);
 			}
 			else if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
 				nNeg++;
-	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleChemotaxis*180/Math.PI+"; Negative: "+angle*180/Math.PI);
+	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleAmplitude*180/Math.PI+"; Negative: "+angle*180/Math.PI);
 			}
 		}
 		int[] results = new int[3];
@@ -264,7 +264,7 @@ public class Chemotaxis {
 		List angles = new ArrayList();
 		int nTracks = theTracks.size();
 		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
-		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);		
+		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
 		float ratioQ = 0;
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			IJ.showProgress((double)trackNr/nTracks);
@@ -284,7 +284,7 @@ public class Chemotaxis {
 				if(Math.abs(angle)<angleChemotaxis){
 					nPos++;
 				}
-				else //if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
+				else //if(Math.abs(angle)>(Math.PI-angleAmplitude)){
 					nNeg++;
 				}
 		}
@@ -307,7 +307,7 @@ public class Chemotaxis {
 		int trackNr=0;
 		int nTracks = theTracks.size();
 		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
-		double angleChemotaxis = (2*Math.PI + (Params.angleChemotaxis/2)*Math.PI/180)%(2*Math.PI);		
+		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
 		float ratioSL = 0;
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			IJ.showProgress((double)trackNr/nTracks);
@@ -456,7 +456,7 @@ public class Chemotaxis {
 			rt.addValue("Concentration","-");
 		}
 		rt.addValue("Direction (Degrees)",Params.angleDirection);
-		rt.addValue("ArcChemotaxis (Degrees)",Params.angleChemotaxis);
+		rt.addValue("ArcChemotaxis (Degrees)",Params.angleAmplitude);
 		rt.addValue("ID",parts[3]);
 		rt.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
 		rt.addValue("Filename",filename);

@@ -80,8 +80,8 @@ public abstract class ComputerVision implements Measurements {
 		ResultsTable rt = new ResultsTable();
 		rt.reset();
 		
-		int minSize = (int) (Math.sqrt(Params.minSize)/Params.microPerPixel);
-		int maxSize = (int) (Math.sqrt(Params.maxSize)/Params.microPerPixel);
+		int minSize = (int) (Math.sqrt(Params.minSize)/Params.micronPerPixel);
+		int maxSize = (int) (Math.sqrt(Params.maxSize)/Params.micronPerPixel);
 		
 		// create storage for Spermatozoa positions
 		List[] spermatozoa = new ArrayList[nFrames];

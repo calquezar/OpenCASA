@@ -31,8 +31,8 @@ public class Kinematics {
 		//Mean value
 		alhMean=alhMean/length;
 		//convert pixels to micrometers
-		alh[0]=alhMean*(float)Params.microPerPixel;
-		alh[1]=alhMax*(float)Params.microPerPixel;
+		alh[0]=alhMean*(float)Params.micronPerPixel;
+		alh[1]=alhMax*(float)Params.micronPerPixel;
 		
 		return alh;
 	}
@@ -106,7 +106,7 @@ public class Kinematics {
 			oldSpermatozoon = newSpermatozoon;
 		}	
 		//convert pixels to micrometers
-		distance = distance*(float)Params.microPerPixel;
+		distance = distance*(float)Params.micronPerPixel;
 	    // Seconds
 		float elapsedTime = (length-1)/Params.frameRate;
 		//return um/second
@@ -125,7 +125,7 @@ public class Kinematics {
 		//Distance (pixels)
 		float distance = last.distance(first);
 		//convert pixels to micrometers
-		distance = distance*(float)Params.microPerPixel;
+		distance = distance*(float)Params.micronPerPixel;
 	    // Seconds
 		float elapsedTime = (length-1)/Params.frameRate;
 		//return um/second

@@ -89,7 +89,7 @@ public abstract class SignalProcessing {
 		List avgTrack = movingAverage(track);
 		float vap = Kinematics.vcl(avgTrack)/Kinematics.vsl(avgTrack);
 		//Kinematics filter
-		double minPixelDistance = 10;//10/Params.microPerPixel;
+		double minPixelDistance = 10;//10/Params.micronPerPixel;
 		if(Kinematics.vcl(track)>Params.vclMin && (distance>minPixelDistance) && (vap>0))
 			return true;
 		else
