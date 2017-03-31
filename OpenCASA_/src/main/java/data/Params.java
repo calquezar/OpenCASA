@@ -99,7 +99,6 @@ public class Params {
 //		drawOrigTrajectories = true;
 //		drawAvgTrajectories = true;
 		
-		
 		try {
 			FileInputStream streamIn = new FileInputStream(System.getProperty("user.dir")+"\\prefs.config");
 			ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
