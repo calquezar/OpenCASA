@@ -20,6 +20,7 @@ import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
 import analysis.Motility;
+import data.Params;
 
 public class MainWindow extends JFrame {
 
@@ -41,6 +42,7 @@ public class MainWindow extends JFrame {
 		this.setVisible(true);		
 		this.setLocationRelativeTo(null);
 		mw = this;
+		Params.resetParams();
 	}
 
 	public void addButton(final String label,int gridx,int gridy,Color background,String iconPath,JPanel panel){

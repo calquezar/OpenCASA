@@ -1,5 +1,11 @@
 package data;
 
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.util.prefs.*;
 
 import ij.measure.ResultsTable;
@@ -12,9 +18,9 @@ public class Params {
 	public static double	pixelWidth=1.0;
 	public static double pixelHeight=1.0;
 	/** @brief minimum sperm size */
-	public static float	minSize = 20;
+	public static float	minSize = 40;
 	//maximum sperm size
-	public static float	maxSize = 200;
+	public static float	maxSize = 400;
 	//minimum length of sperm track in frames
 	public static int 	minTrackLength = 15;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
@@ -53,6 +59,7 @@ public class Params {
 	public static int NUMSAMPLES = 100;
 	
 	public static void resetParams(){
+		
 //		minSize = 20;
 //		maxSize = 200;
 //		minTrackLength = 20;
@@ -72,31 +79,76 @@ public class Params {
 //		drawOrigTrajectories = true;
 //		drawAvgTrajectories = true;
 
-		// GOAT
-		minSize = 100; //um^2
-		maxSize = 10000;//um^2
-		minTrackLength = 5;
-		maxVelocity = 10;
-		wSize = 2;
-		vclMin = 1;
-		decimationFactor = 1;
-		angleDirection = 0; 
-		angleAmplitude = 60;
-		frameRate = 25;
-		bcf_shift = 0;
-		progressMotility = 80;
-		micronPerPixel = 0.58;
-		printXY = false;
-//		calcMotilityParameters = false;
-//		calcMeanMotilityParameters = false;
-		drawOrigTrajectories = true;
-		drawAvgTrajectories = true;
+//		// GOAT
+//		minSize = 100; //um^2
+//		maxSize = 10000;//um^2
+//		minTrackLength = 5;
+//		maxVelocity = 10;
+//		wSize = 2;
+//		vclMin = 1;
+//		decimationFactor = 1;
+//		angleDirection = 0; 
+//		angleAmplitude = 60;
+//		frameRate = 25;
+//		bcf_shift = 0;
+//		progressMotility = 80;
+//		micronPerPixel = 0.58;
+//		printXY = false;
+////		calcMotilityParameters = false;
+////		calcMeanMotilityParameters = false;
+//		drawOrigTrajectories = true;
+//		drawAvgTrajectories = true;
+		
+		
+		try {
+			FileInputStream streamIn = new FileInputStream(System.getProperty("user.dir")+"\\prefs.config");
+			ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
+			prefs.importPreferences(objectinputstream);
+		} catch (Exception e) {
+			System.out.println("Fallo de lectura");
+		}
+		if(prefs==null)
+			prefs = Preferences.userNodeForPackage(Params.class);
+		minSize = prefs.getFloat("minSize", minSize);
+		maxSize = prefs.getFloat("maxSize", maxSize);
+		minTrackLength = prefs.getInt("minTrackLength",minTrackLength);
+		maxVelocity = prefs.getFloat("maxVelocity",maxVelocity);
+		wSize = prefs.getInt("wSize",wSize);
+		vclMin = prefs.getFloat("vclMin",vclMin);
+		decimationFactor = prefs.getInt("decimationFactor",decimationFactor);
+		angleDirection = prefs.getFloat("angleDirection",angleDirection);
+		angleAmplitude = prefs.getFloat("angleAmplitude",angleAmplitude);
+		frameRate = prefs.getFloat("frameRate",frameRate);
+		bcf_shift = prefs.getInt("bcf_shift",bcf_shift);
+		progressMotility = prefs.getFloat("progressMotility",progressMotility );
+		micronPerPixel = prefs.getDouble("micronPerPixel",micronPerPixel);		
 	}
 	
 	public static void saveParams(){
 		
-		// create a Preferences instance (somewhere later in the code)
-		prefs = Preferences.userNodeForPackage(this.getClass());
+		prefs = Preferences.userNodeForPackage(Params.class);
+		prefs.putFloat("minSize", minSize);
+		prefs.putFloat("maxSize", maxSize);
+		prefs.putInt("minTrackLength",minTrackLength);
+		prefs.putFloat("maxVelocity",maxVelocity);
+		prefs.putInt("wSize",wSize);
+		prefs.putFloat("vclMin",vclMin);
+		prefs.putInt("decimationFactor",decimationFactor);
+		prefs.putFloat("angleDirection",angleDirection);
+		prefs.putFloat("angleAmplitude",angleAmplitude);
+		prefs.putFloat("frameRate",frameRate);
+		prefs.putInt("bcf_shift",bcf_shift);
+		prefs.putFloat("progressMotility",progressMotility );
+		prefs.putDouble("micronPerPixel",micronPerPixel);
 		
+		try {
+			FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"\\prefs.config");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+			prefs.exportSubtree(oos);
+			oos.close();
+			fos.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

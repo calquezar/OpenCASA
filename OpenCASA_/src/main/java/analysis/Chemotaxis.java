@@ -398,8 +398,6 @@ public class Chemotaxis {
 	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
-		//Reset Parameters
-		Params.resetParams();
 		//Ask if user wants to analyze a file or directory
 		Object[] options = {"File", "Directory"};
 		String question = "What do you want to analyze?";

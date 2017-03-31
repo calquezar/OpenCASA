@@ -208,8 +208,6 @@ public class Motility {
 	}
 	public void run(MainWindow mw){
 		mw.setVisible(false);
-		//Reset Parameters
-		Params.resetParams();
 		//Ask user which analysis wants to apply
 		int userSelection = analysisSelectionDialog();
 		if(userSelection<0){

@@ -242,6 +242,7 @@ public class SettingsWindow extends JFrame {
 		saveBtn.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 				setParameters();
+				Params.saveParams();
 				sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
 			}
 		} );		
