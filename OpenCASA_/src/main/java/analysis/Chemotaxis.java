@@ -199,7 +199,7 @@ public class Chemotaxis {
 		return n;
 	}
 	public void analyzeFile(){
-		Trial trial = Analyzer.extractTrial("Chemotaxis-File");
+		Trial trial = VideoAnalyzer.extractTrial("Chemotaxis-File");
 		if(trial==null)
 			return;
 		//Draw trajectories
@@ -248,7 +248,7 @@ public class Chemotaxis {
 			rt.addValue("Result","POSITIVE");
 		else
 			rt.addValue("Result","-");
-		rt.addValue("Type", Analyzer.getTrialType(filename));
+		rt.addValue("Type", VideoAnalyzer.getTrialType(filename));
 		rt.addValue("Filename",filename);
 	}
 	/******************************************************/
@@ -420,7 +420,7 @@ public class Chemotaxis {
 				return;	
 			}
 			//Create trials dictionary
-			Map<String,Trial> trials = Utils.readTrials();//Analyzer.extractTrials("Chemotaxis-Directory");//
+			Map<String,Trial> trials = Utils.readTrials();//VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
 			//Utils.saveTrials(trials);
 			if(trials==null){
 				mw.setVisible(true);

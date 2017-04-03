@@ -61,7 +61,7 @@ public class Motility {
 	}
 	public void analyzeDirectory(){
 		//Create trials dictionary
-		Map<String,Trial> trials = Analyzer.extractTrials("Motility-Directory");
+		Map<String,Trial> trials = VideoAnalyzer.extractTrials("Motility-Directory");
 		if(trials==null)
 			return;
 		Set keySet = trials.keySet();
@@ -79,7 +79,7 @@ public class Motility {
 	}
 	
 	public void analyzeFile(){
-		Trial trial = Analyzer.extractTrial("Motility-File");
+		Trial trial = VideoAnalyzer.extractTrial("Motility-File");
 		if(trial==null)
 			return;
 		ResultsTable rtIndividual = new ResultsTable();
