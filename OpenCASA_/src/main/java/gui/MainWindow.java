@@ -76,10 +76,9 @@ public class MainWindow extends JFrame {
 				}else if(label.equals("Settings")){
 					if(sw==null || !sw.isVisible()){
 						sw = new SettingsWindow("Settings");
-						sw.run();
+						sw.run(mw);
 					}
 				}
-				
 			}
 		} );		
 		panel.add(btn, c);
@@ -95,7 +94,7 @@ public class MainWindow extends JFrame {
 		addButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
 		addButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
 		addButton("Settings",0,2,new Color(255,204,153),"/Settings.png",panel);
-		panel.setBackground(new Color(255,204,153));
+//		panel.setBackground(new Color(255,204,153));
 		this.setContentPane(panel);
 	}
 }

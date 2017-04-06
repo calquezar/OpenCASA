@@ -9,6 +9,7 @@ import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -25,7 +26,7 @@ import data.Params;
 public class SettingsWindow extends JFrame {
 
 	SettingsWindow sw;
-	
+	MainWindow mw;
 	// General
 	JTextField frameRateTF = new JTextField(""+Params.frameRate,4);
 	JTextField micronPerPixelTF = new JTextField(""+Params.micronPerPixel,4);
@@ -52,7 +53,17 @@ public class SettingsWindow extends JFrame {
 		this.setVisible(true);
 //		setLocationRelativeTo(null);
 //		this.setPreferredSize(new Dimension(600, 300));
+		
+		this.addWindowListener(new java.awt.event.WindowAdapter() {
+		    @Override
+		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+		    	if(mw!=null)
+		    		mw.enable();
+		    }
+		});		
 	}
+	
+	
 	
 	public JPanel createChemotaxisBox(String title){
 		JPanel box = new JPanel();
@@ -85,7 +96,7 @@ public class SettingsWindow extends JFrame {
 	}
 	public JPanel createFilterBox(String title){
 		JPanel box = new JPanel();
-		box.setBackground(new Color(229,255,204));
+//		box.setBackground(new Color(229,255,204));
 		GridBagConstraints c = new GridBagConstraints();
 //		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx=0;
@@ -115,7 +126,7 @@ public class SettingsWindow extends JFrame {
 	
 	public JPanel createGeneralBox(String title){
 		JPanel box = new JPanel();
-		box.setBackground(new Color(229,255,204));
+//		box.setBackground(new Color(229,255,204));
 		GridBagConstraints c = new GridBagConstraints();
 //		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx=0;
@@ -139,7 +150,7 @@ public class SettingsWindow extends JFrame {
 	
 	public JPanel createMotilityBox(String title){
 		JPanel box = new JPanel();
-		box.setBackground(new Color(229,255,204));
+//		box.setBackground(new Color(229,255,204));
 		GridBagConstraints c = new GridBagConstraints();
 //		c.fill = GridBagConstraints.HORIZONTAL;
 		c.gridx=0;
@@ -221,7 +232,10 @@ public class SettingsWindow extends JFrame {
 		
 	}
 	
-	public void run(){
+	public void run(MainWindow window){
+		
+		mw=window;
+		mw.disable();
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.ipady=0;
@@ -258,9 +272,10 @@ public class SettingsWindow extends JFrame {
 		panel.add(saveBtn,c);
 		c.gridx=2;
 		panel.add(cancelBtn,c);
-		panel.setBackground(new Color(255,204,153));
+//		panel.setBackground(new Color(255,204,153));
 		this.setContentPane(panel);
 		this.pack();
 		
 	}
+
 }
