@@ -19,14 +19,24 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
+import analysis.Morphometry;
 import analysis.Motility;
+import analysis.Viability;
 import data.Params;
+import ij.IJ;
+import ij.ImagePlus;
+import ij.ImageStack;
+import ij.plugin.ChannelSplitter;
+import ij.process.ImageProcessor;
+import utils.ComputerVision;
 
 public class MainWindow extends JFrame {
 
 	MainWindow mw;
 	Chemotaxis ch;
-	Motility ma;
+	Motility mot;
+	Viability via;
+	Morphometry morph;
 	SettingsWindow sw;
 	
 	/**
@@ -68,11 +78,17 @@ public class MainWindow extends JFrame {
 					try {ch.run(mw);} 
 					catch (Exception e1) {e1.printStackTrace();}
 				}else if(label.equals("Motility")){
-					ma = new Motility();
-					try{ma.run(mw);}
+					mot = new Motility();
+					try{mot.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Viability")){
+					via = new Viability();
+					try{via.run(mw);}
+					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Morphometry")){
+					morph = new Morphometry();
+					try{morph.run(mw);}
+					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Settings")){
 					if(sw==null || !sw.isVisible()){
 						sw = new SettingsWindow("Settings");

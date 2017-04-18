@@ -14,6 +14,7 @@ import ij.ImagePlus;
 import ij.ImageStack;
 import ij.measure.Measurements;
 import ij.measure.ResultsTable;
+import ij.plugin.ChannelSplitter;
 import ij.plugin.filter.ParticleAnalyzer;
 import ij.process.ColorProcessor;
 import ij.process.ImageConverter;
@@ -35,6 +36,46 @@ public abstract class ComputerVision implements Measurements {
 		ic.convertToGray8();
 	}
 	
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 */	
+	public static void thresholdImageProcessor(ImageProcessor ip,double lowerThreshold,double upperThreshold){
+		//Make binary
+		int[] lut = new int[256];
+		for (int j=0; j<256; j++) {
+			if (j>=lowerThreshold && j<=upperThreshold)
+				lut[j] = (byte)0;
+			else
+				lut[j] = (byte)255;
+		}
+        ip.applyTable(lut);
+	}
+	
+	/******************************************************/
+	/**
+	 * @param
+	 */	
+	public static ImagePlus getRedChannel(ImagePlus impColor){
+		ImagePlus[] images = ChannelSplitter.split(impColor);
+		return images[0];
+	}	
+	/******************************************************/
+	/**
+	 * @param
+	 */	
+	public static ImagePlus getGreenChannel(ImagePlus impColor){
+		ImagePlus[] images = ChannelSplitter.split(impColor);
+		return images[1];
+	}
+	/******************************************************/
+	/**
+	 * @param
+	 */	
+	public static ImagePlus getBlueChannel(ImagePlus impColor){
+		ImagePlus[] images = ChannelSplitter.split(impColor);
+		return images[2];
+	}
 	/******************************************************/
 	/**
 	 * @param imp ImagePlus

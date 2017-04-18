@@ -36,7 +36,7 @@ public class OpenCASA_ implements PlugIn {
 	 */
 	public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 		
-		 UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		 //UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		// set the plugins.dir property to make the plugin appear in the Plugins menu
 		Class<?> clazz = OpenCASA_.class;
 		String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();

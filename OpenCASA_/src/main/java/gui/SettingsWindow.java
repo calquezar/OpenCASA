@@ -30,6 +30,8 @@ public class SettingsWindow extends JFrame {
 	// General
 	JTextField frameRateTF = new JTextField(""+Params.frameRate,4);
 	JTextField micronPerPixelTF = new JTextField(""+Params.micronPerPixel,4);
+//	JTextField maleTF = new JTextField(Params.male,8);
+//	JTextField dateTF = new JTextField(Params.date,8);
 	// Recognition
 	JTextField minSizeTF = new JTextField(""+Params.minSize,4);
 	JTextField maxSizeTF = new JTextField(""+Params.maxSize,4);
@@ -142,7 +144,19 @@ public class SettingsWindow extends JFrame {
 		box.add(label,c);
 		c.gridx=3;
 		box.add(micronPerPixelTF,c);
-		///////////////			
+		///////////////	
+//		label = new JLabel("Male: ");
+//		c.gridx=4;
+//		box.add(label,c);
+//		c.gridx=5;
+//		box.add(maleTF,c);
+//		///////////////		
+//		label = new JLabel("Date: ");
+//		c.gridx=6;
+//		box.add(label,c);
+//		c.gridx=7;
+//		box.add(dateTF,c);
+		///////////////				
 		box.setBorder(BorderFactory.createTitledBorder(title));
 		
 		return box;
@@ -208,6 +222,43 @@ public class SettingsWindow extends JFrame {
 		
 		return box;
 	}
+	
+//	public JPanel createRecognitionBox(String title){
+//		JPanel box = new JPanel();
+//		box.setBackground(new Color(204,229,255));
+//		GridBagConstraints c = new GridBagConstraints();
+//		c.fill = GridBagConstraints.HORIZONTAL;
+//		c.gridx=0;
+//		c.gridy=0;
+//		///////////////
+//		JLabel label = new JLabel("Minimum Size (um^2): ");
+//		box.add(label,c);
+//		c.gridx=1;
+//		box.add(minSizeTF,c);
+//		///////////////
+//		label = new JLabel("Maximum Size (um^2): ");
+//		c.gridx=2;
+//		box.add(label,c);
+//		c.gridx=3;
+//		box.add(maxSizeTF,c);
+//		///////////////
+//		label = new JLabel("Minimum Track Length(frames): ");
+//		c.gridy=1;
+//		c.gridx=0;
+//		box.add(label,c);
+//		c.gridx=1;
+//		box.add(minTrackLengthTF,c);
+//		///////////////
+//		label = new JLabel("Maximum velocity between frames (um/s): ");
+//		c.gridx=2;
+//		box.add(label,c);
+//		c.gridx=3;
+//		box.add(maxVelocityTF,c);
+//		///////////////		
+//		box.setBorder(BorderFactory.createTitledBorder(title));
+//		
+//		return box;
+//	}
 	
 	public void setParameters(){
 		// General

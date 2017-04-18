@@ -53,10 +53,13 @@ public class Params {
 	public static boolean drawOrigTrajectories = true;
 	//Draw original trajectories
 	public static boolean drawAvgTrajectories = true;
-	
 	//Used to calculate OR ratios
 	public static int MAXINSTANGLES = 20000;
 	public static int NUMSAMPLES = 100;
+	public static float borderSize = 20;
+	public static String selectedFilter = "";
+	public static String male = "";
+	public static String date = "";
 	
 	public static void resetParams(){
 		
