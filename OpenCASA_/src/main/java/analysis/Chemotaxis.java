@@ -420,7 +420,7 @@ public class Chemotaxis {
 				return;	
 			}
 			//Create trials dictionary
-			Map<String,Trial> trials = Utils.readTrials();//VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
+			Map<String,Trial> trials = VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
 			//Utils.saveTrials(trials);
 			if(trials==null){
 				mw.setVisible(true);

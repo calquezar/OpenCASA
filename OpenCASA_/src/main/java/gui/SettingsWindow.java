@@ -36,7 +36,7 @@ public class SettingsWindow extends JFrame {
 	JTextField minSizeTF = new JTextField(""+Params.minSize,4);
 	JTextField maxSizeTF = new JTextField(""+Params.maxSize,4);
 	JTextField minTrackLengthTF = new JTextField(""+Params.minTrackLength,4);
-	JTextField maxVelocityTF = new JTextField(""+Params.maxVelocity,4);
+	JTextField maxVelocityTF = new JTextField(""+Params.maxVelocity*(Params.frameRate*Params.micronPerPixel),4);  //Convert maxVelocity to um/s
 	//Filtering
 	JTextField windowSizeTF = new JTextField(""+Params.wSize,4);
 	JTextField vclMinTF = new JTextField(""+Params.vclMin,4);
@@ -268,7 +268,7 @@ public class SettingsWindow extends JFrame {
 		Params.minSize = Float.parseFloat(minSizeTF.getText());
 		Params.maxSize = Float.parseFloat(maxSizeTF.getText());
 		Params.minTrackLength = Integer.parseInt(minTrackLengthTF.getText());
-		Params.maxVelocity = Float.parseFloat(maxVelocityTF.getText());
+		Params.maxVelocity = (float) (Float.parseFloat(maxVelocityTF.getText())/(Params.frameRate*Params.micronPerPixel)); //Convert to pixels per frame
 		//Filtering
 		Params.wSize = Integer.parseInt(windowSizeTF.getText());
 		Params.vclMin = Float.parseFloat(vclMinTF.getText());

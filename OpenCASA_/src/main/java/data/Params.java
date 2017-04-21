@@ -43,7 +43,7 @@ public class Params {
 	//Micrometers per pixel
 	// 10x ==> 0.58
 	// 40x ==> 0.1455
-	public static double micronPerPixel = 0.58; //10x ISAS
+	public static double micronPerPixel = 1;//0.58; 10x ISAS
 	//print the xy co-ordinates for all tracks?
 	public static boolean printXY = false;
 	//Calculate motility parameters
@@ -142,6 +142,7 @@ public class Params {
 		prefs.putInt("bcf_shift",bcf_shift);
 		prefs.putFloat("progressMotility",progressMotility );
 		prefs.putDouble("micronPerPixel",micronPerPixel);
+		
 		
 		try {
 			FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir")+"\\prefs.config");
