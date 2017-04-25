@@ -331,7 +331,7 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
     final private static int HUFFMAN_LENGTH = 420;
     //dialog parameters
     private int                firstFrame = 1;      //the first frame to read
-   private int                lastFrame = 0;       //the last frame to read; 0 means 'read all'
+    private int                lastFrame = 0;       //the last frame to read; 0 means 'read all'
     private boolean            convertToGray = false;       //whether to convert color video to grayscale
     private boolean            flipVertical = false;        //whether to flip image vertical
     private boolean            isVirtual = false;           //whether to open as virtual stack
@@ -592,6 +592,7 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
             readAVI(path);
         } catch (OutOfMemoryError e) {
             stack.trim();
+            e.printStackTrace();
             IJ.showMessage("AVI Reader", "Out of memory.  " + stack.getSize() + " of " + dwTotalFrames + " frames will be opened.");
         } catch (Exception e) {
             exceptionMessage = exceptionMessage(e);
@@ -1259,7 +1260,7 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
             error(exceptionMessage(e));
             return;
         }
-        //if (!showDialog(fileName)) return;                          //ask for parameters
+        if (!showDialog(fileName)) return;                          //ask for parameters
         try {
             ImageStack stack = makeStack(path, firstFrame, lastFrame, isVirtual, convertToGray, flipVertical);  //read data
         } catch (Exception e) {
