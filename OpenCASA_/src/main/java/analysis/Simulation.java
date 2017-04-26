@@ -1,8 +1,10 @@
 package analysis;
 
 import java.awt.Color;
+import java.awt.Point;
 import java.util.Random;
 
+import data.Spermatozoon;
 import gui.MainWindow;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -19,6 +21,7 @@ public class Simulation {
 	Cell[] sperm = new Cell[cellCount];
 	Obstacle[]  obstacles = new Obstacle[obstaclesCount];
 	int SIMLENGTH = 5000;
+	Point[][] tracks = new Point[cellCount][SIMLENGTH];
 	
 	class Cell {
 		  
@@ -65,6 +68,7 @@ public class Simulation {
 	    y+=dy;    
 	    //Draw Cell
 	    ip.fillOval((int)x, (int)y, sizex, sizey);
+	    
 	  }
 	}
 
