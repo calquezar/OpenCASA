@@ -331,7 +331,7 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
     final private static int HUFFMAN_LENGTH = 420;
     //dialog parameters
     private int                firstFrame = 1;      //the first frame to read
-    private int                lastFrame = 0;       //the last frame to read; 0 means 'read all'
+    private int                lastFrame = -1;       //the last frame to read; 0 means 'read all'
     private boolean            convertToGray = false;       //whether to convert color video to grayscale
     private boolean            flipVertical = false;        //whether to flip image vertical
     private boolean            isVirtual = false;           //whether to open as virtual stack
@@ -697,8 +697,10 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
         long pos = raFile.getFilePointer();
         //IJ.log("at 0x"+Long.toHexString(pos)+" filesize=0x"+Long.toHexString(fileSize));
         // extended AVI: try to find further 'RIFF' chunks, where we expect AVIX tags
-        while (pos>0 && pos<fileSize && (frameNumber<lastFrameToRead+1))
+        while (pos>0 && pos<fileSize && (frameNumber<lastFrameToRead+1)){
                 pos = findFourccAndRead(FOURCC_RIFF, false, fileSize, false);
+                System.out.println("Reading AVI..."+100*frameNumber/lastFrameToRead+"%");
+        }
         return;
      }
 
@@ -1260,7 +1262,7 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
             error(exceptionMessage(e));
             return;
         }
-        if (!showDialog(fileName)) return;                          //ask for parameters
+//        if (!showDialog(fileName)) return;                          //ask for parameters
         try {
             ImageStack stack = makeStack(path, firstFrame, lastFrame, isVirtual, convertToGray, flipVertical);  //read data
         } catch (Exception e) {
