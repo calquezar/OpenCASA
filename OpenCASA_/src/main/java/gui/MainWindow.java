@@ -21,6 +21,7 @@ import javax.swing.JPanel;
 import analysis.Chemotaxis;
 import analysis.Morphometry;
 import analysis.Motility;
+import analysis.Simulation;
 import analysis.Viability;
 import data.Params;
 import ij.IJ;
@@ -37,6 +38,7 @@ public class MainWindow extends JFrame {
 	Motility mot;
 	Viability via;
 	Morphometry morph;
+	Simulation sim;
 	SettingsWindow sw;
 	
 	/**
@@ -89,6 +91,10 @@ public class MainWindow extends JFrame {
 					morph = new Morphometry();
 					try{morph.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
+				}else if(label.equals("Simulation")){
+					sim = new Simulation();
+					try{sim.run(mw);}
+					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Settings")){
 					if(sw==null || !sw.isVisible()){
 						sw = new SettingsWindow("Settings");
@@ -105,11 +111,12 @@ public class MainWindow extends JFrame {
 	 */
 	public void createGUI() {
 		JPanel  panel = new JPanel(new GridBagLayout());
-		addButton("Motility",0,0,new Color(229,255,204),"/motility.png",panel);
-		addButton("Chemotaxis",1,0,new Color(204,229,255),"/chemotaxis.png",panel);
-		addButton("Viability",0,1,new Color(255,153,153),"/viability.png",panel);
-		addButton("Morphometry",1,1,new Color(255,204,153),"/Morphometry.png",panel);
-		addButton("Settings",0,2,new Color(255,204,153),"/Settings.png",panel);
+		addButton("Motility",0,0,new Color(255,255,255),"/motility.png",panel);
+		addButton("Chemotaxis",1,0,new Color(255,255,255),"/chemotaxis.png",panel);
+		addButton("Viability",0,1,new Color(255,255,255),"/viability.png",panel);
+		addButton("Morphometry",1,1,new Color(255,255,255),"/Morphometry.png",panel);
+		addButton("Simulation",0,2,new Color(255,255,255),"/Settings.png",panel);
+		addButton("Settings",1,2,new Color(255,204,153),"/Settings.png",panel);
 //		panel.setBackground(new Color(255,204,153));
 		this.setContentPane(panel);
 	}
