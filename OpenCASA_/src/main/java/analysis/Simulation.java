@@ -6,6 +6,7 @@ import java.util.Random;
 import gui.MainWindow;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 
@@ -17,7 +18,7 @@ public class Simulation {
 	int obstaclesCount = 0;
 	Cell[] sperm = new Cell[cellCount];
 	Obstacle[]  obstacles = new Obstacle[obstaclesCount];
-	int SIMLENGTH = 1000;
+	int SIMLENGTH = 5000;
 	
 	class Cell {
 		  
@@ -40,7 +41,7 @@ public class Simulation {
 	    y = rand.nextInt(h);
 	    angle = 0;//random(-PI,PI);
 	    speed=3;//4;
-	    Drot =0.1;//0.1;
+	    Drot =0.1;
 	    //beta=0;//Control
 	    //Chemotaxis
 	    if(rand.nextFloat()<0.1) //Only 10% of the population is chemoattracted
@@ -113,7 +114,7 @@ public class Simulation {
 		
 		ImageStack imStack = new ImageStack(w,h);
 		for(int i=0;i<SIMLENGTH;i++){
-			ImageProcessor ip = new ColorProcessor(w, h);
+			ImageProcessor ip = new ByteProcessor(w,h);
 			draw(ip);
 			imStack.addSlice(ip);
 		}
