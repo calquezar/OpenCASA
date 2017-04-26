@@ -108,8 +108,6 @@ public class Simulation {
 	        sperm[x].update(ip);
 	      }
 	}
-
-	
 	
 	public void run(MainWindow mw){
 		
@@ -121,5 +119,4 @@ public class Simulation {
 		}
 		new ImagePlus("Simulation", imStack).show();
 	}
-
 }
