@@ -43,9 +43,9 @@ public class Chemotaxis {
 		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
 		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);
 		int nPoints = track.size();
-		for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
+		for (int j = 0; j < (nPoints-Params.angleDelta); j++) {
 			Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
-			Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
+			Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.angleDelta);
 			float diffX = newSpermatozoon.x-oldSpermatozoon.x;
 			float diffY = newSpermatozoon.y-oldSpermatozoon.y;
 			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
@@ -272,9 +272,9 @@ public class Chemotaxis {
 			trackNr++;
 			List track=(ArrayList) iT.next();
 			int nPoints = track.size();
-			for (int j = 0; j < (nPoints-Params.decimationFactor); j++) {
+			for (int j = 0; j < (nPoints-Params.angleDelta); j++) {
 				Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
-				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.decimationFactor);
+				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.angleDelta);
 				float diffX = newSpermatozoon.x-oldSpermatozoon.x;
 				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
 				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle

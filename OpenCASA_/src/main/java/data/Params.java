@@ -30,7 +30,7 @@ public class Params {
 	//Motility filter for motile and non motile sperm
 	public static float vclMin = 70;
 	//Decimation factor
-	public static int decimationFactor = 4;
+	public static int angleDelta = 4;
 	//Angles used to clasify chemotactic trajectories
 	public static float angleDirection = 0; 
 	public static float angleAmplitude = 90;
@@ -69,7 +69,7 @@ public class Params {
 //		maxVelocity = 15;
 //		wSize = 5;
 //		vclMin = 50;
-//		decimationFactor = 5;
+//		angleDelta = 5;
 //		angleDirection = 0; 
 //		angleAmplitude = 60;
 //		frameRate = 100;
@@ -89,7 +89,7 @@ public class Params {
 //		maxVelocity = 10;
 //		wSize = 2;
 //		vclMin = 1;
-//		decimationFactor = 1;
+//		angleDelta = 1;
 //		angleDirection = 0; 
 //		angleAmplitude = 60;
 //		frameRate = 25;
@@ -117,7 +117,7 @@ public class Params {
 		maxVelocity = prefs.getFloat("maxVelocity",maxVelocity);
 		wSize = prefs.getInt("wSize",wSize);
 		vclMin = prefs.getFloat("vclMin",vclMin);
-		decimationFactor = prefs.getInt("decimationFactor",decimationFactor);
+		angleDelta = prefs.getInt("angleDelta",angleDelta);
 		angleDirection = prefs.getFloat("angleDirection",angleDirection);
 		angleAmplitude = prefs.getFloat("angleAmplitude",angleAmplitude);
 		frameRate = prefs.getFloat("frameRate",frameRate);
@@ -135,7 +135,7 @@ public class Params {
 		prefs.putFloat("maxVelocity",maxVelocity);
 		prefs.putInt("wSize",wSize);
 		prefs.putFloat("vclMin",vclMin);
-		prefs.putInt("decimationFactor",decimationFactor);
+		prefs.putInt("angleDelta",angleDelta);
 		prefs.putFloat("angleDirection",angleDirection);
 		prefs.putFloat("angleAmplitude",angleAmplitude);
 		prefs.putFloat("frameRate",frameRate);

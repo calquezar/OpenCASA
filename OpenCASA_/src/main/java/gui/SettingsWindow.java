@@ -40,7 +40,7 @@ public class SettingsWindow extends JFrame {
 	//Filtering
 	JTextField windowSizeTF = new JTextField(""+Params.wSize,4);
 	JTextField vclMinTF = new JTextField(""+Params.vclMin,4);
-	JTextField decimationTF = new JTextField(""+Params.decimationFactor,4);
+	JTextField angleDeltaTF = new JTextField(""+Params.angleDelta,4);
 	//Chemotaxis
 	JTextField angleDirectionTF = new JTextField(""+Params.angleDirection,4);
 	JTextField angleAmplitudeTF = new JTextField(""+Params.angleAmplitude,4);
@@ -115,11 +115,11 @@ public class SettingsWindow extends JFrame {
 		c.gridx=3;
 		box.add(vclMinTF,c);
 		///////////////
-		label = new JLabel("Decimation Factor (frames): ");
+		label = new JLabel("Angle Delta (frames): ");
 		c.gridx=4;
 		box.add(label,c);
 		c.gridx=5;
-		box.add(decimationTF,c);
+		box.add(angleDeltaTF,c);
 		///////////////			
 		box.setBorder(BorderFactory.createTitledBorder(title));
 		
@@ -272,7 +272,7 @@ public class SettingsWindow extends JFrame {
 		//Filtering
 		Params.wSize = Integer.parseInt(windowSizeTF.getText());
 		Params.vclMin = Float.parseFloat(vclMinTF.getText());
-		Params.decimationFactor = Integer.parseInt(decimationTF.getText());
+		Params.angleDelta = Integer.parseInt(angleDeltaTF.getText());
 		//Chemotaxis
 		Params.angleDirection = Float.parseFloat(angleDirectionTF.getText());
 		Params.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
