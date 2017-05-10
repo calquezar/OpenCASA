@@ -8,6 +8,7 @@ import java.util.Map;
 import data.SList;
 import data.Trial;
 import gui.MessageWindow;
+import ij.IJ;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 import utils.ComputerVision;
@@ -41,6 +42,8 @@ public abstract class VideoAnalyzer {
 		SList theTracks = ComputerVision.idenfityTracks(theParticles,imp.getStackSize());
 		//Filtering tracks by length
 		theTracks = SignalProcessing.filterTracksByLength(theTracks);
+		
+//		IJ.saveString(Utils.printXYCoords(theTracks),"");
 		
 		return theTracks;
 	}
@@ -98,6 +101,11 @@ public abstract class VideoAnalyzer {
 		AVI_Reader ar = new  AVI_Reader();
 		ar.run(absoluteFilePath);
 		ImagePlus imp = ar.getImagePlus();
+		/////////////////////////////
+//		Simulation sim = new Simulation();
+//		ImagePlus imp = sim.createSimulation();
+//		imp.show();
+		/////////////////////////////
 		//Analyze the video
 		SList t = analyze(imp);
 		int[] motileSperm = SignalProcessing.motilityTest(t);
@@ -111,6 +119,7 @@ public abstract class VideoAnalyzer {
 		else if(analysis.equals("Motility-Directory"))
 			tr = new Trial(trialID,trialType,filename,t,null,motileSperm);
 		//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();
+		imp = null;
 		return tr;
 	}
 	/******************************************************/

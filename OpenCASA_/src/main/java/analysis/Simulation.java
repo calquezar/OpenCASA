@@ -104,9 +104,9 @@ public class Simulation {
 	}
 	
 	void draw(ImageProcessor ip){
-		  ip.setColor(Color.white);
-		  ip.fill();
 		  ip.setColor(Color.black);
+		  ip.fill();
+		  ip.setColor(Color.white);
 
 	      for (int x = obstaclesCount-1; x >= 0; x--) { 
 	        obstacles[x].update(ip);
