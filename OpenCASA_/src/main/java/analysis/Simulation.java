@@ -2,9 +2,11 @@ package analysis;
 
 import java.awt.Color;
 import java.awt.Point;
+import java.util.Map;
 import java.util.Random;
 
 import data.Spermatozoon;
+import data.Trial;
 import gui.MainWindow;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -20,7 +22,7 @@ public class Simulation {
 	int obstaclesCount = 0;
 	Cell[] sperm = new Cell[cellCount];
 	Obstacle[]  obstacles = new Obstacle[obstaclesCount];
-	int SIMLENGTH = 5000;
+	int SIMLENGTH = 1000;
 	Point[][] tracks = new Point[cellCount][SIMLENGTH];
 	
 	class Cell {
@@ -114,14 +116,19 @@ public class Simulation {
 	      }
 	}
 	
-	public void run(MainWindow mw){
-		
+	public ImagePlus createSimulation(){
 		ImageStack imStack = new ImageStack(w,h);
 		for(int i=0;i<SIMLENGTH;i++){
 			ImageProcessor ip = new ByteProcessor(w,h);
 			draw(ip);
 			imStack.addSlice(ip);
 		}
-		new ImagePlus("Simulation", imStack).show();
+		return new ImagePlus("Simulation", imStack);
+	}
+	
+	public void run(MainWindow mw){
+		
+		createSimulation().show();
+		
 	}
 }
