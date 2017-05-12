@@ -22,7 +22,7 @@ public class Simulation {
 	int obstaclesCount = 0;
 	Cell[] sperm = new Cell[cellCount];
 	Obstacle[]  obstacles = new Obstacle[obstaclesCount];
-	int SIMLENGTH = 1000;
+	int SIMLENGTH = 500;
 	Point[][] tracks = new Point[cellCount][SIMLENGTH];
 	
 	class Cell {
@@ -49,8 +49,8 @@ public class Simulation {
 	    Drot =0.1;
 	    //beta=0;//Control
 	    //Chemotaxis
-	    if(rand.nextFloat()<0.1) //Only 10% of the population is chemoattracted
-	      beta = 0.5;
+	    if(rand.nextFloat()<0.9) //Only 10% of the population is chemoattracted
+	      beta = 2.0;
 	    else
 	      beta=0;
 	    ro = 1/Drot;
@@ -104,9 +104,9 @@ public class Simulation {
 	}
 	
 	void draw(ImageProcessor ip){
-		  ip.setColor(Color.black);
-		  ip.fill();
 		  ip.setColor(Color.white);
+		  ip.fill();
+		  ip.setColor(Color.black);
 
 	      for (int x = obstaclesCount-1; x >= 0; x--) { 
 	        obstacles[x].update(ip);
