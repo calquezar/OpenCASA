@@ -572,7 +572,7 @@ public class Viability implements Measurements,ChangeListener, MouseListener{
 			case 2: ip.setColor(Color.MAGENTA);
 					break;						
 		}
-		ip.setLineWidth(1);
+		ip.setLineWidth(5);
 		for (ListIterator j=thespermatozoa.listIterator();j.hasNext();) {
 			Spermatozoon sperm=(Spermatozoon) j.next();
 			if(sperm.selected)
