@@ -49,7 +49,7 @@ public class Simulation {
 	    Drot =0.1;
 	    //beta=0;//Control
 	    //Chemotaxis
-	    if(rand.nextFloat()<0.9) //Only 10% of the population is chemoattracted
+	    if(rand.nextFloat()<0.0) //Only 10% of the population is chemoattracted
 	      beta = 2.0;
 	    else
 	      beta=0;
@@ -104,9 +104,9 @@ public class Simulation {
 	}
 	
 	void draw(ImageProcessor ip){
-		  ip.setColor(Color.white);
-		  ip.fill();
 		  ip.setColor(Color.black);
+		  ip.fill();
+		  ip.setColor(Color.white);
 
 	      for (int x = obstaclesCount-1; x >= 0; x--) { 
 	        obstacles[x].update(ip);
