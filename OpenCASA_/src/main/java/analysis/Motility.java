@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import data.Params;
 import data.Trial;
 import gui.MainWindow;
+import ij.IJ;
 import ij.measure.ResultsTable;
 import utils.SignalProcessing;
 import utils.Paint;

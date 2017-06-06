@@ -18,7 +18,7 @@ public class OscillatoryWalker extends Simulation {
 	int h = 800;
 	int cellCount = 1;
 	Cell[] sperm = new Cell[cellCount];
-	int SIMLENGTH = 1500;
+	int SIMLENGTH = 800;
 	Point[][] tracks = new Point[cellCount][SIMLENGTH];
 	
 	public OscillatoryWalker() {
@@ -37,6 +37,7 @@ public class OscillatoryWalker extends Simulation {
 	  double w;
 	  double f;
 	  double phi;
+	  double T;
 	  
 	  Cell(){
 	    sizex= 10;
@@ -44,7 +45,8 @@ public class OscillatoryWalker extends Simulation {
 	    t = 0;
 	    y = h/2;
 	    amplitude= 100;
-	    f=0.01;
+	    T=800;
+	    f=1/T;//0.01;
 	    w=2*Math.PI*f;
 	    phi=0;
 	  }
@@ -52,8 +54,7 @@ public class OscillatoryWalker extends Simulation {
 	  void update(ImageProcessor ip){
 
 	    //Update variables
-	    t += 0.5;
-//	    angle = angle%(2*Math.PI);
+	    t += T/1600;
 	    y = (float) (amplitude*Math.cos(w*t+phi))+h/2; 
 	    //Draw Cell
 	    ip.fillOval((int)t, (int)y, sizex, sizey);
