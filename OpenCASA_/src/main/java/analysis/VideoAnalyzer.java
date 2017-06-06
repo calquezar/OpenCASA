@@ -12,6 +12,7 @@ import ij.IJ;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 import utils.ComputerVision;
+import utils.Paint;
 import utils.SignalProcessing;
 import utils.Utils;
 
@@ -44,7 +45,6 @@ public abstract class VideoAnalyzer {
 		theTracks = SignalProcessing.filterTracksByLength(theTracks);
 		
 		IJ.saveString(Utils.printXYCoords(theTracks),"");
-		
 		return theTracks;
 	}
 	
@@ -102,7 +102,7 @@ public abstract class VideoAnalyzer {
 		ar.run(absoluteFilePath);
 //		ImagePlus imp = ar.getImagePlus();
 		/////////////////////////////
-		RandomPersistentWalkers sim = new RandomPersistentWalkers();
+		Simulation sim = new OscillatoryWalker();
 		ImagePlus imp = sim.createSimulation();
 //		imp.show();
 		/////////////////////////////
