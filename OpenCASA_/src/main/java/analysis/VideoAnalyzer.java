@@ -102,7 +102,7 @@ public abstract class VideoAnalyzer {
 		ar.run(absoluteFilePath);
 //		ImagePlus imp = ar.getImagePlus();
 		/////////////////////////////
-		Simulation sim = new Simulation();
+		RandomPersistentWalkers sim = new RandomPersistentWalkers();
 		ImagePlus imp = sim.createSimulation();
 //		imp.show();
 		/////////////////////////////
