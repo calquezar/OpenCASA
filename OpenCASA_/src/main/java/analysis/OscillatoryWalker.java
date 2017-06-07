@@ -14,8 +14,8 @@ import ij.process.ImageProcessor;
 public class OscillatoryWalker extends Simulation {
 
 
-	int w = 800;
-	int h = 800;
+	int width = 800;
+	int height = 800;
 	int cellCount = 1;
 	Cell[] sperm = new Cell[cellCount];
 	int SIMLENGTH = 800;
@@ -44,7 +44,7 @@ public class OscillatoryWalker extends Simulation {
 	    sizex= 10;
 	    sizey=8;
 	    t = 0;
-	    y = h/2;
+	    y = height/2;
 	    amplitude= 100;
 	    T=400;
 	    f=1/T;//0.01;
@@ -57,8 +57,8 @@ public class OscillatoryWalker extends Simulation {
 		float prevT = t;
 		float prevY = y;
 	    //Update variables
-	    t += T/SIMLENGTH;
-	    y = (float) (amplitude*Math.cos(w*t+phi))+h/2; 
+	    t += T/width;
+	    y = (float) (amplitude*Math.cos(w*t+phi))+height/2; 
 	    dist += distance(prevT,prevY,t,y);
 	    //Draw Cell
 	    ip.fillOval((int)t, (int)y, sizex, sizey);
@@ -79,14 +79,14 @@ public class OscillatoryWalker extends Simulation {
 	}
 	
 	public ImagePlus createSimulation(){
-		ImageStack imStack = new ImageStack(w,h);
+		ImageStack imStack = new ImageStack(width,height);
 		for(int i=0;i<SIMLENGTH;i++){
-			ImageProcessor ip = new ByteProcessor(w,h);
+			ImageProcessor ip = new ByteProcessor(width,height);
 			draw(ip);
 			imStack.addSlice(ip);
 		}
 		for (int x = cellCount-1; x >= 0; x--) { 
-//			System.out.println("Distance: "+sperm[x].dist);
+			System.out.println("Distance: "+sperm[x].dist)
 //			System.out.println("Time: "+sperm[x].t);
 			double meanVel = sperm[x].dist/sperm[x].t;
 			System.out.println("mean Velocity: "+meanVel);

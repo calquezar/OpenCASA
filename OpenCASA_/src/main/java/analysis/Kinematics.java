@@ -109,6 +109,7 @@ public class Kinematics {
 		distance = distance*(float)Params.micronPerPixel;
 	    // Seconds
 		float elapsedTime = (length-1)/Params.frameRate;
+		System.out.println("vcl distance: "+distance)
 		//return um/second
 		return distance/elapsedTime;
 	}
