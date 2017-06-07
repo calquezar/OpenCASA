@@ -44,7 +44,7 @@ public abstract class VideoAnalyzer {
 		//Filtering tracks by length
 		theTracks = SignalProcessing.filterTracksByLength(theTracks);
 		
-		IJ.saveString(Utils.printXYCoords(theTracks),"");
+//		IJ.saveString(Utils.printXYCoords(theTracks),"");
 		return theTracks;
 	}
 	
@@ -98,8 +98,8 @@ public abstract class VideoAnalyzer {
 			trialID = filename;
 		}
 		//Load video
-		AVI_Reader ar = new  AVI_Reader();
-		ar.run(absoluteFilePath);
+//		AVI_Reader ar = new  AVI_Reader();
+//		ar.run(absoluteFilePath);
 //		ImagePlus imp = ar.getImagePlus();
 		/////////////////////////////
 		Simulation sim = new OscillatoryWalker();

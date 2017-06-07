@@ -38,6 +38,7 @@ public class OscillatoryWalker extends Simulation {
 	  double f;
 	  double phi;
 	  double T;
+	  float dist;
 	  
 	  Cell(){
 	    sizex= 10;
@@ -45,7 +46,7 @@ public class OscillatoryWalker extends Simulation {
 	    t = 0;
 	    y = h/2;
 	    amplitude= 100;
-	    T=800;
+	    T=400;
 	    f=1/T;//0.01;
 	    w=2*Math.PI*f;
 	    phi=0;
@@ -53,12 +54,18 @@ public class OscillatoryWalker extends Simulation {
 	  
 	  void update(ImageProcessor ip){
 
+		float prevT = t;
+		float prevY = y;
 	    //Update variables
-	    t += T/1600;
+	    t += T/SIMLENGTH;
 	    y = (float) (amplitude*Math.cos(w*t+phi))+h/2; 
+	    dist += distance(prevT,prevY,t,y);
 	    //Draw Cell
 	    ip.fillOval((int)t, (int)y, sizex, sizey);
-	    
+	  }
+	  
+	  double distance(float x1,float y1, float x2, float y2){
+		  return Math.sqrt(Math.pow(x2-x1, 2)+Math.pow(y2-y1, 2));
 	  }
 	}
 		
@@ -66,7 +73,6 @@ public class OscillatoryWalker extends Simulation {
 		  ip.setColor(Color.black);
 		  ip.fill();
 		  ip.setColor(Color.white);
-
 	      for (int x = cellCount-1; x >= 0; x--) { 
 	        sperm[x].update(ip);
 	      }
@@ -79,7 +85,14 @@ public class OscillatoryWalker extends Simulation {
 			draw(ip);
 			imStack.addSlice(ip);
 		}
-		return new ImagePlus("RandomPersistentWalkers", imStack);
+		for (int x = cellCount-1; x >= 0; x--) { 
+//			System.out.println("Distance: "+sperm[x].dist);
+//			System.out.println("Time: "+sperm[x].t);
+			double meanVel = sperm[x].dist/sperm[x].t;
+			System.out.println("mean Velocity: "+meanVel);
+	      }
+		
+		return new ImagePlus("Simulation", imStack);
 	}
 	
 	public void run(){createSimulation().show();}
