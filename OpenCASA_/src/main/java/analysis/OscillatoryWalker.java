@@ -56,12 +56,18 @@ public class OscillatoryWalker extends Simulation {
 
 		float prevT = t;
 		float prevY = y;
+		Random rand = new Random();
+	    double epsilon = 2*rand.nextGaussian();
 	    //Update variables
 	    t += 1;//T/width;
-	    y = (float) (amplitude*Math.cos(w*t+phi))+height/2; 
+	    //Sinusoidal function
+	    y = (float) (amplitude*Math.sin(w*t+phi)+epsilon)+height/2;
+	    float x = (float) (amplitude*Math.cos(w*t+phi)+epsilon)+height/2;
+	    //Triangular function
+//	    y=(float) ((2*amplitude/Math.PI)*Math.asin(Math.sin(2*Math.PI*t/T)))+height/2;
 	    dist += distance(prevT,prevY,t,y);
 	    //Draw Cell
-	    ip.fillOval((int)t, (int)y, sizex, sizey);
+	    ip.fillOval((int)x, (int)y, sizex, sizey);
 	  }
 	  
 	  double distance(float x1,float y1, float x2, float y2){

@@ -48,7 +48,7 @@ public class Kinematics {
 		int length = avgTrack.size();
 		int intersections=0;
 		// bcf_shift equal to 1 is not enougth to catch all beat-cross
-		for (int i=Params.bcf_shift;i<length;i=i+1+Params.bcf_shift){
+		for (int i=1;i<length;i=i+1+Params.bcf_shift){
 			Spermatozoon origP0 = (Spermatozoon)track.get(i-Params.bcf_shift+Params.wSize/2-1);
 			Spermatozoon origP1 = (Spermatozoon)track.get(i+Params.wSize/2-1);
 			Spermatozoon avgP0 = (Spermatozoon)avgTrack.get(i-Params.bcf_shift);
