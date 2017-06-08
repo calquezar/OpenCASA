@@ -18,7 +18,7 @@ public class OscillatoryWalker extends Simulation {
 	int height = 800;
 	int cellCount = 1;
 	Cell[] sperm = new Cell[cellCount];
-	int SIMLENGTH = 800;
+	int SIMLENGTH = 700;
 	Point[][] tracks = new Point[cellCount][SIMLENGTH];
 	
 	public OscillatoryWalker() {
@@ -46,7 +46,7 @@ public class OscillatoryWalker extends Simulation {
 	    t = 0;
 	    y = height/2;
 	    amplitude= 100;
-	    T=400;
+	    T=350;
 	    f=1/T;//0.01;
 	    w=2*Math.PI*f;
 	    phi=0;
@@ -57,7 +57,7 @@ public class OscillatoryWalker extends Simulation {
 		float prevT = t;
 		float prevY = y;
 	    //Update variables
-	    t += T/width;
+	    t += 1;//T/width;
 	    y = (float) (amplitude*Math.cos(w*t+phi))+height/2; 
 	    dist += distance(prevT,prevY,t,y);
 	    //Draw Cell
@@ -86,10 +86,10 @@ public class OscillatoryWalker extends Simulation {
 			imStack.addSlice(ip);
 		}
 		for (int x = cellCount-1; x >= 0; x--) { 
-			System.out.println("Distance: "+sperm[x].dist)
+			System.out.println("Distance: "+sperm[x].dist);
 //			System.out.println("Time: "+sperm[x].t);
 			double meanVel = sperm[x].dist/sperm[x].t;
-			System.out.println("mean Velocity: "+meanVel);
+//			System.out.println("mean Velocity: "+meanVel);
 	      }
 		
 		return new ImagePlus("Simulation", imStack);
