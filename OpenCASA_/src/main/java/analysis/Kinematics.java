@@ -43,28 +43,57 @@ public class Kinematics {
 	 * @param avgTrack - 
 	 * @return BCF (Hz)
 	 */	
+//	public static float bcf(List track,List avgTrack){
+//		
+//		int length = avgTrack.size();
+//		int intersections=0;
+//		// bcf_shift equal to 1 is not enougth to catch all beat-cross
+//		for (int i=1;i<length;i=i+1+Params.bcf_shift){
+//			Spermatozoon origP0 = (Spermatozoon)track.get(i-Params.bcf_shift+Params.wSize/2-1);
+//			Spermatozoon origP1 = (Spermatozoon)track.get(i+Params.wSize/2-1);
+//			Spermatozoon avgP0 = (Spermatozoon)avgTrack.get(i-Params.bcf_shift);
+//			Spermatozoon avgP1 = (Spermatozoon)avgTrack.get(i);
+//			Line2D origLine = new Line2D.Float();
+//			origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
+//			Line2D avgLine = new Line2D.Float();
+//			avgLine.setLine(avgP0.x,avgP0.y,avgP1.x,avgP1.y);
+//			
+//			boolean intersection = origLine.intersectsLine(avgLine);
+//			if(intersection)
+//				intersections++;
+//		}
+//		float bcf_value = (float)intersections*Params.frameRate/(float)length;
+//		
+//		return bcf_value;
+//	}
 	public static float bcf(List track,List avgTrack){
 		
-		int length = avgTrack.size();
-		int intersections=0;
-		// bcf_shift equal to 1 is not enougth to catch all beat-cross
-		for (int i=1;i<length;i=i+1+Params.bcf_shift){
-			Spermatozoon origP0 = (Spermatozoon)track.get(i-Params.bcf_shift+Params.wSize/2-1);
-			Spermatozoon origP1 = (Spermatozoon)track.get(i+Params.wSize/2-1);
-			Spermatozoon avgP0 = (Spermatozoon)avgTrack.get(i-Params.bcf_shift);
-			Spermatozoon avgP1 = (Spermatozoon)avgTrack.get(i);
-			Line2D origLine = new Line2D.Float();
-			origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
-			Line2D avgLine = new Line2D.Float();
-			avgLine.setLine(avgP0.x,avgP0.y,avgP1.x,avgP1.y);
-			
-			boolean intersection = origLine.intersectsLine(avgLine);
-			if(intersection)
-				intersections++;
-		}
-		float bcf_value = (float)intersections*Params.frameRate/(float)length;
-		
+		int nAvgPoints = avgTrack.size();
+		float[] dists = new float[nAvgPoints];
+		int[] xPoints = new int[nAvgPoints];
+	    for(int i=0;i<nAvgPoints;i++){
+	      Spermatozoon origS = (Spermatozoon)track.get(i+Params.wSize-1)
+	      Spermatozoon avgS = (Spermatozoon)avgTrack.get(i);
+	      dists[i] = origS.distance(avgS);
+	      System.out.println("Distance: "+dists[i]);
+	    }
+		int intersections = countLocalMaximas(dists);
+		System.out.println("intersections: "+intersections);
+		float bcf_value = (float)intersections*Params.frameRate/(float)nAvgPoints;
 		return bcf_value;
+	}
+	
+	static int countLocalMaximas(float[] points){
+		 int nPoints = points.length;
+		 int count = 0;
+		 for(int i=2;i<nPoints;i++){
+		   float x0=points[i-2];
+		   float x1=points[i-1];
+		   float x2=points[i];
+		   if(((x1>x0)&(x1>x2))||(x1<x0)&(x1<x2))
+		     count++;
+		 }
+		 return count;
 	}
 	/******************************************************/
 	/**
