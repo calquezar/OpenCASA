@@ -6,6 +6,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.Spermatozoon;
+import utils.SignalProcessing;
 
 public class Kinematics {
 	/******************************************************/
@@ -72,11 +73,12 @@ public class Kinematics {
 		float[] dists = new float[nAvgPoints];
 		int[] xPoints = new int[nAvgPoints];
 	    for(int i=0;i<nAvgPoints;i++){
-	      Spermatozoon origS = (Spermatozoon)track.get(i+Params.wSize-1)
+	      Spermatozoon origS = (Spermatozoon)track.get(i+Params.wSize/2-1);
 	      Spermatozoon avgS = (Spermatozoon)avgTrack.get(i);
 	      dists[i] = origS.distance(avgS);
 	      System.out.println("Distance: "+dists[i]);
 	    }
+	    dists = SignalProcessing.movingAverage(dists,2);
 		int intersections = countLocalMaximas(dists);
 		System.out.println("intersections: "+intersections);
 		float bcf_value = (float)intersections*Params.frameRate/(float)nAvgPoints;
@@ -90,7 +92,7 @@ public class Kinematics {
 		   float x0=points[i-2];
 		   float x1=points[i-1];
 		   float x2=points[i];
-		   if(((x1>x0)&(x1>x2))||(x1<x0)&(x1<x2))
+		   if(((x1>x0)&(x1>x2))||((x1<x0)&(x1<x2)))
 		     count++;
 		 }
 		 return count;

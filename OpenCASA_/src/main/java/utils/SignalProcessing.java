@@ -130,24 +130,39 @@ public abstract class SignalProcessing {
 	 * @param track Array list that stores one track 
 	 * @return ArrayList with the averaged track
 	 */
-	public static List movingAverage (List track){
+	public static List movingAverage (List track, int wSize){
 		int nPoints = track.size();
 		List avgTrack = new ArrayList();
-		for (int j = Params.wSize-1; j < nPoints; j++) {
+		for (int j = wSize-1; j < nPoints; j++) {
 			int avgX = 0;
 			int avgY = 0;
-			for (int k=Params.wSize-1;k>=0;k--){
+			for (int k=wSize-1;k>=0;k--){
 				Spermatozoon aSpermatozoon = (Spermatozoon)track.get(j-k);
 				avgX += (int)aSpermatozoon.x;
 				avgY += (int)aSpermatozoon.y;
 			}
-			avgX = avgX/Params.wSize;
-			avgY = avgY/Params.wSize;
+			avgX = avgX/wSize;
+			avgY = avgY/wSize;
 			Spermatozoon newSpermatozoon = new Spermatozoon();
 			newSpermatozoon.x=(float)avgX;
 			newSpermatozoon.y=(float)avgY;
 			avgTrack.add(newSpermatozoon);
 		}
 		return avgTrack;
+	}
+	public static List movingAverage (List track){
+		return movingAverage(track,Params.wSize);
+	}
+	public static float[] movingAverage(float[] points, int wSize){
+		 int nPoints = points.length;
+		 int count = 0;
+		 float[] avgPoints = new float[nPoints-wSize+1];
+		 for(int i=wSize-1;i<nPoints;i++){
+			 for (int k=wSize-1;k>=0;k--){
+				 avgPoints[i-wSize+1]+=points[i-k];
+			 }
+			 avgPoints[i-wSize+1]/=(float)wSize;
+		 }
+		 return avgPoints;
 	}
 }
