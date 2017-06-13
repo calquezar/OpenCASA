@@ -76,7 +76,7 @@ public class Kinematics {
 	      Spermatozoon origS = (Spermatozoon)track.get(i+Params.wSize/2-1);
 	      Spermatozoon avgS = (Spermatozoon)avgTrack.get(i);
 	      dists[i] = origS.distance(avgS);
-	      System.out.println("Distance: "+dists[i]);
+//	      System.out.println("Distance: "+dists[i]);
 	    }
 	    dists = SignalProcessing.movingAverage(dists,2);
 		int intersections = countLocalMaximas(dists);
@@ -151,7 +151,7 @@ public class Kinematics {
 	 */	
 	public static float vsl(List track){
 		int length = track.size();
-		Spermatozoon first = (Spermatozoon)track.get(1);
+		Spermatozoon first = (Spermatozoon)track.get(0);
 		Spermatozoon last = (Spermatozoon)track.get(length-1);
 		//Distance (pixels)
 		float distance = last.distance(first);
