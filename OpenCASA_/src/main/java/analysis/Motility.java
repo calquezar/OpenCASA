@@ -184,7 +184,7 @@ public class Motility {
 				countProgressiveSperm++;
 			}	
 			// DANCE
-			float dance_value =  vcl_value*alh_values[0];
+			float dance_value =  vcl_value*alh_values[0];//vcl*alh_mean
 			total_dance+=dance_value;
 			//MAD
 			float mad_value = Kinematics.mad(aTrack);

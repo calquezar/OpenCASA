@@ -66,10 +66,10 @@ public class OscillatoryWalker extends Simulation {
 	    //Update variables
 	    t += 1;//T/width;
 	    //Sinusoidal function
-//	    y = (float) (amplitude*Math.sin(w*t+phi)+epsilon)+height/2;
+	    y = (float) (amplitude*Math.sin(w*t+phi))+height/2;
 //	    float x = (float) (amplitude*Math.cos(w*t+phi)+epsilon)+height/2;
 	    //Triangular function
-	    y=(float) ((2*amplitude/Math.PI)*Math.asin(Math.sin(2*Math.PI*t/T)))+height/2;
+//	    y=(float) ((2*amplitude/Math.PI)*Math.asin(Math.sin(2*Math.PI*t/T)))+height/2;
 	    dist += distance(prevT,prevY,t,y);
 	    //Draw Cell
 	    ip.fillOval((int)t, (int)y, sizex, sizey);
@@ -107,7 +107,7 @@ public class OscillatoryWalker extends Simulation {
 			double vsl = track.get(0).distance(track.get(track.size()-1))/track.size();
 			double vcl = sperm[x].dist/sperm[x].t;
 			List<Spermatozoon> avgTrack = SignalProcessing.movingAverage(track);
-			double vap = 
+			double vap = Kinematics.vcl(avgTrack);
 			double lin = vsl/vcl;
 			double wob = vap/vcl;
 			System.out.println("VSL: "+vsl);

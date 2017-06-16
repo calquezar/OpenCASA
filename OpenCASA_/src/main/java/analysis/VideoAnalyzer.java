@@ -98,12 +98,12 @@ public abstract class VideoAnalyzer {
 			trialID = filename;
 		}
 		//Load video
-//		AVI_Reader ar = new  AVI_Reader();
-//		ar.run(absoluteFilePath);
-//		ImagePlus imp = ar.getImagePlus();
+		AVI_Reader ar = new  AVI_Reader();
+		ar.run(absoluteFilePath);
+		ImagePlus imp = ar.getImagePlus();
 		/////////////////////////////
-		Simulation sim = new OscillatoryWalker();
-		ImagePlus imp = sim.createSimulation();
+//		Simulation sim = new OscillatoryWalker();
+//		ImagePlus imp = sim.createSimulation();
 //		imp.show();
 		/////////////////////////////
 		//Analyze the video
