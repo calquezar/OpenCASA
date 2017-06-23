@@ -80,7 +80,7 @@ public class Kinematics {
 	    }
 	    dists = SignalProcessing.movingAverage(dists,2);
 		int intersections = countLocalMaximas(dists);
-		System.out.println("intersections: "+intersections);
+//		System.out.println("intersections: "+intersections);
 		float bcf_value = (float)intersections*Params.frameRate/(float)nAvgPoints;
 		return bcf_value;
 	}
@@ -134,10 +134,13 @@ public class Kinematics {
 		for (;jT.hasNext();){ 
 			Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
 			distance += newSpermatozoon.distance(oldSpermatozoon);
+//			System.out.println("Distance: "+newSpermatozoon.distance(oldSpermatozoon));
 			oldSpermatozoon = newSpermatozoon;
-		}	
+		}
+//		System.out.println("Distance: "+distance);
 		//convert pixels to micrometers
 		distance = distance*(float)Params.micronPerPixel;
+		
 	    // Seconds
 		float elapsedTime = (length-1)/Params.frameRate;
 		//return um/second
@@ -150,6 +153,7 @@ public class Kinematics {
 	 * @return VSL (um/second)
 	 */	
 	public static float vsl(List track){
+		
 		int length = track.size();
 		Spermatozoon first = (Spermatozoon)track.get(0);
 		Spermatozoon last = (Spermatozoon)track.get(length-1);

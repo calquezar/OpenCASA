@@ -74,8 +74,8 @@ public class Motility {
 			// Motility results
 			calculateMotility(rtIndividual,trial);
 			calculateAverageMotility(rtAverage,trial);
+			resetParams();
 		}
-		rtIndividual.show("Individual Motility");
 		rtAverage.show("Average Motility");
 	}
 	
