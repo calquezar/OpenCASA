@@ -24,7 +24,7 @@ public class Params {
 	//minimum length of sperm track in frames
 	public static int 	minTrackLength = 15;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
-	public static float 	maxVelocity = 10;
+	public static float 	maxDisplacement = 10; // um
 	//Window size for moving average method
 	public static int wSize = 9;
 	//Motility filter for motile and non motile sperm
@@ -66,7 +66,7 @@ public class Params {
 //		minSize = 20;
 //		maxSize = 200;
 //		minTrackLength = 20;
-//		maxVelocity = 15;
+//		maxDisplacement = 15;
 //		wSize = 5;
 //		vclMin = 50;
 //		angleDelta = 5;
@@ -86,7 +86,7 @@ public class Params {
 //		minSize = 100; //um^2
 //		maxSize = 10000;//um^2
 //		minTrackLength = 5;
-//		maxVelocity = 10;
+//		maxDisplacement = 10;
 //		wSize = 2;
 //		vclMin = 1;
 //		angleDelta = 1;
@@ -114,7 +114,7 @@ public class Params {
 		minSize = prefs.getFloat("minSize", minSize);
 		maxSize = prefs.getFloat("maxSize", maxSize);
 		minTrackLength = prefs.getInt("minTrackLength",minTrackLength);
-		maxVelocity = prefs.getFloat("maxVelocity",maxVelocity);
+		maxDisplacement = prefs.getFloat("maxDisplacement",maxDisplacement);
 		wSize = prefs.getInt("wSize",wSize);
 		vclMin = prefs.getFloat("vclMin",vclMin);
 		angleDelta = prefs.getInt("angleDelta",angleDelta);
@@ -132,7 +132,7 @@ public class Params {
 		prefs.putFloat("minSize", minSize);
 		prefs.putFloat("maxSize", maxSize);
 		prefs.putInt("minTrackLength",minTrackLength);
-		prefs.putFloat("maxVelocity",maxVelocity);
+		prefs.putFloat("maxDisplacement",maxDisplacement);
 		prefs.putInt("wSize",wSize);
 		prefs.putFloat("vclMin",vclMin);
 		prefs.putInt("angleDelta",angleDelta);

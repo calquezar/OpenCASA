@@ -36,7 +36,7 @@ public class SettingsWindow extends JFrame {
 	JTextField minSizeTF = new JTextField(""+Params.minSize,4);
 	JTextField maxSizeTF = new JTextField(""+Params.maxSize,4);
 	JTextField minTrackLengthTF = new JTextField(""+Params.minTrackLength,4);
-	JTextField maxVelocityTF = new JTextField(""+Params.maxVelocity*(1/Params.micronPerPixel),4);  //Convert maxVelocity to um/s
+	JTextField maxDisplacementTF = new JTextField(""+Params.maxDisplacement,4);
 	//Filtering
 	JTextField windowSizeTF = new JTextField(""+Params.wSize,4);
 	JTextField vclMinTF = new JTextField(""+Params.vclMin,4);
@@ -212,11 +212,11 @@ public class SettingsWindow extends JFrame {
 		c.gridx=1;
 		box.add(minTrackLengthTF,c);
 		///////////////
-		label = new JLabel("Maximum velocity between frames (um/s): ");
+		label = new JLabel("Maximum displacement between frames (um): ");
 		c.gridx=2;
 		box.add(label,c);
 		c.gridx=3;
-		box.add(maxVelocityTF,c);
+		box.add(maxDisplacementTF,c);
 		///////////////		
 		box.setBorder(BorderFactory.createTitledBorder(title));
 		
@@ -253,7 +253,7 @@ public class SettingsWindow extends JFrame {
 //		c.gridx=2;
 //		box.add(label,c);
 //		c.gridx=3;
-//		box.add(maxVelocityTF,c);
+//		box.add(maxDisplacementTF,c);
 //		///////////////		
 //		box.setBorder(BorderFactory.createTitledBorder(title));
 //		
@@ -268,7 +268,7 @@ public class SettingsWindow extends JFrame {
 		Params.minSize = Float.parseFloat(minSizeTF.getText());
 		Params.maxSize = Float.parseFloat(maxSizeTF.getText());
 		Params.minTrackLength = Integer.parseInt(minTrackLengthTF.getText());
-		Params.maxVelocity = (float) (Float.parseFloat(maxVelocityTF.getText())/(1/Params.micronPerPixel)); //Convert to pixels per frame
+		Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um => pixels
 		//Filtering
 		Params.wSize = Integer.parseInt(windowSizeTF.getText());
 		Params.vclMin = Float.parseFloat(vclMinTF.getText());

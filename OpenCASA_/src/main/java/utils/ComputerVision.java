@@ -199,7 +199,7 @@ public abstract class ComputerVision implements Measurements {
 							Spermatozoon testSpermatozoon =(Spermatozoon) jF.next();
 							float distance = testSpermatozoon.distance(oldSpermatozoon);
 							// record a Spermatozoon when it is within the search radius, and when it had not yet been claimed by another track
-							if ( (distance < Params.maxVelocity) && !testSpermatozoon.inTrack) {
+							if ( (distance < (Params.maxDisplacement/Params.micronPerPixel)) && !testSpermatozoon.inTrack) {
 								// if we had not found a Spermatozoon before, it is easy
 								if (!foundOne) {
 									tmpSpermatozoon=testSpermatozoon;
@@ -224,7 +224,7 @@ public abstract class ComputerVision implements Measurements {
 									}
 								}
 							}
-							else if (distance < Params.maxVelocity) {
+							else if (distance < (Params.maxDisplacement/Params.micronPerPixel)) {
 							// this Spermatozoon is already in another track but could have been part of this one
 							// We have a number of choices here:
 							// 1. Sort out to which track this Spermatozoon really belongs (but how?)
