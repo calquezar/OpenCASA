@@ -378,10 +378,12 @@ public class Chemotaxis {
 	  return tracks;
 	}
 	
-	public void ratioQ(Map<String,Trial> trials){
+	public float ratioQ(Map<String,Trial> trials){
 		
+		float maxRatioQ = 0;
+		float maxRatioSL = 0;
 		if(trials==null)
-			return;
+			return (Float) null;
 		Set keySet = trials.keySet();	
 		getControlKeys(keySet);
 		ResultsTable rtRatios = new ResultsTable();
@@ -390,10 +392,15 @@ public class Chemotaxis {
 			Trial trial = (Trial)trials.get(key);
 		  	System.out.println("key: "+key);
 		  	float ratioQ = calculateRatioQ(trial.tracks);
+		  	if(ratioQ>maxRatioQ)
+		  		maxRatioQ=ratioQ;
 		  	float ratioSL = calculateRatioSL(trial.tracks);
+		  	if(ratioSL>maxRatioSL)
+		  		maxRatioSL=ratioSL;
 		  	setQResults(rtRatios,trial.source,ratioQ,ratioSL,trial.tracks.size());
 		}
 		rtRatios.show("Chemotaxis results");
+		return maxRatioQ;
 	}
 	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
@@ -421,20 +428,59 @@ public class Chemotaxis {
 			}
 			Map<String,Trial> trials = null;
 			//Create trials dictionary
-			if(userSelection1==1)
+			if(userSelection1==1){
 				trials = VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
-			else if(userSelection1==2)
-				trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation");//
-			//Utils.saveTrials(trials);
-			if(trials==null){
-				mw.setVisible(true);
-				return;
+				//Utils.saveTrials(trials);
+				if(trials==null){
+					mw.setVisible(true);
+					return;
+				}
+//				Utils.saveTrials(trials);
+				if(userSelection2==0)
+					ratioQ(trials);
+				else if(userSelection2==1)
+					bootstrapping(trials);		
 			}
-//			Utils.saveTrials(trials);
-			if(userSelection2==0)
-				ratioQ(trials);
-			else if(userSelection2==1)
-				bootstrapping(trials);			
+			else if(userSelection1==2){
+				
+				int N = 20;
+				double[] Betas = new double[N];
+				double[] Responsiveness = new double[N];
+				double[][] results = new double[N][N];
+				double maxBeta = 2;
+				
+//				double beta=2.0;
+//				double responsiveCells=0.4;
+				for(int i=0;i<N;i++){
+					double beta = (i/(double)N)*maxBeta;
+					System.out.println("beta: "+beta);
+					Betas[i]=beta;
+					for(int j=0;j<N;j++){
+						System.out.println("i: "+i+"; j: "+j);
+						double responsiveCells = j/(double)N;
+						Responsiveness[j]=responsiveCells;
+						System.out.println("responsiveCells: "+responsiveCells);
+						
+						trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation",beta,responsiveCells);//
+						//Utils.saveTrials(trials);
+						if(trials==null){
+							mw.setVisible(true);
+							return;
+						}
+//						Utils.saveTrials(trials);
+						if(userSelection2==0)
+							results[i][j]=ratioQ(trials);
+						else if(userSelection2==1)
+							bootstrapping(trials);		
+					}
+				}
+				for(int i=0;i<N;i++){
+					for(int j=0;j<N;j++){
+						IJ.log(""+results[i][j]);
+					}
+				}
+			}
+	
 		}
 		mw.setVisible(true);
 	}

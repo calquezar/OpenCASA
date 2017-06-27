@@ -60,48 +60,47 @@ public abstract class VideoAnalyzer {
 	public static Map<String,Trial> extractTrials(String analysis){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
-		
-		if(analysis.equals("Chemotaxis-Directory")||analysis.equals("Motility-Directory")){
-			String[] listOfFiles = Utils.getFileNames();
-			if(listOfFiles==null || listOfFiles.length==0)
-				return null;
-			for (int i = 0; i < listOfFiles.length; i++) {
-			    if (new File(listOfFiles[i]).isFile()) {
-			    	String absoluteFilePath = listOfFiles[i];
-					if(Utils.isAVI(absoluteFilePath)){
-				    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
-						trials.put(tr.ID, tr);
-					}
-			    } //else if (new File(listOfFiles[i]).isDirectory()) {}		    
-			}
-		}else if(analysis.equals("Chemotaxis-Simulation")){
-			
-			for (int i = 0; i < 5; i++) {
-				
-				Simulation sim = new RandomPersistentWalker();
-				ImagePlus imp = sim.createSimulation();
-				String filename = "YYYY-MM-DD-"+i+"-C-x-x ";
-				String trialID = getID(filename);
-				String trialType =  getTrialType(filename);
-		    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
-				trials.put(tr.ID, tr);
-				System.out.println(tr.ID);
-			}
-			for (int i = 0; i < 5; i++) {
-				
-				double beta=2.0;
-				double responsiveCells = 0.4;
-				Simulation sim = new RandomPersistentWalker(beta,responsiveCells);
-				ImagePlus imp = sim.createSimulation();
-				String filename = "YYYY-MM-DD-"+i+"-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
-				String trialID = getID(filename);
-				String trialType =  getTrialType(filename);
-		    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
-				trials.put(tr.ID, tr);
-				System.out.println(tr.ID);
-			}			
+		String[] listOfFiles = Utils.getFileNames();
+		if(listOfFiles==null || listOfFiles.length==0)
+			return null;
+		for (int i = 0; i < listOfFiles.length; i++) {
+		    if (new File(listOfFiles[i]).isFile()) {
+		    	String absoluteFilePath = listOfFiles[i];
+				if(Utils.isAVI(absoluteFilePath)){
+			    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
+					trials.put(tr.ID, tr);
+				}
+		    } //else if (new File(listOfFiles[i]).isDirectory()) {}		    
 		}
-		/////////////////////////////
+		return trials;
+	}
+	
+	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells){
+		
+		int MAXSIMULATIONS = 5;
+		Map<String,Trial> trials = new HashMap<String,Trial>();
+//		for (int i = 0; i < MAXSIMULATIONS; i++) {
+//			
+//			Simulation sim = new RandomPersistentWalker();
+//			ImagePlus imp = sim.createSimulation();
+//			String filename = "YYYY-MM-DD-"+i+"-C-x-x ";
+//			String trialID = getID(filename);
+//			String trialType =  getTrialType(filename);
+//	    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+//			trials.put(tr.ID, tr);
+////			System.out.println(tr.ID);
+//		}
+		for (int i = 0; i < MAXSIMULATIONS; i++) {
+			
+			Simulation sim = new RandomPersistentWalker(beta,responsiveCells);
+			ImagePlus imp = sim.createSimulation();
+			String filename = "YYYY-MM-DD-"+i+"-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
+			String trialID = getID(filename);
+			String trialType =  getTrialType(filename);
+	    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+			trials.put(tr.ID, tr);
+//			System.out.println(tr.ID);
+		}
 		return trials;
 	}
 	public static String getID(String filename){
