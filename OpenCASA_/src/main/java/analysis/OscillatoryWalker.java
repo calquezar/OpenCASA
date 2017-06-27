@@ -6,8 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import analysis.RandomPersistentWalkers.Cell;
-import analysis.RandomPersistentWalkers.Obstacle;
+import analysis.RandomPersistentWalker.Cell;
+import analysis.RandomPersistentWalker.Obstacle;
 import data.Spermatozoon;
 import ij.ImagePlus;
 import ij.ImageStack;

@@ -60,18 +60,48 @@ public abstract class VideoAnalyzer {
 	public static Map<String,Trial> extractTrials(String analysis){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
-		String[] listOfFiles = Utils.getFileNames();
-		if(listOfFiles==null || listOfFiles.length==0)
-			return null;
-		for (int i = 0; i < listOfFiles.length; i++) {
-		    if (new File(listOfFiles[i]).isFile()) {
-		    	String absoluteFilePath = listOfFiles[i];
-				if(Utils.isAVI(absoluteFilePath)){
-			    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
-					trials.put(tr.ID, tr);
-				}
-		    } //else if (new File(listOfFiles[i]).isDirectory()) {}		    
+		
+		if(analysis.equals("Chemotaxis-Directory")||analysis.equals("Motility-Directory")){
+			String[] listOfFiles = Utils.getFileNames();
+			if(listOfFiles==null || listOfFiles.length==0)
+				return null;
+			for (int i = 0; i < listOfFiles.length; i++) {
+			    if (new File(listOfFiles[i]).isFile()) {
+			    	String absoluteFilePath = listOfFiles[i];
+					if(Utils.isAVI(absoluteFilePath)){
+				    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
+						trials.put(tr.ID, tr);
+					}
+			    } //else if (new File(listOfFiles[i]).isDirectory()) {}		    
+			}
+		}else if(analysis.equals("Chemotaxis-Simulation")){
+			
+			for (int i = 0; i < 5; i++) {
+				
+				Simulation sim = new RandomPersistentWalker();
+				ImagePlus imp = sim.createSimulation();
+				String filename = "YYYY-MM-DD-"+i+"-C-x-x ";
+				String trialID = getID(filename);
+				String trialType =  getTrialType(filename);
+		    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+				trials.put(tr.ID, tr);
+				System.out.println(tr.ID);
+			}
+			for (int i = 0; i < 5; i++) {
+				
+				double beta=2.0;
+				double responsiveCells = 0.4;
+				Simulation sim = new RandomPersistentWalker(beta,responsiveCells);
+				ImagePlus imp = sim.createSimulation();
+				String filename = "YYYY-MM-DD-"+i+"-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
+				String trialID = getID(filename);
+				String trialType =  getTrialType(filename);
+		    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+				trials.put(tr.ID, tr);
+				System.out.println(tr.ID);
+			}			
 		}
+		/////////////////////////////
 		return trials;
 	}
 	public static String getID(String filename){
@@ -101,18 +131,18 @@ public abstract class VideoAnalyzer {
 		AVI_Reader ar = new  AVI_Reader();
 		ar.run(absoluteFilePath);
 		ImagePlus imp = ar.getImagePlus();
-		/////////////////////////////
-//		Simulation sim = new OscillatoryWalker();
-//		ImagePlus imp = sim.createSimulation();
-//		imp.show();
-		/////////////////////////////
+
+		return getTrialFromImp(imp,analysis,trialID,trialType,filename);
+	}
+	
+	public static Trial getTrialFromImp(ImagePlus imp,String analysis,String trialID,String trialType,String filename){
 		//Analyze the video
 		SList t = analyze(imp);
 		int[] motileSperm = SignalProcessing.motilityTest(t);
 		//Only pass from here tracks with a minimum level of motility
 		t = SignalProcessing.filterTracksByMotility(t);
 		Trial tr = null;
-		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory"))
+		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory")||analysis.equals("Chemotaxis-Simulation"))
 			tr = new Trial(trialID,trialType,filename,t,imp.getWidth(),imp.getHeight());
 		else if(analysis.equals("Motility-File"))
 			tr = new Trial(trialID,trialType,filename,t,imp,motileSperm);

@@ -399,7 +399,7 @@ public class Chemotaxis {
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
 		//Ask if user wants to analyze a file or directory
-		Object[] options = {"File", "Directory"};
+		Object[] options = {"File", "Directory","Simulation"};
 		String question = "What do you want to analyze?";
 		String title = "Choose one analysis...";
 		int userSelection1 = analysisSelectionDialog(options,question,title);
@@ -409,7 +409,7 @@ public class Chemotaxis {
 		}
 		else if( userSelection1==0){//File
 			analyzeFile();
-		}else if( userSelection1==1){//Directory
+		}else if( userSelection1==1 || userSelection1==2){//Directory
 			//Ask user which analysis wants to apply
 			Object[] options2 = {"RatioQ", "Bootstrapping"};
 			question = "Which analysis do you want to apply to the data?";
@@ -419,8 +419,12 @@ public class Chemotaxis {
 				mw.setVisible(true);
 				return;	
 			}
+			Map<String,Trial> trials = null;
 			//Create trials dictionary
-			Map<String,Trial> trials = VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
+			if(userSelection1==1)
+				trials = VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
+			else if(userSelection1==2)
+				trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation");//
 			//Utils.saveTrials(trials);
 			if(trials==null){
 				mw.setVisible(true);

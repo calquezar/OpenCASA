@@ -14,7 +14,7 @@ import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 
-public class RandomPersistentWalkers extends Simulation {
+public class RandomPersistentWalker extends Simulation {
 
 	int w = 800;
 	int h = 800;
@@ -37,8 +37,7 @@ public class RandomPersistentWalkers extends Simulation {
 	  double beta;
 	  double ro;
 	  
-	  Cell(){
-		
+	  Cell(double b,double responsiveCells){
 		Random rand = new Random();
 	    sizex= 10;
 	    sizey=8;
@@ -49,10 +48,22 @@ public class RandomPersistentWalkers extends Simulation {
 	    Drot =0.1;
 	    //beta=0;//Control
 	    //Chemotaxis
-	    if(rand.nextFloat()<0.0) //Only 10% of the population is chemoattracted
-	      beta = 2.0;
+	    if(rand.nextFloat()<responsiveCells) //Only 10% of the population is chemoattracted
+	      beta = b;
 	    else
 	      beta=0;
+	    ro = 1/Drot;
+	  }
+	  Cell(){
+		Random rand = new Random();
+	    sizex= 10;
+	    sizey=8;
+	    x = rand.nextInt(w);
+	    y = rand.nextInt(h);
+	    angle = 0;//random(-PI,PI);
+	    speed=3;//4;
+	    Drot =0.1;
+	    beta=0;
 	    ro = 1/Drot;
 	  }
 	  
@@ -91,8 +102,17 @@ public class RandomPersistentWalkers extends Simulation {
 		ip.fillOval(x,y,radius,radius);
 	  }
 	}
-		
-	public RandomPersistentWalkers() {
+	
+
+	public RandomPersistentWalker(double b, double responsiveCells) {
+	  for (int x = cellCount-1; x >= 0; x--) { 
+		    sperm[x] = new Cell(b,responsiveCells);
+		  }
+	  for (int x = obstaclesCount-1; x >= 0; x--) { 
+	    obstacles[x] = new Obstacle();
+	  }
+	}
+	public RandomPersistentWalker() {
 		
 	  for (int x = cellCount-1; x >= 0; x--) { 
 		    sperm[x] = new Cell();
@@ -100,7 +120,6 @@ public class RandomPersistentWalkers extends Simulation {
 	  for (int x = obstaclesCount-1; x >= 0; x--) { 
 	    obstacles[x] = new Obstacle();
 	  }
-	  
 	}
 	
 	void draw(ImageProcessor ip){
@@ -123,7 +142,7 @@ public class RandomPersistentWalkers extends Simulation {
 			draw(ip);
 			imStack.addSlice(ip);
 		}
-		return new ImagePlus("RandomPersistentWalkers", imStack);
+		return new ImagePlus("RandomPersistentWalker", imStack);
 	}
 	
 	public void run(){createSimulation().show();}

@@ -22,7 +22,7 @@ import analysis.Chemotaxis;
 import analysis.Morphometry;
 import analysis.Motility;
 import analysis.OscillatoryWalker;
-import analysis.RandomPersistentWalkers;
+import analysis.RandomPersistentWalker;
 import analysis.Simulation;
 import analysis.Viability;
 import data.Params;
