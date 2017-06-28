@@ -77,19 +77,18 @@ public abstract class VideoAnalyzer {
 	
 	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells){
 		
-		int MAXSIMULATIONS = 5;
+		int MAXSIMULATIONS = 50;
 		Map<String,Trial> trials = new HashMap<String,Trial>();
-//		for (int i = 0; i < MAXSIMULATIONS; i++) {
-//			
-//			Simulation sim = new RandomPersistentWalker();
-//			ImagePlus imp = sim.createSimulation();
-//			String filename = "YYYY-MM-DD-"+i+"-C-x-x ";
-//			String trialID = getID(filename);
-//			String trialType =  getTrialType(filename);
-//	    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
-//			trials.put(tr.ID, tr);
-////			System.out.println(tr.ID);
-//		}
+		for (int i = 0; i < MAXSIMULATIONS; i++) {
+			Simulation sim = new RandomPersistentWalker();
+			ImagePlus imp = sim.createSimulation();
+			String filename = "YYYY-MM-DD-"+i+"-C-x-x ";
+			String trialID = getID(filename);
+			String trialType =  getTrialType(filename);
+	    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+			trials.put(tr.ID, tr);
+//			System.out.println(tr.ID);
+		}
 		for (int i = 0; i < MAXSIMULATIONS; i++) {
 			
 			Simulation sim = new RandomPersistentWalker(beta,responsiveCells);

@@ -449,17 +449,17 @@ public class Chemotaxis {
 				double[][] results = new double[N][N];
 				double maxBeta = 2;
 				
-//				double beta=2.0;
-//				double responsiveCells=0.4;
-				for(int i=0;i<N;i++){
-					double beta = (i/(double)N)*maxBeta;
-					System.out.println("beta: "+beta);
-					Betas[i]=beta;
-					for(int j=0;j<N;j++){
-						System.out.println("i: "+i+"; j: "+j);
-						double responsiveCells = j/(double)N;
-						Responsiveness[j]=responsiveCells;
-						System.out.println("responsiveCells: "+responsiveCells);
+				double beta=0.3;
+				double responsiveCells=0.1;
+//				for(int i=0;i<N;i++){
+//					double beta = (i/(double)N)*maxBeta;
+//					System.out.println("beta: "+beta);
+//					Betas[i]=beta;
+//					for(int j=0;j<N;j++){
+//						System.out.println("i: "+i+"; j: "+j);
+//						double responsiveCells = j/(double)N;
+//						Responsiveness[j]=responsiveCells;
+//						System.out.println("responsiveCells: "+responsiveCells);
 						
 						trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation",beta,responsiveCells);//
 						//Utils.saveTrials(trials);
@@ -469,16 +469,17 @@ public class Chemotaxis {
 						}
 //						Utils.saveTrials(trials);
 						if(userSelection2==0)
-							results[i][j]=ratioQ(trials);
+							ratioQ(trials);
+//							results[i][j]=ratioQ(trials);
 						else if(userSelection2==1)
 							bootstrapping(trials);		
-					}
-				}
-				for(int i=0;i<N;i++){
-					for(int j=0;j<N;j++){
-						IJ.log(""+results[i][j]);
-					}
-				}
+//					}
+//				}
+//				for(int i=0;i<N;i++){
+//					for(int j=0;j<N;j++){
+//						IJ.log(""+results[i][j]);
+//					}
+//				}
 			}
 	
 		}
