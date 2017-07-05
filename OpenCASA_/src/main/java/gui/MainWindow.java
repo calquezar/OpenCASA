@@ -22,7 +22,7 @@ import analysis.Chemotaxis;
 import analysis.Morphometry;
 import analysis.Motility;
 import analysis.OscillatoryWalker;
-import analysis.RandomPersistentWalker;
+import analysis.PersistentRandomWalker;
 import analysis.Simulation;
 import analysis.Viability;
 import data.Params;
@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 					try{morph.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Simulation")){
-					sim = new RandomPersistentWalker();
+					sim = new PersistentRandomWalker();
 					try{sim.run();}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Settings")){

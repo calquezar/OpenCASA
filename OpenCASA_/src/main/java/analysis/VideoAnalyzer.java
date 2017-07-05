@@ -83,7 +83,7 @@ public abstract class VideoAnalyzer {
 		int MAXSIMULATIONS = 50;
 		Map<String,Trial> trials = new HashMap<String,Trial>();
 		for (int i = 0; i < MAXSIMULATIONS; i++) {
-			Simulation sim = new RandomPersistentWalker();
+			Simulation sim = new PersistentRandomWalker();
 			ImagePlus imp = sim.createSimulation();
 			String filename = "YYYY-MM-DD-"+i+"-C-x-x ";
 			String trialID = getID(filename);
@@ -94,7 +94,7 @@ public abstract class VideoAnalyzer {
 		}
 		for (int i = 0; i < MAXSIMULATIONS; i++) {
 			
-			Simulation sim = new RandomPersistentWalker(beta,responsiveCells);
+			Simulation sim = new PersistentRandomWalker(beta,responsiveCells);
 			ImagePlus imp = sim.createSimulation();
 			String filename = "YYYY-MM-DD-"+i+"-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
 			String trialID = getID(filename);

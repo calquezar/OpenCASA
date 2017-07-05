@@ -14,7 +14,7 @@ import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 
-public class RandomPersistentWalker extends Simulation {
+public class PersistentRandomWalker extends Simulation {
 
 	int w = 800;
 	int h = 800;
@@ -104,7 +104,7 @@ public class RandomPersistentWalker extends Simulation {
 	}
 	
 
-	public RandomPersistentWalker(double b, double responsiveCells) {
+	public PersistentRandomWalker(double b, double responsiveCells) {
 	  for (int x = cellCount-1; x >= 0; x--) { 
 		    sperm[x] = new Cell(b,responsiveCells);
 		  }
@@ -112,7 +112,7 @@ public class RandomPersistentWalker extends Simulation {
 	    obstacles[x] = new Obstacle();
 	  }
 	}
-	public RandomPersistentWalker() {
+	public PersistentRandomWalker() {
 		
 	  for (int x = cellCount-1; x >= 0; x--) { 
 		    sperm[x] = new Cell();
@@ -142,7 +142,7 @@ public class RandomPersistentWalker extends Simulation {
 			draw(ip);
 			imStack.addSlice(ip);
 		}
-		return new ImagePlus("RandomPersistentWalker", imStack);
+		return new ImagePlus("PersistentRandomWalker", imStack);
 	}
 	
 	public void run(){createSimulation().show();}
