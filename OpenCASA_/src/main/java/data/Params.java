@@ -61,6 +61,9 @@ public class Params {
 	public static String male = "";
 	public static String date = "";
 	
+	public static float vclLowerTh = 45;
+	public static float vclUpperTh = 75;
+	
 	public static void resetParams(){
 		
 //		minSize = 20;

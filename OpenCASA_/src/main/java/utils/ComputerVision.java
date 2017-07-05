@@ -35,6 +35,17 @@ public abstract class ComputerVision implements Measurements {
 		ImageConverter ic = new ImageConverter(imp);
 		ic.convertToGray8();
 	}
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 * 
+	 * This functions converts imp to grayscale.
+	 */	
+	public static void convertToRGB(ImagePlus imp){
+		
+		ImageConverter ic = new ImageConverter(imp);
+		ic.convertToRGB();
+	}	
 	
 	/******************************************************/
 	/**

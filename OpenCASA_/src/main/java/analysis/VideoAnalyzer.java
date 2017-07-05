@@ -23,6 +23,9 @@ public abstract class VideoAnalyzer {
 	 */
 	public static SList analyze(ImagePlus imp){
 		
+		if(imp==null)
+			return new SList();
+		
 		System.out.println("converToGrayScale...");
  		ComputerVision.convertToGrayscale(imp);
 		//************************************************************ 
@@ -125,7 +128,7 @@ public abstract class VideoAnalyzer {
 		}else if(analysis.equals("Motility-File")||analysis.equals("Motility-Directory")){
 			trialID = filename;
 		}
-		//Load video
+		//Load videos
 		AVI_Reader ar = new  AVI_Reader();
 		ar.run(absoluteFilePath);
 		ImagePlus imp = ar.getImagePlus();
@@ -133,17 +136,22 @@ public abstract class VideoAnalyzer {
 		return getTrialFromImp(imp,analysis,trialID,trialType,filename);
 	}
 	
-	public static Trial getTrialFromImp(ImagePlus imp,String analysis,String trialID,String trialType,String filename){
+	public static Trial getTrialFromImp(ImagePlus impOrig,String analysis,String trialID,String trialType,String filename){
 		//Analyze the video
+		// It's necessary to duplicate the ImagePlus if
+		// we want to draw later sperm trajectories in the original video
+		ImagePlus imp = impOrig;
+		if(analysis.equals("Motility-File"))
+			imp =  impOrig.duplicate();
 		SList t = analyze(imp);
 		int[] motileSperm = SignalProcessing.motilityTest(t);
 		//Only pass from here tracks with a minimum level of motility
 		t = SignalProcessing.filterTracksByMotility(t);
 		Trial tr = null;
 		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory")||analysis.equals("Chemotaxis-Simulation"))
-			tr = new Trial(trialID,trialType,filename,t,imp.getWidth(),imp.getHeight());
+			tr = new Trial(trialID,trialType,filename,t,impOrig.getWidth(),impOrig.getHeight());
 		else if(analysis.equals("Motility-File"))
-			tr = new Trial(trialID,trialType,filename,t,imp,motileSperm);
+			tr = new Trial(trialID,trialType,filename,t,impOrig,motileSperm);
 		else if(analysis.equals("Motility-Directory"))
 			tr = new Trial(trialID,trialType,filename,t,null,motileSperm);
 		//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();

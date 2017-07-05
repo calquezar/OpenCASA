@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import analysis.Kinematics;
 import data.Params;
 import data.SList;
 import data.Spermatozoon;
@@ -24,6 +25,8 @@ public abstract class Paint {
 	 * @param avgTracks 2D-ArrayList with the averaged tracks
 	 */
 	public static void draw(ImagePlus imp,SList theTracks){
+		
+		ComputerVision.convertToRGB(imp);
 		int nFrames = imp.getStackSize();
 		ImageStack stack = imp.getStack();	
 		if (imp.getCalibration().scaled()) {
@@ -60,7 +63,13 @@ public abstract class Paint {
 				trackCount3++;
 				for (;jT.hasNext();) {
 					Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
-					ip.setValue(color);
+					if(Kinematics.getVelocityTrackType(zTrack)=="Slow")
+						ip.setColor(Color.white);
+					else if(Kinematics.getVelocityTrackType(zTrack)=="Normal")
+						ip.setColor(Color.yellow);
+					else if(Kinematics.getVelocityTrackType(zTrack)=="Fast")
+						ip.setColor(Color.red);
+//					ip.setValue(color);
 					if(Params.drawOrigTrajectories){
 						ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
 						ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
@@ -76,25 +85,25 @@ public abstract class Paint {
 					}
 				}					
 			}
-			//Draw average paths
-			color=0;
-			for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
-				List zTrack=(ArrayList) iT.next();
-				ListIterator jT=zTrack.listIterator();
-				Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
-				//Variables used to 
-				Spermatozoon firstSpermatozoon = new Spermatozoon();
-				firstSpermatozoon.copy(oldSpermatozoon);
-				for (;jT.hasNext();) {
-					Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
-					ip.setValue(color);
-					if(Params.drawAvgTrajectories){
-						ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
-						ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
-					}
-					oldSpermatozoon=newSpermatozoon;
-				}
-			}							
+//			//Draw average paths
+//			color=0;
+//			for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
+//				List zTrack=(ArrayList) iT.next();
+//				ListIterator jT=zTrack.listIterator();
+//				Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
+//				//Variables used to 
+//				Spermatozoon firstSpermatozoon = new Spermatozoon();
+//				firstSpermatozoon.copy(oldSpermatozoon);
+//				for (;jT.hasNext();) {
+//					Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
+//					ip.setValue(color);
+//					if(Params.drawAvgTrajectories){
+//						ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
+//						ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
+//					}
+//					oldSpermatozoon=newSpermatozoon;
+//				}
+//			}							
 		}
 		imp.updateAndRepaintWindow();
 	}	

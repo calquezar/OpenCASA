@@ -167,4 +167,21 @@ public class Kinematics {
 		return distance/elapsedTime;
 	}
 	
+	/******************************************************/
+	/**
+	 * @param 
+	 * @return 
+	 */
+	public static String getVelocityTrackType(List track){
+		
+		List avgTrack = SignalProcessing.movingAverage(track);
+		float vap = vcl(avgTrack);
+		if((vsl(track)<Params.vclLowerTh)||(vcl(track)<Params.vclLowerTh)||(vap<Params.vclLowerTh))
+			return "Slow";
+		else if((vsl(track)>Params.vclUpperTh)||(vcl(track)>Params.vclUpperTh)||(vap>Params.vclUpperTh))
+			return "Fast";
+		else
+			return "Normal";
+	}
+	
 }

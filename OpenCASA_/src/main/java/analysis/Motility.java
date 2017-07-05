@@ -19,6 +19,7 @@ import utils.Paint;
 public class Motility {
 
 	//Motility variables
+	private float total_sperm = 0;
 	private float total_vsl = 0;
 	private float total_vcl = 0;
 	private float total_vap = 0;
@@ -30,11 +31,14 @@ public class Motility {
 	private float total_bcf = 0;
 	private float total_dance = 0;
 	private float total_mad = 0;
+	private float total_motile = 0;
+	private float total_nonMotile = 0;
 	private float countProgressiveSperm = 0;
 	
 	public Motility() {}
 
 	public void resetParams(){
+		total_sperm = 0;
 	    total_vsl = 0;
 		total_vcl = 0;
 		total_vap = 0;
@@ -46,6 +50,8 @@ public class Motility {
 		total_bcf = 0;
 		total_dance = 0;
 		total_mad = 0;
+		total_motile = 0;
+		total_nonMotile = 0;
 		countProgressiveSperm = 0;
 	}
 	public int analysisSelectionDialog(){
@@ -68,15 +74,19 @@ public class Motility {
 		Set keySet = trials.keySet();
 		ResultsTable rtIndividual = new ResultsTable();
 		ResultsTable rtAverage = new ResultsTable();
+		ResultsTable rtTotal = new ResultsTable();
 		for (Iterator k=keySet.iterator();k.hasNext();) {
 			String key= (String)k.next();
 			Trial trial = (Trial)trials.get(key);
 			// Motility results
 			calculateMotility(rtIndividual,trial);
 			calculateAverageMotility(rtAverage,trial);
-			resetParams();
+//			resetParams();
 		}
-		rtAverage.show("Average Motility");
+		calculateTotalMotility(rtTotal);
+		resetParams();
+//		rtAverage.show("Average Motility");
+		rtTotal.show("Total Motility");
 	}
 	
 	public void analyzeFile(){
@@ -97,13 +107,53 @@ public class Motility {
 	
 	/******************************************************/
 	/**
+	 * @param  
+	 * @return 
+	 */	
+	public void calculateTotalMotility(ResultsTable rt){
+		
+		
+		float vsl_mean = total_vsl/total_sperm;
+		float vcl_mean = total_vcl/total_sperm;
+		float vap_mean = total_vap/total_sperm;
+		float lin_mean = total_lin/total_sperm;
+		float wob_mean = total_wob/total_sperm;
+		float str_mean = total_str/total_sperm;
+		float alhMean_mean = total_alhMean/total_sperm;
+		float alhMax_mean = total_alhMax/total_sperm;
+		float bcf_mean = total_bcf/total_sperm;
+		float dance_mean = total_dance/total_sperm;
+		float mad_mean = total_mad/total_sperm;
+		// % progressive Motile sperm
+		float progressiveMotPercent = countProgressiveSperm/(float)total_sperm;			
+		// % motility
+		float motility_value = (float)total_motile/((float)(total_motile+total_nonMotile));
+		
+		rt.incrementCounter();
+		rt.addValue("Motile trajectories",total_sperm);
+		rt.addValue("VSL Mean (um/s)",vsl_mean);
+		rt.addValue("VCL Mean (um/s)",vcl_mean);
+		rt.addValue("VAP Mean (um/s)",vap_mean);
+		rt.addValue("LIN Mean ",lin_mean);
+		rt.addValue("WOB Mean ",wob_mean);
+		rt.addValue("STR Mean ",str_mean);
+		rt.addValue("ALH_Mean Mean (um)",alhMean_mean);
+		rt.addValue("ALH_Max Mean (um)",alhMax_mean);
+		rt.addValue("BCF Mean (Hz)",bcf_mean);
+		rt.addValue("DANCE Mean (um^2/s)",dance_mean);
+		rt.addValue("MAD Mean (degrees)",mad_mean);
+		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
+		rt.addValue("Motility (%)",motility_value*100);
+	}	
+	/******************************************************/
+	/**
 	 * @param nTracks - 
 	 * @return 
 	 */	
 	public void calculateAverageMotility(ResultsTable rt,Trial trial){
 		
 		
-		float nTracks = trial.tracks.size();
+		float nTracks = trial.tracks.size();		
 		float vsl_mean = total_vsl/nTracks;
 		float vcl_mean = total_vcl/nTracks;
 		float vap_mean = total_vap/nTracks;
@@ -119,8 +169,11 @@ public class Motility {
 		float progressiveMotPercent = countProgressiveSperm/(float)nTracks;			
 		// % motility
 		int countMotileSperm = trial.motileSperm[0];
+		total_motile += countMotileSperm;
 		int countNonMotileSperm = trial.motileSperm[1];
+		total_nonMotile += countNonMotileSperm;
 		float motility_value = (float)countMotileSperm/((float)(countMotileSperm+countNonMotileSperm));
+		total_sperm+=nTracks;
 		
 		rt.incrementCounter();
 		rt.addValue("Motile trajectories",nTracks);
