@@ -94,7 +94,7 @@ public class MainWindow extends JFrame {
 					try{morph.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Simulation")){
-					sim = new OscillatoryWalker();
+					sim = new RandomPersistentWalker();
 					try{sim.run();}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Settings")){

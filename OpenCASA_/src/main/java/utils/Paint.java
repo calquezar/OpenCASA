@@ -81,6 +81,7 @@ public abstract class Paint {
 						ip.setColor(Color.black);
 						// we could do someboundary testing here to place the labels better when we are close to the edge
 						ip.moveTo((int)(oldSpermatozoon.x/Params.pixelWidth+0),doOffset((int)(oldSpermatozoon.y/Params.pixelHeight),yWidth,5) );
+						ip.setColor(Color.white);
 						ip.drawString(strPart);
 					}
 				}					
