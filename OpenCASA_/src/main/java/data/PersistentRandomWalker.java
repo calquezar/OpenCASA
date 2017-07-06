@@ -20,7 +20,7 @@ public class PersistentRandomWalker extends Simulation {
 	int obstaclesCount = 0;
 	Cell[] sperm = new Cell[cellCount];
 	Obstacle[]  obstacles = new Obstacle[obstaclesCount];
-	int SIMLENGTH = 500;
+	int SIMLENGTH = 5000;
 	Point[][] tracks = new Point[cellCount][SIMLENGTH];
 	
 	class Cell {
