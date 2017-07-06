@@ -5,7 +5,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import data.PersistentRandomWalker;
 import data.SList;
+import data.Simulation;
 import data.Trial;
 import gui.MessageWindow;
 import ij.IJ;
@@ -80,7 +82,7 @@ public abstract class VideoAnalyzer {
 	
 	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells){
 		
-		int MAXSIMULATIONS = 50;
+		int MAXSIMULATIONS = 2;
 		Map<String,Trial> trials = new HashMap<String,Trial>();
 		for (int i = 0; i < MAXSIMULATIONS; i++) {
 			Simulation sim = new PersistentRandomWalker();

@@ -1,4 +1,4 @@
-package analysis;
+package data;
 
 import gui.MainWindow;
 import ij.ImagePlus;

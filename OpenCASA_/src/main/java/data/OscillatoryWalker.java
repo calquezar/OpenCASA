@@ -1,4 +1,4 @@
-package analysis;
+package data;
 
 import java.awt.Color;
 import java.awt.Point;
@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import analysis.PersistentRandomWalker.Cell;
-import analysis.PersistentRandomWalker.Obstacle;
-import data.Spermatozoon;
+import analysis.Kinematics;
+import data.PersistentRandomWalker.Cell;
+import data.PersistentRandomWalker.Obstacle;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.process.ByteProcessor;

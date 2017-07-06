@@ -1,12 +1,10 @@
-package analysis;
+package data;
 
 import java.awt.Color;
 import java.awt.Point;
 import java.util.Map;
 import java.util.Random;
 
-import data.Spermatozoon;
-import data.Trial;
 import gui.MainWindow;
 import ij.ImagePlus;
 import ij.ImageStack;
