@@ -49,7 +49,7 @@ public abstract class VideoAnalyzer {
 		//Filtering tracks by length
 		theTracks = SignalProcessing.filterTracksByLength(theTracks);
 		
-		IJ.saveString(Utils.printXYCoords(theTracks),"");
+//		IJ.saveString(Utils.printXYCoords(theTracks),"");
 		return theTracks;
 	}
 	
@@ -62,6 +62,26 @@ public abstract class VideoAnalyzer {
 		return getTrialFromAVI(analysis,absoluteFilePath);
 	}
 	
+	public static Map<String,Trial> extractTrials(String absoluteFilePath,String analysis){
+		
+		Map<String,Trial> trials = new HashMap<String,Trial>();
+	    if (new File(absoluteFilePath).isFile()) {
+			if(Utils.isAVI(absoluteFilePath)){
+		    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
+				trials.put(tr.ID, tr);
+			}
+	    } else if (new File(absoluteFilePath).isDirectory()) {
+	    	String[] listOfFiles = Utils.getFileNames(absoluteFilePath);
+			if(listOfFiles==null || listOfFiles.length==0)
+				return null;
+			for (int i = 0; i < listOfFiles.length; i++) {
+				String filePath = listOfFiles[i];
+				System.out.println(filePath);
+				trials.putAll(extractTrials(filePath,analysis));
+			}
+	    }		    
+		return trials;
+	}
 	public static Map<String,Trial> extractTrials(String analysis){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
@@ -69,16 +89,17 @@ public abstract class VideoAnalyzer {
 		if(listOfFiles==null || listOfFiles.length==0)
 			return null;
 		for (int i = 0; i < listOfFiles.length; i++) {
-		    if (new File(listOfFiles[i]).isFile()) {
-		    	String absoluteFilePath = listOfFiles[i];
+			String absoluteFilePath = listOfFiles[i];
+		    if (new File(absoluteFilePath).isFile()) {
 				if(Utils.isAVI(absoluteFilePath)){
 			    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
 					trials.put(tr.ID, tr);
 				}
-		    } //else if (new File(listOfFiles[i]).isDirectory()) {}		    
+		    } 	    
 		}
 		return trials;
-	}
+	}	
+
 	
 	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells){
 		

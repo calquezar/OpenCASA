@@ -1,5 +1,7 @@
 package analysis;
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -14,6 +16,7 @@ import gui.MainWindow;
 import ij.IJ;
 import ij.measure.ResultsTable;
 import utils.SignalProcessing;
+import utils.Utils;
 import utils.Paint;
 
 public class Motility {
@@ -67,24 +70,32 @@ public class Motility {
 		return n;
 	}
 	public void analyzeDirectory(){
-		//Create trials dictionary
-		Map<String,Trial> trials = VideoAnalyzer.extractTrials("Motility-Directory");
-		if(trials==null)
+		
+		String[] listOfFiles = Utils.getFileNames();
+		if(listOfFiles==null || listOfFiles.length==0)
 			return;
-		Set keySet = trials.keySet();
+		String analysis = "Motility-Directory";
 		ResultsTable rtIndividual = new ResultsTable();
 		ResultsTable rtAverage = new ResultsTable();
-		ResultsTable rtTotal = new ResultsTable();
-		for (Iterator k=keySet.iterator();k.hasNext();) {
-			String key= (String)k.next();
-			Trial trial = (Trial)trials.get(key);
-			// Motility results
-			calculateMotility(rtIndividual,trial);
-			calculateAverageMotility(rtAverage,trial);
-//			resetParams();
+		ResultsTable rtTotal = new ResultsTable();		
+		for (int i = 0; i < listOfFiles.length; i++) {
+			Map<String,Trial> trials = null;
+			String absoluteFilePath = listOfFiles[i];
+			trials = VideoAnalyzer.extractTrials(absoluteFilePath,analysis);
+			if(trials==null)
+				return;
+			Set keySet = trials.keySet();
+			for (Iterator k=keySet.iterator();k.hasNext();) {
+				String key= (String)k.next();
+				Trial trial = (Trial)trials.get(key);
+				// Motility results
+				calculateMotility(rtIndividual,trial);
+				calculateAverageMotility(rtAverage,trial);
+//				resetParams();
+			}
+			calculateTotalMotility(rtTotal,absoluteFilePath);
+			resetParams();
 		}
-		calculateTotalMotility(rtTotal);
-		resetParams();
 //		rtAverage.show("Average Motility");
 		rtTotal.show("Total Motility");
 	}
@@ -110,7 +121,7 @@ public class Motility {
 	 * @param  
 	 * @return 
 	 */	
-	public void calculateTotalMotility(ResultsTable rt){
+	public void calculateTotalMotility(ResultsTable rt,String filename){
 		
 		
 		float vsl_mean = total_vsl/total_sperm;
@@ -144,6 +155,7 @@ public class Motility {
 		rt.addValue("MAD Mean (degrees)",mad_mean);
 		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
 		rt.addValue("Motility (%)",motility_value*100);
+		rt.addValue("Filename",filename);
 	}	
 	/******************************************************/
 	/**

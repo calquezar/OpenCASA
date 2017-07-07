@@ -40,6 +40,18 @@ public abstract class Utils {
 		return null;
 	}
 	/**
+	 * @return String[]
+	 */	
+	public static String[] getFileNames(String dir){
+
+		  File folder = new File(dir);
+		  File[] listOfFiles = folder.listFiles();
+		  String[] listOfNames = new String[listOfFiles.length];
+		  for(int i=0;i<listOfFiles.length;i++)
+			  listOfNames[i]=folder.getAbsolutePath()+"\\"+listOfFiles[i].getName();
+		  return listOfNames;	
+	}
+	/**
 	 * @param String filename
 	 */
 	public static boolean isAVI (String filename){
