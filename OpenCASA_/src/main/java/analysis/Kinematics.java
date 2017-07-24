@@ -6,7 +6,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.Spermatozoon;
-import utils.SignalProcessing;
+import functions.SignalProcessing;
 
 public class Kinematics {
 	/******************************************************/

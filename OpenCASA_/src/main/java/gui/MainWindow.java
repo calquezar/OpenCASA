@@ -26,12 +26,12 @@ import data.OscillatoryWalker;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
+import functions.ComputerVision;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.ChannelSplitter;
 import ij.process.ImageProcessor;
-import utils.ComputerVision;
 
 public class MainWindow extends JFrame {
 

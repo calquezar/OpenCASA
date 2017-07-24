@@ -33,6 +33,7 @@ import javax.swing.event.ChangeListener;
 
 import data.Params;
 import data.Spermatozoon;
+import functions.ComputerVision;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
@@ -48,7 +49,6 @@ import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 import ij.process.ImageStatistics;
-import utils.ComputerVision;
 
 public class Viability implements Measurements,ChangeListener, MouseListener{
 	

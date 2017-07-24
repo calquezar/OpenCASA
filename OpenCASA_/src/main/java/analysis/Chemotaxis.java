@@ -15,11 +15,11 @@ import data.Params;
 import data.SList;
 import data.Spermatozoon;
 import data.Trial;
+import functions.Paint;
+import functions.Utils;
 import gui.MainWindow;
 import ij.IJ;
 import ij.measure.ResultsTable;
-import utils.Paint;
-import utils.Utils;
 
 public class Chemotaxis {
 

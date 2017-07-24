@@ -27,6 +27,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import data.Spermatozoon;
+import functions.ComputerVision;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
@@ -45,7 +46,6 @@ import ij.process.ColorProcessor;
 import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
 import ij.process.ImageStatistics;
-import utils.ComputerVision;
 
 public class Morphometry implements Measurements,ChangeListener,MouseListener {
 	

@@ -9,14 +9,14 @@ import data.PersistentRandomWalker;
 import data.SList;
 import data.Simulation;
 import data.Trial;
+import functions.ComputerVision;
+import functions.Paint;
+import functions.SignalProcessing;
+import functions.Utils;
 import gui.MessageWindow;
 import ij.IJ;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
-import utils.ComputerVision;
-import utils.Paint;
-import utils.SignalProcessing;
-import utils.Utils;
 
 public abstract class VideoAnalyzer {
 

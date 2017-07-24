@@ -9,11 +9,11 @@ import java.util.Random;
 import analysis.Kinematics;
 import data.PersistentRandomWalker.Cell;
 import data.PersistentRandomWalker.Obstacle;
+import functions.SignalProcessing;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
-import utils.SignalProcessing;
 
 public class OscillatoryWalker extends Simulation {
 

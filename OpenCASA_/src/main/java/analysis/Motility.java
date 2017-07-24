@@ -12,12 +12,12 @@ import javax.swing.JOptionPane;
 
 import data.Params;
 import data.Trial;
+import functions.Paint;
+import functions.SignalProcessing;
+import functions.Utils;
 import gui.MainWindow;
 import ij.IJ;
 import ij.measure.ResultsTable;
-import utils.SignalProcessing;
-import utils.Utils;
-import utils.Paint;
 
 public class Motility {
 

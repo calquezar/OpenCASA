@@ -1,4 +1,4 @@
-package utils;
+package functions;
 
 import java.awt.Color;
 import java.awt.Font;
