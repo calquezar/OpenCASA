@@ -17,6 +17,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,6 +60,8 @@ public class Morphometry implements Measurements,ChangeListener,MouseListener {
 	
 	String date = "";
 	ImagePlus imp = new ImagePlus();
+	JLabel imgLabel = new JLabel();
+	
 	//Here we'll store the original images
 	ImagePlus completeImpOrig = null;
 	ImagePlus acrosomeImpOrig = null;
@@ -229,22 +232,24 @@ public class Morphometry implements Measurements,ChangeListener,MouseListener {
 		//Add action listener
 		btnCompleteSpermatozoon.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
-				activeImage = 1;
-				if(completeImpOrig==null)
-					completeImpOrig = IJ.openImage();
-				if(completeImpOrig!=null){//Usefull when the user cancel before load an image
-					completeImpDraw = completeImpOrig.duplicate();
-					imp.setProcessor(completeImpDraw.getProcessor());
-					imp.setTitle("Complete");
-					imp.show();
-					if(!hasCanvas){
-						setCanvas();
-						hasCanvas=true;
-					}
-					setCompleteImage(false);
-					hideSliderEvent=true;
-					sldThreshold.setValue((int)completeThreshold);
-				}
+//				activeImage = 1;
+//				if(completeImpOrig==null)
+//					completeImpOrig = IJ.openImage();
+//				if(completeImpOrig!=null){//Usefull when the user cancel before load an image
+//					completeImpDraw = completeImpOrig.duplicate();
+//					imp.setProcessor(completeImpDraw.getProcessor());
+//					imp.setTitle("Complete");
+//					imp.show();
+//					if(!hasCanvas){
+//						setCanvas();
+//						hasCanvas=true;
+//					}
+//					setCompleteImage(false);
+//					hideSliderEvent=true;
+//					sldThreshold.setValue((int)completeThreshold);
+				
+//				}
+				setImage();
 			} 
 		} );
 		c.gridx = 0;
@@ -769,6 +774,13 @@ public class Morphometry implements Measurements,ChangeListener,MouseListener {
 		panel.add(btnResetImages, c);
 
 		
+		c.gridx = 0;
+		c.gridy = 7;
+//		c.gridwidth = 1;
+		panel.add(imgLabel, c);
+		
+		
+		
 		JFrame frame = new JFrame("Adjust Threshold");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double width = screenSize.getWidth();
@@ -777,6 +789,7 @@ public class Morphometry implements Measurements,ChangeListener,MouseListener {
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(panel);
 		frame.pack();
+		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		frame.setVisible(true);
 	}
 	/******************************************************/
@@ -1444,7 +1457,14 @@ public class Morphometry implements Measurements,ChangeListener,MouseListener {
 		
 		createGUI();
 		morphometrics.show("Morphometrics");
-	}		
+	}
+	
+	public void setImage(){
+		ImagePlus imp = IJ.openImage();
+		imgLabel.setIcon(new ImageIcon(imp.getImage()));
+		imgLabel.repaint();
+	}
+	
 	double s2d(String s) {
 		Double d;
 		try {d = new Double(s);}
