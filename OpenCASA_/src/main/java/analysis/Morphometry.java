@@ -257,6 +257,7 @@ public class Morphometry implements Measurements,ChangeListener,MouseListener {
 		c.gridwidth = 2;
 		panel.add(btnCompleteSpermatozoon, c);
 
+		
 		JButton btnAcrosome = new JButton("Acrosome");
 		btnAcrosome.setBackground(Color.GREEN);
 		btnAcrosome.addActionListener(new ActionListener() { 
