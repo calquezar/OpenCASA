@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Color;
-import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -10,6 +9,8 @@ import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.BorderFactory;
+import javax.swing.Box;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -17,7 +18,9 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
+import javax.swing.JSeparator;
 import javax.swing.JSlider;
+import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -32,7 +35,6 @@ public class MorphWindow extends JFrame implements ChangeListener {
 	
 	/**
 	 * Constructor. The main graphical user interface is created.
-	 * @param title - String that is used as title of the window.
 	 */
 	public MorphWindow() throws HeadlessException {
 		super();
@@ -40,31 +42,15 @@ public class MorphWindow extends JFrame implements ChangeListener {
 		imgLabel = new JLabel();
 		setImage();
 	}
-
 	/******************************************************/
 	/**
 	 * 
 	 */
-	public void showGUI() {
+	public void showWindow() {
 
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
-		//natural height, maximum width
-		c.weightx = 0.5;
 		c.fill = GridBagConstraints.HORIZONTAL;
-
-		JButton btnNewImage = new JButton("New Image");
-		btnNewImage.setBackground(Color.LIGHT_GRAY);
-		//Add action listener
-		btnNewImage.addActionListener(new ActionListener() { 
-			public void actionPerformed(ActionEvent e) { 
-
-			}
-		} );
-		c.gridx = 0;
-		c.gridy = 0;
-//		c.gridwidth = 1;
-		panel.add(btnNewImage, c);
 		
 		//RADIO BUTTONS
 		JRadioButton btnOtsu = new JRadioButton("Otsu");
@@ -73,24 +59,23 @@ public class MorphWindow extends JFrame implements ChangeListener {
 			public void actionPerformed(ActionEvent e) {
 
 			} 
-		} );		
+		} );
 		JRadioButton btnMinimum = new JRadioButton("Minimum");
 		btnMinimum.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) {
 
 			} 
-		} );	
+		} );
 		//Group the radio buttons.
 		ButtonGroup btnGroup = new ButtonGroup();
 		btnGroup.add(btnOtsu);
 		btnGroup.add(btnMinimum);
 		c.gridx = 0;
-		c.gridy = 1;
+		c.gridy = 0;
 		c.gridwidth = 1;
 		panel.add(btnOtsu,c);
-		c.gridy = 2;
+		c.gridy = 1;
 		panel.add(btnMinimum,c);
-	
 		// THRESHOLD SLIDERBAR
 		JSlider sldThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60);
 		sldThreshold.setMinorTickSpacing(2);
@@ -99,62 +84,81 @@ public class MorphWindow extends JFrame implements ChangeListener {
 		sldThreshold.setPaintLabels(true);
 		// We'll just use the standard numeric labels for now...
 		sldThreshold.setLabelTable(sldThreshold.createStandardLabels(10));
-		sldThreshold.addChangeListener(this);		
-		c.weightx = 1;
+		sldThreshold.addChangeListener(this);
 		c.fill = GridBagConstraints.HORIZONTAL;
-//		c.ipady = 40;  
+		c.gridx = 1;
+		c.gridy = 0;
 		c.gridwidth = 10;
-		c.gridx = 0;
-		c.gridy = 3;
-		panel.add(sldThreshold, c);			
+		c.gridheight = 2;
+		c.ipady = 10; 
+		panel.add(sldThreshold, c);		
 		
+		c.gridx = 0;
+		c.gridy = 2;
+		c.gridwidth = 10;
+		c.gridheight = 1; 
+		panel.add(new JSeparator(SwingConstants.HORIZONTAL),c);
+	
 		c.gridx = 2;
-		c.gridy = 4;
+		c.gridy = 3;
 		c.gridwidth = 6;
-		//		c.gridwidth = 1;
+		c.gridheight = 1;
+		c.ipady = 10;  
 		panel.add(imgLabel , c);
 		
-		JButton btnFinish = new JButton("Finish");
-		btnFinish.setBackground(Color.YELLOW);
+		c.gridx = 0;
+		c.gridy = 4;
+		c.gridwidth = 10;
+		c.gridheight = 1; 
+		panel.add(new JSeparator(SwingConstants.HORIZONTAL),c);
+		
+		JButton btn1 = new JButton("Btn 1");
 		//Add action listener
-		btnFinish.addActionListener(new ActionListener() { 
+		btn1.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+
+			}
+		} );
+		c.gridx = 0;
+		c.gridy = 5;
+		c.gridwidth = 1;
+		c.gridheight = 1; 
+		panel.add(btn1, c);
+		
+		JButton btn2 = new JButton("Btn 2");
+		//Add action listener
+		btn2.addActionListener(new ActionListener() { 
 			public void actionPerformed(ActionEvent e) { 
 
 			} 
 		} );
-		//c.weightx = 0.5;
-		//c.fill = GridBagConstraints.HORIZONTAL;
-		//c.ipady = 5;  
-		c.gridx = 0;
+		c.gridx = 9;
 		c.gridy = 5;
-		c.gridwidth = 1;
-		panel.add(btnFinish, c);
-
-
+		panel.add(btn2, c);
 		
 		JFrame frame = new JFrame("Adjust Threshold");
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double width = screenSize.getWidth();
-		double height = screenSize.getHeight();
-		frame.setPreferredSize(new Dimension((int)width, 250));
+//		double width = screenSize.getWidth();
+//		double height = screenSize.getHeight();
+//		frame.setPreferredSize(new Dimension((int)width, 250));
 		//frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setContentPane(panel);
 		frame.pack();
-		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
+//		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		frame.setVisible(true);
 	}
-
+	/******************************************************/
+	/**
+	 * 
+	 */
 	public void setImage(){
-		ImagePlus imp = IJ.openImage();
-		
-		
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double w = screenSize.getWidth();
 		double h = screenSize.getHeight();
+		int targetWidth = (int) (w*0.6);
+		int targetHeight = (int) (h*0.6);
 		
-		int targetWidth = (int) (w*0.7);
-		int targetHeight = (int) (h*0.7);
-		
+		ImagePlus imp = IJ.openImage();
 		ImageProcessor ip = imp.getProcessor();
 	    ip.setInterpolationMethod(ImageProcessor.BILINEAR);
 	    ip = ip.resize(targetWidth, targetHeight);
@@ -162,8 +166,10 @@ public class MorphWindow extends JFrame implements ChangeListener {
 		imgLabel.setIcon(new ImageIcon(imp.getImage()));
 		imgLabel.repaint();
 	}
-	
-	@Override
+	/******************************************************/
+	/**
+	 * 
+	 */
 	public void stateChanged(ChangeEvent e) {
 		// TODO Auto-generated method stub
 		

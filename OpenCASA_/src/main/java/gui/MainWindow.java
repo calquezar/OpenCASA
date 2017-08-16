@@ -91,7 +91,7 @@ public class MainWindow extends JFrame {
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Morphometry")){
 					morph = new MorphWindow();
-					try{morph.showGUI();}
+					try{morph.showWindow();}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Simulation")){
 					sim = new PersistentRandomWalker();
