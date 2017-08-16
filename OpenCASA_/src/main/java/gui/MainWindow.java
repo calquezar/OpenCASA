@@ -39,7 +39,7 @@ public class MainWindow extends JFrame {
 	Chemotaxis ch;
 	Motility mot;
 	Viability via;
-	Morphometry morph;
+	MorphWindow morph;
 	Simulation sim;
 	SettingsWindow sw;
 	
@@ -90,8 +90,8 @@ public class MainWindow extends JFrame {
 					try{via.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Morphometry")){
-					morph = new Morphometry();
-					try{morph.run(mw);}
+					morph = new MorphWindow();
+					try{morph.showGUI();}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Simulation")){
 					sim = new PersistentRandomWalker();
