@@ -127,7 +127,7 @@ public abstract class ComputerVision implements Measurements {
 		int nFrames = imp.getStackSize();
 		ImageStack stack = imp.getStack();	
 		int options = 0; // set all PA options false
-		int measurements = CENTROID;
+		int measurements = MEAN+CENTROID+RECT+AREA+PERIMETER+FERET;
 		// Initialize results table
 		ResultsTable rt = new ResultsTable();
 		rt.reset();
@@ -149,14 +149,30 @@ public abstract class ComputerVision implements Measurements {
 			pa.analyze(imp, stack.getProcessor(iFrame));
 			float[] sxRes = rt.getColumn(ResultsTable.X_CENTROID);
 			float[] syRes = rt.getColumn(ResultsTable.Y_CENTROID);
+			float[] bxRes = rt.getColumn(ResultsTable.ROI_X);
+			float[] byRes = rt.getColumn(ResultsTable.ROI_Y);
+			float[] widthRes = rt.getColumn(ResultsTable.ROI_WIDTH);
+			float[] heightRes = rt.getColumn(ResultsTable.ROI_HEIGHT);
+			float[] areaRes = rt.getColumn(ResultsTable.AREA);
+			float[] perimeterRes = rt.getColumn(ResultsTable.PERIMETER);
+			float[] feretRes = rt.getColumn(ResultsTable.FERET);
+			float[] minFeretRes = rt.getColumn(ResultsTable.MIN_FERET);			
 			if (sxRes==null)
 				return null;
-			
 			for (int iPart=0; iPart<sxRes.length; iPart++) {
 				Spermatozoon aSpermatozoon = new Spermatozoon();
+				aSpermatozoon.id="***";
 				aSpermatozoon.x=sxRes[iPart];
 				aSpermatozoon.y=syRes[iPart];
 				aSpermatozoon.z=iFrame-1;
+				aSpermatozoon.bx = bxRes[iPart];
+				aSpermatozoon.by = byRes[iPart];
+				aSpermatozoon.width = widthRes[iPart];
+				aSpermatozoon.height = heightRes[iPart];
+				aSpermatozoon.total_area=areaRes[iPart];
+				aSpermatozoon.total_perimeter=perimeterRes[iPart];
+				aSpermatozoon.total_feret=feretRes[iPart];
+				aSpermatozoon.total_minFeret=minFeretRes[iPart];				
 				spermatozoa[iFrame-1].add(aSpermatozoon);
 			}
 			IJ.showProgress((double)iFrame/nFrames);

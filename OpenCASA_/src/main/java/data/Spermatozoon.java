@@ -22,19 +22,11 @@ public class Spermatozoon implements Serializable {
 	//Color type
 	public String type="Unknown";	
 	//Morphometrics
-	//total
 	public float total_area=-1;
 	public float total_perimeter=-1;
 	public float total_feret=-1;
 	public float total_minFeret=-1;
-	//Acrosome
-	public float acrosome_area=-1;
-	public float acrosome_perimeter=-1;
-	//Nucleus
-	public float nucleus_area=-1;
-	public float nucleus_perimeter=-1;
-	public float nucleus_feret=-1;
-	public float nucleus_minFeret=-1;
+
 	/**
 	 * @param source - Spermatozoon to be copied
 	 */
@@ -56,12 +48,6 @@ public class Spermatozoon implements Serializable {
 		this.total_perimeter=source.total_perimeter;
 		this.total_feret=source.total_feret;
 		this.total_minFeret=source.total_minFeret;
-		this.acrosome_area=source.acrosome_area;
-		this.acrosome_perimeter=source.acrosome_perimeter;
-		this.nucleus_area=source.nucleus_area;
-		this.nucleus_perimeter=source.nucleus_perimeter;
-		this.nucleus_feret=source.nucleus_feret;
-		this.nucleus_minFeret=source.nucleus_minFeret;		
 	}
 	
 	/**
