@@ -378,7 +378,11 @@ public abstract class Paint {
 			// we could do someboundary testing here to place the labels better when we are close to the edge
 			ip.moveTo((int)(sperm.x),doOffset((int)(sperm.y),yWidth,5) );
 			try{ip.drawString(""+sperm.id);}
-			catch(Exception e){e.printStackTrace();}
+			catch(Exception e){
+//				e.printStackTrace();
+				//ip.drawString throws eventually an exception. 
+				//Possibly it is a bug in the ImageProcessor implementation of this ImageJ version
+			}
 		}
 	}	
 	

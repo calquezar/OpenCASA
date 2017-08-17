@@ -163,6 +163,7 @@ public abstract class ComputerVision implements Measurements {
 	 * @param
 	 */	
 	public static void outlineThresholdImage(ImagePlus imp){
+		convertToGrayscale(imp);
 		ImageProcessor ip = imp.getProcessor();
 		BinaryProcessor bp = new BinaryProcessor((ByteProcessor)ip);
 		bp.outline();

@@ -182,22 +182,22 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		c.gridheight = 1; 
 		panel.add(new JSeparator(SwingConstants.HORIZONTAL),c);
 		
-//		JButton btn1 = new JButton("Previous");
-//		//Add action listener
-//		btn1.addActionListener(new ActionListener() { 
-//			public void actionPerformed(ActionEvent e) { 
-//				if(imgIndex>0){
-//					reset();
-//					setImage(--imgIndex);
-//					processImage(false);
-//				}
-//			}
-//		} );
-//		c.gridx = 0;
-//		c.gridy = 6;
-//		c.gridwidth = 1;
-//		c.gridheight = 1; 
-//		panel.add(btn1, c);
+		JButton btn1 = new JButton("Previous");
+		//Add action listener
+		btn1.addActionListener(new ActionListener() { 
+			public void actionPerformed(ActionEvent e) { 
+				if(imgIndex>0){
+					reset();
+					setImage(--imgIndex);
+					processImage(false);
+				}
+			}
+		} );
+		c.gridx = 0;
+		c.gridy = 6;
+		c.gridwidth = 1;
+		c.gridheight = 1; 
+		panel.add(btn1, c);
 		
 		JButton btn2 = new JButton("Next");
 		//Add action listener
