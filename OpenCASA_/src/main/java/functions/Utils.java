@@ -171,4 +171,10 @@ public abstract class Utils {
 		return null;
 	}
 	
+	public static int[] convertLongArrayToInt(long[] orig){
+		int[] arrayInt = new int[orig.length];
+		for(int i=0;i<orig.length;i++)
+			arrayInt[i] = (int)orig[i];
+		return arrayInt;
+	}	
 }

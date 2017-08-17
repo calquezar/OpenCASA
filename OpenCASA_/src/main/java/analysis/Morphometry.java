@@ -36,6 +36,11 @@ public class Morphometry {
 		// MorphWindow works with an ImagePlus array.
 		// If we want to analyze only one image, we have to pass
 		// an array of one element
+		if(imp==null){
+			JOptionPane.showMessageDialog(null, "Please, select a valid file.");
+			mainW.setVisible(true);
+			return;
+		}
 		List<ImagePlus> images = new ArrayList<ImagePlus>();
 		images.add(imp);
 		morphW.setImages(images);
@@ -45,8 +50,11 @@ public class Morphometry {
 	public void analyzeDirectory(){
 		
 		String[] listOfFiles = Utils.getFileNames();
-		if(listOfFiles==null || listOfFiles.length==0)
+		if(listOfFiles==null || listOfFiles.length==0){
+			JOptionPane.showMessageDialog(null, "Please, select a valid folder.");
+			mainW.setVisible(true);
 			return;
+		}
 		List<ImagePlus> images = new ArrayList<ImagePlus>();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String absoluteFilePath = listOfFiles[i];
@@ -54,7 +62,12 @@ public class Morphometry {
 			if(imp!=null)
 				images.add(imp);
 			// else - possibly the file is not an image
-		}	
+		}
+		if(images.size()<1){
+			JOptionPane.showMessageDialog(null, "Please, select a valid folder.");
+			mainW.setVisible(true);
+			return;
+		}
 		morphW.setImages(images);
 		morphW.showWindow();
 	}

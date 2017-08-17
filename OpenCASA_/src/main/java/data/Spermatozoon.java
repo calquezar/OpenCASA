@@ -19,8 +19,6 @@ public class Spermatozoon implements Serializable {
 	public float height;
 	//Selection variables
 	public boolean selected = true;
-	//Color type
-	public String type="Unknown";	
 	//Morphometrics
 	public float total_area=-1;
 	public float total_perimeter=-1;
@@ -43,7 +41,6 @@ public class Spermatozoon implements Serializable {
 		this.width=source.width;
 		this.height=source.height;
 		this.selected=source.selected;
-		this.type=source.type;
 		this.total_area=source.total_area;
 		this.total_perimeter=source.total_perimeter;
 		this.total_feret=source.total_feret;

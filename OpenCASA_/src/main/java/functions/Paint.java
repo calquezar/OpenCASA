@@ -337,4 +337,48 @@ public abstract class Paint {
 		}
 	}
 	
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 */	
+	public static void drawOutline(ImagePlus impOrig,ImagePlus impTh){
+
+		IJ.showStatus("Changing background...");
+		ColorProcessor ipOrig = (ColorProcessor)impOrig.getProcessor();
+		ipOrig.setColor(Color.yellow);
+		ImageProcessor ipTh = impTh.getProcessor();
+		int ipWidth = ipOrig.getWidth();
+		int ipHeight = ipOrig.getHeight();
+		for (int x=0; x< ipWidth;x++){
+			IJ.showStatus("scanning pixels...");				
+			for (int y=0;y<ipHeight;y++){
+				int pixel = ipTh.get(x,y);
+				if(pixel==0)//It's background
+					ipOrig.drawPixel(x,y);
+			}
+		}
+	}
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 * @return 2D-ArrayList with all spermatozoa detected for each frame
+	 */
+	public static void drawBoundaries(ImagePlus imp,List spermatozoa){
+		int xHeight=imp.getHeight();
+		int yWidth=imp.getWidth();	
+		IJ.showStatus("Drawing boundaries...");
+		ImageProcessor ip = imp.getProcessor();
+		ip.setColor(Color.white);
+		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon sperm=(Spermatozoon) j.next();
+			if(sperm.selected)
+				ip.drawRect((int)sperm.bx,(int)sperm.by,(int)sperm.width,(int)sperm.height);
+			//Draw numbers
+			ip.setFont(new Font("SansSerif", Font.PLAIN, 32));
+			// we could do someboundary testing here to place the labels better when we are close to the edge
+			ip.moveTo((int)(sperm.x),doOffset((int)(sperm.y),yWidth,5) );
+			ip.drawString(sperm.id);
+		}
+	}	
+	
 }

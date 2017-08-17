@@ -16,6 +16,9 @@ import ij.measure.Measurements;
 import ij.measure.ResultsTable;
 import ij.plugin.ChannelSplitter;
 import ij.plugin.filter.ParticleAnalyzer;
+import ij.process.AutoThresholder;
+import ij.process.BinaryProcessor;
+import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
@@ -116,6 +119,54 @@ public abstract class ComputerVision implements Measurements {
             ip.applyTable(lut);
 		}
 	}
+	
+	/******************************************************/
+	/**
+	 * 
+	 */	
+	public static double autoThresholdImagePlus(ImagePlus imp,String thresholdMethod){
+		ImageProcessor ip = imp.getProcessor();
+		double lowerThreshold = 0;
+		ImageStatistics st = ip.getStatistics();
+		long[] histlong = st.getHistogram();
+		int histogram[] = Utils.convertLongArrayToInt(histlong);
+		AutoThresholder at = new AutoThresholder();
+		lowerThreshold = (double)at.getThreshold(thresholdMethod,histogram); 
+		//Upper threshold set to maximum
+		double upperThreshold = 255;	
+		//Threshold image processor
+		ComputerVision.thresholdImageProcessor(ip,lowerThreshold,upperThreshold);
+		return lowerThreshold;
+	}
+	/******************************************************/
+	/**
+	 * 
+	 */	
+	public static double autoThresholdImagePlus(ImagePlus imp){
+		return autoThresholdImagePlus(imp,"Otsu"); //Otsu as a default thresholding method
+	}	
+		
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 */	
+	public static void thresholdImagePlus(ImagePlus imp,double lowerThreshold){
+		ImageProcessor ip = imp.getProcessor();
+		//Upper threshold set to maximum
+		double upperThreshold = 255;	
+		//Threshold image processor
+		ComputerVision.thresholdImageProcessor(ip,lowerThreshold,upperThreshold);
+	}
+
+	/******************************************************/
+	/**
+	 * @param
+	 */	
+	public static void outlineThresholdImage(ImagePlus imp){
+		ImageProcessor ip = imp.getProcessor();
+		BinaryProcessor bp = new BinaryProcessor((ByteProcessor)ip);
+		bp.outline();
+	}	
 	
 	/******************************************************/
 	/**

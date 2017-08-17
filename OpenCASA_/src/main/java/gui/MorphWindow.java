@@ -11,7 +11,9 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.ListIterator;
 
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -26,19 +28,46 @@ import javax.swing.SwingConstants;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import data.Spermatozoon;
+import functions.ComputerVision;
+import functions.Paint;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
 public class MorphWindow extends JFrame implements ChangeListener,MouseListener {
+	
 
+	//Here we'll store the original images
+	ImagePlus impOrig = null;
+	//These ImagePlus will be used to draw over them
+	ImagePlus impDraw = null;
+	//These ImagePlus will be used to calculate mean gray values
+	ImagePlus impGray = null;
+	//These ImagePlus will be used to identify spermatozoa
+	ImagePlus impTh = null;
+	//These ImagePlus will be used to store outlines
+	ImagePlus impOutline = null;
+	
+	double threshold = -1.0;
+	String thresholdMethod = "Otsu";
 	
 	JLabel imgLabel;
 	JLabel title;
 	MainWindow mainW;
+	
 	List<ImagePlus> images;
 	int imgIndex;
-	JFrame frame;
 	
+	JFrame frame;
+	//Resize parameters
+	double resizeFactor;
+	double xFactor;
+	double yFactor;
+	
+	//Variable used to store spermatozoa
+	List<Spermatozoon> spermatozoa = new ArrayList<Spermatozoon>();
+		
+		
 	/**
 	 * Constructor. The main graphical user interface is created.
 	 */
@@ -49,6 +78,7 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		imgLabel.addMouseListener(this);
 		mainW = mw;
 		imgIndex = 0;
+		resizeFactor = 0.6;
 		
 	}
 	/******************************************************/
@@ -157,7 +187,7 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		panel.add(btn2, c);
 		
 		frame = new JFrame("Analyze morphometry...");
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+//		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 //		double width = screenSize.getWidth();
 //		double height = screenSize.getHeight();
 //		frame.setPreferredSize(new Dimension((int)width, 250));
@@ -167,7 +197,7 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 //		frame.setExtendedState( frame.getExtendedState()|JFrame.MAXIMIZED_BOTH );
 		frame.addWindowListener(new WindowAdapter() {
 			  public void windowClosing(WindowEvent e) {
-//				imp.close();
+				close();
 			    mainW.setVisible(true);
 			  }
 			});		
@@ -180,20 +210,96 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 	public void setImage(int index){
 		if(index<0 || index>=images.size())
 			return;
-		ImagePlus imp = images.get(index);
-		title.setText(imp.getTitle());
+		impOrig = images.get(index).duplicate();
+		impOrig.setTitle(images.get(index).getTitle());
+		impDraw = impOrig.duplicate();
+		title.setText(impOrig.getTitle());
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double w = screenSize.getWidth();
 		double h = screenSize.getHeight();
-		int targetWidth = (int) (w*0.6);
-		int targetHeight = (int) (h*0.6);
+		int targetWidth = (int) (w*resizeFactor);
+		int targetHeight = (int) (h*resizeFactor);
 		
-		ImageProcessor ip = imp.getProcessor();
+		ImageProcessor ip = impDraw.getProcessor();
 	    ip.setInterpolationMethod(ImageProcessor.BILINEAR);
 	    ip = ip.resize(targetWidth, targetHeight);
-	    imp.setProcessor(ip);
-		imgLabel.setIcon(new ImageIcon(imp.getImage()));
+	    impDraw.setProcessor(ip);
+		imgLabel.setIcon(new ImageIcon(impDraw.getImage()));
 		imgLabel.repaint();
+//		impOrig.show();
+		
+		double origW = impOrig.getWidth();
+		double origH = impOrig.getHeight();
+		double resizeW = impDraw.getWidth();
+		double resizeH = impDraw.getHeight();
+		xFactor = origW/resizeW;
+		yFactor = origH/resizeH;
+		
+		processImage(false);
+	}
+	
+	public void setImage(){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double w = screenSize.getWidth();
+		double h = screenSize.getHeight();
+		int targetWidth = (int) (w*resizeFactor);
+		int targetHeight = (int) (h*resizeFactor);
+		ImageProcessor ip = impDraw.getProcessor();
+	    ip.setInterpolationMethod(ImageProcessor.BILINEAR);
+	    ip = ip.resize(targetWidth, targetHeight);
+	    impDraw.setProcessor(ip);
+		imgLabel.setIcon(new ImageIcon(impDraw.getImage()));
+		imgLabel.repaint();		
+	}
+	/******************************************************/
+	/**
+	 * 
+	 */	
+	public void processImage(boolean isEvent){
+		if(threshold==-1 || isEvent){//First time
+			impTh = impOrig.duplicate();
+			ComputerVision.convertToGrayscale(impTh);
+			impGray = impTh.duplicate();
+			thresholdImagePlus(impTh);
+			List<Spermatozoon>[] sperm = ComputerVision.detectSpermatozoa(impTh);
+			spermatozoa = sperm[0];
+			//Calculate outlines
+			impOutline = impTh.duplicate();
+			ComputerVision.outlineThresholdImage(impOutline);
+			idenfitySperm();
+		}
+		impDraw = impOrig.duplicate();
+		Paint.drawOutline(impDraw,impOutline);
+		Paint.drawBoundaries(impDraw,spermatozoa);
+		setImage();
+	}
+	
+	public void idenfitySperm(){
+		int SpermNr=0;
+		for (ListIterator<Spermatozoon> j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon sperm=(Spermatozoon) j.next();
+			SpermNr++;
+			sperm.id = ""+SpermNr;
+		}
+	}
+	
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 */	
+	public void thresholdImagePlus(ImagePlus imp){
+		if(threshold==-1){
+			ComputerVision.autoThresholdImagePlus(imp, thresholdMethod);
+		}else{
+			ComputerVision.thresholdImagePlus(imp, threshold);
+		}
+	}
+	
+	public void close(){
+		impOrig.changes = false;
+		impDraw.changes = false;
+		impOrig.close();
+		impDraw.close();
 	}
 	/******************************************************/
 	/**
@@ -209,6 +315,9 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		int x = e.getX();
 		int y = e.getY();
 		System.out.println("X: "+ x+"; Y: "+ y);
+		int realX = (int) (x*xFactor);
+		int realY = (int) (y*yFactor);
+		System.out.println("realX: "+ realX+"; realY: "+ realY);
 	}
 	public void mouseEntered(MouseEvent e) {}
 	public void mouseExited(MouseEvent e) {}		
