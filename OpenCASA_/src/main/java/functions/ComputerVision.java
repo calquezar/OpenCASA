@@ -324,4 +324,31 @@ public abstract class ComputerVision implements Measurements {
 		}
 		return theTracks;
 	}
+	
+	/******************************************************/
+	/**
+	 * @param
+	 */	
+	public static float getMeanGrayValue(Spermatozoon part,ImagePlus impGray,ImagePlus impTh){
+
+		ImageProcessor ipTh = impTh.getProcessor();
+		ImageProcessor ipGray = impGray.getProcessor();
+		int bx = (int)part.bx;
+		int by = (int)part.by;
+		int width = (int)part.width;
+		int height = (int)part.height;
+		float totalGray=0;
+		float totalPixels=0;
+		for (int x=bx; x< (width+bx);x++){
+			IJ.showStatus("scanning pixels...");				
+			for (int y=by;y<(height+by);y++){
+				int pixel = ipTh.get(x,y);
+				if(pixel==0){
+					totalGray+=(float)ipGray.get(x,y);
+					totalPixels++;
+				}
+			}
+		}
+		return totalGray/totalPixels;
+	}	
 }

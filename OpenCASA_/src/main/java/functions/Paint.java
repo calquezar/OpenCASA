@@ -377,7 +377,8 @@ public abstract class Paint {
 			ip.setFont(new Font("SansSerif", Font.PLAIN, 32));
 			// we could do someboundary testing here to place the labels better when we are close to the edge
 			ip.moveTo((int)(sperm.x),doOffset((int)(sperm.y),yWidth,5) );
-			ip.drawString(sperm.id);
+			try{ip.drawString(""+sperm.id);}
+			catch(Exception e){e.printStackTrace();}
 		}
 	}	
 	

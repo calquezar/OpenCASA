@@ -176,5 +176,22 @@ public abstract class Utils {
 		for(int i=0;i<orig.length;i++)
 			arrayInt[i] = (int)orig[i];
 		return arrayInt;
+	}
+	
+	/******************************************************/
+	/**
+	 * @param
+	 * @return
+	 */
+	public static Spermatozoon getSpermatozoon(String id,List spermatozoa){
+		Spermatozoon spermatozoon = null;
+		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon candidate= (Spermatozoon)j.next();
+			if(candidate.id.equals(id) && id!="***"){
+				spermatozoon=candidate;
+				break;
+			}
+		}
+		return spermatozoon;
 	}	
 }

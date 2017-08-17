@@ -18,7 +18,7 @@ public class Spermatozoon implements Serializable {
 	public float width;
 	public float height;
 	//Selection variables
-	public boolean selected = true;
+	public boolean selected = false;
 	//Morphometrics
 	public float total_area=-1;
 	public float total_perimeter=-1;
