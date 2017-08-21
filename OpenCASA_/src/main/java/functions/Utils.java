@@ -52,6 +52,36 @@ public abstract class Utils {
 		  return listOfNames;	
 	}
 	/**
+	 * @return String
+	 */	
+	public static String getParentDirectory(String path){
+		String[] parts = path.split("\\\\");
+		return parts[parts.length-2];
+	}	
+	/**
+	 * @return String
+	 */	
+	public static String getFileName(String path){
+		String[] parts = path.split("\\\\");
+		return parts[parts.length-1];
+	}
+	/**
+	 * @return String[]
+	 */	
+	public static String getAbsoluteFileName(){
+		JFileChooser chooser = new JFileChooser();
+		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
+		chooser.setDialogTitle("Select a folder...");
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+		  //System.out.println("Directory: "+chooser.getSelectedFile());
+		  File folder = chooser.getSelectedFile();
+		  return folder.getAbsolutePath();
+		}
+		return null;
+	}
+	/**
 	 * @param String filename
 	 */
 	public static boolean isAVI (String filename){

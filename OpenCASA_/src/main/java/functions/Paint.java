@@ -379,7 +379,7 @@ public abstract class Paint {
 			ip.moveTo((int)(sperm.x),doOffset((int)(sperm.y),yWidth,5) );
 			try{ip.drawString(""+sperm.id);}
 			catch(Exception e){
-//				e.printStackTrace();
+				e.printStackTrace();
 				//ip.drawString throws eventually an exception. 
 				//Possibly it is a bug in the ImageProcessor implementation of this ImageJ version
 			}

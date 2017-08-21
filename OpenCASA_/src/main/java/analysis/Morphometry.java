@@ -32,7 +32,9 @@ public class Morphometry {
 	}
 	
 	public void analyzeFile(){
-		ImagePlus imp = IJ.openImage();
+		String absoluteFilePath = Utils.getAbsoluteFileName();
+		String parentsDirectory = Utils.getParentDirectory(absoluteFilePath);
+		ImagePlus imp = IJ.openImage(absoluteFilePath);
 		// MorphWindow works with an ImagePlus array.
 		// If we want to analyze only one image, we have to pass
 		// an array of one element
@@ -41,6 +43,7 @@ public class Morphometry {
 			mainW.setVisible(true);
 			return;
 		}
+		imp.setTitle(parentsDirectory+"\\"+imp.getTitle());
 		List<ImagePlus> images = new ArrayList<ImagePlus>();
 		images.add(imp);
 		morphW.setImages(images);
@@ -58,9 +61,12 @@ public class Morphometry {
 		List<ImagePlus> images = new ArrayList<ImagePlus>();
 		for (int i = 0; i < listOfFiles.length; i++) {
 			String absoluteFilePath = listOfFiles[i];
+			String parentsDirectory = Utils.getParentDirectory(absoluteFilePath);
 			ImagePlus imp = IJ.openImage(absoluteFilePath);
-			if(imp!=null)
+			if(imp!=null){
+				imp.setTitle(parentsDirectory+"\\"+imp.getTitle());
 				images.add(imp);
+			}
 			// else - possibly the file is not an image
 		}
 		if(images.size()<1){

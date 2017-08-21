@@ -483,7 +483,8 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		morphometrics.addValue("total_roughness",total_roughness);
 		morphometrics.addValue("total_elongation",total_elongation);
 		morphometrics.addValue("total_regularity",total_regularity);
-		morphometrics.addValue("Filename",impOrig.getTitle());
+		morphometrics.addValue("Sample",Utils.getParentDirectory(impOrig.getTitle()));
+		morphometrics.addValue("Filename",Utils.getFileName(impOrig.getTitle()));
 		morphometrics.show("Morphometrics");
 	}	
 
