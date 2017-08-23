@@ -371,8 +371,10 @@ public abstract class Paint {
 		ip.setColor(Color.white);
 		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
 			Spermatozoon sperm=(Spermatozoon) j.next();
+			ip.setLineWidth(2);
 			if(sperm.selected)
 				ip.drawRect((int)sperm.bx,(int)sperm.by,(int)sperm.width,(int)sperm.height);
+			ip.setLineWidth(1);
 			//Draw numbers
 			ip.setFont(new Font("SansSerif", Font.PLAIN, 32));
 			// we could do someboundary testing here to place the labels better when we are close to the edge

@@ -474,6 +474,7 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 //		morphometrics.addValue("Male",male);
 //		morphometrics.addValue("Date",date);
 		morphometrics.addValue("ID",spermatozoon.id);
+		morphometrics.addValue("Threshold",threshold);
 		morphometrics.addValue("total_meanGray",total_meanGray);
 		morphometrics.addValue("total_area(um^2)",total_area);
 		morphometrics.addValue("total_perimeter(um)",total_perimeter);
