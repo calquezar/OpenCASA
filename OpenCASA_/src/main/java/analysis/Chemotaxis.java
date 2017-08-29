@@ -203,9 +203,9 @@ public class Chemotaxis {
 		if(trial==null)
 			return;
 		//Draw trajectories
-		float ratioQ = calculateRatioQ(trial.tracks);
-		float ratioSL = calculateRatioSL(trial.tracks);
-		Paint.drawChemotaxis(trial.tracks,ratioQ,ratioSL,trial.width,trial.height,trial.source);
+		float chIdx = calculateChIndex(trial.tracks);
+		float slIdx = calculateSLIndex(trial.tracks);
+		Paint.drawChemotaxis(trial.tracks,chIdx,slIdx,trial.width,trial.height,trial.source);
 	}
 	public void bootstrapping(Map<String,Trial> trials){
 		
@@ -256,7 +256,7 @@ public class Chemotaxis {
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return the Ratio-Q
 	 */
-	public float calculateRatioQ(List theTracks){
+	public float calculateChIndex(List theTracks){
 		
 		float nPos=0; //Number of shifts in the chemoattractant direction
 		float nNeg=0; //Number of shifts in other direction
@@ -265,10 +265,10 @@ public class Chemotaxis {
 		int nTracks = theTracks.size();
 		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
 		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
-		float ratioQ = 0;
+		float chIdx = 0;
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
 			IJ.showProgress((double)trackNr/nTracks);
-			IJ.showStatus("Calculating RatioQ...");
+			IJ.showStatus("Calculating Ch-Index...");
 			trackNr++;
 			List track=(ArrayList) iT.next();
 			int nPoints = track.size();
@@ -289,10 +289,10 @@ public class Chemotaxis {
 				}
 		}
 		if((nPos+nNeg)>0)
-			ratioQ = (nPos/(nPos+nNeg)); // (nPos+nNeg) = Total number of shifts
+			chIdx = (nPos/(nPos+nNeg)); // (nPos+nNeg) = Total number of shifts
 		else
-			ratioQ=-1;
-		return ratioQ;
+			chIdx=-1;
+		return chIdx;
 	}
 	
 	/******************************************************/
@@ -300,7 +300,7 @@ public class Chemotaxis {
 	 * @param theTracks 2D-ArrayList that stores all the tracks
 	 * @return RatioSL
 	 */
-	public float calculateRatioSL(List theTracks){
+	public float calculateSLIndex(List theTracks){
 		
 		float nPos=0; //Number of shifts in the chemoattractant direction
 		float nNeg=0; //Number of shifts in other direction
@@ -378,10 +378,10 @@ public class Chemotaxis {
 	  return tracks;
 	}
 	
-	public float ratioQ(Map<String,Trial> trials){
+	public float calculateChIndex(Map<String,Trial> trials){
 		
-		float maxRatioQ = 0;
-		float maxRatioSL = 0;
+		float maxChIndex = 0;
+		float maxSLIndex = 0;
 		if(trials==null)
 			return (Float) null;
 		Set keySet = trials.keySet();	
@@ -391,16 +391,16 @@ public class Chemotaxis {
 			String key= (String)k.next();
 			Trial trial = (Trial)trials.get(key);
 		  	System.out.println("key: "+key);
-		  	float ratioQ = calculateRatioQ(trial.tracks);
-		  	if(ratioQ>maxRatioQ)
-		  		maxRatioQ=ratioQ;
-		  	float ratioSL = calculateRatioSL(trial.tracks);
-		  	if(ratioSL>maxRatioSL)
-		  		maxRatioSL=ratioSL;
-		  	setQResults(rtRatios,trial.source,ratioQ,ratioSL,trial.tracks.size());
+		  	float chIdx = calculateChIndex(trial.tracks);
+		  	if(chIdx>maxChIndex)
+		  		maxChIndex=chIdx;
+		  	float ratioSL = calculateSLIndex(trial.tracks);
+		  	if(ratioSL>maxSLIndex)
+		  		maxSLIndex=ratioSL;
+		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
 		}
 		rtRatios.show("Chemotaxis results");
-		return maxRatioQ;
+		return maxChIndex;
 	}
 	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
@@ -418,7 +418,7 @@ public class Chemotaxis {
 			analyzeFile();
 		}else if( userSelection1==1 || userSelection1==2){//Directory
 			//Ask user which analysis wants to apply
-			Object[] options2 = {"RatioQ", "Bootstrapping"};
+			Object[] options2 = {"Ch-Index", "Bootstrapping"};
 			question = "Which analysis do you want to apply to the data?";
 			title = "Choose one analysis...";
 			int  userSelection2 = analysisSelectionDialog(options2,question,title);
@@ -437,7 +437,7 @@ public class Chemotaxis {
 				}
 //				Utils.saveTrials(trials);
 				if(userSelection2==0)
-					ratioQ(trials);
+					calculateChIndex(trials);
 				else if(userSelection2==1)
 					bootstrapping(trials);		
 			}
@@ -469,8 +469,8 @@ public class Chemotaxis {
 						}
 //						Utils.saveTrials(trials);
 						if(userSelection2==0)
-							ratioQ(trials);
-//							results[i][j]=ratioQ(trials);
+							calculateChIndex(trials);
+//							results[i][j]=chIndex(trials);
 						else if(userSelection2==1)
 							bootstrapping(trials);		
 //					}
@@ -485,7 +485,7 @@ public class Chemotaxis {
 		}
 		mw.setVisible(true);
 	}
-	public void setQResults(ResultsTable rt,String filename,float ratioQ, float ratioSL, int nTracks){
+	public void setChResults(ResultsTable rt,String filename,float chIdx, float slIdx, int nTracks){
 		
 //		System.out.println("filename: "+filename);
 		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
@@ -494,8 +494,8 @@ public class Chemotaxis {
 		
 		rt.incrementCounter();	
 		rt.addValue("nTracks",nTracks);
-		rt.addValue("RatioQ",ratioQ);
-		rt.addValue("RatioSL",ratioSL);		
+		rt.addValue("Ch-Index",chIdx);
+		rt.addValue("sl-Index",slIdx);		
 		rt.addValue("Type",parts[4]);
 		if(parts[4].equals("Q")){
 			rt.addValue("Hormone",parts[5]);

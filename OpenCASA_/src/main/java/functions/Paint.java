@@ -113,10 +113,10 @@ public abstract class Paint {
 //	 * @param imp 
 //	 * @param theTracks 2D-ArrayList with all the tracks
 //	 * @param avgTracks 2D-ArrayList with the averaged tracks
-//	 * @param ratioQ
-//	 * @param ratioSL
+//	 * @param chIdx
+//	 * @param slIdx
 //	 */
-//	public static void draw(ImagePlus imp,List theTracks,List avgTracks,float ratioQ,float ratioSL){
+//	public static void draw(ImagePlus imp,List theTracks,List avgTracks,float chIdx,float slIdx){
 //		int nFrames = imp.getStackSize();
 //		ImageStack stack = imp.getStack();	
 //		if (imp.getCalibration().scaled()) {
@@ -135,7 +135,7 @@ public abstract class Paint {
 //		if(Params.drawRelTrajectories){
 //			//Draw cone used to clasify chemotactic trajectories
 //			ipRelTraj.setColor(Color.green);
-//			chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL);	
+//			chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),chIdx,slIdx);	
 //		}	
 //		//Draw on each frame
 //		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
@@ -221,10 +221,10 @@ public abstract class Paint {
 	 * @param imp 
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @param avgTracks 2D-ArrayList with the averaged tracks
-	 * @param ratioQ
-	 * @param ratioSL
+	 * @param chIdx
+	 * @param slIdx
 	 */
-	public static void drawChemotaxis(SList theTracks,float ratioQ,float ratioSL,int width,int height,String sampleID){
+	public static void drawChemotaxis(SList theTracks,float chIdx,float slIdx,int width,int height,String sampleID){
 
 		SList avgTracks = SignalProcessing.averageTracks(theTracks);
 		int upRes = 1;
@@ -237,7 +237,7 @@ public abstract class Paint {
 		ipRelTraj.fill();
 		//Draw cone used to clasify chemotactic trajectories
 		ipRelTraj.setColor(Color.green);
-		chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),ratioQ,ratioSL,sampleID);	
+		chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),chIdx,slIdx,sampleID);	
 		
 		IJ.showStatus("Drawing Tracks...");
 	
@@ -273,10 +273,10 @@ public abstract class Paint {
 	 * @param ip 
 	 * @param upRes 
 	 * @param numTracks 
-	 * @param ratioQ 
-	 * @param ratioSL 
+	 * @param chIdx 
+	 * @param slIdx 
 	 */
-	public static void chemotaxisTemplate(ColorProcessor ip,int upRes,int numTracks,float ratioQ,float ratioSL,String sampleID){
+	public static void chemotaxisTemplate(ColorProcessor ip,int upRes,int numTracks,float chIdx,float slIdx,String sampleID){
 		// Alpha version of this method
 		ip.setLineWidth(4);
 		//center coords. of the cone used to clasify chemotactic trajectories
@@ -317,13 +317,13 @@ public abstract class Paint {
 		ip.drawString("Ratio-Q: ");
 		ip.moveTo(70, 70);
 		ip.setColor(Color.black);
-		ip.drawString(""+ratioQ*100+"%");
+		ip.drawString(""+chIdx*100+"%");
 		ip.moveTo(10, 90);
 		ip.setColor(new Color(34,146,234));
 		ip.drawString("Ratio-SL: ");
 		ip.moveTo(80, 90);
 		ip.setColor(Color.black);
-		ip.drawString(""+ratioSL*100+"%");
+		ip.drawString(""+slIdx*100+"%");
 		
 
 	}
