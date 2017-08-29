@@ -314,13 +314,13 @@ public abstract class Paint {
 		ip.drawString(""+numTracks);
 		ip.moveTo(10, 70);
 		ip.setColor(Color.red);
-		ip.drawString("Ratio-Q: ");
+		ip.drawString("Ch-Index: ");
 		ip.moveTo(70, 70);
 		ip.setColor(Color.black);
 		ip.drawString(""+chIdx*100+"%");
 		ip.moveTo(10, 90);
 		ip.setColor(new Color(34,146,234));
-		ip.drawString("Ratio-SL: ");
+		ip.drawString("SL-Index: ");
 		ip.moveTo(80, 90);
 		ip.setColor(Color.black);
 		ip.drawString(""+slIdx*100+"%");
