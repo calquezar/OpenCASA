@@ -378,7 +378,7 @@ public class Chemotaxis {
 	  return tracks;
 	}
 	
-	public float calculateChIndex(Map<String,Trial> trials){
+	public float analyseChDirectory(Map<String,Trial> trials){
 		
 		float maxChIndex = 0;
 		float maxSLIndex = 0;
@@ -437,7 +437,7 @@ public class Chemotaxis {
 				}
 //				Utils.saveTrials(trials);
 				if(userSelection2==0)
-					calculateChIndex(trials);
+					analyseChDirectory(trials);
 				else if(userSelection2==1)
 					bootstrapping(trials);		
 			}
@@ -469,7 +469,7 @@ public class Chemotaxis {
 						}
 //						Utils.saveTrials(trials);
 						if(userSelection2==0)
-							calculateChIndex(trials);
+							analyseChDirectory(trials);
 //							results[i][j]=chIndex(trials);
 						else if(userSelection2==1)
 							bootstrapping(trials);		
