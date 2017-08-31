@@ -101,9 +101,8 @@ public abstract class VideoAnalyzer {
 	}	
 
 	
-	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells){
+	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells,int MAXSIMULATIONS){
 		
-		int MAXSIMULATIONS = 1;
 		Map<String,Trial> trials = new HashMap<String,Trial>();
 		for (int i = 0; i < MAXSIMULATIONS; i++) {
 			Simulation sim = new PersistentRandomWalker();
@@ -115,17 +114,16 @@ public abstract class VideoAnalyzer {
 			trials.put(tr.ID, tr);
 //			System.out.println(tr.ID);
 		}
-//		for (int i = 0; i < MAXSIMULATIONS; i++) {
-//			
-//			Simulation sim = new PersistentRandomWalker(beta,responsiveCells);
-//			ImagePlus imp = sim.createSimulation();
-//			String filename = "YYYY-MM-DD-"+i+"-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
-//			String trialID = getID(filename);
-//			String trialType =  getTrialType(filename);
-//	    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
-//			trials.put(tr.ID, tr);
-////			System.out.println(tr.ID);
-//		}
+		for (int i = 0; i < MAXSIMULATIONS; i++) {
+			Simulation sim = new PersistentRandomWalker(beta,responsiveCells);
+			ImagePlus imp = sim.createSimulation();
+			String filename = "YYYY-MM-DD-"+i+"-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
+			String trialID = getID(filename);
+			String trialType =  getTrialType(filename);
+	    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+			trials.put(tr.ID, tr);
+//			System.out.println(tr.ID);
+		}
 		return trials;
 	}
 	public static String getID(String filename){

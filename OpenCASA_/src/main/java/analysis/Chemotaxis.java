@@ -207,9 +207,10 @@ public class Chemotaxis {
 		float slIdx = calculateSLIndex(trial.tracks);
 		Paint.drawChemotaxis(trial.tracks,chIdx,slIdx,trial.width,trial.height,trial.source);
 	}
-	public void bootstrapping(Map<String,Trial> trials){
+	public float bootstrapping(Map<String,Trial> trials){
 		
 		ResultsTable rtRatios = new ResultsTable();
+		float positiveSamples = 0;//Percentage of positive samples
 		//Calculate minimum sample size
 		minSampleSize(trials);
 		Set keys = trials.keySet();
@@ -222,15 +223,19 @@ public class Chemotaxis {
 		for (Iterator k=controlKeys.iterator();k.hasNext();) {
 			String control= (String)k.next();
 			List conditionsKeys = getRelatedConditions(keys, control);
+			float TOTALSAMPLES = (float)controlKeys.size();
 			for (Iterator cond = conditionsKeys.iterator(); cond.hasNext();) {
 				String condition = (String)cond.next();
 				double OR = OR(control,condition,trials);
+				if(OR>thControl)
+					positiveSamples+=1/TOTALSAMPLES;
 				String filename = trials.get(condition).source;
 				String ID = trials.get(condition).ID;
 				setBootstrappingResults(rtRatios, OR, thControl, ID, filename);
 			}
 		}
 		rtRatios.show("Bootstrapping Results");
+		return positiveSamples;
 	}
 	
 	public void setBootstrappingResults(ResultsTable rt,double OR,double th,String ID, String filename){
@@ -441,45 +446,47 @@ public class Chemotaxis {
 				else if(userSelection2==1)
 					bootstrapping(trials);		
 			}
-			else if(userSelection1==2){
+			else if(userSelection1==2){ //Simulations
 				
-				int N = 20;
+				int N = 10;
+				int MAXSIMULATIONS = 50;
 				double[] Betas = new double[N];
 				double[] Responsiveness = new double[N];
 				double[][] results = new double[N][N];
 				double maxBeta = 2;
 				
-				double beta=0.3;
-				double responsiveCells=0.1;
-//				for(int i=0;i<N;i++){
-//					double beta = (i/(double)N)*maxBeta;
-//					System.out.println("beta: "+beta);
-//					Betas[i]=beta;
-//					for(int j=0;j<N;j++){
-//						System.out.println("i: "+i+"; j: "+j);
-//						double responsiveCells = j/(double)N;
-//						Responsiveness[j]=responsiveCells;
-//						System.out.println("responsiveCells: "+responsiveCells);
-						
-						trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation",beta,responsiveCells);//
+//				double beta=0.3;
+//				double responsiveCells=0.2;
+				for(int i=0;i<N;i++){
+					double beta = (i/(double)N)*maxBeta;
+					System.out.println("beta: "+beta);
+					Betas[i]=beta;
+					for(int j=0;j<N;j++){
+						System.out.println("i: "+i+"; j: "+j);
+						double responsiveCells = j/(double)N;
+						Responsiveness[j]=responsiveCells;
+						System.out.println("responsiveCells: "+responsiveCells);
+						trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation",beta,responsiveCells,MAXSIMULATIONS);//
 						//Utils.saveTrials(trials);
 						if(trials==null){
 							mw.setVisible(true);
 							return;
 						}
 //						Utils.saveTrials(trials);
-						if(userSelection2==0)
+						if(userSelection2==0){
 							analyseChDirectory(trials);
 //							results[i][j]=chIndex(trials);
-						else if(userSelection2==1)
-							bootstrapping(trials);		
-//					}
-//				}
-//				for(int i=0;i<N;i++){
-//					for(int j=0;j<N;j++){
-//						IJ.log(""+results[i][j]);
-//					}
-//				}
+						}
+						else if(userSelection2==1){
+							results[i][j]=bootstrapping(trials);
+						}
+					}
+				}
+				for(int i=0;i<N;i++){
+					for(int j=0;j<N;j++){
+						IJ.log(""+results[i][j]);
+					}
+				}
 			}
 	
 		}
