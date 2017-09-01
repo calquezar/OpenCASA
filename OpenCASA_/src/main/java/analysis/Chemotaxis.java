@@ -152,7 +152,7 @@ public class Chemotaxis {
 				numeratorValues[1]+=(double)(countInstDirections[0]+countInstDirections[1]);			        
 				index++;
 			}
-			java.util.Collections.shuffle(controlTracks);			
+			java.util.Collections.shuffle(controlTracks);		
 			//Calculate denominator's odds value
 			count=0;index=0;
 			while((count<Params.MAXINSTANGLES)&&(index<controlTracks.size())){
@@ -166,7 +166,7 @@ public class Chemotaxis {
 			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
 			double OddsRatio = numeratorRatio/denominatorRatio;
 			ORs.add(OddsRatio);
-//			IJ.log(""+OddsRatio);
+			IJ.log(""+OddsRatio);
 //			System.out.println("OddsRatio: "+OddsRatio);
 		}
 		
@@ -433,10 +433,9 @@ public class Chemotaxis {
 				mw.setVisible(true);
 				return;	
 			}
-			Map<String,Trial> trials = null;
 			//Create trials dictionary
 			if(userSelection1==1){
-				trials = VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
+				Map<String,Trial> trials = VideoAnalyzer.extractTrials("Chemotaxis-Directory");//
 				//Utils.saveTrials(trials);
 				if(trials==null){
 					mw.setVisible(true);
@@ -450,49 +449,69 @@ public class Chemotaxis {
 			}
 			else if(userSelection1==2){ //Simulations
 				
-				int N = 10;
-				int MAXSIMULATIONS = 50;
-				double[] Betas = new double[N];
-				double[] Responsiveness = new double[N];
-				double[][] results = new double[N][N];
+				int MAXNBETAS = 1;
+				int MAXNRESP = 1;
+				int MAXSIMULATIONS = 100;
+				double[][] results = new double[MAXNBETAS][MAXNRESP];
 				double maxBeta = 2;
-				
-//				double beta=0.3;
-//				double responsiveCells=0.2;
-				for(int i=0;i<N;i++){
-					double beta = (i/(double)N)*maxBeta;
-					System.out.println("beta: "+beta);
-					Betas[i]=beta;
-					for(int j=0;j<N;j++){
-						System.out.println("i: "+i+"; j: "+j);
-						double responsiveCells = j/(double)N;
-						Responsiveness[j]=responsiveCells;
-						System.out.println("responsiveCells: "+responsiveCells);
-						trials = VideoAnalyzer.extractTrials("Chemotaxis-Simulation",beta,responsiveCells,MAXSIMULATIONS);//
-						//Utils.saveTrials(trials);
-						if(trials==null){
-							mw.setVisible(true);
-							return;
-						}
-//						Utils.saveTrials(trials);
-						if(userSelection2==0){
-							analyseChDirectory(trials);
-//							results[i][j]=chIndex(trials);
-						}
-						else if(userSelection2==1){
-							results[i][j]=bootstrapping(trials);
-						}
-					}
-				}
-				for(int i=0;i<N;i++){
-					for(int j=0;j<N;j++){
-						IJ.log(""+results[i][j]);
-					}
-				}
+				final boolean CHINDEX = true;
+				final boolean BOOTSTRAPPING = false;
+				boolean analysis = false;
+				if(userSelection2==0)
+					analysis=CHINDEX;
+				else if(userSelection2==1)
+					analysis=BOOTSTRAPPING;
+				results = simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
+				mw.setVisible(true);
+				//Print simulation results throw IJ.log
+//				for(int i=0;i<MAXNBETAS;i++){
+//					for(int j=0;j<MAXNRESP;j++){
+//						IJ.log(""+results[i][j]);
+//					}
+//				}
 			}
-	
 		}
 		mw.setVisible(true);
+	}
+	
+	/******************************************************/
+	/**
+	 * @param analysis - true: simulate ch-index; false: bootstrapping
+	 * @return matrix of chIndexes relative to each pair beta-responsiveness level 
+	 */
+	public double[][] simulate(boolean analysis,int MAXNBETAS,int MAXNRESP,double maxBeta,int MAXSIMULATIONS){
+		
+		double[] Betas = new double[MAXNBETAS];
+		double[] Responsiveness = new double[MAXNRESP];
+		double[][] results = new double[MAXNBETAS][MAXNRESP];
+		Map<String,Trial> trials = null;
+//		double beta=0.3;
+//		double responsiveCells=0.2;
+		for(int i=0;i<MAXNBETAS;i++){
+			double beta = (i/(double)MAXNBETAS)*maxBeta;
+			System.out.println("beta: "+beta);
+			Betas[i]=beta;
+			for(int j=0;j<MAXNRESP;j++){
+				System.out.println("i: "+i+"; j: "+j);
+				double responsiveCells = j/(double)MAXNRESP;
+				Responsiveness[j]=responsiveCells;
+				System.out.println("responsiveCells: "+responsiveCells);
+				trials = VideoAnalyzer.simulateTrials("Chemotaxis-Simulation",beta,responsiveCells,MAXSIMULATIONS);//
+				//Utils.saveTrials(trials);
+				if(trials==null){
+					return null;
+				}
+//				Utils.saveTrials(trials);
+				if(analysis){
+					analyseChDirectory(trials);
+					results[i][j]=analyseChDirectory(trials);
+				}
+				else{
+					results[i][j]=bootstrapping(trials);
+				}
+			}
+		}
+		return results;		
 	}
 	public void setChResults(ResultsTable rt,String filename,float chIdx, float slIdx, int nTracks){
 		

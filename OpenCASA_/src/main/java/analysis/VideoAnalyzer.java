@@ -101,7 +101,7 @@ public abstract class VideoAnalyzer {
 	}	
 
 	
-	public static Map<String,Trial> extractTrials(String analysis,double beta,double responsiveCells,int MAXSIMULATIONS){
+	public static Map<String,Trial> simulateTrials(String analysis,double beta,double responsiveCells,int MAXSIMULATIONS){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
 		for (int i = 0; i < MAXSIMULATIONS; i++) {

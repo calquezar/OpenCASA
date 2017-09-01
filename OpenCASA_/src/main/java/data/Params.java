@@ -126,7 +126,8 @@ public class Params {
 		frameRate = prefs.getFloat("frameRate",frameRate);
 		bcf_shift = prefs.getInt("bcf_shift",bcf_shift);
 		progressMotility = prefs.getFloat("progressMotility",progressMotility );
-		micronPerPixel = prefs.getDouble("micronPerPixel",micronPerPixel);		
+		micronPerPixel = prefs.getDouble("micronPerPixel",micronPerPixel);	
+		NUMSAMPLES = prefs.getInt("NUMSAMPLES",NUMSAMPLES);
 	}
 	
 	public static void saveParams(){
@@ -145,6 +146,7 @@ public class Params {
 		prefs.putInt("bcf_shift",bcf_shift);
 		prefs.putFloat("progressMotility",progressMotility );
 		prefs.putDouble("micronPerPixel",micronPerPixel);
+		prefs.putInt("NUMSAMPLES",NUMSAMPLES);
 		
 		
 		try {
