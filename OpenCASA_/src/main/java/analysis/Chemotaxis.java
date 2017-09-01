@@ -284,6 +284,7 @@ public class Chemotaxis {
 				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
 				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
 				angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+//				IJ.log(""+angle);
 				if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
 					angle = -(2*Math.PI-angle);			
 				if(Math.abs(angle)<angleChemotaxis){
@@ -291,7 +292,8 @@ public class Chemotaxis {
 				}
 				else //if(Math.abs(angle)>(Math.PI-angleAmplitude)){
 					nNeg++;
-				}
+			}
+			
 		}
 		if((nPos+nNeg)>0)
 			chIdx = (nPos/(nPos+nNeg)); // (nPos+nNeg) = Total number of shifts
