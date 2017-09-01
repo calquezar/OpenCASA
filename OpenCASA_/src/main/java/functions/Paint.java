@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
-import analysis.Kinematics;
 import data.Params;
 import data.SList;
 import data.Spermatozoon;

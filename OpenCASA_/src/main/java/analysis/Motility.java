@@ -12,6 +12,7 @@ import javax.swing.JOptionPane;
 
 import data.Params;
 import data.Trial;
+import functions.Kinematics;
 import functions.Paint;
 import functions.SignalProcessing;
 import functions.Utils;

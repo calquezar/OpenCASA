@@ -6,9 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import analysis.Kinematics;
 import data.PersistentRandomWalker.Cell;
 import data.PersistentRandomWalker.Obstacle;
+import functions.Kinematics;
 import functions.SignalProcessing;
 import ij.ImagePlus;
 import ij.ImageStack;

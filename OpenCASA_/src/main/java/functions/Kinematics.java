@@ -1,4 +1,4 @@
-package analysis;
+package functions;
 
 import java.awt.geom.Line2D;
 import java.util.List;
@@ -6,7 +6,6 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.Spermatozoon;
-import functions.SignalProcessing;
 
 public class Kinematics {
 	/******************************************************/
