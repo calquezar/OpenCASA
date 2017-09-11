@@ -448,7 +448,6 @@ public class Chemotaxis {
 					bootstrapping(trials);		
 			}
 			else if(userSelection1==2){ //Simulations
-				
 				int MAXNBETAS = 1;
 				int MAXNRESP = 1;
 				int MAXSIMULATIONS = 100;
@@ -465,7 +464,7 @@ public class Chemotaxis {
 				////////////////////
 //				double beta=2;
 //				double responsiveness = 0.9
-//				simulate(beta,responsiveness);
+//				simulate(beta,responsiveness); // a single ch-index simulation
 				////////////////////
 				mw.setVisible(true);
 				//Print simulation results throw IJ.log
