@@ -100,6 +100,18 @@ public abstract class VideoAnalyzer {
 		return trials;
 	}	
 
+	public static Trial simulateTrial(String analysis,double beta,double responsiveCells){
+		
+//		Map<String,Trial> trials = new HashMap<String,Trial>();
+		Simulation sim = new PersistentRandomWalker(beta,responsiveCells);
+		ImagePlus imp = sim.createSimulation();
+		String filename = "YYYY-MM-DD-0-Q-Beta-"+beta+"-Responsive Cells-"+responsiveCells;
+		String trialID = getID(filename);
+		String trialType =  getTrialType(filename);
+    	Trial tr = getTrialFromImp(imp,analysis,trialID,trialType,filename);
+//		trials.put(tr.ID, tr);
+		return tr;
+	}
 	
 	public static Map<String,Trial> simulateTrials(String analysis,double beta,double responsiveCells,int MAXSIMULATIONS){
 		

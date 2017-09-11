@@ -284,7 +284,7 @@ public class Chemotaxis {
 				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
 				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
 				angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
-//				IJ.log(""+angle);
+				IJ.log(""+angle);
 				if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
 					angle = -(2*Math.PI-angle);			
 				if(Math.abs(angle)<angleChemotaxis){
@@ -462,6 +462,11 @@ public class Chemotaxis {
 				else if(userSelection2==1)
 					analysis=BOOTSTRAPPING;
 				results = simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
+				////////////////////
+//				double beta=2;
+//				double responsiveness = 0.9
+//				simulate(beta,responsiveness);
+				////////////////////
 				mw.setVisible(true);
 				//Print simulation results throw IJ.log
 //				for(int i=0;i<MAXNBETAS;i++){
@@ -485,8 +490,6 @@ public class Chemotaxis {
 		double[] Responsiveness = new double[MAXNRESP];
 		double[][] results = new double[MAXNBETAS][MAXNRESP];
 		Map<String,Trial> trials = null;
-//		double beta=0.3;
-//		double responsiveCells=0.2;
 		for(int i=0;i<MAXNBETAS;i++){
 			double beta = (i/(double)MAXNBETAS)*maxBeta;
 			System.out.println("beta: "+beta);
@@ -503,7 +506,6 @@ public class Chemotaxis {
 				}
 //				Utils.saveTrials(trials);
 				if(analysis){
-					analyseChDirectory(trials);
 					results[i][j]=analyseChDirectory(trials);
 				}
 				else{
@@ -513,6 +515,22 @@ public class Chemotaxis {
 		}
 		return results;		
 	}
+	/******************************************************/
+	/**
+	 * @param analysis - true: simulate ch-index; false: bootstrapping
+	 * @return matrix of chIndexes relative to each pair beta-responsiveness level 
+	 */
+	public void simulate(double beta,double responsiveness){
+		Trial tr = null;
+		tr = VideoAnalyzer.simulateTrial("Chemotaxis-Simulation",beta,responsiveness);//
+		if(tr==null)
+			return;
+		float chIdx = calculateChIndex(tr.tracks);
+		float slIdx = calculateSLIndex(tr.tracks);
+		Paint.drawChemotaxis(tr.tracks,chIdx,slIdx,tr.width,tr.height,tr.source);
+	}	
+	
+	
 	public void setChResults(ResultsTable rt,String filename,float chIdx, float slIdx, int nTracks){
 		
 //		System.out.println("filename: "+filename);
