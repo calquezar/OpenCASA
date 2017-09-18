@@ -3,6 +3,7 @@ package analysis;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -22,6 +23,9 @@ import ij.IJ;
 import ij.measure.ResultsTable;
 
 public class Chemotaxis {
+
+private static final Float FLOAT = (Float)null;
+
 
 //	private Map<String, Trial> trials = new HashMap<String, Trial>();
 	
@@ -214,7 +218,7 @@ public class Chemotaxis {
 		//Calculate minimum sample size
 		minSampleSize(trials);
 		Set keys = trials.keySet();
-		List controlKeys = getControlKeys(keys);
+		List controlKeys = getKeys(keys,'C');
 		SList controlTracks = mergeControlTracks(controlKeys,trials);
 		//Setting maximum number of subsamples used by bootstrapping method
 		//Params.NUMSAMPLES=controlKeys.size();
@@ -284,7 +288,7 @@ public class Chemotaxis {
 				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
 				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
 				angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
-				IJ.log(""+angle);
+//				IJ.log(""+angle);
 				if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
 					angle = -(2*Math.PI-angle);			
 				if(Math.abs(angle)<angleChemotaxis){
@@ -341,19 +345,20 @@ public class Chemotaxis {
 		return ratioSL;
 	}
 	
-	public List getControlKeys(Set keySet){
-		List controlList = new ArrayList();
-		for (Iterator k=keySet.iterator();k.hasNext();) {
-			String id = (String)k.next();
+	public List<String> getKeys(Set<String> keySet,char type){
+		List<String> keyList = new ArrayList<String>();
+		for (Iterator<String> k=keySet.iterator();k.hasNext();) {
+			String id = k.next();
 			//Key is in format:
 			//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
 			//	for control: YYYYMMDD-[ID]-C
 			String[] parts = id.split("-");
-			if(parts[parts.length-1].charAt(0)=='C') //Control identifier
-				controlList.add(id);
+			if(parts[parts.length-1].charAt(0)==type)
+				keyList.add(id);
 		}
-		return controlList;
+		return keyList;
 	}
+	
 	
 	public List getRelatedConditions(Set keySet,String controlKey){
 		List conditionsList = new ArrayList();
@@ -390,15 +395,18 @@ public class Chemotaxis {
 		float maxChIndex = 0;
 		float maxSLIndex = 0;
 		if(trials==null)
-			return (Float) null;
-		Set keySet = trials.keySet();	
-		getControlKeys(keySet);
+			return FLOAT;
+		Set<String> keySet = trials.keySet();	
+		List<String> controlList = getKeys(keySet,'C'); //'C' = Control
+		List<String> chemoList = getKeys(keySet,'Q'); //'Q' = Chemotaxis
+		
 		ResultsTable rtRatios = new ResultsTable();
-		for (Iterator k=keySet.iterator();k.hasNext();) {
+		for (Iterator<String> k=controlList.iterator();k.hasNext();) {
 			String key= (String)k.next();
 			Trial trial = (Trial)trials.get(key);
 		  	System.out.println("key: "+key);
 		  	float chIdx = calculateChIndex(trial.tracks);
+		  	IJ.log(""+chIdx);
 		  	if(chIdx>maxChIndex)
 		  		maxChIndex=chIdx;
 		  	float ratioSL = calculateSLIndex(trial.tracks);
@@ -406,6 +414,21 @@ public class Chemotaxis {
 		  		maxSLIndex=ratioSL;
 		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
 		}
+		
+		for (Iterator<String> k=chemoList.iterator();k.hasNext();) {
+			String key= (String)k.next();
+			Trial trial = (Trial)trials.get(key);
+		  	System.out.println("key: "+key);
+		  	float chIdx = calculateChIndex(trial.tracks);
+		  	IJ.log(""+chIdx);
+		  	if(chIdx>maxChIndex)
+		  		maxChIndex=chIdx;
+		  	float ratioSL = calculateSLIndex(trial.tracks);
+		  	if(ratioSL>maxSLIndex)
+		  		maxSLIndex=ratioSL;
+		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
+		}		
+		
 		rtRatios.show("Chemotaxis results");
 		return maxChIndex;
 	}
@@ -448,9 +471,9 @@ public class Chemotaxis {
 					bootstrapping(trials);		
 			}
 			else if(userSelection1==2){ //Simulations
-				int MAXNBETAS = 1;
-				int MAXNRESP = 1;
-				int MAXSIMULATIONS = 100;
+				int MAXNBETAS = 10;
+				int MAXNRESP = 10;
+				int MAXSIMULATIONS = 20;
 				double[][] results = new double[MAXNBETAS][MAXNRESP];
 				double maxBeta = 2;
 				final boolean CHINDEX = true;
