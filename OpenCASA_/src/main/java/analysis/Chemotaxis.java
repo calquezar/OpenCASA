@@ -483,11 +483,11 @@ private static final Float FLOAT = (Float)null;
 					analysis=CHINDEX;
 				else if(userSelection2==1)
 					analysis=BOOTSTRAPPING;
-				results = simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
+//				results = simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
 				////////////////////
-//				double beta=2;
-//				double responsiveness = 0.9
-//				simulate(beta,responsiveness); // a single ch-index simulation
+				double beta=2;
+				double responsiveness = 0.9;
+				simulate(beta,responsiveness); // a single ch-index simulation
 				////////////////////
 				mw.setVisible(true);
 				//Print simulation results throw IJ.log
