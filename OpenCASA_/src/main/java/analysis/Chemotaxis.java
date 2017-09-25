@@ -238,6 +238,9 @@ private static final Float FLOAT = (Float)null;
 		float chIdx = calculateChIndex(trial.tracks);
 		float slIdx = calculateSLIndex(trial.tracks);
 		Paint.drawChemotaxis(trial.tracks,chIdx,slIdx,trial.width,trial.height,trial.source);
+		int[] hist = circularHistogram(getListOfAngles(trial.tracks),45);
+		int radius = trial.width;
+		Paint.drawRoseDiagram(hist,radius,chIdx,trial.source);
 	}
 	public float bootstrapping(Map<String,Trial> trials){
 		
