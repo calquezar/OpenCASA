@@ -234,13 +234,20 @@ public abstract class Paint {
 		ColorProcessor ipRelTraj = new ColorProcessor(width, height);
 		ipRelTraj.setColor(Color.white);
 		ipRelTraj.fill();
+		int xCenter = width/2;
+		int yCenter = height/2;
 		//Draw cone used to clasify chemotactic trajectories
 		ipRelTraj.setColor(Color.green);
-		chemotaxisTemplate(ipRelTraj,avgTracks.size(),chIdx,slIdx,sampleID);	
-		
-		IJ.showStatus("Drawing Tracks...");
-	
+		chemotaxisTemplate(ipRelTraj,avgTracks.size(),chIdx,slIdx,sampleID);
+		ipRelTraj.setColor(Color.red);
+		ipRelTraj.setLineWidth(4);
+		ipRelTraj.moveTo(xCenter,yCenter);
+		int rx = (int) (1000*Math.cos(Params.angleDirection*Math.PI/180));
+		int ry = (int) (1000*Math.sin(Params.angleDirection*Math.PI/180));
+		ipRelTraj.lineTo(xCenter+rx, yCenter-ry);
+		ipRelTraj.setLineWidth(1);
 		//Draw average paths
+		IJ.showStatus("Drawing Tracks...");
 		int color = 0;
 		for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
 			List zTrack=(ArrayList) iT.next();
@@ -249,16 +256,14 @@ public abstract class Paint {
 			//Variables used to 
 			Spermatozoon firstSpermatozoon = new Spermatozoon();
 			firstSpermatozoon.copy(oldSpermatozoon);
-			int xCenter = width/2;
-			int yCenter = height/2;
 			int xLast = xCenter;
 			int yLast = yCenter;
 			for (;jT.hasNext();) {
 				Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
 				ipRelTraj.setColor(Color.black);
 				ipRelTraj.moveTo(xLast,yLast);
-				xLast = (int)(newSpermatozoon.x-firstSpermatozoon.x+xCenter);
-				yLast = (int)(newSpermatozoon.y-firstSpermatozoon.y+yCenter);
+				xLast = (int)(xCenter+(newSpermatozoon.x-firstSpermatozoon.x));
+				yLast = (int)(yCenter-(newSpermatozoon.y-firstSpermatozoon.y));
 				ipRelTraj.lineTo(xLast, yLast);
 				oldSpermatozoon=newSpermatozoon;
 			}
@@ -406,10 +411,10 @@ public abstract class Paint {
 		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
 		//Upper Line
 		int upperLineX = xCenter+(int)(1000*Math.cos(upperAngle));
-		int upperLineY = yCenter+(int)(1000*Math.sin(upperAngle));
+		int upperLineY = yCenter-(int)(1000*Math.sin(upperAngle));
 		//Lower Line
 		int lowerLineX = xCenter+(int)(1000*Math.cos(lowerAngle));
-		int lowerLineY = yCenter+(int)(1000*Math.sin(lowerAngle));
+		int lowerLineY = yCenter-(int)(1000*Math.sin(lowerAngle));
 		//Draw Chemotaxis Cone
 		ip.moveTo((int)xCenter, (int)yCenter);
 		ip.lineTo((int)upperLineX, (int)upperLineY);		
