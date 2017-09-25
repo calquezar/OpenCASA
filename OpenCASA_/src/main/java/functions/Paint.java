@@ -2,6 +2,7 @@ package functions;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Polygon;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -226,17 +227,16 @@ public abstract class Paint {
 	public static void drawChemotaxis(SList theTracks,float chIdx,float slIdx,int width,int height,String sampleID){
 
 		SList avgTracks = SignalProcessing.averageTracks(theTracks);
-		int upRes = 1;
 		String strPart;
 		//Variables used to draw chemotactic cone
 		int displayTrackNr=0;
 		//We create another ImageProcesor to draw chemotactic cone and relative trajectories
-		ColorProcessor ipRelTraj = new ColorProcessor(width*upRes, height*upRes);
+		ColorProcessor ipRelTraj = new ColorProcessor(width, height);
 		ipRelTraj.setColor(Color.white);
 		ipRelTraj.fill();
 		//Draw cone used to clasify chemotactic trajectories
 		ipRelTraj.setColor(Color.green);
-		chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),chIdx,slIdx,sampleID);	
+		chemotaxisTemplate(ipRelTraj,avgTracks.size(),chIdx,slIdx,sampleID);	
 		
 		IJ.showStatus("Drawing Tracks...");
 	
@@ -259,12 +259,131 @@ public abstract class Paint {
 				ipRelTraj.moveTo(xLast,yLast);
 				xLast = (int)(newSpermatozoon.x-firstSpermatozoon.x+xCenter);
 				yLast = (int)(newSpermatozoon.y-firstSpermatozoon.y+yCenter);
-				ipRelTraj.lineTo(xLast*upRes, yLast*upRes);
+				ipRelTraj.lineTo(xLast, yLast);
 				oldSpermatozoon=newSpermatozoon;
 			}
 			ipRelTraj.drawOval(xLast-3,yLast,6,6);
 		}
 		new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
+	}
+	/******************************************************/
+	/**
+	 * @param imp 
+	 * @param theTracks 2D-ArrayList with all the tracks
+	 * @param avgTracks 2D-ArrayList with the averaged tracks
+	 * @param chIdx
+	 * @param slIdx
+	 */
+	public static void drawRoseDiagram (int[] histogram, int radius,float chIdx,String sampleID){
+
+		//Calculate maximum value of the histogram
+		//to use it later for normalization
+		double max = 0;
+		for(int i=0;i<histogram.length;i++)
+			if(histogram[i]>max)
+				max=histogram[i];
+		double normFactor = radius/max;
+		int xCenter = radius;
+		int yCenter = radius;
+		ColorProcessor roseDiagram = new ColorProcessor(2*radius, 2*radius);
+		
+		
+		roseDiagram.setColor(Color.white);
+		roseDiagram.fill();
+		Color c = new Color((int)0,0,255,10);
+		roseDiagram.setColor(c);
+		roseDiagram.setLineWidth(1);	
+		
+		int NBINS = histogram.length;
+		double angleBin = 2*Math.PI/(double)NBINS;
+		
+		for(double i=0;i<NBINS;i++){
+			int value = histogram[(int)i];
+			int r = (int) (value*normFactor);
+			//We will draw a triangle for each bin
+			Polygon p = new Polygon();
+			p.addPoint(xCenter, yCenter); //First point
+			int x = (int)(r*Math.cos(i*angleBin));
+			int y = (int)(r*Math.sin(i*angleBin));
+			p.addPoint(xCenter+x,yCenter-y); // Second point
+			x = (int)(r*Math.cos((i+1)*angleBin));
+			y = (int)(r*Math.sin((i+1)*angleBin));
+			p.addPoint(xCenter+x,yCenter-y); //Third point
+			roseDiagram.fillPolygon(p);
+//			roseDiagram.moveTo(xCenter,yCenter);
+//			roseDiagram.lineTo(xCenter+x, yCenter-y);
+		}
+		
+		roseDiagram.setColor(Color.gray);
+		//
+		for(double i=0;i<NBINS;i++){
+			int x = (int)(radius*Math.cos(i*(2*Math.PI/NBINS)));
+			int y = (int)(radius*Math.sin(i*(2*Math.PI/NBINS)));
+			roseDiagram.moveTo(xCenter,yCenter);
+			roseDiagram.lineTo(xCenter+x, yCenter-y);
+		}
+		
+		roseDiagram.setColor(Color.gray);
+		roseDiagram.drawOval(0,0,2*radius,2*radius);
+		roseDiagram.setColor(Color.black);
+		int rx = (int) (radius*Math.cos(Math.PI/3));
+		int ry = (int) (radius*Math.sin(Math.PI/3));
+		roseDiagram.moveTo(xCenter+rx, yCenter -ry);
+		roseDiagram.setFont(new Font("SansSerif", Font.PLAIN, 30));
+		roseDiagram.drawString(""+(int)max);//Draw reference value
+		
+		roseDiagram.setColor(Color.gray);
+		roseDiagram.drawOval(radius-2*radius/3,radius-2*radius/3,4*radius/3,4*radius/3);
+		roseDiagram.setColor(Color.black);
+		int r=radius-radius/3;
+		rx = (int) (r*Math.cos(Math.PI/3));
+		ry = (int) (r*Math.sin(Math.PI/3));
+		roseDiagram.moveTo(xCenter+rx, yCenter -ry);
+		roseDiagram.drawString(""+(int)(2*max/3));//Draw reference value
+		
+		roseDiagram.setColor(Color.gray);
+		roseDiagram.drawOval(radius-radius/3,radius-radius/3,2*radius/3,2*radius/3);
+		roseDiagram.setColor(Color.black);
+		r=radius-2*radius/3;
+		rx = (int) (r*Math.cos(Math.PI/3));
+		ry = (int) (r*Math.sin(Math.PI/3));
+		roseDiagram.moveTo(xCenter+rx, yCenter -ry);
+		roseDiagram.drawString(""+(int)(max/3));//Draw reference value
+		
+		roseDiagram.setColor(Color.red);
+		roseDiagram.setLineWidth(4);
+		roseDiagram.moveTo(xCenter,yCenter);
+		rx = (int) (radius*Math.cos(Params.angleDirection*Math.PI/180));
+		ry = (int) (radius*Math.sin(Params.angleDirection*Math.PI/180));
+		roseDiagram.lineTo(xCenter+rx, yCenter-ry);
+		roseDiagram.setColor(new Color(0, 0, 255, 0));
+			
+		//Draw chemotaxis cone
+		roseDiagram.setColor(Color.green);
+		roseDiagram.setLineWidth(8);	
+		double upperAngle = (360 + Params.angleDirection + Params.angleAmplitude/2)%360;
+		upperAngle*=Math.PI/180;
+		int x = (int)(radius*Math.cos(upperAngle));
+		int y = (int)(radius*Math.sin(upperAngle));
+		roseDiagram.moveTo(xCenter,yCenter);
+		roseDiagram.lineTo(xCenter+x, yCenter-y);
+		double lowerAngle = (360 +Params.angleDirection - Params.angleAmplitude/2)%360;
+		lowerAngle*=Math.PI/180;
+		x = (int)(radius*Math.cos(lowerAngle));
+		y = (int)(radius*Math.sin(lowerAngle));
+		roseDiagram.moveTo(xCenter,yCenter);
+		roseDiagram.lineTo(xCenter+x, yCenter-y);
+		
+		//Draw sample info
+		roseDiagram.setLineWidth(1);
+		roseDiagram.setFont(new Font("SansSerif", Font.PLAIN, 30));
+		roseDiagram.moveTo(10, 30);
+		roseDiagram.setColor(Color.blue);
+		roseDiagram.drawString("Sample: "+sampleID);
+		roseDiagram.moveTo(10, 70);
+		roseDiagram.drawString("Ch-Index: "+chIdx);
+		
+		new ImagePlus("Chemotactic Ratios", roseDiagram).show();
 	}
 	
 	/******************************************************/
@@ -275,7 +394,7 @@ public abstract class Paint {
 	 * @param chIdx 
 	 * @param slIdx 
 	 */
-	public static void chemotaxisTemplate(ColorProcessor ip,int upRes,int numTracks,float chIdx,float slIdx,String sampleID){
+	public static void chemotaxisTemplate(ColorProcessor ip,int numTracks,float chIdx,float slIdx,String sampleID){
 		// Alpha version of this method
 		ip.setLineWidth(4);
 		//center coords. of the cone used to clasify chemotactic trajectories
@@ -292,10 +411,10 @@ public abstract class Paint {
 		int lowerLineX = xCenter+(int)(1000*Math.cos(lowerAngle));
 		int lowerLineY = yCenter+(int)(1000*Math.sin(lowerAngle));
 		//Draw Chemotaxis Cone
-		ip.moveTo((int)xCenter*upRes, (int)yCenter*upRes);
-		ip.lineTo((int)upperLineX*upRes, (int)upperLineY*upRes);		
-		ip.moveTo((int)xCenter*upRes, (int)yCenter*upRes);
-		ip.lineTo((int)lowerLineX*upRes, (int)lowerLineY*upRes);
+		ip.moveTo((int)xCenter, (int)yCenter);
+		ip.lineTo((int)upperLineX, (int)upperLineY);		
+		ip.moveTo((int)xCenter, (int)yCenter);
+		ip.lineTo((int)lowerLineX, (int)lowerLineY);
 		//Reses line width
 		ip.setLineWidth(1);
 		ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -323,8 +442,6 @@ public abstract class Paint {
 		ip.moveTo(80, 90);
 		ip.setColor(Color.black);
 		ip.drawString(""+slIdx*100+"%");
-		
-
 	}
 	
 	static int doOffset (int center, int maxSize, int displacement) {

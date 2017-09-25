@@ -49,7 +49,7 @@ public abstract class VideoAnalyzer {
 		//Filtering tracks by length
 		theTracks = SignalProcessing.filterTracksByLength(theTracks);
 		
-		IJ.saveString(Utils.printXYCoords(theTracks),"");
+//		IJ.saveString(Utils.printXYCoords(theTracks),"");
 		return theTracks;
 	}
 	

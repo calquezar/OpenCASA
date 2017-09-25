@@ -58,17 +58,45 @@ private static final Float FLOAT = (Float)null;
 				angle = -(2*Math.PI-angle);			
 			if(Math.abs(angle)<angleChemotaxis){
 				nPos++;
-	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleAmplitude*180/Math.PI+"; Positive: "+angle*180/Math.PI);
 			}
 			else if(Math.abs(angle)>(Math.PI-angleChemotaxis)){
 				nNeg++;
-	//			System.out.println("AngleDirection: "+angleDirection*180/Math.PI+"; AngleChemotaxis: "+angleAmplitude*180/Math.PI+"; Negative: "+angle*180/Math.PI);
 			}
 		}
 		int[] results = new int[3];
 		results[0] = nPos;
 		results[1] = nNeg;
 		return results;
+	}
+	
+	public int[] circularHistogram(List<Double> angles,int N){
+		
+		int[] histogram = new int[N];
+		for(int i=0;i<N;i++)
+			histogram[i]=0;
+		int BINSIZE=360/N;
+		for(int i=0;i<angles.size();i++){
+			int bin = angles.get(i).intValue()/BINSIZE;
+			histogram[bin]++;
+		}
+		return histogram;
+	}
+	
+	public List<Double> getListOfAngles(SList theTracks){
+		List<Double> instAngles = new ArrayList<Double>();
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			List track=(ArrayList)iT.next();
+			int nPoints = track.size();
+			for (int j = 0; j < (nPoints-Params.angleDelta); j++) {
+				Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
+				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.angleDelta);
+				float diffX = newSpermatozoon.x-oldSpermatozoon.x;
+				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
+				double angle = (360+Math.atan2(diffY,diffX)*180/Math.PI)%(360); //Absolute angle
+				instAngles.add(angle);
+			}
+		}
+		return instAngles;
 	}
 	
 	public void minSampleSize(Map<String, Trial> trials){
@@ -488,6 +516,7 @@ private static final Float FLOAT = (Float)null;
 				double beta=2;
 				double responsiveness = 0.9;
 				simulate(beta,responsiveness); // a single ch-index simulation
+//				simulate(0,0); // a single control ch-index simulation
 				////////////////////
 				mw.setVisible(true);
 				//Print simulation results throw IJ.log
@@ -550,6 +579,10 @@ private static final Float FLOAT = (Float)null;
 		float chIdx = calculateChIndex(tr.tracks);
 		float slIdx = calculateSLIndex(tr.tracks);
 		Paint.drawChemotaxis(tr.tracks,chIdx,slIdx,tr.width,tr.height,tr.source);
+		
+		int[] hist = circularHistogram(getListOfAngles(tr.tracks),45);
+		int radius = tr.width;
+		Paint.drawRoseDiagram(hist,radius,chIdx,tr.source);
 	}	
 	
 	

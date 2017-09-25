@@ -223,5 +223,5 @@ public abstract class Utils {
 			}
 		}
 		return spermatozoon;
-	}	
+	}
 }
