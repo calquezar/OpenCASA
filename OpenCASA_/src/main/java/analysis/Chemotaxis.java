@@ -198,7 +198,7 @@ private static final Float FLOAT = (Float)null;
 			double denominatorRatio = denominatorValues[0]/denominatorValues[1];
 			double OddsRatio = numeratorRatio/denominatorRatio;
 			ORs.add(OddsRatio);
-			IJ.log(""+OddsRatio);
+//			IJ.log(""+OddsRatio);
 //			System.out.println("OddsRatio: "+OddsRatio);
 		}
 		
