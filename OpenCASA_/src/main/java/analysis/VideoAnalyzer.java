@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.ProgressMonitor;
+
 import data.PersistentRandomWalker;
 import data.SList;
 import data.Simulation;
@@ -26,7 +28,7 @@ public abstract class VideoAnalyzer {
 	public static SList analyze(ImagePlus imp){
 		
 		if(imp==null)
-			return new SList();
+			return new SList();		
 		
 		System.out.println("converToGrayScale...");
  		ComputerVision.convertToGrayscale(imp);

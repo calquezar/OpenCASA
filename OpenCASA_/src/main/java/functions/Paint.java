@@ -84,7 +84,7 @@ public abstract class Paint {
 						ip.setColor(Color.white);
 						ip.drawString(strPart);
 					}
-				}					
+				}
 			}
 //			//Draw average paths
 //			color=0;
@@ -104,7 +104,8 @@ public abstract class Paint {
 //					}
 //					oldSpermatozoon=newSpermatozoon;
 //				}
-//			}							
+//			}		
+			System.out.println("Drawind frame: "+iFrame);
 		}
 		imp.updateAndRepaintWindow();
 	}	
@@ -273,11 +274,10 @@ public abstract class Paint {
 	}
 	/******************************************************/
 	/**
-	 * @param imp 
-	 * @param theTracks 2D-ArrayList with all the tracks
-	 * @param avgTracks 2D-ArrayList with the averaged tracks
+	 * @param histogram
+	 * @param radius
 	 * @param chIdx
-	 * @param slIdx
+	 * @param sampleID
 	 */
 	public static void drawRoseDiagram (int[] histogram, int radius,float chIdx,String sampleID){
 
