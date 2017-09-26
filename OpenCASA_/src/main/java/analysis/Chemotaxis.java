@@ -518,8 +518,8 @@ private static final Float FLOAT = (Float)null;
 				////////////////////
 				double beta=2;
 				double responsiveness = 0.9;
-				simulate(beta,responsiveness); // a single ch-index simulation
-//				simulate(0,0); // a single control ch-index simulation
+//				simulate(beta,responsiveness); // a single ch-index simulation
+				simulate(0,0); // a single control ch-index simulation
 				////////////////////
 				mw.setVisible(true);
 				//Print simulation results throw IJ.log

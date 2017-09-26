@@ -312,12 +312,15 @@ public abstract class Paint {
 			roseDiagram.fillPolygon(p);
 		}
 		roseDiagram.setColor(Color.gray);
-		//Draw borders for each bin
-		for(double i=0;i<NBINS;i++){
-			int x = (int)(radius*Math.cos(i*(2*Math.PI/NBINS)));
-			int y = (int)(radius*Math.sin(i*(2*Math.PI/NBINS)));
+		roseDiagram.setFont(new Font("SansSerif", Font.PLAIN, 22));
+		//Draw line at each 30º
+		for(double i=0;i<12;i++){
+			int x = (int)(radius*Math.cos(i*(2*Math.PI/12)));
+			int y = (int)(radius*Math.sin(i*(2*Math.PI/12)));
 			roseDiagram.moveTo(xCenter,yCenter);
 			roseDiagram.lineTo(xCenter+x, yCenter-y);
+			roseDiagram.moveTo(xCenter+x, yCenter-y);
+			roseDiagram.drawString(""+i*30);
 		}
 		roseDiagram.setColor(Color.gray);
 		//Draw three concentric circles as reference values
