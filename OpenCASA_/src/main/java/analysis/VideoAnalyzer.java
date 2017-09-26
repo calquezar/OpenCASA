@@ -144,6 +144,8 @@ public abstract class VideoAnalyzer {
 		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
 		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
 		String[] parts = filename.split("-");
+		if(parts.length<7)
+			return "test";
 		String type = getTrialType(filename);
 		// ID's format:
 		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
@@ -202,6 +204,8 @@ public abstract class VideoAnalyzer {
 		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
 		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
 		String[] parts = filename.split("-");
+		if(parts.length<7)
+			return "test";
 		if(parts[4].equals("Q")){
 			String hormone = parts[5];
 			String concentration = parts[6];

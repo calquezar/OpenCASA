@@ -1,5 +1,7 @@
 package gui;
 
+import java.awt.Checkbox;
+import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -9,6 +11,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -30,6 +33,7 @@ import functions.ComputerVision;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.gui.GenericDialog;
 import ij.plugin.ChannelSplitter;
 import ij.process.ImageProcessor;
 
@@ -94,7 +98,18 @@ public class MainWindow extends JFrame {
 					try{morph.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Simulation")){
-					sim = new PersistentRandomWalker(1,50);
+					GenericDialog gd = new GenericDialog("Set Simulation parameters");	
+					gd.addNumericField("Beta", 0, 2);
+					gd.addNumericField("Responsiveness (%)", 50, 2);
+					gd.addNumericField("Length of the simulation (frames)", 500, 0);
+					gd.showDialog();
+					if (gd.wasCanceled()){
+						return;
+					}
+					double beta = gd.getNextNumber();
+					double responsiveness = gd.getNextNumber();
+					int length = (int)gd.getNextNumber();	
+					sim = new PersistentRandomWalker(beta,responsiveness,length);
 					try{sim.run();}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Settings")){

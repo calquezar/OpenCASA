@@ -102,13 +102,23 @@ public class PersistentRandomWalker extends Simulation {
 	}
 	
 
+	public PersistentRandomWalker(double b, double responsiveCells,int simlength) {
+		SIMLENGTH = simlength;
+		for (int x = cellCount-1; x >= 0; x--) {
+			sperm[x] = new Cell(b,responsiveCells);
+		}
+		for (int x = obstaclesCount-1; x >= 0; x--) { 
+			obstacles[x] = new Obstacle();
+		}
+	}
 	public PersistentRandomWalker(double b, double responsiveCells) {
-	  for (int x = cellCount-1; x >= 0; x--) { 
-		    sperm[x] = new Cell(b,responsiveCells);
-		  }
-	  for (int x = obstaclesCount-1; x >= 0; x--) { 
-	    obstacles[x] = new Obstacle();
-	  }
+		SIMLENGTH = 500;
+		for (int x = cellCount-1; x >= 0; x--) {
+		   sperm[x] = new Cell(b,responsiveCells);
+		}
+		for (int x = obstaclesCount-1; x >= 0; x--) { 
+		   obstacles[x] = new Obstacle();
+		}	
 	}
 	public PersistentRandomWalker() {
 		
