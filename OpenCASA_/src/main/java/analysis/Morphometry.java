@@ -33,6 +33,10 @@ public class Morphometry {
 	
 	public void analyzeFile(){
 		String absoluteFilePath = Utils.getAbsoluteFileName();
+		if(absoluteFilePath==null){
+			mainW.setVisible(true);
+			return;
+		}
 		String parentsDirectory = Utils.getParentDirectory(absoluteFilePath);
 		ImagePlus imp = IJ.openImage(absoluteFilePath);
 		// MorphWindow works with an ImagePlus array.
@@ -54,7 +58,8 @@ public class Morphometry {
 		
 		String[] listOfFiles = Utils.getFileNames();
 		if(listOfFiles==null || listOfFiles.length==0){
-			JOptionPane.showMessageDialog(null, "Please, select a valid folder.");
+			if(listOfFiles!=null)
+				JOptionPane.showMessageDialog(null, "Please, select a non-empty folder.");
 			mainW.setVisible(true);
 			return;
 		}
