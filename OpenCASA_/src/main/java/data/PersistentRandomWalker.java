@@ -46,7 +46,7 @@ public class PersistentRandomWalker extends Simulation {
 	    Drot =0.1;
 	    //beta=0;//Control
 	    //Chemotaxis
-	    if(rand.nextFloat()<responsiveCells) //Only 10% of the population is chemoattracted
+	    if(rand.nextFloat()<responsiveCells) //Only x% of the population is chemoattracted
 	      beta = b;
 	    else
 	      beta=0;

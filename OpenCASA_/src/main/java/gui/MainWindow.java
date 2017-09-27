@@ -107,7 +107,7 @@ public class MainWindow extends JFrame {
 						return;
 					}
 					double beta = gd.getNextNumber();
-					double responsiveness = gd.getNextNumber();
+					double responsiveness = gd.getNextNumber()/100; // value must be between [0,1]
 					int length = (int)gd.getNextNumber();	
 					sim = new PersistentRandomWalker(beta,responsiveness,length);
 					try{sim.run();}
