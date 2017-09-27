@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['opencasa_5f',['OpenCASA_',['../class_open_c_a_s_a__.html',1,'']]]
+  ['chemotaxis',['Chemotaxis',['../classanalysis_1_1_chemotaxis.html',1,'analysis']]],
+  ['computervision',['ComputerVision',['../classfunctions_1_1_computer_vision.html',1,'functions']]]
 ];

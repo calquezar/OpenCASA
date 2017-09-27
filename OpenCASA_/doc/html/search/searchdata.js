@@ -1,10 +1,11 @@
 var indexSectionsWithContent =
 {
-  0: "cgmor",
-  1: "mo",
-  2: "g",
-  3: "mo",
-  4: "cmr"
+  0: "abcdefghikmnoprstuvwxyz",
+  1: "ackmopstuv",
+  2: "adfgp",
+  3: "ackmopstuv",
+  4: "abcdefgimoprstv",
+  5: "abdfhimnpstvwxyz"
 };
 
 var indexSectionNames =
@@ -13,7 +14,8 @@ var indexSectionNames =
   1: "classes",
   2: "namespaces",
   3: "files",
-  4: "functions"
+  4: "functions",
+  5: "variables"
 };
 
 var indexSectionLabels =
@@ -22,6 +24,7 @@ var indexSectionLabels =
   1: "Classes",
   2: "Namespaces",
   3: "Files",
-  4: "Functions"
+  4: "Functions",
+  5: "Variables"
 };
 

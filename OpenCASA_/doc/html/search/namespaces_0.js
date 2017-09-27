@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gui',['gui',['../namespacegui.html',1,'']]]
+  ['analysis',['analysis',['../namespaceanalysis.html',1,'']]]
 ];
