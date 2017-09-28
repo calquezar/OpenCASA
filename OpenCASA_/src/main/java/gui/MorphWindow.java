@@ -39,47 +39,114 @@ import ij.ImagePlus;
 import ij.measure.ResultsTable;
 import ij.process.ImageProcessor;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class MorphWindow extends JFrame implements ChangeListener,MouseListener {
 	
-
 	//Here we'll store the original images
+	/**
+	 * 
+	 */
 	ImagePlus impOrig = null;
 	//These ImagePlus will be used to draw over them
+	/**
+	 * 
+	 */
 	ImagePlus impDraw = null;
 	//These ImagePlus will be used to calculate mean gray values
+	/**
+	 * 
+	 */
 	ImagePlus impGray = null;
 	//These ImagePlus will be used to identify spermatozoa
+	/**
+	 * 
+	 */
 	ImagePlus impTh = null;
 	//These ImagePlus will be used to store outlines
+	/**
+	 * 
+	 */
 	ImagePlus impOutline = null;
 	
+	/**
+	 * 
+	 */
 	double threshold = -1.0;
+	/**
+	 * 
+	 */
 	String thresholdMethod = "Otsu";
 	
+	/**
+	 * 
+	 */
 	JLabel imgLabel;
+	/**
+	 * 
+	 */
 	JLabel title;
+	/**
+	 * 
+	 */
 	MainWindow mainW;
 	
+	/**
+	 * 
+	 */
 	boolean isThresholding =  false;
+	/**
+	 * 
+	 */
 	JSlider sldThreshold;
 	
+	/**
+	 * 
+	 */
 	List<ImagePlus> images;
+	/**
+	 * 
+	 */
 	int imgIndex;
 	
+	/**
+	 * 
+	 */
 	JFrame frame;
 	//Resize parameters
+	/**
+	 * 
+	 */
 	double resizeFactor;
+	/**
+	 * 
+	 */
 	double xFactor;
+	/**
+	 * 
+	 */
 	double yFactor;
 	
 	//Variable used to store spermatozoa
+	/**
+	 * 
+	 */
 	List<Spermatozoon> spermatozoa = new ArrayList<Spermatozoon>();
 		
 	//Results table
+	/**
+	 * 
+	 */
 	ResultsTable morphometrics = new ResultsTable();
 	
 	/**
 	 * Constructor. The main graphical user interface is created.
+	 */
+	/**
+	 * @param mw
+	 * @throws HeadlessException
 	 */
 	public MorphWindow(MainWindow mw) throws HeadlessException {
 		super();
@@ -93,12 +160,275 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 	}
 	/******************************************************/
 	/**
+	 * @param x
+	 * @param y
+	 */
+	public void checkSelection(int x, int y){
+		Point click = new Point(x,y);
+		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon sperm=(Spermatozoon) j.next();
+			if(isClickInside(sperm,click)){
+				sperm.selected=!sperm.selected;
+				if(sperm.selected){
+					Spermatozoon spermatozoon = Utils.getSpermatozoon(sperm.id,spermatozoa);
+					generateResults(spermatozoon);
+				}
+				break;
+			}
+		}
+	}
+	/**
+	 * 
+	 */
+	public void close(){
+		impOrig.changes = false;
+		impDraw.changes = false;
+		impOrig.close();
+		impDraw.close();
+	}
+	/******************************************************/
+	/**
+	 *
+	 */
+    private void doMouseRefresh() {
+		if(!isThresholding){
+			isThresholding = true;
+			Thread t1 = new Thread(new Runnable() {
+				public void run() {
+					impDraw = impOrig.duplicate();
+					Paint.drawOutline(impDraw,impOutline);
+					Paint.drawBoundaries(impDraw,spermatozoa);
+					setImage();	
+					isThresholding = false;
+				}
+			});  
+			t1.start();
+		}
+    }
+	/**
+	 * 
+	 */
+	private void doSliderRefresh() {
+		if(!isThresholding){
+			isThresholding = true;
+			Thread t1 = new Thread(new Runnable() {
+				public void run() {
+					resetSelections();
+					processImage(true);
+					isThresholding = false;
+				}
+			});  
+			t1.start();
+		}
+    }
+	/******************************************************/
+	/**
+	 * @param spermatozoon
+	 */
+	public void generateResults(Spermatozoon spermatozoon){
+	
+		double total_meanGray = (double)ComputerVision.getMeanGrayValue(spermatozoon,impGray,impTh);
+		double total_area=spermatozoon.total_area*Math.pow(Params.micronPerPixel,2);
+		double total_perimeter=spermatozoon.total_perimeter*Params.micronPerPixel; 
+		double total_feret=spermatozoon.total_feret*Params.micronPerPixel;
+		double total_minFeret=spermatozoon.total_minFeret*Params.micronPerPixel;
+		double total_ellipticity=total_feret/total_minFeret;
+		double total_roughness=4*Math.PI*total_area/(Math.pow(total_perimeter,2));
+		double total_elongation=(total_feret-total_minFeret)/(total_feret+total_minFeret);
+		double total_regularity=(Math.PI*total_feret*total_minFeret)/(4*total_area);
+
+		morphometrics.incrementCounter();
+//		morphometrics.addValue("Male",male);
+//		morphometrics.addValue("Date",date);
+		morphometrics.addValue("ID",spermatozoon.id);
+		morphometrics.addValue("Threshold",threshold);
+		morphometrics.addValue("total_meanGray",total_meanGray);
+		morphometrics.addValue("total_area(um^2)",total_area);
+		morphometrics.addValue("total_perimeter(um)",total_perimeter);
+		morphometrics.addValue("total_length(um)",total_feret);
+		morphometrics.addValue("total_width(um)",total_minFeret);
+		morphometrics.addValue("total_ellipticity",total_ellipticity);
+		morphometrics.addValue("total_roughness",total_roughness);
+		morphometrics.addValue("total_elongation",total_elongation);
+		morphometrics.addValue("total_regularity",total_regularity);
+		morphometrics.addValue("Sample",Utils.getParentDirectory(impOrig.getTitle()));
+		morphometrics.addValue("Filename",Utils.getFileName(impOrig.getTitle()));
+		morphometrics.show("Morphometrics");
+	}
+	/**
+	 * 
+	 */
+	public void idenfitySperm(){
+		int SpermNr=0;
+		for (ListIterator<Spermatozoon> j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon sperm=(Spermatozoon) j.next();
+			SpermNr++;
+			sperm.id = ""+SpermNr;
+		}
+	}
+	/******************************************************/
+	/**
 	 * 
 	 */	
 	public void initImage(){
 		setImage(0); //Initialization with the first image available
 		processImage(false);
 	}
+	
+	/******************************************************/
+	/**
+	 * @param part
+	 * @param click
+	 * @return
+	 */
+	public boolean isClickInside(Spermatozoon part, Point click){
+		//Get boundaries
+		double offsetX = (double)part.bx;
+		double offsetY = (double)part.by;
+		int w=(int)part.width;
+		int h=(int)part.height;
+		//correct offset
+		int pX = (int)(click.getX()-offsetX);
+		int pY = (int)(click.getY()-offsetY);
+		//IJ.log("offsetX: "+offsetX+" ; offsetY: "+offsetY+" ;w: "+w+"; h: "+h+"px: "+pX+"; py: "+pY);
+		Rectangle r = new Rectangle(w,h);
+		return r.contains(new Point(pX,pY));
+	}
+	
+	/******************************************************	
+	*	MOUSE LISTENER
+	******************************************************/
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+	 */
+	public void mouseClicked(MouseEvent e) {
+		int x = e.getX();
+		int y = e.getY();
+//		System.out.println("X: "+ x+"; Y: "+ y);
+		int realX = (int) (x*xFactor);
+		int realY = (int) (y*yFactor);
+//		System.out.println("realX: "+ realX+"; realY: "+ realY);
+		checkSelection(realX,realY);
+		doMouseRefresh();
+	}
+	
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
+	 */
+	public void mouseEntered(MouseEvent e) {}
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseExited(java.awt.event.MouseEvent)
+	 */
+	public void mouseExited(MouseEvent e) {}	
+    /* (non-Javadoc)
+     * @see java.awt.event.MouseListener#mousePressed(java.awt.event.MouseEvent)
+     */
+    public void mousePressed(MouseEvent e) {}
+	/* (non-Javadoc)
+	 * @see java.awt.event.MouseListener#mouseReleased(java.awt.event.MouseEvent)
+	 */
+	public void mouseReleased(MouseEvent e) {}
+	/******************************************************/
+	/**
+	 * @param isEvent
+	 */
+	public void processImage(boolean isEvent){
+		if(threshold==-1 || isEvent){//First time or threshold's refreshing event
+			impTh = impOrig.duplicate();
+			ComputerVision.convertToGrayscale(impTh);
+			impGray = impTh.duplicate();
+			thresholdImagePlus(impTh);
+			//Update sliderbar with the new threshold
+			sldThreshold.setValue((int)threshold);	
+			List<Spermatozoon>[] sperm = ComputerVision.detectSpermatozoa(impTh);
+			if(sperm != null)
+				spermatozoa = sperm[0];
+			//Calculate outlines
+			impOutline = impTh.duplicate();
+			ComputerVision.outlineThresholdImage(impOutline);
+			idenfitySperm();
+		}
+		impDraw = impOrig.duplicate();
+		Paint.drawOutline(impDraw,impOutline);
+		Paint.drawBoundaries(impDraw,spermatozoa);
+		setImage();
+	}		
+	/**
+	 * 
+	 */
+	public void reset(){
+		impOrig.close();
+		impDraw.close();
+		impGray.close();
+		impTh.close();
+		impOutline.close();
+		threshold = -1.0;
+		spermatozoa.clear();
+	}
+	/**
+	 * 
+	 */
+	public void resetSelections(){
+		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon spermatozoon= (Spermatozoon)j.next();
+			spermatozoon.selected=false;
+		}
+	}
+	
+	/******************************************************/
+	/**
+	 * 
+	 */
+	public void setImage(){
+		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+		double w = screenSize.getWidth();
+		double h = screenSize.getHeight();
+		int targetWidth = (int) (w*resizeFactor);
+		int targetHeight = (int) (h*resizeFactor);
+		ImageProcessor ip = impDraw.getProcessor();
+	    ip.setInterpolationMethod(ImageProcessor.BILINEAR);
+	    ip = ip.resize(targetWidth, targetHeight);
+	    impDraw.setProcessor(ip);
+		imgLabel.setIcon(new ImageIcon(impDraw.getImage()));
+		imgLabel.repaint();		
+	}
+    
+	/******************************************************/
+	/**
+	 * @param index
+	 */
+	public void setImage(int index){
+		if(index<0 || index>=images.size())
+			return;
+		impOrig = images.get(index).duplicate();
+		impOrig.setTitle(images.get(index).getTitle());
+		impDraw = impOrig.duplicate();
+		title.setText(impOrig.getTitle());
+		setImage();
+		setResizeFactor();
+	}
+	
+	/******************************************************/
+	/**
+	 * @param i
+	 */
+	public void setImages(List<ImagePlus> i){
+		images = i;
+	}	
+	 
+	/******************************************************/
+	/**
+	 * 
+	 */
+	public void setResizeFactor(){
+		double origW = impOrig.getWidth();
+		double origH = impOrig.getHeight();
+		double resizeW = impDraw.getWidth();
+		double resizeH = impDraw.getHeight();
+		xFactor = origW/resizeW;
+		yFactor = origH/resizeH;
+	}
+	
 	/******************************************************/
 	/**
 	 * 
@@ -231,93 +561,20 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 			});		
 		frame.setVisible(true);
 	}
-	/******************************************************/
-	/**
-	 * 
-	 */
-	public void setResizeFactor(){
-		double origW = impOrig.getWidth();
-		double origH = impOrig.getHeight();
-		double resizeW = impDraw.getWidth();
-		double resizeH = impDraw.getHeight();
-		xFactor = origW/resizeW;
-		yFactor = origH/resizeH;
-	}
-	/******************************************************/
-	/**
-	 * 
-	 */	
-	public void setImage(int index){
-		if(index<0 || index>=images.size())
-			return;
-		impOrig = images.get(index).duplicate();
-		impOrig.setTitle(images.get(index).getTitle());
-		impDraw = impOrig.duplicate();
-		title.setText(impOrig.getTitle());
-		setImage();
-		setResizeFactor();
-	}
-	/******************************************************/
-	/**
-	 * 
-	 */	
-	public void setImage(){
-		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
-		double w = screenSize.getWidth();
-		double h = screenSize.getHeight();
-		int targetWidth = (int) (w*resizeFactor);
-		int targetHeight = (int) (h*resizeFactor);
-		ImageProcessor ip = impDraw.getProcessor();
-	    ip.setInterpolationMethod(ImageProcessor.BILINEAR);
-	    ip = ip.resize(targetWidth, targetHeight);
-	    impDraw.setProcessor(ip);
-		imgLabel.setIcon(new ImageIcon(impDraw.getImage()));
-		imgLabel.repaint();		
-	}
 	
-	public void reset(){
-		impOrig.close();
-		impDraw.close();
-		impGray.close();
-		impTh.close();
-		impOutline.close();
-		threshold = -1.0;
-		spermatozoa.clear();
-	}
-	/******************************************************/
-	/**
-	 * 
-	 */	
-	public void processImage(boolean isEvent){
-		if(threshold==-1 || isEvent){//First time or threshold's refreshing event
-			impTh = impOrig.duplicate();
-			ComputerVision.convertToGrayscale(impTh);
-			impGray = impTh.duplicate();
-			thresholdImagePlus(impTh);
-			//Update sliderbar with the new threshold
-			sldThreshold.setValue((int)threshold);	
-			List<Spermatozoon>[] sperm = ComputerVision.detectSpermatozoa(impTh);
-			if(sperm != null)
-				spermatozoa = sperm[0];
-			//Calculate outlines
-			impOutline = impTh.duplicate();
-			ComputerVision.outlineThresholdImage(impOutline);
-			idenfitySperm();
-		}
-		impDraw = impOrig.duplicate();
-		Paint.drawOutline(impDraw,impOutline);
-		Paint.drawBoundaries(impDraw,spermatozoa);
-		setImage();
-	}
-	
-	public void idenfitySperm(){
-		int SpermNr=0;
-		for (ListIterator<Spermatozoon> j=spermatozoa.listIterator();j.hasNext();) {
-			Spermatozoon sperm=(Spermatozoon) j.next();
-			SpermNr++;
-			sperm.id = ""+SpermNr;
-		}
-	}
+	/******************************************************/	
+	/** Listen events from slider */
+    /* (non-Javadoc)
+     * @see javax.swing.event.ChangeListener#stateChanged(javax.swing.event.ChangeEvent)
+     */
+    public void stateChanged(ChangeEvent inEvent) {
+    	Object auxWho = inEvent.getSource();
+    	if ((auxWho==sldThreshold)) {
+			//Updating threshold value from slider
+			threshold = sldThreshold.getValue();
+			doSliderRefresh();
+    	}
+    }	
 	
 	/******************************************************/
 	/**
@@ -329,164 +586,6 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		}else{
 			ComputerVision.thresholdImagePlus(imp, threshold);
 		}
-	}
-	
-	public void close(){
-		impOrig.changes = false;
-		impDraw.changes = false;
-		impOrig.close();
-		impDraw.close();
-	}
-	/******************************************************/
-	/**
-	 * 
-	 */
-	public void setImages(List<ImagePlus> i){
-		images = i;
-	}	
-    /******************************************************	
-	*	MOUSE LISTENER
-	******************************************************/
-	public void mouseClicked(MouseEvent e) {
-		int x = e.getX();
-		int y = e.getY();
-//		System.out.println("X: "+ x+"; Y: "+ y);
-		int realX = (int) (x*xFactor);
-		int realY = (int) (y*yFactor);
-//		System.out.println("realX: "+ realX+"; realY: "+ realY);
-		checkSelection(realX,realY);
-		doMouseRefresh();
-	}
-	public void mouseEntered(MouseEvent e) {}
-	public void mouseExited(MouseEvent e) {}		
-	public void mousePressed(MouseEvent e) {}
-	public void mouseReleased(MouseEvent e) {}
-	
-	/******************************************************/	
-	/** Listen events from slider */
-    public void stateChanged(ChangeEvent inEvent) {
-    	Object auxWho = inEvent.getSource();
-    	if ((auxWho==sldThreshold)) {
-			//Updating threshold value from slider
-			threshold = sldThreshold.getValue();
-			doSliderRefresh();
-    	}
-    }
-    
-	private void doSliderRefresh() {
-		if(!isThresholding){
-			isThresholding = true;
-			Thread t1 = new Thread(new Runnable() {
-				public void run() {
-					resetSelections();
-					processImage(true);
-					isThresholding = false;
-				}
-			});  
-			t1.start();
-		}
-    }
-	
-	public void resetSelections(){
-		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
-			Spermatozoon spermatozoon= (Spermatozoon)j.next();
-			spermatozoon.selected=false;
-		}
-	}	
-	 
-	/******************************************************/
-	/**
-	 * @param 
-	 * @return 
-	 */	
-	public void checkSelection(int x, int y){
-		Point click = new Point(x,y);
-		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
-			Spermatozoon sperm=(Spermatozoon) j.next();
-			if(isClickInside(sperm,click)){
-				sperm.selected=!sperm.selected;
-				if(sperm.selected){
-					Spermatozoon spermatozoon = Utils.getSpermatozoon(sperm.id,spermatozoa);
-					generateResults(spermatozoon);
-				}
-				break;
-			}
-		}
-	}
-	
-	/******************************************************/
-	/**
-	 * @param 
-	 * @return 
-	 */	
-	public boolean isClickInside(Spermatozoon part, Point click){
-		//Get boundaries
-		double offsetX = (double)part.bx;
-		double offsetY = (double)part.by;
-		int w=(int)part.width;
-		int h=(int)part.height;
-		//correct offset
-		int pX = (int)(click.getX()-offsetX);
-		int pY = (int)(click.getY()-offsetY);
-		//IJ.log("offsetX: "+offsetX+" ; offsetY: "+offsetY+" ;w: "+w+"; h: "+h+"px: "+pX+"; py: "+pY);
-		Rectangle r = new Rectangle(w,h);
-		return r.contains(new Point(pX,pY));
-	}
-	
-	/******************************************************/
-	/**
-	 *
-	 */
-    private void doMouseRefresh() {
-		if(!isThresholding){
-			isThresholding = true;
-			Thread t1 = new Thread(new Runnable() {
-				public void run() {
-					impDraw = impOrig.duplicate();
-					Paint.drawOutline(impDraw,impOutline);
-					Paint.drawBoundaries(impDraw,spermatozoa);
-					setImage();	
-					isThresholding = false;
-				}
-			});  
-			t1.start();
-		}
-    }	
-	
-	/******************************************************/
-	/**
-	 * @param imp ImagePlus
-	 * @return 2D-ArrayList with all spermatozoa detected for each frame
-	 */
-	public void generateResults(Spermatozoon spermatozoon){
-	
-		double total_meanGray = (double)ComputerVision.getMeanGrayValue(spermatozoon,impGray,impTh);
-		double total_area=spermatozoon.total_area*Math.pow(Params.micronPerPixel,2);
-		double total_perimeter=spermatozoon.total_perimeter*Params.micronPerPixel; 
-		double total_feret=spermatozoon.total_feret*Params.micronPerPixel;
-		double total_minFeret=spermatozoon.total_minFeret*Params.micronPerPixel;
-		double total_ellipticity=total_feret/total_minFeret;
-		double total_roughness=4*Math.PI*total_area/(Math.pow(total_perimeter,2));
-		double total_elongation=(total_feret-total_minFeret)/(total_feret+total_minFeret);
-		double total_regularity=(Math.PI*total_feret*total_minFeret)/(4*total_area);
-
-		morphometrics.incrementCounter();
-//		morphometrics.addValue("Male",male);
-//		morphometrics.addValue("Date",date);
-		morphometrics.addValue("ID",spermatozoon.id);
-		morphometrics.addValue("Threshold",threshold);
-		morphometrics.addValue("total_meanGray",total_meanGray);
-		morphometrics.addValue("total_area(um^2)",total_area);
-		morphometrics.addValue("total_perimeter(um)",total_perimeter);
-		morphometrics.addValue("total_length(um)",total_feret);
-		morphometrics.addValue("total_width(um)",total_minFeret);
-		morphometrics.addValue("total_ellipticity",total_ellipticity);
-		morphometrics.addValue("total_roughness",total_roughness);
-		morphometrics.addValue("total_elongation",total_elongation);
-		morphometrics.addValue("total_regularity",total_regularity);
-		morphometrics.addValue("Sample",Utils.getParentDirectory(impOrig.getTitle()));
-		morphometrics.addValue("Filename",Utils.getFileName(impOrig.getTitle()));
-		morphometrics.show("Morphometrics");
 	}	
 
 }

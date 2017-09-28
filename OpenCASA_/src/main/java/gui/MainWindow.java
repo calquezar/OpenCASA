@@ -1,55 +1,68 @@
 package gui;
 
-import java.awt.Checkbox;
-import java.awt.CheckboxGroup;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
 import analysis.Morphometry;
 import analysis.Motility;
 import analysis.Viability;
-import data.OscillatoryWalker;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
-import functions.ComputerVision;
-import ij.IJ;
-import ij.ImagePlus;
-import ij.ImageStack;
 import ij.gui.GenericDialog;
-import ij.plugin.ChannelSplitter;
-import ij.process.ImageProcessor;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class MainWindow extends JFrame {
 
+	/**
+	 * 
+	 */
 	MainWindow mw;
+	/**
+	 * 
+	 */
 	Chemotaxis ch;
+	/**
+	 * 
+	 */
 	Motility mot;
+	/**
+	 * 
+	 */
 	Viability via;
+	/**
+	 * 
+	 */
 	Morphometry morph;
+	/**
+	 * 
+	 */
 	Simulation sim;
+	/**
+	 * 
+	 */
 	SettingsWindow sw;
 	
 	/**
 	 * Constructor. The main graphical user interface is created.
 	 * @param title - String that is used as title of the window.
+	 * @throws HeadlessException
 	 */
 	public MainWindow(String title) throws HeadlessException {
 		super(title);
@@ -63,6 +76,14 @@ public class MainWindow extends JFrame {
 		Params.resetParams();
 	}
 
+	/**
+	 * @param label
+	 * @param gridx
+	 * @param gridy
+	 * @param background
+	 * @param iconPath
+	 * @param panel
+	 */
 	public void addButton(final String label,int gridx,int gridy,Color background,String iconPath,JPanel panel){
 		
 		GridBagConstraints c = new GridBagConstraints();

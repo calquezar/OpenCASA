@@ -8,10 +8,11 @@ import data.Params;
 import data.SList;
 import data.Spermatozoon;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public abstract class SignalProcessing {
-
-//	static int countMotileSperm = 0;
-//	static int countNonMotileSperm = 0;
 
 	
 	/******************************************************/
@@ -63,39 +64,6 @@ public abstract class SignalProcessing {
 		return decimatedTracks;
 	}
 	/******************************************************/
-	public static int[] motilityTest(SList theTracks){
-		int motile = 0;
-		int nonMotile = 0;
-		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
-			List aTrack=(ArrayList)iT.next();
-			if( motilityTest(aTrack))
-				motile++;
-			else
-				nonMotile++;
-		}
-		int[] results = new int[2];
-		results[0] = motile;
-		results[1] = nonMotile;
-		return results;
-	}
-	/******************************************************/
-	public static boolean motilityTest(List track){
-		
-		int nPoints = track.size();
-		Spermatozoon firstSpermatozoon = (Spermatozoon)track.get(0);
-		Spermatozoon lastSpermatozoon = (Spermatozoon)track.get(nPoints-1);
-		float distance = lastSpermatozoon.distance(firstSpermatozoon);
-		List avgTrack = movingAverage(track);
-		float vap = Kinematics.vcl(avgTrack)/Kinematics.vsl(avgTrack);
-		//Kinematics filter
-		double minPixelDistance = 10;//10/Params.micronPerPixel;
-		if(Kinematics.vcl(track)>Params.vclMin && (distance>minPixelDistance) && (vap>0))
-			return true;
-		else
-			return false;	
-	}
-
-	/******************************************************/
 	/**
 	 * @param theTracks 2D-ArrayList with all the tracks
 	 * @return 2D-ArrayList with all the tracks that have passed the filter
@@ -123,11 +91,77 @@ public abstract class SignalProcessing {
 		}
 		return filteredTracks;
 	}
-	
+
 	/******************************************************/
-	/** Fuction to calculate the average path of a track using a moving average filter
+	/**
+	 * @param track
+	 * @return
+	 */
+	public static boolean motilityTest(List track){
+		
+		int nPoints = track.size();
+		Spermatozoon firstSpermatozoon = (Spermatozoon)track.get(0);
+		Spermatozoon lastSpermatozoon = (Spermatozoon)track.get(nPoints-1);
+		float distance = lastSpermatozoon.distance(firstSpermatozoon);
+		List avgTrack = movingAverage(track);
+		float vap = Kinematics.vcl(avgTrack)/Kinematics.vsl(avgTrack);
+		//Kinematics filter
+		double minPixelDistance = 10;//10/Params.micronPerPixel;
+		if(Kinematics.vcl(track)>Params.vclMin && (distance>minPixelDistance) && (vap>0))
+			return true;
+		else
+			return false;	
+	}
+	/******************************************************/
+	/**
+	 * @param theTracks
+	 * @return
+	 */
+	public static int[] motilityTest(SList theTracks){
+		int motile = 0;
+		int nonMotile = 0;
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			List aTrack=(ArrayList)iT.next();
+			if( motilityTest(aTrack))
+				motile++;
+			else
+				nonMotile++;
+		}
+		int[] results = new int[2];
+		results[0] = motile;
+		results[1] = nonMotile;
+		return results;
+	}
+	
+	/**
+	 * @param points
+	 * @param wSize
+	 * @return
+	 */
+	public static float[] movingAverage(float[] points, int wSize){
+		 int nPoints = points.length;
+		 int count = 0;
+		 float[] avgPoints = new float[nPoints-wSize+1];
+		 for(int i=wSize-1;i<nPoints;i++){
+			 for (int k=wSize-1;k>=0;k--){
+				 avgPoints[i-wSize+1]+=points[i-k];
+			 }
+			 avgPoints[i-wSize+1]/=(float)wSize;
+		 }
+		 return avgPoints;
+	}
+	/**
+	 * @param track
+	 * @return
+	 */
+	public static List movingAverage (List track){
+		return movingAverage(track,Params.wSize);
+	}
+	/******************************************************/
+	/** Function to calculate the average path of a track using a moving average filter
 	 * @param track Array list that stores one track 
-	 * @return ArrayList with the averaged track
+	 * @param wSize
+	 * @return  ArrayList with the averaged track
 	 */
 	public static List movingAverage (List track, int wSize){
 		int nPoints = track.size();
@@ -148,20 +182,5 @@ public abstract class SignalProcessing {
 			avgTrack.add(newSpermatozoon);
 		}
 		return avgTrack;
-	}
-	public static List movingAverage (List track){
-		return movingAverage(track,Params.wSize);
-	}
-	public static float[] movingAverage(float[] points, int wSize){
-		 int nPoints = points.length;
-		 int count = 0;
-		 float[] avgPoints = new float[nPoints-wSize+1];
-		 for(int i=wSize-1;i<nPoints;i++){
-			 for (int k=wSize-1;k>=0;k--){
-				 avgPoints[i-wSize+1]+=points[i-k];
-			 }
-			 avgPoints[i-wSize+1]/=(float)wSize;
-		 }
-		 return avgPoints;
 	}
 }

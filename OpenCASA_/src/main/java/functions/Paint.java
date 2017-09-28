@@ -16,13 +16,88 @@ import ij.ImageStack;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public abstract class Paint {
 
 	/******************************************************/
 	/**
+	 * @param ip
+	 * @param numTracks
+	 * @param chIdx
+	 * @param slIdx
+	 * @param sampleID
+	 */
+	public static void chemotaxisTemplate(ColorProcessor ip,int numTracks,float chIdx,float slIdx,String sampleID){
+		// Alpha version of this method
+		ip.setLineWidth(4);
+		//center coords. of the cone used to clasify chemotactic trajectories
+		int xCenter = ip.getWidth()/2;
+		int yCenter = ip.getHeight()/2;
+		float upperAngle = (float)(Params.angleDirection + Params.angleAmplitude/2 + 360)%360;
+		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
+		float lowerAngle = (float)(Params.angleDirection - Params.angleAmplitude/2 + 360)%360;
+		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
+		//Upper Line
+		int upperLineX = xCenter+(int)(1000*Math.cos(upperAngle));
+		int upperLineY = yCenter-(int)(1000*Math.sin(upperAngle));
+		//Lower Line
+		int lowerLineX = xCenter+(int)(1000*Math.cos(lowerAngle));
+		int lowerLineY = yCenter-(int)(1000*Math.sin(lowerAngle));
+		//Draw Chemotaxis Cone
+		ip.moveTo((int)xCenter, (int)yCenter);
+		ip.lineTo((int)upperLineX, (int)upperLineY);		
+		ip.moveTo((int)xCenter, (int)yCenter);
+		ip.lineTo((int)lowerLineX, (int)lowerLineY);
+		//Reses line width
+		ip.setLineWidth(1);
+		ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
+		ip.moveTo(10, 30);
+		ip.setColor(Color.blue);
+		ip.drawString("Sample: ");		
+		ip.moveTo(70, 30);
+		ip.setColor(Color.black);
+		ip.drawString(sampleID);		
+		ip.moveTo(10, 50);
+		ip.setColor(Color.blue);
+		ip.drawString("Number of tracks: ");
+		ip.moveTo(135, 50);
+		ip.setColor(Color.black);
+		ip.drawString(""+numTracks);
+		ip.moveTo(10, 70);
+		ip.setColor(Color.red);
+		ip.drawString("Ch-Index: ");
+		ip.moveTo(70, 70);
+		ip.setColor(Color.black);
+		ip.drawString(""+chIdx*100+"%");
+		ip.moveTo(10, 90);
+		ip.setColor(new Color(34,146,234));
+		ip.drawString("SL-Index: ");
+		ip.moveTo(80, 90);
+		ip.setColor(Color.black);
+		ip.drawString(""+slIdx*100+"%");
+	}
+	
+	/**
+	 * @param center
+	 * @param maxSize
+	 * @param displacement
+	 * @return
+	 */
+	static int doOffset (int center, int maxSize, int displacement) {
+		if ((center - displacement) < 2*displacement) {
+			return (center + 4*displacement);
+		}
+		else {
+			return (center - displacement);
+		}
+	}
+	/******************************************************/
+	/**
 	 * @param imp 
 	 * @param theTracks 2D-ArrayList with all the tracks
-	 * @param avgTracks 2D-ArrayList with the averaged tracks
 	 */
 	public static void draw(ImagePlus imp,SList theTracks){
 		
@@ -219,11 +294,42 @@ public abstract class Paint {
 	
 	/******************************************************/
 	/**
-	 * @param imp 
+	 * @param imp
+	 * @param spermatozoa
+	 */
+	public static void drawBoundaries(ImagePlus imp,List spermatozoa){
+		int xHeight=imp.getHeight();
+		int yWidth=imp.getWidth();	
+		IJ.showStatus("Drawing boundaries...");
+		ImageProcessor ip = imp.getProcessor();
+		ip.setColor(Color.white);
+		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon sperm=(Spermatozoon) j.next();
+			ip.setLineWidth(2);
+			if(sperm.selected)
+				ip.drawRect((int)sperm.bx,(int)sperm.by,(int)sperm.width,(int)sperm.height);
+			ip.setLineWidth(1);
+			//Draw numbers
+			ip.setFont(new Font("SansSerif", Font.PLAIN, 32));
+			// we could do someboundary testing here to place the labels better when we are close to the edge
+			ip.moveTo((int)(sperm.x),doOffset((int)(sperm.y),yWidth,5) );
+			try{ip.drawString(""+sperm.id);}
+			catch(Exception e){
+				e.printStackTrace();
+				//ip.drawString throws eventually an exception. 
+				//Possibly it is a bug in the ImageProcessor implementation of this ImageJ version
+			}
+		}
+	}
+	
+	/******************************************************/
+	/**
 	 * @param theTracks 2D-ArrayList with all the tracks
-	 * @param avgTracks 2D-ArrayList with the averaged tracks
 	 * @param chIdx
 	 * @param slIdx
+	 * @param width
+	 * @param height
+	 * @param sampleID
 	 */
 	public static void drawChemotaxis(SList theTracks,float chIdx,float slIdx,int width,int height,String sampleID){
 
@@ -271,6 +377,29 @@ public abstract class Paint {
 			ipRelTraj.drawOval(xLast-3,yLast,6,6);
 		}
 		new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
+	}
+	
+	/******************************************************/
+	/**
+	 * @param impOrig
+	 * @param impTh
+	 */
+	public static void drawOutline(ImagePlus impOrig,ImagePlus impTh){
+
+		IJ.showStatus("Changing background...");
+		ColorProcessor ipOrig = (ColorProcessor)impOrig.getProcessor();
+		ipOrig.setColor(Color.yellow);
+		ImageProcessor ipTh = impTh.getProcessor();
+		int ipWidth = ipOrig.getWidth();
+		int ipHeight = ipOrig.getHeight();
+		for (int x=0; x< ipWidth;x++){
+			IJ.showStatus("scanning pixels...");				
+			for (int y=0;y<ipHeight;y++){
+				int pixel = ipTh.get(x,y);
+				if(pixel==0)//It's background
+					ipOrig.drawPixel(x,y);
+			}
+		}
 	}
 	/******************************************************/
 	/**
@@ -380,124 +509,6 @@ public abstract class Paint {
 		roseDiagram.drawString("Ch-Index: "+chIdx);
 		
 		new ImagePlus("Chemotactic Ratios", roseDiagram).show();
-	}
-	
-	/******************************************************/
-	/**
-	 * @param ip 
-	 * @param upRes 
-	 * @param numTracks 
-	 * @param chIdx 
-	 * @param slIdx 
-	 */
-	public static void chemotaxisTemplate(ColorProcessor ip,int numTracks,float chIdx,float slIdx,String sampleID){
-		// Alpha version of this method
-		ip.setLineWidth(4);
-		//center coords. of the cone used to clasify chemotactic trajectories
-		int xCenter = ip.getWidth()/2;
-		int yCenter = ip.getHeight()/2;
-		float upperAngle = (float)(Params.angleDirection + Params.angleAmplitude/2 + 360)%360;
-		upperAngle = upperAngle*(float)Math.PI/180; //calculate and convert to radians		
-		float lowerAngle = (float)(Params.angleDirection - Params.angleAmplitude/2 + 360)%360;
-		lowerAngle = lowerAngle*(float)Math.PI/180; //convert to radians
-		//Upper Line
-		int upperLineX = xCenter+(int)(1000*Math.cos(upperAngle));
-		int upperLineY = yCenter-(int)(1000*Math.sin(upperAngle));
-		//Lower Line
-		int lowerLineX = xCenter+(int)(1000*Math.cos(lowerAngle));
-		int lowerLineY = yCenter-(int)(1000*Math.sin(lowerAngle));
-		//Draw Chemotaxis Cone
-		ip.moveTo((int)xCenter, (int)yCenter);
-		ip.lineTo((int)upperLineX, (int)upperLineY);		
-		ip.moveTo((int)xCenter, (int)yCenter);
-		ip.lineTo((int)lowerLineX, (int)lowerLineY);
-		//Reses line width
-		ip.setLineWidth(1);
-		ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
-		ip.moveTo(10, 30);
-		ip.setColor(Color.blue);
-		ip.drawString("Sample: ");		
-		ip.moveTo(70, 30);
-		ip.setColor(Color.black);
-		ip.drawString(sampleID);		
-		ip.moveTo(10, 50);
-		ip.setColor(Color.blue);
-		ip.drawString("Number of tracks: ");
-		ip.moveTo(135, 50);
-		ip.setColor(Color.black);
-		ip.drawString(""+numTracks);
-		ip.moveTo(10, 70);
-		ip.setColor(Color.red);
-		ip.drawString("Ch-Index: ");
-		ip.moveTo(70, 70);
-		ip.setColor(Color.black);
-		ip.drawString(""+chIdx*100+"%");
-		ip.moveTo(10, 90);
-		ip.setColor(new Color(34,146,234));
-		ip.drawString("SL-Index: ");
-		ip.moveTo(80, 90);
-		ip.setColor(Color.black);
-		ip.drawString(""+slIdx*100+"%");
-	}
-	
-	static int doOffset (int center, int maxSize, int displacement) {
-		if ((center - displacement) < 2*displacement) {
-			return (center + 4*displacement);
-		}
-		else {
-			return (center - displacement);
-		}
-	}
-	
-	/******************************************************/
-	/**
-	 * @param imp ImagePlus
-	 */	
-	public static void drawOutline(ImagePlus impOrig,ImagePlus impTh){
-
-		IJ.showStatus("Changing background...");
-		ColorProcessor ipOrig = (ColorProcessor)impOrig.getProcessor();
-		ipOrig.setColor(Color.yellow);
-		ImageProcessor ipTh = impTh.getProcessor();
-		int ipWidth = ipOrig.getWidth();
-		int ipHeight = ipOrig.getHeight();
-		for (int x=0; x< ipWidth;x++){
-			IJ.showStatus("scanning pixels...");				
-			for (int y=0;y<ipHeight;y++){
-				int pixel = ipTh.get(x,y);
-				if(pixel==0)//It's background
-					ipOrig.drawPixel(x,y);
-			}
-		}
-	}
-	/******************************************************/
-	/**
-	 * @param imp ImagePlus
-	 * @return 2D-ArrayList with all spermatozoa detected for each frame
-	 */
-	public static void drawBoundaries(ImagePlus imp,List spermatozoa){
-		int xHeight=imp.getHeight();
-		int yWidth=imp.getWidth();	
-		IJ.showStatus("Drawing boundaries...");
-		ImageProcessor ip = imp.getProcessor();
-		ip.setColor(Color.white);
-		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
-			Spermatozoon sperm=(Spermatozoon) j.next();
-			ip.setLineWidth(2);
-			if(sperm.selected)
-				ip.drawRect((int)sperm.bx,(int)sperm.by,(int)sperm.width,(int)sperm.height);
-			ip.setLineWidth(1);
-			//Draw numbers
-			ip.setFont(new Font("SansSerif", Font.PLAIN, 32));
-			// we could do someboundary testing here to place the labels better when we are close to the edge
-			ip.moveTo((int)(sperm.x),doOffset((int)(sperm.y),yWidth,5) );
-			try{ip.drawString(""+sperm.id);}
-			catch(Exception e){
-				e.printStackTrace();
-				//ip.drawString throws eventually an exception. 
-				//Possibly it is a bug in the ImageProcessor implementation of this ImageJ version
-			}
-		}
 	}	
 	
 }

@@ -16,12 +16,49 @@ import javax.swing.JFileChooser;
 import data.Spermatozoon;
 import data.Trial;
 import ij.IJ;
-
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public abstract class Utils {
 	
 	/**
-	 * @return String[]
-	 */	
+	 * @param orig
+	 * @return
+	 */
+	public static int[] convertLongArrayToInt(long[] orig){
+		int[] arrayInt = new int[orig.length];
+		for(int i=0;i<orig.length;i++)
+			arrayInt[i] = (int)orig[i];
+		return arrayInt;
+	}
+	/**
+	 * @return
+	 */
+	public static String getAbsoluteFileName(){
+		JFileChooser chooser = new JFileChooser();
+		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
+		chooser.setDialogTitle("Select a folder...");
+		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
+		  //System.out.println("Directory: "+chooser.getSelectedFile());
+		  File folder = chooser.getSelectedFile();
+		  return folder.getAbsolutePath();
+		}
+		return null;
+	}
+	/**
+	 * @param path
+	 * @return
+	 */
+	public static String getFileName(String path){
+		String[] parts = path.split("\\\\");
+		return parts[parts.length-1];
+	}
+	/**
+	 * @return
+	 */
 	public static String[] getFileNames(){
 		JFileChooser chooser = new JFileChooser();
 		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
@@ -40,8 +77,9 @@ public abstract class Utils {
 		return null;
 	}
 	/**
-	 * @return String[]
-	 */	
+	 * @param dir
+	 * @return
+	 */
 	public static String[] getFileNames(String dir){
 
 		  File folder = new File(dir);
@@ -52,37 +90,34 @@ public abstract class Utils {
 		  return listOfNames;	
 	}
 	/**
-	 * @return String
-	 */	
+	 * @param path
+	 * @return
+	 */
 	public static String getParentDirectory(String path){
 		String[] parts = path.split("\\\\");
 		return parts[parts.length-2];
-	}	
-	/**
-	 * @return String
-	 */	
-	public static String getFileName(String path){
-		String[] parts = path.split("\\\\");
-		return parts[parts.length-1];
 	}
+	
+	/******************************************************/
 	/**
-	 * @return String[]
-	 */	
-	public static String getAbsoluteFileName(){
-		JFileChooser chooser = new JFileChooser();
-		//chooser.setCurrentDirectory(new java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 - Zaragoza\\data"));
-		chooser.setDialogTitle("Select a folder...");
-		chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-		chooser.setAcceptAllFileFilterUsed(false);
-		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-		  //System.out.println("Directory: "+chooser.getSelectedFile());
-		  File folder = chooser.getSelectedFile();
-		  return folder.getAbsolutePath();
+	 * @param id
+	 * @param spermatozoa
+	 * @return
+	 */
+	public static Spermatozoon getSpermatozoon(String id,List spermatozoa){
+		Spermatozoon spermatozoon = null;
+		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+			Spermatozoon candidate= (Spermatozoon)j.next();
+			if(candidate.id.equals(id) && id!="***"){
+				spermatozoon=candidate;
+				break;
+			}
 		}
-		return null;
+		return spermatozoon;
 	}
 	/**
-	 * @param String filename
+	 * @param filename
+	 * @return
 	 */
 	public static boolean isAVI (String filename){
 		String[] parts = filename.split("\\.");
@@ -91,7 +126,6 @@ public abstract class Utils {
 		else 
 			return false;
 	}
-	
 	/******************************************************/
 	/**
 	 * @param theTracks 2D-ArrayList with all the tracks
@@ -135,7 +169,9 @@ public abstract class Utils {
 		}
 		return output;
 	}
-
+	/**
+	 * @return
+	 */
 	public static Map<String,Trial> readTrials(){
 		Map<String,Trial> trials = null;
 		try {
@@ -148,6 +184,10 @@ public abstract class Utils {
 		} catch (Exception e) {e.printStackTrace();}
 		return trials;
 	}
+	
+	/**
+	 * @param trials
+	 */
 	public static void saveTrials(Map<String,Trial> trials){
 	    
 		String filename = "";
@@ -171,8 +211,8 @@ public abstract class Utils {
 		}catch(IOException ioe){ioe.printStackTrace();}		
 	}
 	/**
-	 * @return String
-	 */	
+	 * @return
+	 */
 	public static String selectFile(){
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Select a file...");
@@ -184,10 +224,9 @@ public abstract class Utils {
 		}
 		return null;
 	}
-	
 	/**
-	 * @return String
-	 */	
+	 * @return
+	 */
 	public static String selectFolder(){
 		JFileChooser chooser = new JFileChooser();
 		chooser.setDialogTitle("Select a folder...");
@@ -199,29 +238,5 @@ public abstract class Utils {
 		  return folder.getAbsolutePath();	
 		}
 		return null;
-	}
-	
-	public static int[] convertLongArrayToInt(long[] orig){
-		int[] arrayInt = new int[orig.length];
-		for(int i=0;i<orig.length;i++)
-			arrayInt[i] = (int)orig[i];
-		return arrayInt;
-	}
-	
-	/******************************************************/
-	/**
-	 * @param
-	 * @return
-	 */
-	public static Spermatozoon getSpermatozoon(String id,List spermatozoa){
-		Spermatozoon spermatozoon = null;
-		for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
-			Spermatozoon candidate= (Spermatozoon)j.next();
-			if(candidate.id.equals(id) && id!="***"){
-				spermatozoon=candidate;
-				break;
-			}
-		}
-		return spermatozoon;
 	}
 }

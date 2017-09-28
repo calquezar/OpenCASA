@@ -1,7 +1,5 @@
 package functions;
 
-import java.awt.Color;
-import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -19,111 +17,31 @@ import ij.plugin.filter.ParticleAnalyzer;
 import ij.process.AutoThresholder;
 import ij.process.BinaryProcessor;
 import ij.process.ByteProcessor;
-import ij.process.ColorProcessor;
 import ij.process.ImageConverter;
 import ij.process.ImageProcessor;
 import ij.process.ImageStatistics;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public abstract class ComputerVision implements Measurements {
 
 
 	/******************************************************/
 	/**
-	 * @param imp ImagePlus
-	 * 
-	 * This functions converts imp to grayscale.
-	 */	
-	public static void convertToGrayscale (ImagePlus imp){
-		
-		ImageConverter ic = new ImageConverter(imp);
-		ic.convertToGray8();
+	 * @param imp
+	 * @return
+	 */
+	public static double autoThresholdImagePlus(ImagePlus imp){
+		return autoThresholdImagePlus(imp,"Otsu"); //Otsu as a default thresholding method
 	}
 	/******************************************************/
 	/**
-	 * @param imp ImagePlus
-	 * 
-	 * This functions converts imp to grayscale.
-	 */	
-	public static void convertToRGB(ImagePlus imp){
-		
-		ImageConverter ic = new ImageConverter(imp);
-		ic.convertToRGB();
-	}	
-	
-	/******************************************************/
-	/**
-	 * @param imp ImagePlus
-	 */	
-	public static void thresholdImageProcessor(ImageProcessor ip,double lowerThreshold,double upperThreshold){
-		//Make binary
-		int[] lut = new int[256];
-		for (int j=0; j<256; j++) {
-			if (j>=lowerThreshold && j<=upperThreshold)
-				lut[j] = (byte)0;
-			else
-				lut[j] = (byte)255;
-		}
-        ip.applyTable(lut);
-	}
-	
-	/******************************************************/
-	/**
-	 * @param
-	 */	
-	public static ImagePlus getRedChannel(ImagePlus impColor){
-		ImagePlus[] images = ChannelSplitter.split(impColor);
-		return images[0];
-	}	
-	/******************************************************/
-	/**
-	 * @param
-	 */	
-	public static ImagePlus getGreenChannel(ImagePlus impColor){
-		ImagePlus[] images = ChannelSplitter.split(impColor);
-		return images[1];
-	}
-	/******************************************************/
-	/**
-	 * @param
-	 */	
-	public static ImagePlus getBlueChannel(ImagePlus impColor){
-		ImagePlus[] images = ChannelSplitter.split(impColor);
-		return images[2];
-	}
-	/******************************************************/
-	/**
-	 * @param imp ImagePlus
-	 * This function makes binary 'imp' applying an statistical threshold
-	 */	
-	public static void thresholdStack(ImagePlus imp){
-		
-		ImageStack stack = imp.getStack();
-		ImageProcessor ip = stack.getProcessor(1);
-		ImageStatistics st = ip.getStatistics();
-		double mean = st.mean;
-		double std = st.stdDev;
-		//Set threshold as mean + 2 x standard deviation
-		double lowerThreshold = mean+2*std; // std factor: candidate to be a parameter of the plugin
-		double upperThreshold = 255;
-		//Make binary
-		int[] lut = new int[256];
-		for (int j=0; j<256; j++) {
-			if (j>=lowerThreshold && j<=upperThreshold)
-				lut[j] = 0;
-			else
-				lut[j] = (byte)255;
-		}
-		int nFrames = imp.getStackSize();
-		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
-			ip = stack.getProcessor(iFrame);
-            ip.applyTable(lut);
-		}
-	}
-	
-	/******************************************************/
-	/**
-	 * 
-	 */	
+	 * @param imp
+	 * @param thresholdMethod
+	 * @return
+	 */
 	public static double autoThresholdImagePlus(ImagePlus imp,String thresholdMethod){
 		ImageProcessor ip = imp.getProcessor();
 		double lowerThreshold = 0;
@@ -137,38 +55,31 @@ public abstract class ComputerVision implements Measurements {
 		//Threshold image processor
 		ComputerVision.thresholdImageProcessor(ip,lowerThreshold,upperThreshold);
 		return lowerThreshold;
-	}
-	/******************************************************/
-	/**
-	 * 
-	 */	
-	public static double autoThresholdImagePlus(ImagePlus imp){
-		return autoThresholdImagePlus(imp,"Otsu"); //Otsu as a default thresholding method
 	}	
-		
+	
 	/******************************************************/
 	/**
 	 * @param imp ImagePlus
+	 * 
+	 * This functions converts imp to grayscale.
 	 */	
-	public static void thresholdImagePlus(ImagePlus imp,double lowerThreshold){
-		ImageProcessor ip = imp.getProcessor();
-		//Upper threshold set to maximum
-		double upperThreshold = 255;	
-		//Threshold image processor
-		ComputerVision.thresholdImageProcessor(ip,lowerThreshold,upperThreshold);
+	public static void convertToGrayscale (ImagePlus imp){
+		
+		ImageConverter ic = new ImageConverter(imp);
+		ic.convertToGray8();
 	}
-
+	
 	/******************************************************/
 	/**
-	 * @param
+	 * @param imp ImagePlus
+	 * 
+	 * This functions converts imp to grayscale.
 	 */	
-	public static void outlineThresholdImage(ImagePlus imp){
-		convertToGrayscale(imp);
-		ImageProcessor ip = imp.getProcessor();
-		BinaryProcessor bp = new BinaryProcessor((ByteProcessor)ip);
-		bp.outline();
+	public static void convertToRGB(ImagePlus imp){
+		
+		ImageConverter ic = new ImageConverter(imp);
+		ic.convertToRGB();
 	}	
-	
 	/******************************************************/
 	/**
 	 * @param imp ImagePlus
@@ -233,10 +144,68 @@ public abstract class ComputerVision implements Measurements {
 		}
 		return spermatozoa;
 	}
+	/******************************************************/
+	/**
+	 * @param impColor
+	 * @return
+	 */
+	public static ImagePlus getBlueChannel(ImagePlus impColor){
+		ImagePlus[] images = ChannelSplitter.split(impColor);
+		return images[2];
+	}
+	/******************************************************/
+	/**
+	 * @param impColor
+	 * @return
+	 */
+	public static ImagePlus getGreenChannel(ImagePlus impColor){
+		ImagePlus[] images = ChannelSplitter.split(impColor);
+		return images[1];
+	}
 	
 	/******************************************************/
 	/**
+	 * @param part
+	 * @param impGray
+	 * @param impTh
+	 * @return
+	 */
+	public static float getMeanGrayValue(Spermatozoon part,ImagePlus impGray,ImagePlus impTh){
+
+		ImageProcessor ipTh = impTh.getProcessor();
+		ImageProcessor ipGray = impGray.getProcessor();
+		int bx = (int)part.bx;
+		int by = (int)part.by;
+		int width = (int)part.width;
+		int height = (int)part.height;
+		float totalGray=0;
+		float totalPixels=0;
+		for (int x=bx; x< (width+bx);x++){
+			IJ.showStatus("scanning pixels...");				
+			for (int y=by;y<(height+by);y++){
+				int pixel = ipTh.get(x,y);
+				if(pixel==0){
+					totalGray+=(float)ipGray.get(x,y);
+					totalPixels++;
+				}
+			}
+		}
+		return totalGray/totalPixels;
+	}
+	/******************************************************/
+	/**
+	 * @param impColor
+	 * @return
+	 */
+	public static ImagePlus getRedChannel(ImagePlus impColor){
+		ImagePlus[] images = ChannelSplitter.split(impColor);
+		return images[0];
+	}	
+		
+	/******************************************************/
+	/**
 	 * @param spermatozoa 2D-ArrayList with all spermatozoa detected for each frame
+	 * @param nFrames
 	 * @return 2D-ArrayList with all tracks detected
 	 */
 	public static SList idenfityTracks(List[] spermatozoa,int nFrames){
@@ -325,31 +294,76 @@ public abstract class ComputerVision implements Measurements {
 		}
 		return theTracks;
 	}
+
+	/******************************************************
+	/**
+	 * @param imp
+	 */
+	public static void outlineThresholdImage(ImagePlus imp){
+		convertToGrayscale(imp);
+		ImageProcessor ip = imp.getProcessor();
+		BinaryProcessor bp = new BinaryProcessor((ByteProcessor)ip);
+		bp.outline();
+	}	
 	
 	/******************************************************/
 	/**
-	 * @param
-	 */	
-	public static float getMeanGrayValue(Spermatozoon part,ImagePlus impGray,ImagePlus impTh){
-
-		ImageProcessor ipTh = impTh.getProcessor();
-		ImageProcessor ipGray = impGray.getProcessor();
-		int bx = (int)part.bx;
-		int by = (int)part.by;
-		int width = (int)part.width;
-		int height = (int)part.height;
-		float totalGray=0;
-		float totalPixels=0;
-		for (int x=bx; x< (width+bx);x++){
-			IJ.showStatus("scanning pixels...");				
-			for (int y=by;y<(height+by);y++){
-				int pixel = ipTh.get(x,y);
-				if(pixel==0){
-					totalGray+=(float)ipGray.get(x,y);
-					totalPixels++;
-				}
-			}
+	 * @param imp
+	 * @param lowerThreshold
+	 */
+	public static void thresholdImagePlus(ImagePlus imp,double lowerThreshold){
+		ImageProcessor ip = imp.getProcessor();
+		//Upper threshold set to maximum
+		double upperThreshold = 255;	
+		//Threshold image processor
+		ComputerVision.thresholdImageProcessor(ip,lowerThreshold,upperThreshold);
+	}
+	
+	/******************************************************/
+	/**
+	 * @param ip
+	 * @param lowerThreshold
+	 * @param upperThreshold
+	 */
+	public static void thresholdImageProcessor(ImageProcessor ip,double lowerThreshold,double upperThreshold){
+		//Make binary
+		int[] lut = new int[256];
+		for (int j=0; j<256; j++) {
+			if (j>=lowerThreshold && j<=upperThreshold)
+				lut[j] = (byte)0;
+			else
+				lut[j] = (byte)255;
 		}
-		return totalGray/totalPixels;
+        ip.applyTable(lut);
+	}
+	
+	/******************************************************/
+	/**
+	 * @param imp ImagePlus
+	 * This function makes binary 'imp' applying an statistical threshold
+	 */	
+	public static void thresholdStack(ImagePlus imp){
+		
+		ImageStack stack = imp.getStack();
+		ImageProcessor ip = stack.getProcessor(1);
+		ImageStatistics st = ip.getStatistics();
+		double mean = st.mean;
+		double std = st.stdDev;
+		//Set threshold as mean + 2 x standard deviation
+		double lowerThreshold = mean+2*std; // std factor: candidate to be a parameter of the plugin
+		double upperThreshold = 255;
+		//Make binary
+		int[] lut = new int[256];
+		for (int j=0; j<256; j++) {
+			if (j>=lowerThreshold && j<=upperThreshold)
+				lut[j] = 0;
+			else
+				lut[j] = (byte)255;
+		}
+		int nFrames = imp.getStackSize();
+		for (int iFrame=1; iFrame<=nFrames; iFrame++) {
+			ip = stack.getProcessor(iFrame);
+            ip.applyTable(lut);
+		}
 	}	
 }

@@ -97,6 +97,9 @@ import ij.process.ShortProcessor;
  *      - When the first frame to read is > 1, uses the index to quickly skip the initial frames.
  *      - Creates a unique window name.
  *      - Opens MJPG files also if they do not contain Huffman tables
+ *   2017-09-28
+ *   	- Commented line 1268 (in current file) from the original plugin to hide dialog
+ *   	- in order to apply the plugin automatically (by Carlos Alquézar)
  *
  * The AVI format looks like this:
  * RIFF AVI                 RIFF HEADER, AVI CHUNK                  

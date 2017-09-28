@@ -1,12 +1,15 @@
 package functions;
 
-import java.awt.geom.Line2D;
 import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
 import data.Spermatozoon;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class Kinematics {
 	/******************************************************/
 	/**
@@ -66,6 +69,11 @@ public class Kinematics {
 //		
 //		return bcf_value;
 //	}
+	/**
+	 * @param track
+	 * @param avgTrack
+	 * @return
+	 */
 	public static float bcf(List track,List avgTrack){
 		
 		int nAvgPoints = avgTrack.size();
@@ -84,6 +92,10 @@ public class Kinematics {
 		return bcf_value;
 	}
 	
+	/**
+	 * @param points
+	 * @return
+	 */
 	static int countLocalMaximas(float[] points){
 		 int nPoints = points.length;
 		 int count = 0;
@@ -96,6 +108,22 @@ public class Kinematics {
 		 }
 		 return count;
 	}
+	/******************************************************/
+	/**
+	 * @param track
+	 * @return
+	 */
+	public static String getVelocityTrackType(List track){
+		
+		List avgTrack = SignalProcessing.movingAverage(track);
+		float vap = vcl(avgTrack);
+		if((vsl(track)<Params.vclLowerTh)||(vcl(track)<Params.vclLowerTh)||(vap<Params.vclLowerTh))
+			return "Slow";
+		else if((vsl(track)>Params.vclUpperTh)||(vcl(track)>Params.vclUpperTh)||(vap>Params.vclUpperTh))
+			return "Fast";
+		else
+			return "Normal";
+	}	
 	/******************************************************/
 	/**
 	 * @param track - a track
@@ -118,7 +146,8 @@ public class Kinematics {
 		//mean angle
 		float meanAngle = totalDegrees/(length-1);
 		return meanAngle;
-	}	
+	}
+	
 	/******************************************************/
 	/**
 	 * @param track - a track
@@ -164,23 +193,6 @@ public class Kinematics {
 		float elapsedTime = (length-1)/Params.frameRate;
 		//return um/second
 		return distance/elapsedTime;
-	}
-	
-	/******************************************************/
-	/**
-	 * @param 
-	 * @return 
-	 */
-	public static String getVelocityTrackType(List track){
-		
-		List avgTrack = SignalProcessing.movingAverage(track);
-		float vap = vcl(avgTrack);
-		if((vsl(track)<Params.vclLowerTh)||(vcl(track)<Params.vclLowerTh)||(vap<Params.vclLowerTh))
-			return "Slow";
-		else if((vsl(track)>Params.vclUpperTh)||(vcl(track)>Params.vclUpperTh)||(vap>Params.vclUpperTh))
-			return "Fast";
-		else
-			return "Normal";
 	}
 	
 }

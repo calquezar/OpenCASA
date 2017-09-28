@@ -1,7 +1,6 @@
 package gui;
 
 import java.awt.Font;
-import java.awt.GraphicsConfiguration;
 import java.awt.HeadlessException;
 
 import javax.swing.JFrame;
