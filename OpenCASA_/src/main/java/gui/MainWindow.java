@@ -16,12 +16,12 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
-import analysis.Morphometry;
 import analysis.Motility;
 import analysis.Viability;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
+import functions.LoadImages;
 import ij.gui.GenericDialog;
 
 /**
@@ -45,11 +45,11 @@ public class MainWindow extends JFrame {
 	/**
 	 * 
 	 */
-	Viability via;
+	ViabilityWindow viabilityW;
 	/**
 	 * 
 	 */
-	Morphometry morph;
+	MorphWindow morphW;
 	/**
 	 * 
 	 */
@@ -111,13 +111,18 @@ public class MainWindow extends JFrame {
 					try{mot.run(mw);}
 					catch(Exception e1){e1.printStackTrace();}
 				}else if(label.equals("Viability")){
-					via = new Viability();
-					try{via.run(mw);}
-					catch(Exception e1){e1.printStackTrace();}
+//					via = new Viability();
+//					try{via.run(mw);}
+//					catch(Exception e1){e1.printStackTrace();}
+					LoadImages ld = new LoadImages(mw);
+					viabilityW = new ViabilityWindow(mw);
+					viabilityW.setImages(ld.run());
+					viabilityW.showWindow();					
 				}else if(label.equals("Morphometry")){
-					morph = new Morphometry();
-					try{morph.run(mw);}
-					catch(Exception e1){e1.printStackTrace();}
+					LoadImages ld = new LoadImages(mw);
+					morphW = new MorphWindow(mw);
+					morphW.setImages(ld.run());
+					morphW.showWindow();
 				}else if(label.equals("Simulation")){
 					GenericDialog gd = new GenericDialog("Set Simulation parameters");	
 					gd.addNumericField("Beta", 0, 2);
@@ -152,7 +157,7 @@ public class MainWindow extends JFrame {
 		addButton("Motility",0,0,new Color(255,255,255),"/motility.png",panel);
 		addButton("Chemotaxis",1,0,new Color(255,255,255),"/chemotaxis.png",panel);
 		addButton("Viability",0,1,new Color(255,255,255),"/viability.png",panel);
-		addButton("Morphometry",1,1,new Color(255,255,255),"/Morphometry.png",panel);
+		addButton("Morphometry",1,1,new Color(255,255,255),"/morphometry.png",panel);
 		addButton("Simulation",0,2,new Color(255,255,255),"/Settings.png",panel);
 		addButton("Settings",1,2,new Color(255,204,153),"/Settings.png",panel);
 //		panel.setBackground(new Color(255,204,153));

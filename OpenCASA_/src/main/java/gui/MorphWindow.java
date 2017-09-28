@@ -33,6 +33,7 @@ import javax.swing.event.ChangeListener;
 import data.Params;
 import data.Spermatozoon;
 import functions.ComputerVision;
+import functions.LoadImages;
 import functions.Paint;
 import functions.Utils;
 import ij.ImagePlus;
@@ -43,7 +44,7 @@ import ij.process.ImageProcessor;
  * @author Carlos Alquezar
  *
  */
-public class MorphWindow extends JFrame implements ChangeListener,MouseListener {
+public class MorphWindow extends JFrame implements ChangeListener, MouseListener {
 	
 	//Here we'll store the original images
 	/**
@@ -155,8 +156,7 @@ public class MorphWindow extends JFrame implements ChangeListener,MouseListener 
 		imgLabel.addMouseListener(this);
 		mainW = mw;
 		imgIndex = 0;
-		resizeFactor = 0.6;
-		
+		resizeFactor = 0.6;		
 	}
 	/******************************************************/
 	/**

@@ -1,11 +1,10 @@
-package analysis;
+package functions;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.swing.JOptionPane;
 
-import functions.Utils;
 import gui.MainWindow;
 import gui.MorphWindow;
 import ij.IJ;
@@ -15,12 +14,9 @@ import ij.ImagePlus;
  * @author Carlos Alquezar
  *
  */
-public class Morphometry {
+public class LoadImages {
 
-	/**
-	 * 
-	 */
-	MorphWindow morphW;
+
 	/**
 	 * 
 	 */
@@ -29,7 +25,7 @@ public class Morphometry {
 	/**
 	 * 
 	 */
-	public Morphometry() {}
+	public LoadImages(MainWindow mw) {mainW = mw;}
 	
 	/**
 	 * @return
@@ -49,15 +45,16 @@ public class Morphometry {
 	
 	/**
 	 * 
+	 * @return
 	 */
-	public void analyzeDirectory(){
+	public List<ImagePlus> analyzeDirectory(){
 		
 		String[] listOfFiles = Utils.getFileNames();
 		if(listOfFiles==null || listOfFiles.length==0){
 			if(listOfFiles!=null)
 				JOptionPane.showMessageDialog(null, "Please, select a non-empty folder.");
 			mainW.setVisible(true);
-			return;
+			return null;
 		}
 		List<ImagePlus> images = new ArrayList<ImagePlus>();
 		for (int i = 0; i < listOfFiles.length; i++) {
@@ -73,20 +70,21 @@ public class Morphometry {
 		if(images.size()<1){
 			JOptionPane.showMessageDialog(null, "Please, select a valid folder.");
 			mainW.setVisible(true);
-			return;
+			return null;
 		}
-		morphW.setImages(images);
-		morphW.showWindow();
+		return images;
+//		morphW.showWindow();
 	}	
 	
 	/**
 	 * 
+	 * @return
 	 */
-	public void analyzeFile(){
+	public List<ImagePlus> analyzeFile(){
 		String absoluteFilePath = Utils.getAbsoluteFileName();
 		if(absoluteFilePath==null){
 			mainW.setVisible(true);
-			return;
+			return null;
 		}
 		String parentsDirectory = Utils.getParentDirectory(absoluteFilePath);
 		ImagePlus imp = IJ.openImage(absoluteFilePath);
@@ -96,31 +94,32 @@ public class Morphometry {
 		if(imp==null){
 			JOptionPane.showMessageDialog(null, "Please, select a valid file.");
 			mainW.setVisible(true);
-			return;
+			return null;
 		}
 		imp.setTitle(parentsDirectory+"\\"+imp.getTitle());
 		List<ImagePlus> images = new ArrayList<ImagePlus>();
 		images.add(imp);
-		morphW.setImages(images);
-		morphW.showWindow();
+		return images;
+//		morphW.showWindow();
 	}
 	/**
-	 * @param mw
+	 * 
+	 * @return
 	 */
-	public void run(MainWindow mw){
-		mainW = mw;
+	public List<ImagePlus> run(){
 		mainW.setVisible(false);
 		//Ask user which analysis wants to apply
 		int userSelection = analysisSelectionDialog();
 		if(userSelection<0){
-			mw.setVisible(true);
-			return;			
+			mainW.setVisible(true);
+			return null;			
 		}
-		morphW = new MorphWindow(mainW);
+//		morphW = new MorphWindow(mainW);
 		if(userSelection==0)
-			analyzeFile();
+			return analyzeFile();
 		else if(userSelection==1)
-			analyzeDirectory();
+			return analyzeDirectory();
+		else
+			return null;
 	}
-	
 }
