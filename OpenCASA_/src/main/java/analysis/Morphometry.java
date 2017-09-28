@@ -11,13 +11,29 @@ import gui.MorphWindow;
 import ij.IJ;
 import ij.ImagePlus;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class Morphometry {
 
+	/**
+	 * 
+	 */
 	MorphWindow morphW;
+	/**
+	 * 
+	 */
 	MainWindow mainW;
 	
+	/**
+	 * 
+	 */
 	public Morphometry() {}
 	
+	/**
+	 * @return
+	 */
 	public int analysisSelectionDialog(){
 		Object[] options = {"File", "Directory"};
 		int n = JOptionPane.showOptionDialog(null,
@@ -31,29 +47,9 @@ public class Morphometry {
 		return n;
 	}
 	
-	public void analyzeFile(){
-		String absoluteFilePath = Utils.getAbsoluteFileName();
-		if(absoluteFilePath==null){
-			mainW.setVisible(true);
-			return;
-		}
-		String parentsDirectory = Utils.getParentDirectory(absoluteFilePath);
-		ImagePlus imp = IJ.openImage(absoluteFilePath);
-		// MorphWindow works with an ImagePlus array.
-		// If we want to analyze only one image, we have to pass
-		// an array of one element
-		if(imp==null){
-			JOptionPane.showMessageDialog(null, "Please, select a valid file.");
-			mainW.setVisible(true);
-			return;
-		}
-		imp.setTitle(parentsDirectory+"\\"+imp.getTitle());
-		List<ImagePlus> images = new ArrayList<ImagePlus>();
-		images.add(imp);
-		morphW.setImages(images);
-		morphW.showWindow();
-	}	
-	
+	/**
+	 * 
+	 */
 	public void analyzeDirectory(){
 		
 		String[] listOfFiles = Utils.getFileNames();
@@ -81,7 +77,36 @@ public class Morphometry {
 		}
 		morphW.setImages(images);
 		morphW.showWindow();
+	}	
+	
+	/**
+	 * 
+	 */
+	public void analyzeFile(){
+		String absoluteFilePath = Utils.getAbsoluteFileName();
+		if(absoluteFilePath==null){
+			mainW.setVisible(true);
+			return;
+		}
+		String parentsDirectory = Utils.getParentDirectory(absoluteFilePath);
+		ImagePlus imp = IJ.openImage(absoluteFilePath);
+		// MorphWindow works with an ImagePlus array.
+		// If we want to analyze only one image, we have to pass
+		// an array of one element
+		if(imp==null){
+			JOptionPane.showMessageDialog(null, "Please, select a valid file.");
+			mainW.setVisible(true);
+			return;
+		}
+		imp.setTitle(parentsDirectory+"\\"+imp.getTitle());
+		List<ImagePlus> images = new ArrayList<ImagePlus>();
+		images.add(imp);
+		morphW.setImages(images);
+		morphW.showWindow();
 	}
+	/**
+	 * @param mw
+	 */
 	public void run(MainWindow mw){
 		mainW = mw;
 		mainW.setVisible(false);

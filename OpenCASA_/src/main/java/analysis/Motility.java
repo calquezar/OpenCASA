@@ -1,7 +1,5 @@
 package analysis;
 
-import java.io.File;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,47 +15,84 @@ import functions.Paint;
 import functions.SignalProcessing;
 import functions.Utils;
 import gui.MainWindow;
-import ij.IJ;
 import ij.measure.ResultsTable;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class Motility {
 
 	//Motility variables
+	/**
+	 * 
+	 */
 	private float total_sperm = 0;
+	/**
+	 * 
+	 */
 	private float total_vsl = 0;
+	/**
+	 * 
+	 */
 	private float total_vcl = 0;
+	/**
+	 * 
+	 */
 	private float total_vap = 0;
+	/**
+	 * 
+	 */
 	private float total_lin = 0;
+	/**
+	 * 
+	 */
 	private float total_wob = 0;
+	/**
+	 * 
+	 */
 	private float total_str = 0;
+	/**
+	 * 
+	 */
 	private float total_alhMean = 0;
+	/**
+	 * 
+	 */
 	private float total_alhMax = 0;
+	/**
+	 * 
+	 */
 	private float total_bcf = 0;
+	/**
+	 * 
+	 */
 	private float total_dance = 0;
+	/**
+	 * 
+	 */
 	private float total_mad = 0;
+	/**
+	 * 
+	 */
 	private float total_motile = 0;
+	/**
+	 * 
+	 */
 	private float total_nonMotile = 0;
+	/**
+	 * 
+	 */
 	private float countProgressiveSperm = 0;
 	
+	/**
+	 * 
+	 */
 	public Motility() {}
 
-	public void resetParams(){
-		total_sperm = 0;
-	    total_vsl = 0;
-		total_vcl = 0;
-		total_vap = 0;
-		total_lin = 0;
-		total_wob = 0;
-		total_str = 0;
-		total_alhMean = 0;
-		total_alhMax = 0;
-		total_bcf = 0;
-		total_dance = 0;
-		total_mad = 0;
-		total_motile = 0;
-		total_nonMotile = 0;
-		countProgressiveSperm = 0;
-	}
+	/**
+	 * @return
+	 */
 	public int analysisSelectionDialog(){
 		Object[] options = {"File", "Directory"};
 		int n = JOptionPane.showOptionDialog(null,
@@ -70,6 +105,9 @@ public class Motility {
 				options[0]); //default button title
 		return n;
 	}
+	/**
+	 * 
+	 */
 	public void analyzeDirectory(){
 		
 		String[] listOfFiles = Utils.getFileNames();
@@ -100,7 +138,9 @@ public class Motility {
 //		rtAverage.show("Average Motility");
 		rtTotal.show("Total Motility");
 	}
-	
+	/**
+	 * 
+	 */
 	public void analyzeFile(){
 		Trial trial = VideoAnalyzer.extractTrial("Motility-File");
 		if(trial==null)
@@ -119,50 +159,13 @@ public class Motility {
 	
 	/******************************************************/
 	/**
-	 * @param  
-	 * @return 
-	 */	
-	public void calculateTotalMotility(ResultsTable rt,String filename){
-		
-		
-		float vsl_mean = total_vsl/total_sperm;
-		float vcl_mean = total_vcl/total_sperm;
-		float vap_mean = total_vap/total_sperm;
-		float lin_mean = total_lin/total_sperm;
-		float wob_mean = total_wob/total_sperm;
-		float str_mean = total_str/total_sperm;
-		float alhMean_mean = total_alhMean/total_sperm;
-		float alhMax_mean = total_alhMax/total_sperm;
-		float bcf_mean = total_bcf/total_sperm;
-		float dance_mean = total_dance/total_sperm;
-		float mad_mean = total_mad/total_sperm;
-		// % progressive Motile sperm
-		float progressiveMotPercent = countProgressiveSperm/(float)total_sperm;			
-		// % motility
-		float motility_value = (float)total_motile/((float)(total_motile+total_nonMotile));
-		
-		rt.incrementCounter();
-		rt.addValue("Motile trajectories",total_sperm);
-		rt.addValue("VSL Mean (um/s)",vsl_mean);
-		rt.addValue("VCL Mean (um/s)",vcl_mean);
-		rt.addValue("VAP Mean (um/s)",vap_mean);
-		rt.addValue("LIN Mean ",lin_mean);
-		rt.addValue("WOB Mean ",wob_mean);
-		rt.addValue("STR Mean ",str_mean);
-		rt.addValue("ALH_Mean Mean (um)",alhMean_mean);
-		rt.addValue("ALH_Max Mean (um)",alhMax_mean);
-		rt.addValue("BCF Mean (Hz)",bcf_mean);
-		rt.addValue("DANCE Mean (um^2/s)",dance_mean);
-		rt.addValue("MAD Mean (degrees)",mad_mean);
-		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
-		rt.addValue("Motility (%)",motility_value*100);
-		rt.addValue("Filename",filename);
-	}	
-	/******************************************************/
-	/**
 	 * @param nTracks - 
 	 * @return 
 	 */	
+	/**
+	 * @param rt
+	 * @param trial
+	 */
 	public void calculateAverageMotility(ResultsTable rt,Trial trial){
 		
 		
@@ -211,6 +214,10 @@ public class Motility {
 	 * @param theTracks 2d-Array with all tracks
 	 * @return 
 	 */	
+	/**
+	 * @param rt
+	 * @param trial
+	 */
 	public void calculateMotility(ResultsTable rt,Trial trial){
 		
 		//Calculate values for each track
@@ -272,7 +279,76 @@ public class Motility {
 			rt.addValue("Progress Motility",progressMotility_value);
 			rt.addValue("sampleID", trial.source);
 		}
+	}	
+	/******************************************************/
+	/**
+	 * @param  
+	 * @return 
+	 */	
+	/**
+	 * @param rt
+	 * @param filename
+	 */
+	public void calculateTotalMotility(ResultsTable rt,String filename){
+		
+		
+		float vsl_mean = total_vsl/total_sperm;
+		float vcl_mean = total_vcl/total_sperm;
+		float vap_mean = total_vap/total_sperm;
+		float lin_mean = total_lin/total_sperm;
+		float wob_mean = total_wob/total_sperm;
+		float str_mean = total_str/total_sperm;
+		float alhMean_mean = total_alhMean/total_sperm;
+		float alhMax_mean = total_alhMax/total_sperm;
+		float bcf_mean = total_bcf/total_sperm;
+		float dance_mean = total_dance/total_sperm;
+		float mad_mean = total_mad/total_sperm;
+		// % progressive Motile sperm
+		float progressiveMotPercent = countProgressiveSperm/(float)total_sperm;			
+		// % motility
+		float motility_value = (float)total_motile/((float)(total_motile+total_nonMotile));
+		
+		rt.incrementCounter();
+		rt.addValue("Motile trajectories",total_sperm);
+		rt.addValue("VSL Mean (um/s)",vsl_mean);
+		rt.addValue("VCL Mean (um/s)",vcl_mean);
+		rt.addValue("VAP Mean (um/s)",vap_mean);
+		rt.addValue("LIN Mean ",lin_mean);
+		rt.addValue("WOB Mean ",wob_mean);
+		rt.addValue("STR Mean ",str_mean);
+		rt.addValue("ALH_Mean Mean (um)",alhMean_mean);
+		rt.addValue("ALH_Max Mean (um)",alhMax_mean);
+		rt.addValue("BCF Mean (Hz)",bcf_mean);
+		rt.addValue("DANCE Mean (um^2/s)",dance_mean);
+		rt.addValue("MAD Mean (degrees)",mad_mean);
+		rt.addValue("Progressive Motility (%)",progressiveMotPercent*100);
+		rt.addValue("Motility (%)",motility_value*100);
+		rt.addValue("Filename",filename);
 	}
+	
+	/**
+	 * 
+	 */
+	public void resetParams(){
+		total_sperm = 0;
+	    total_vsl = 0;
+		total_vcl = 0;
+		total_vap = 0;
+		total_lin = 0;
+		total_wob = 0;
+		total_str = 0;
+		total_alhMean = 0;
+		total_alhMax = 0;
+		total_bcf = 0;
+		total_dance = 0;
+		total_mad = 0;
+		total_motile = 0;
+		total_nonMotile = 0;
+		countProgressiveSperm = 0;
+	}
+	/**
+	 * @param mw
+	 */
 	public void run(MainWindow mw){
 		mw.setVisible(false);
 		//Ask user which analysis wants to apply

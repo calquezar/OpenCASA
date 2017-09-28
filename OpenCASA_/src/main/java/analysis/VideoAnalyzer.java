@@ -5,25 +5,25 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.ProgressMonitor;
-
 import data.PersistentRandomWalker;
 import data.SList;
 import data.Simulation;
 import data.Trial;
 import functions.ComputerVision;
-import functions.Paint;
 import functions.SignalProcessing;
 import functions.Utils;
-import gui.MessageWindow;
-import ij.IJ;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public abstract class VideoAnalyzer {
 
 	/**
 	 * @param ImagePlus imp
+	 * @return
 	 */
 	public static SList analyze(ImagePlus imp){
 		
@@ -55,6 +55,10 @@ public abstract class VideoAnalyzer {
 		return theTracks;
 	}
 	
+	/**
+	 * @param analysis
+	 * @return
+	 */
 	public static Trial extractTrial(String analysis){
 		String absoluteFilePath = Utils.selectFile();
 		if(absoluteFilePath==null)
@@ -64,6 +68,32 @@ public abstract class VideoAnalyzer {
 		return getTrialFromAVI(analysis,absoluteFilePath);
 	}
 	
+	/**
+	 * @param analysis
+	 * @return
+	 */
+	public static Map<String,Trial> extractTrials(String analysis){
+		
+		Map<String,Trial> trials = new HashMap<String,Trial>();
+		String[] listOfFiles = Utils.getFileNames();
+		if(listOfFiles==null || listOfFiles.length==0)
+			return null;
+		for (int i = 0; i < listOfFiles.length; i++) {
+			String absoluteFilePath = listOfFiles[i];
+		    if (new File(absoluteFilePath).isFile()) {
+				if(Utils.isAVI(absoluteFilePath)){
+			    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
+					trials.put(tr.ID, tr);
+				}
+		    } 	    
+		}
+		return trials;
+	}
+	/**
+	 * @param absoluteFilePath
+	 * @param analysis
+	 * @return
+	 */
 	public static Map<String,Trial> extractTrials(String absoluteFilePath,String analysis){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
@@ -83,25 +113,110 @@ public abstract class VideoAnalyzer {
 			}
 	    }		    
 		return trials;
-	}
-	public static Map<String,Trial> extractTrials(String analysis){
-		
-		Map<String,Trial> trials = new HashMap<String,Trial>();
-		String[] listOfFiles = Utils.getFileNames();
-		if(listOfFiles==null || listOfFiles.length==0)
-			return null;
-		for (int i = 0; i < listOfFiles.length; i++) {
-			String absoluteFilePath = listOfFiles[i];
-		    if (new File(absoluteFilePath).isFile()) {
-				if(Utils.isAVI(absoluteFilePath)){
-			    	Trial tr = getTrialFromAVI(analysis,absoluteFilePath);
-					trials.put(tr.ID, tr);
-				}
-		    } 	    
-		}
-		return trials;
 	}	
 
+	/**
+	 * @param filename
+	 * @return
+	 */
+	public static String getID(String filename){
+		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
+		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
+		String[] parts = filename.split("-");
+		if(parts.length<7)
+			return "test";
+		String type = getTrialType(filename);
+		// ID's format:
+		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
+		//	for control: YYYYMMDD-[ID]-C
+		return parts[0]+parts[1]+parts[2]+'-'+parts[3]+'-'+type;
+	}
+	
+	/**
+	 * @param analysis
+	 * @param absoluteFilePath
+	 * @return
+	 */
+	public static Trial getTrialFromAVI(String analysis,String absoluteFilePath){
+		
+		String[] parts = absoluteFilePath.split("\\\\");
+		String filename = parts[parts.length-1];
+		String trialType = "";
+		String trialID = "";
+		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory")){
+			trialType = getTrialType(filename);
+			trialID = getID(filename);
+		}else if(analysis.equals("Motility-File")||analysis.equals("Motility-Directory")){
+			trialID = filename;
+		}
+		//Load videos
+		AVI_Reader ar = new  AVI_Reader();
+		ar.run(absoluteFilePath);
+		ImagePlus imp = ar.getImagePlus();
+
+		return getTrialFromImp(imp,analysis,trialID,trialType,filename);
+	}
+	/**
+	 * @param impOrig
+	 * @param analysis
+	 * @param trialID
+	 * @param trialType
+	 * @param filename
+	 * @return
+	 */
+	public static Trial getTrialFromImp(ImagePlus impOrig,String analysis,String trialID,String trialType,String filename){
+		//Analyze the video
+		// It's necessary to duplicate the ImagePlus if
+		// we want to draw later sperm trajectories in the original video
+		ImagePlus imp = impOrig;
+		if(analysis.equals("Motility-File"))
+			imp =  impOrig.duplicate();
+		SList t = analyze(imp);
+		int[] motileSperm = SignalProcessing.motilityTest(t);
+		//Only pass from here tracks with a minimum level of motility
+		t = SignalProcessing.filterTracksByMotility(t);
+		Trial tr = null;
+		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory")||analysis.equals("Chemotaxis-Simulation"))
+			tr = new Trial(trialID,trialType,filename,t,impOrig.getWidth(),impOrig.getHeight());
+		else if(analysis.equals("Motility-File"))
+			tr = new Trial(trialID,trialType,filename,t,impOrig,motileSperm);
+		else if(analysis.equals("Motility-Directory"))
+			tr = new Trial(trialID,trialType,filename,t,null,motileSperm);
+		//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();
+		imp = null;
+		return tr;
+	}
+	
+	/******************************************************/
+	/**
+	 * @param String filename
+	 * @return String type
+	 */	
+	/**
+	 * @param filename
+	 * @return
+	 */
+	public static String getTrialType(String filename){
+		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
+		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
+		String[] parts = filename.split("-");
+		if(parts.length<7)
+			return "test";
+		if(parts[4].equals("Q")){
+			String hormone = parts[5];
+			String concentration = parts[6];
+			return "Q"+hormone+concentration;
+		}else{
+			return "C"; //If It's not chemotaxis, then it's control
+		}
+	}
+	
+	/**
+	 * @param analysis
+	 * @param beta
+	 * @param responsiveCells
+	 * @return
+	 */
 	public static Trial simulateTrial(String analysis,double beta,double responsiveCells){
 		
 //		Map<String,Trial> trials = new HashMap<String,Trial>();
@@ -114,7 +229,13 @@ public abstract class VideoAnalyzer {
 //		trials.put(tr.ID, tr);
 		return tr;
 	}
-	
+	/**
+	 * @param analysis
+	 * @param beta
+	 * @param responsiveCells
+	 * @param MAXSIMULATIONS
+	 * @return
+	 */
 	public static Map<String,Trial> simulateTrials(String analysis,double beta,double responsiveCells,int MAXSIMULATIONS){
 		
 		Map<String,Trial> trials = new HashMap<String,Trial>();
@@ -139,79 +260,5 @@ public abstract class VideoAnalyzer {
 //			System.out.println(tr.ID);
 		}
 		return trials;
-	}
-	public static String getID(String filename){
-		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
-		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
-		String[] parts = filename.split("-");
-		if(parts.length<7)
-			return "test";
-		String type = getTrialType(filename);
-		// ID's format:
-		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
-		//	for control: YYYYMMDD-[ID]-C
-		return parts[0]+parts[1]+parts[2]+'-'+parts[3]+'-'+type;
-	}
-	
-	public static Trial getTrialFromAVI(String analysis,String absoluteFilePath){
-		
-		String[] parts = absoluteFilePath.split("\\\\");
-		String filename = parts[parts.length-1];
-		String trialType = "";
-		String trialID = "";
-		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory")){
-			trialType = getTrialType(filename);
-			trialID = getID(filename);
-		}else if(analysis.equals("Motility-File")||analysis.equals("Motility-Directory")){
-			trialID = filename;
-		}
-		//Load videos
-		AVI_Reader ar = new  AVI_Reader();
-		ar.run(absoluteFilePath);
-		ImagePlus imp = ar.getImagePlus();
-
-		return getTrialFromImp(imp,analysis,trialID,trialType,filename);
-	}
-	
-	public static Trial getTrialFromImp(ImagePlus impOrig,String analysis,String trialID,String trialType,String filename){
-		//Analyze the video
-		// It's necessary to duplicate the ImagePlus if
-		// we want to draw later sperm trajectories in the original video
-		ImagePlus imp = impOrig;
-		if(analysis.equals("Motility-File"))
-			imp =  impOrig.duplicate();
-		SList t = analyze(imp);
-		int[] motileSperm = SignalProcessing.motilityTest(t);
-		//Only pass from here tracks with a minimum level of motility
-		t = SignalProcessing.filterTracksByMotility(t);
-		Trial tr = null;
-		if(analysis.equals("Chemotaxis-File")||analysis.equals("Chemotaxis-Directory")||analysis.equals("Chemotaxis-Simulation"))
-			tr = new Trial(trialID,trialType,filename,t,impOrig.getWidth(),impOrig.getHeight());
-		else if(analysis.equals("Motility-File"))
-			tr = new Trial(trialID,trialType,filename,t,impOrig,motileSperm);
-		else if(analysis.equals("Motility-Directory"))
-			tr = new Trial(trialID,trialType,filename,t,null,motileSperm);
-		//new Thread(new Runnable() {public void run() {analyze(imp,filename);}}).start();
-		imp = null;
-		return tr;
-	}
-	/******************************************************/
-	/**
-	 * @param String filename
-	 * @return String type
-	 */	
-	public static String getTrialType(String filename){
-		//Format YYYY-MM-DD-ID-C-numVideo-Medium (for control)
-		//Format YYYY-MM-DD-ID-Q-Hormone-Concentration-numVideo-Medium (with hormone)
-		String[] parts = filename.split("-");
-		if(parts.length<7)
-			return "test";
-		if(parts[4].equals("Q")){
-			String hormone = parts[5];
-			String concentration = parts[6];
-			return "Q"+hormone+concentration;
-		}else{
-			return "C"; //If It's not chemotaxis, then it's control
-		}
 	}	
 }

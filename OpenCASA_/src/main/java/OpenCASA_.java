@@ -18,15 +18,6 @@ import ij.plugin.PlugIn;
 public class OpenCASA_ implements PlugIn {
 
 	/**
-	 * This method overrides the superclass run's method. 
-	 * Start point of the plugin. 
-	 **/
-	@Override
-	public void run(String arg) {
-		(new MainWindow("OpenCASA")).setVisible(true);
-	}
-
-	/**
 	 * Main method
 	 * @param args unused
 	 * @throws UnsupportedLookAndFeelException 
@@ -47,5 +38,14 @@ public class OpenCASA_ implements PlugIn {
 		// run the plugin
 		IJ.runPlugIn(clazz.getName(), "");		
 	
+	}
+
+	/**
+	 * This method overrides the superclass run's method. 
+	 * Start point of the plugin. 
+	 **/
+	@Override
+	public void run(String arg) {
+		(new MainWindow("OpenCASA")).setVisible(true);
 	}
 }

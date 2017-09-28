@@ -1,13 +1,10 @@
 package data;
 
 import java.awt.Color;
-import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-import data.PersistentRandomWalker.Cell;
-import data.PersistentRandomWalker.Obstacle;
 import functions.Kinematics;
 import functions.SignalProcessing;
 import ij.ImagePlus;
@@ -15,37 +12,64 @@ import ij.ImageStack;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class OscillatoryWalker extends Simulation {
 
 
-	int width = 800;
-	int height = 800;
-	int cellCount = 1;
-	Cell[] sperm = new Cell[cellCount];
-	int SIMLENGTH = 700;
-//	Point[][] tracks = new Point[cellCount][SIMLENGTH];
-	List<Spermatozoon> track = new ArrayList<Spermatozoon>();
-	
-	public OscillatoryWalker() {
-		  for (int x = cellCount-1; x >= 0; x--) { 
-			    sperm[x] = new Cell();
-			  }
-	}
-
+	/**
+	 * @author Carlos Alquezar
+	 *
+	 */
 	class Cell {
 		  
-	  int sizex;
-	  int sizey;
-	  float t;
-	  float y;
-	  float amplitude;
-	  double w;
-	  double f;
-	  double phi;
-	  double T;
-	  float dist;
+	 /**
+	 * 
+	 */
+	int sizex;
+	 /**
+	 * 
+	 */
+	int sizey;
+	 /**
+	 * 
+	 */
+	float t;
+	 /**
+	 * 
+	 */
+	float y;
+	 /**
+	 * 
+	 */
+	float amplitude;
+	 /**
+	 * 
+	 */
+	double w;
+	 /**
+	 * 
+	 */
+	double f;
+	 /**
+	 * 
+	 */
+	double phi;
+	 /**
+	 * 
+	 */
+	double T;
+	 /**
+	 * 
+	 */
+	float dist;
 	  
-	  Cell(){
+	 /**
+	 * 
+	 */
+	Cell(){
 	    sizex= 10;
 	    sizey=8;
 	    t = 0;
@@ -57,7 +81,21 @@ public class OscillatoryWalker extends Simulation {
 	    phi=0;
 	  }
 	  
-	  void update(ImageProcessor ip){
+	  /**
+	 * @param x1
+	 * @param y1
+	 * @param x2
+	 * @param y2
+	 * @return
+	 */
+	double distance(float x1,float y1, float x2, float y2){
+		  return Math.sqrt(Math.pow(x2-x1, 2)+Math.pow(y2-y1, 2));
+	  }
+	  
+	 /**
+	 * @param ip
+	 */
+	void update(ImageProcessor ip){
 
 		float prevT = t;
 		float prevY = y;
@@ -79,21 +117,49 @@ public class OscillatoryWalker extends Simulation {
 	    p.y=y;
 	    track.add(p);
 	  }
-	  
-	  double distance(float x1,float y1, float x2, float y2){
-		  return Math.sqrt(Math.pow(x2-x1, 2)+Math.pow(y2-y1, 2));
-	  }
+	}
+	/**
+	 * 
+	 */
+	int width = 800;
+	/**
+	 * 
+	 */
+	int height = 800;
+	/**
+	 * 
+	 */
+	int cellCount = 1;
+	/**
+	 * 
+	 */
+	Cell[] sperm = new Cell[cellCount];
+/**
+ * 
+ */
+/**
+ * 
+ */
+int SIMLENGTH = 700;
+	
+	//	Point[][] tracks = new Point[cellCount][SIMLENGTH];
+	/**
+	 * 
+	 */
+	List<Spermatozoon> track = new ArrayList<Spermatozoon>();
+
+	/**
+	 * 
+	 */
+	public OscillatoryWalker() {
+		  for (int x = cellCount-1; x >= 0; x--) { 
+			    sperm[x] = new Cell();
+			  }
 	}
 	
-	void draw(ImageProcessor ip){
-		  ip.setColor(Color.black);
-		  ip.fill();
-		  ip.setColor(Color.white);
-	      for (int x = cellCount-1; x >= 0; x--) { 
-	        sperm[x].update(ip);
-	      }
-	}
-	
+	/**
+	 * @return
+	 */
 	public ImagePlus createSimulation(){
 		ImageStack imStack = new ImageStack(width,height);
 		for(int i=0;i<SIMLENGTH;i++){
@@ -119,6 +185,21 @@ public class OscillatoryWalker extends Simulation {
 		return new ImagePlus("Simulation", imStack);
 	}
 	
+	/** 
+	 * @param ImageProcessor ip
+	 */
+	void draw(ImageProcessor ip){
+		  ip.setColor(Color.black);
+		  ip.fill();
+		  ip.setColor(Color.white);
+	      for (int x = cellCount-1; x >= 0; x--) { 
+	        sperm[x].update(ip);
+	      }
+	}
+	
+	/**
+	 * 
+	 */
 	public void run(){createSimulation().show();}
 
 }

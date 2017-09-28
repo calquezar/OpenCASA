@@ -3,7 +3,6 @@ package analysis;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
@@ -17,18 +16,260 @@ import data.SList;
 import data.Spermatozoon;
 import data.Trial;
 import functions.Paint;
-import functions.Utils;
 import gui.MainWindow;
 import ij.IJ;
 import ij.measure.ResultsTable;
 
+/**
+ * 
+ * @author Carlos Alquezar
+ *
+ */
 public class Chemotaxis {
 
+/**
+ * 
+ */
 private static final Float FLOAT = (Float)null;
 
 
 //	private Map<String, Trial> trials = new HashMap<String, Trial>();
+	/**
+	 * 
+	 */
+	public Chemotaxis() {}
 	
+	
+	/**
+	 * @param trials
+	 * @return
+	 */
+	public float analyseChDirectory(Map<String,Trial> trials){
+		
+		float maxChIndex = 0;
+		float maxSLIndex = 0;
+		if(trials==null)
+			return FLOAT;
+		Set<String> keySet = trials.keySet();	
+		List<String> controlList = getKeys(keySet,'C'); //'C' = Control
+		List<String> chemoList = getKeys(keySet,'Q'); //'Q' = Chemotaxis
+		
+		ResultsTable rtRatios = new ResultsTable();
+		for (Iterator<String> k=controlList.iterator();k.hasNext();) {
+			String key= (String)k.next();
+			Trial trial = (Trial)trials.get(key);
+		  	System.out.println("key: "+key);
+		  	float chIdx = calculateChIndex(trial.tracks);
+		  	IJ.log(""+chIdx);
+		  	if(chIdx>maxChIndex)
+		  		maxChIndex=chIdx;
+		  	float ratioSL = calculateSLIndex(trial.tracks);
+		  	if(ratioSL>maxSLIndex)
+		  		maxSLIndex=ratioSL;
+		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
+		}
+		
+		for (Iterator<String> k=chemoList.iterator();k.hasNext();) {
+			String key= (String)k.next();
+			Trial trial = (Trial)trials.get(key);
+		  	System.out.println("key: "+key);
+		  	float chIdx = calculateChIndex(trial.tracks);
+		  	IJ.log(""+chIdx);
+		  	if(chIdx>maxChIndex)
+		  		maxChIndex=chIdx;
+		  	float ratioSL = calculateSLIndex(trial.tracks);
+		  	if(ratioSL>maxSLIndex)
+		  		maxSLIndex=ratioSL;
+		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
+		}		
+		
+		rtRatios.show("Chemotaxis results");
+		return maxChIndex;
+	}
+	/**
+	 * 
+	 * @param options
+	 * @param question
+	 * @param title
+	 * @return
+	 */
+	public int analysisSelectionDialog(Object[] options,String question,String title){
+		int n = JOptionPane.showOptionDialog(null,
+				question,
+				title,
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.QUESTION_MESSAGE,
+				null,     //do not use a custom Icon
+				options,  //the titles of buttons
+				options[0]); //default button title
+		return n;
+	}
+	
+	/**
+	 * 
+	 */
+	public void analyzeFile(){
+		Trial trial = VideoAnalyzer.extractTrial("Chemotaxis-File");
+		if(trial==null)
+			return;
+		//Draw trajectories
+		float chIdx = calculateChIndex(trial.tracks);
+		float slIdx = calculateSLIndex(trial.tracks);
+		Paint.drawChemotaxis(trial.tracks,chIdx,slIdx,trial.width,trial.height,trial.source);
+		int[] hist = circularHistogram(getListOfAngles(trial.tracks),45);
+		int radius = trial.width;
+		Paint.drawRoseDiagram(hist,radius,chIdx,trial.source);
+	}
+	
+	/**
+	 * @param trials
+	 * @return
+	 */
+	public float bootstrapping(Map<String,Trial> trials){
+		
+		ResultsTable rtRatios = new ResultsTable();
+		float positiveSamples = 0;//Percentage of positive samples
+		//Calculate minimum sample size
+		minSampleSize(trials);
+		Set keys = trials.keySet();
+		List controlKeys = getKeys(keys,'C');
+		SList controlTracks = mergeControlTracks(controlKeys,trials);
+		//Setting maximum number of subsamples used by bootstrapping method
+		//Params.NUMSAMPLES=controlKeys.size();
+		//Calculating OR threshold via subsampling
+		double thControl = ORThreshold(controlTracks);
+		for (Iterator k=controlKeys.iterator();k.hasNext();) {
+			String control= (String)k.next();
+			List conditionsKeys = getRelatedConditions(keys, control);
+			float TOTALSAMPLES = (float)controlKeys.size();
+			for (Iterator cond = conditionsKeys.iterator(); cond.hasNext();) {
+				String condition = (String)cond.next();
+				double OR = OR(control,condition,trials);
+				if(OR>thControl)
+					positiveSamples+=1/TOTALSAMPLES;
+				String filename = trials.get(condition).source;
+				String ID = trials.get(condition).ID;
+				setBootstrappingResults(rtRatios, OR, thControl, ID, filename);
+			}
+		}
+		rtRatios.show("Bootstrapping Results");
+		return positiveSamples;
+	}
+	/******************************************************/
+	/** Fuction to calculate the Ratio-Q
+	 * @param theTracks 2D-ArrayList with all the tracks
+	 * @return the Ratio-Q
+	 */
+	/**
+	 * @param theTracks
+	 * @return
+	 */
+	public float calculateChIndex(List theTracks){
+		
+		float nPos=0; //Number of shifts in the chemoattractant direction
+		float nNeg=0; //Number of shifts in other direction
+		int trackNr = 0; //Number of tracks
+		List angles = new ArrayList();
+		int nTracks = theTracks.size();
+		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
+		float chIdx = 0;
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			IJ.showProgress((double)trackNr/nTracks);
+			IJ.showStatus("Calculating Ch-Index...");
+			trackNr++;
+			List track=(ArrayList) iT.next();
+			int nPoints = track.size();
+			for (int j = 0; j < (nPoints-Params.angleDelta); j++) {
+				Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
+				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.angleDelta);
+				float diffX = newSpermatozoon.x-oldSpermatozoon.x;
+				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
+				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
+				angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+//				IJ.log(""+angle);
+				if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
+					angle = -(2*Math.PI-angle);			
+				if(Math.abs(angle)<angleChemotaxis){
+					nPos++;
+				}
+				else //if(Math.abs(angle)>(Math.PI-angleAmplitude)){
+					nNeg++;
+			}
+			
+		}
+		if((nPos+nNeg)>0)
+			chIdx = (nPos/(nPos+nNeg)); // (nPos+nNeg) = Total number of shifts
+		else
+			chIdx=-1;
+		return chIdx;
+	}
+	
+	/******************************************************/
+	/**
+	 * @param theTracks 2D-ArrayList that stores all the tracks
+	 * @return RatioSL
+	 */
+	/**
+	 * @param theTracks
+	 * @return
+	 */
+	public float calculateSLIndex(List theTracks){
+		
+		float nPos=0; //Number of shifts in the chemoattractant direction
+		float nNeg=0; //Number of shifts in other direction
+		int trackNr=0;
+		int nTracks = theTracks.size();
+		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
+		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
+		float ratioSL = 0;
+		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
+			IJ.showProgress((double)trackNr/nTracks);
+			IJ.showStatus("Calculating RatioSL...");
+			trackNr++;
+			List aTrack=(ArrayList) iT.next();
+			Spermatozoon first = (Spermatozoon)aTrack.get(1);
+			Spermatozoon last = (Spermatozoon)aTrack.get(aTrack.size() - 1);
+			float diffX = last.x-first.x;
+			float diffY = last.y-first.y;
+			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
+			angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
+			if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
+				angle = -(2*Math.PI-angle);			
+			if(Math.abs(angle)<angleChemotaxis)
+				nPos++;
+			else
+				nNeg++;			
+		}
+		if((nPos+nNeg)>0)
+			ratioSL = (nPos/(nPos+nNeg));
+		else
+			ratioSL=-1;
+		return ratioSL;
+	}
+	
+	/**
+	 * @param angles
+	 * @param N
+	 * @return
+	 */
+	public int[] circularHistogram(List<Double> angles,int N){
+		
+		int[] histogram = new int[N];
+		for(int i=0;i<N;i++)
+			histogram[i]=0;
+		int BINSIZE=360/N;
+		for(int i=0;i<angles.size();i++){
+			int bin = angles.get(i).intValue()/BINSIZE;
+			histogram[bin]++;
+		}
+		return histogram;
+	}
+	
+	/**
+	 * @param theTracks
+	 * @return
+	 */
 	public int[] countAngles(SList theTracks){
 		
 		int[] angles = {0,0};
@@ -40,7 +281,10 @@ private static final Float FLOAT = (Float)null;
 		}
 		return angles;
 	}
-	
+	/**
+	 * @param track
+	 * @return
+	 */
 	public int[] countInstantDirections(List track){
 		int nPos = 0;
 		int nNeg = 0;
@@ -68,20 +312,29 @@ private static final Float FLOAT = (Float)null;
 		results[1] = nNeg;
 		return results;
 	}
-	
-	public int[] circularHistogram(List<Double> angles,int N){
-		
-		int[] histogram = new int[N];
-		for(int i=0;i<N;i++)
-			histogram[i]=0;
-		int BINSIZE=360/N;
-		for(int i=0;i<angles.size();i++){
-			int bin = angles.get(i).intValue()/BINSIZE;
-			histogram[bin]++;
+	/**
+	 * @param keySet
+	 * @param type
+	 * @return
+	 */
+	public List<String> getKeys(Set<String> keySet,char type){
+		List<String> keyList = new ArrayList<String>();
+		for (Iterator<String> k=keySet.iterator();k.hasNext();) {
+			String id = k.next();
+			//Key is in format:
+			//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
+			//	for control: YYYYMMDD-[ID]-C
+			String[] parts = id.split("-");
+			if(parts[parts.length-1].charAt(0)==type)
+				keyList.add(id);
 		}
-		return histogram;
+		return keyList;
 	}
 	
+	/**
+	 * @param theTracks
+	 * @return
+	 */
 	public List<Double> getListOfAngles(SList theTracks){
 		List<Double> instAngles = new ArrayList<Double>();
 		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
@@ -98,7 +351,48 @@ private static final Float FLOAT = (Float)null;
 		}
 		return instAngles;
 	}
+	/**
+	 * @param keySet
+	 * @param controlKey
+	 * @return
+	 */
+	public List getRelatedConditions(Set keySet,String controlKey){
+		List conditionsList = new ArrayList();
+		//Key is in format:
+		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
+		//	for control: YYYYMMDD-[ID]-C	
+		String id = controlKey.substring(0, controlKey.length()-2);
+		id = id+"-Q";
+		for (Iterator k=keySet.iterator();k.hasNext();) {
+			String key = (String)k.next();
+			if(key.length()>=id.length()){
+			//  prefix: YYYYMMDD-[ID]-Q
+				String prefix = key.substring(0, id.length());
+				if(id.equals(prefix)) //Control identifier
+					conditionsList.add(key);
+			}
+		}
+		return conditionsList;
+	}
 	
+	/**
+	 * @param controlKeys
+	 * @param trials
+	 * @return
+	 */
+	public SList mergeControlTracks(List controlKeys, Map<String, Trial> trials){
+		
+	  SList tracks = new SList();
+	  for (Iterator k=controlKeys.iterator();k.hasNext();) {
+		  String key= (String)k.next();
+		  Trial trial = (Trial)trials.get(key);
+		  tracks.addAll(trial.tracks);
+	  }		
+	  return tracks;
+	}
+	/**
+	 * @param trials
+	 */
 	public void minSampleSize(Map<String, Trial> trials){
 	
 		Set keySet = trials.keySet();
@@ -116,6 +410,12 @@ private static final Float FLOAT = (Float)null;
 		}
 		Params.MAXINSTANGLES = minimum;
 	}
+	/**
+	 * @param control
+	 * @param condition
+	 * @param trials
+	 * @return
+	 */
 	public double OR(String control,String condition,Map<String,Trial> trials){
 		
 		Trial trialControl = (Trial)trials.get(control);
@@ -161,7 +461,10 @@ private static final Float FLOAT = (Float)null;
 	//	System.out.println("OR: "+OddsRatio+" ;nAngles: "+(numeratorValues[0]+numeratorValues[1]));
 		return OddsRatio;
 	}
-	
+	/**
+	 * @param controlTracks
+	 * @return
+	 */
 	public double ORThreshold(SList controlTracks){
 	
 		List<Double> ORs = new ArrayList<Double>();
@@ -216,254 +519,11 @@ private static final Float FLOAT = (Float)null;
 	//	IJ.log("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
 		return ORs.get((int) (Params.NUMSAMPLES*0.95));
 	}
-	
-	public Chemotaxis() {}
-	
-	public int analysisSelectionDialog(Object[] options,String question,String title){
-		int n = JOptionPane.showOptionDialog(null,
-				question,
-				title,
-				JOptionPane.YES_NO_OPTION,
-				JOptionPane.QUESTION_MESSAGE,
-				null,     //do not use a custom Icon
-				options,  //the titles of buttons
-				options[0]); //default button title
-		return n;
-	}
-	public void analyzeFile(){
-		Trial trial = VideoAnalyzer.extractTrial("Chemotaxis-File");
-		if(trial==null)
-			return;
-		//Draw trajectories
-		float chIdx = calculateChIndex(trial.tracks);
-		float slIdx = calculateSLIndex(trial.tracks);
-		Paint.drawChemotaxis(trial.tracks,chIdx,slIdx,trial.width,trial.height,trial.source);
-		int[] hist = circularHistogram(getListOfAngles(trial.tracks),45);
-		int radius = trial.width;
-		Paint.drawRoseDiagram(hist,radius,chIdx,trial.source);
-	}
-	public float bootstrapping(Map<String,Trial> trials){
-		
-		ResultsTable rtRatios = new ResultsTable();
-		float positiveSamples = 0;//Percentage of positive samples
-		//Calculate minimum sample size
-		minSampleSize(trials);
-		Set keys = trials.keySet();
-		List controlKeys = getKeys(keys,'C');
-		SList controlTracks = mergeControlTracks(controlKeys,trials);
-		//Setting maximum number of subsamples used by bootstrapping method
-		//Params.NUMSAMPLES=controlKeys.size();
-		//Calculating OR threshold via subsampling
-		double thControl = ORThreshold(controlTracks);
-		for (Iterator k=controlKeys.iterator();k.hasNext();) {
-			String control= (String)k.next();
-			List conditionsKeys = getRelatedConditions(keys, control);
-			float TOTALSAMPLES = (float)controlKeys.size();
-			for (Iterator cond = conditionsKeys.iterator(); cond.hasNext();) {
-				String condition = (String)cond.next();
-				double OR = OR(control,condition,trials);
-				if(OR>thControl)
-					positiveSamples+=1/TOTALSAMPLES;
-				String filename = trials.get(condition).source;
-				String ID = trials.get(condition).ID;
-				setBootstrappingResults(rtRatios, OR, thControl, ID, filename);
-			}
-		}
-		rtRatios.show("Bootstrapping Results");
-		return positiveSamples;
-	}
-	
-	public void setBootstrappingResults(ResultsTable rt,double OR,double th,String ID, String filename){
-		
-//		System.out.println("filename: "+filename);
-		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
-//		System.out.println("parts[0]: "+parts[0]);
-//		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
-		
-		rt.incrementCounter();
-		rt.addValue("ID",ID);
-		rt.addValue("OR",OR);
-		rt.addValue("Threshold",th);
-		if(OR>(th))
-			rt.addValue("Result","POSITIVE");
-		else
-			rt.addValue("Result","-");
-		rt.addValue("Type", VideoAnalyzer.getTrialType(filename));
-		rt.addValue("Filename",filename);
-	}
-	/******************************************************/
-	/** Fuction to calculate the Ratio-Q
-	 * @param theTracks 2D-ArrayList with all the tracks
-	 * @return the Ratio-Q
-	 */
-	public float calculateChIndex(List theTracks){
-		
-		float nPos=0; //Number of shifts in the chemoattractant direction
-		float nNeg=0; //Number of shifts in other direction
-		int trackNr = 0; //Number of tracks
-		List angles = new ArrayList();
-		int nTracks = theTracks.size();
-		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
-		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
-		float chIdx = 0;
-		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
-			IJ.showProgress((double)trackNr/nTracks);
-			IJ.showStatus("Calculating Ch-Index...");
-			trackNr++;
-			List track=(ArrayList) iT.next();
-			int nPoints = track.size();
-			for (int j = 0; j < (nPoints-Params.angleDelta); j++) {
-				Spermatozoon oldSpermatozoon=(Spermatozoon)track.get(j);
-				Spermatozoon newSpermatozoon = (Spermatozoon)track.get(j+Params.angleDelta);
-				float diffX = newSpermatozoon.x-oldSpermatozoon.x;
-				float diffY = newSpermatozoon.y-oldSpermatozoon.y;
-				double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
-				angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
-//				IJ.log(""+angle);
-				if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
-					angle = -(2*Math.PI-angle);			
-				if(Math.abs(angle)<angleChemotaxis){
-					nPos++;
-				}
-				else //if(Math.abs(angle)>(Math.PI-angleAmplitude)){
-					nNeg++;
-			}
-			
-		}
-		if((nPos+nNeg)>0)
-			chIdx = (nPos/(nPos+nNeg)); // (nPos+nNeg) = Total number of shifts
-		else
-			chIdx=-1;
-		return chIdx;
-	}
-	
-	/******************************************************/
 	/**
-	 * @param theTracks 2D-ArrayList that stores all the tracks
-	 * @return RatioSL
+	 * @param mw
+	 * @throws IOException
+	 * @throws ClassNotFoundException
 	 */
-	public float calculateSLIndex(List theTracks){
-		
-		float nPos=0; //Number of shifts in the chemoattractant direction
-		float nNeg=0; //Number of shifts in other direction
-		int trackNr=0;
-		int nTracks = theTracks.size();
-		double angleDirection = (2*Math.PI + Params.angleDirection*Math.PI/180)%(2*Math.PI);
-		double angleChemotaxis = (2*Math.PI + (Params.angleAmplitude/2)*Math.PI/180)%(2*Math.PI);		
-		float ratioSL = 0;
-		for (ListIterator iT=theTracks.listIterator(); iT.hasNext();) {
-			IJ.showProgress((double)trackNr/nTracks);
-			IJ.showStatus("Calculating RatioSL...");
-			trackNr++;
-			List aTrack=(ArrayList) iT.next();
-			Spermatozoon first = (Spermatozoon)aTrack.get(1);
-			Spermatozoon last = (Spermatozoon)aTrack.get(aTrack.size() - 1);
-			float diffX = last.x-first.x;
-			float diffY = last.y-first.y;
-			double angle = (4*Math.PI+Math.atan2(diffY,diffX))%(2*Math.PI); //Absolute angle
-			angle = (2*Math.PI+angle-angleDirection)%(2*Math.PI); //Relative angle between interval [0,2*Pi]
-			if(angle>Math.PI) //expressing angle between interval [-Pi,Pi]
-				angle = -(2*Math.PI-angle);			
-			if(Math.abs(angle)<angleChemotaxis)
-				nPos++;
-			else
-				nNeg++;			
-		}
-		if((nPos+nNeg)>0)
-			ratioSL = (nPos/(nPos+nNeg));
-		else
-			ratioSL=-1;
-		return ratioSL;
-	}
-	
-	public List<String> getKeys(Set<String> keySet,char type){
-		List<String> keyList = new ArrayList<String>();
-		for (Iterator<String> k=keySet.iterator();k.hasNext();) {
-			String id = k.next();
-			//Key is in format:
-			//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
-			//	for control: YYYYMMDD-[ID]-C
-			String[] parts = id.split("-");
-			if(parts[parts.length-1].charAt(0)==type)
-				keyList.add(id);
-		}
-		return keyList;
-	}
-	
-	
-	public List getRelatedConditions(Set keySet,String controlKey){
-		List conditionsList = new ArrayList();
-		//Key is in format:
-		//	for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
-		//	for control: YYYYMMDD-[ID]-C	
-		String id = controlKey.substring(0, controlKey.length()-2);
-		id = id+"-Q";
-		for (Iterator k=keySet.iterator();k.hasNext();) {
-			String key = (String)k.next();
-			if(key.length()>=id.length()){
-			//  prefix: YYYYMMDD-[ID]-Q
-				String prefix = key.substring(0, id.length());
-				if(id.equals(prefix)) //Control identifier
-					conditionsList.add(key);
-			}
-		}
-		return conditionsList;
-	}
-	
-	public SList mergeControlTracks(List controlKeys, Map<String, Trial> trials){
-		
-	  SList tracks = new SList();
-	  for (Iterator k=controlKeys.iterator();k.hasNext();) {
-		  String key= (String)k.next();
-		  Trial trial = (Trial)trials.get(key);
-		  tracks.addAll(trial.tracks);
-	  }		
-	  return tracks;
-	}
-	
-	public float analyseChDirectory(Map<String,Trial> trials){
-		
-		float maxChIndex = 0;
-		float maxSLIndex = 0;
-		if(trials==null)
-			return FLOAT;
-		Set<String> keySet = trials.keySet();	
-		List<String> controlList = getKeys(keySet,'C'); //'C' = Control
-		List<String> chemoList = getKeys(keySet,'Q'); //'Q' = Chemotaxis
-		
-		ResultsTable rtRatios = new ResultsTable();
-		for (Iterator<String> k=controlList.iterator();k.hasNext();) {
-			String key= (String)k.next();
-			Trial trial = (Trial)trials.get(key);
-		  	System.out.println("key: "+key);
-		  	float chIdx = calculateChIndex(trial.tracks);
-		  	IJ.log(""+chIdx);
-		  	if(chIdx>maxChIndex)
-		  		maxChIndex=chIdx;
-		  	float ratioSL = calculateSLIndex(trial.tracks);
-		  	if(ratioSL>maxSLIndex)
-		  		maxSLIndex=ratioSL;
-		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
-		}
-		
-		for (Iterator<String> k=chemoList.iterator();k.hasNext();) {
-			String key= (String)k.next();
-			Trial trial = (Trial)trials.get(key);
-		  	System.out.println("key: "+key);
-		  	float chIdx = calculateChIndex(trial.tracks);
-		  	IJ.log(""+chIdx);
-		  	if(chIdx>maxChIndex)
-		  		maxChIndex=chIdx;
-		  	float ratioSL = calculateSLIndex(trial.tracks);
-		  	if(ratioSL>maxSLIndex)
-		  		maxSLIndex=ratioSL;
-		  	setChResults(rtRatios,trial.source,chIdx,ratioSL,trial.tracks.size());
-		}		
-		
-		rtRatios.show("Chemotaxis results");
-		return maxChIndex;
-	}
-	
 	public void run(MainWindow mw) throws IOException, ClassNotFoundException{
 		mw.setVisible(false);
 		//Ask if user wants to analyze a file or directory
@@ -532,11 +592,76 @@ private static final Float FLOAT = (Float)null;
 		}
 		mw.setVisible(true);
 	}
+	/**
+	 * @param rt
+	 * @param OR
+	 * @param th
+	 * @param ID
+	 * @param filename
+	 */
+	public void setBootstrappingResults(ResultsTable rt,double OR,double th,String ID, String filename){
+		
+//		System.out.println("filename: "+filename);
+		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
+//		System.out.println("parts[0]: "+parts[0]);
+//		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
+		
+		rt.incrementCounter();
+		rt.addValue("ID",ID);
+		rt.addValue("OR",OR);
+		rt.addValue("Threshold",th);
+		if(OR>(th))
+			rt.addValue("Result","POSITIVE");
+		else
+			rt.addValue("Result","-");
+		rt.addValue("Type", VideoAnalyzer.getTrialType(filename));
+		rt.addValue("Filename",filename);
+	}
 	
+	/**
+	 * @param rt
+	 * @param filename
+	 * @param chIdx
+	 * @param slIdx
+	 * @param nTracks
+	 */
+	public void setChResults(ResultsTable rt,String filename,float chIdx, float slIdx, int nTracks){
+		
+//		System.out.println("filename: "+filename);
+		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
+//		System.out.println("parts[0]: "+parts[0]);
+//		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
+		
+		rt.incrementCounter();	
+		rt.addValue("nTracks",nTracks);
+		rt.addValue("Ch-Index",chIdx);
+		rt.addValue("sl-Index",slIdx);		
+		rt.addValue("Type",parts[4]);
+		if(parts[4].equals("Q")){
+			rt.addValue("Hormone",parts[5]);
+			rt.addValue("Concentration",parts[6]);
+		}else{
+			rt.addValue("Hormone","-");
+			rt.addValue("Concentration","-");
+		}
+		rt.addValue("Direction (Degrees)",Params.angleDirection);
+		rt.addValue("ArcChemotaxis (Degrees)",Params.angleAmplitude);
+		rt.addValue("ID",parts[3]);
+		rt.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
+		rt.addValue("Filename",filename);
+	}
 	/******************************************************/
 	/**
 	 * @param analysis - true: simulate ch-index; false: bootstrapping
 	 * @return matrix of chIndexes relative to each pair beta-responsiveness level 
+	 */
+	/**
+	 * @param analysis
+	 * @param MAXNBETAS
+	 * @param MAXNRESP
+	 * @param maxBeta
+	 * @param MAXSIMULATIONS
+	 * @return
 	 */
 	public double[][] simulate(boolean analysis,int MAXNBETAS,int MAXNRESP,double maxBeta,int MAXSIMULATIONS){
 		
@@ -568,11 +693,17 @@ private static final Float FLOAT = (Float)null;
 			}
 		}
 		return results;		
-	}
+	}	
+	
+	
 	/******************************************************/
 	/**
 	 * @param analysis - true: simulate ch-index; false: bootstrapping
 	 * @return matrix of chIndexes relative to each pair beta-responsiveness level 
+	 */
+	/**
+	 * @param beta
+	 * @param responsiveness
 	 */
 	public void simulate(double beta,double responsiveness){
 		Trial tr = null;
@@ -586,32 +717,5 @@ private static final Float FLOAT = (Float)null;
 		int[] hist = circularHistogram(getListOfAngles(tr.tracks),45);
 		int radius = tr.width;
 		Paint.drawRoseDiagram(hist,radius,chIdx,tr.source);
-	}	
-	
-	
-	public void setChResults(ResultsTable rt,String filename,float chIdx, float slIdx, int nTracks){
-		
-//		System.out.println("filename: "+filename);
-		String[] parts = filename.split("-");//it's necessary to remove the '.avi' extension
-//		System.out.println("parts[0]: "+parts[0]);
-//		parts = parts[0].split("-");//Format 2000-11-19-1234-Q-P-100pM-0-1
-		
-		rt.incrementCounter();	
-		rt.addValue("nTracks",nTracks);
-		rt.addValue("Ch-Index",chIdx);
-		rt.addValue("sl-Index",slIdx);		
-		rt.addValue("Type",parts[4]);
-		if(parts[4].equals("Q")){
-			rt.addValue("Hormone",parts[5]);
-			rt.addValue("Concentration",parts[6]);
-		}else{
-			rt.addValue("Hormone","-");
-			rt.addValue("Concentration","-");
-		}
-		rt.addValue("Direction (Degrees)",Params.angleDirection);
-		rt.addValue("ArcChemotaxis (Degrees)",Params.angleAmplitude);
-		rt.addValue("ID",parts[3]);
-		rt.addValue("Date",parts[0]+"-"+parts[1]+"-"+parts[2]);
-		rt.addValue("Filename",filename);
 	}	
 }

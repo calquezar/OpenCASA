@@ -1,69 +1,153 @@
 package data;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.util.prefs.*;
+import java.util.prefs.Preferences;
 
-import ij.measure.ResultsTable;
-
+/**
+ * @author Carlos Alquezar
+ *
+ */
 public class Params {
 	
 	// declare my variable at the top of my Java class
+	/**
+	 * 
+	 */
 	private static Preferences prefs;
 	
+	/**
+	 * 
+	 */
 	public static double	pixelWidth=1.0;
+	/**
+	 * 
+	 */
 	public static double pixelHeight=1.0;
 	/** @brief minimum sperm size */
+	/**
+	 * 
+	 */
 	public static float	minSize = 40;
 	//maximum sperm size
+	/**
+	 * 
+	 */
 	public static float	maxSize = 400;
 	//minimum length of sperm track in frames
+	/**
+	 * 
+	 */
 	public static int 	minTrackLength = 15;
 	//maximum velocity that is allowable between frames (this is the search radius for the next sperm location in a track... it will only look w/in this distance)
+	/**
+	 * 
+	 */
 	public static float 	maxDisplacement = 10; // um
 	//Window size for moving average method
+	/**
+	 * 
+	 */
 	public static int wSize = 9;
 	//Motility filter for motile and non motile sperm
+	/**
+	 * 
+	 */
 	public static float vclMin = 70;
 	//Decimation factor
+	/**
+	 * 
+	 */
 	public static int angleDelta = 4;
 	//Angles used to clasify chemotactic trajectories
+	/**
+	 * 
+	 */
 	public static float angleDirection = 0; 
+	/**
+	 * 
+	 */
 	public static float angleAmplitude = 90;
 	// frame rate
+	/**
+	 * 
+	 */
 	public static float frameRate = 100;
 	//parameters used to compute BCF (equivalent to decimation factor)
+	/**
+	 * 
+	 */
 	public static int bcf_shift = 0;
 	// Parameter used to determine progressive motility sperm
+	/**
+	 * 
+	 */
 	public static float progressMotility = 80;
 	//Micrometers per pixel
 	// 10x ==> 0.58
 	// 40x ==> 0.1455
+	/**
+	 * 
+	 */
 	public static double micronPerPixel = 1;//0.58; 10x ISAS
 	//print the xy co-ordinates for all tracks?
+	/**
+	 * 
+	 */
 	public static boolean printXY = false;
 	//Calculate motility parameters
 //	public static boolean calcMotilityParameters = true;
 //	public static boolean calcMeanMotilityParameters = true;
 	//Draw original trajectories
+	/**
+	 * 
+	 */
 	public static boolean drawOrigTrajectories = true;
 	//Draw original trajectories
+	/**
+	 * 
+	 */
 	public static boolean drawAvgTrajectories = true;
 	//Used to calculate OR ratios
+	/**
+	 * 
+	 */
 	public static int MAXINSTANGLES = 20000;
+	/**
+	 * 
+	 */
 	public static int NUMSAMPLES = 100;
+	/**
+	 * 
+	 */
 	public static float borderSize = 20;
+	/**
+	 * 
+	 */
 	public static String selectedFilter = "";
+	/**
+	 * 
+	 */
 	public static String male = "";
+	/**
+	 * 
+	 */
 	public static String date = "";
 	
+	/**
+	 * 
+	 */
 	public static float vclLowerTh = 45;
+	/**
+	 * 
+	 */
 	public static float vclUpperTh = 75;
 	
+	/**
+	 * 
+	 */
 	public static void resetParams(){
 		
 //		minSize = 20;
@@ -130,6 +214,9 @@ public class Params {
 		NUMSAMPLES = prefs.getInt("NUMSAMPLES",NUMSAMPLES);
 	}
 	
+	/**
+	 * 
+	 */
 	public static void saveParams(){
 		
 		prefs = Preferences.userNodeForPackage(Params.class);
