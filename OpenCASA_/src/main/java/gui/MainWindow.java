@@ -32,31 +32,31 @@ public class MainWindow extends JFrame {
 
   /**
     * 
-  	 */
+    */
   private MainWindow mw;
   /**
-  	 * 
-  	 */
+    * 
+    */
   Chemotaxis ch;
   /**
-  	 * 
-  	 */
+    * 
+    */
   Motility mot;
   /**
-  	 * 
-  	 */
+    * 
+    */
   ViabilityWindow viabilityW;
   /**
-  	 * 
-  	 */
+    * 
+    */
   MorphWindow morphW;
   /**
-  	 * 
-  	 */
+    * 
+    */
   Simulation sim;
   /**
-  	 * 
-  	 */
+    * 
+    */
   SettingsWindow sw;
 
   /**

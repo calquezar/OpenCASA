@@ -34,8 +34,8 @@ public class Chemotaxis {
 
   // private Map<String, Trial> trials = new HashMap<String, Trial>();
   /**
-  	 * 
-  	 */
+   * 
+   */
   public Chemotaxis() {
   }
 
@@ -47,8 +47,9 @@ public class Chemotaxis {
 
     float maxChIndex = 0;
     float maxSLIndex = 0;
-    if (trials == null)
+    if (trials == null) {
       return FLOAT;
+    }
     Set<String> keySet = trials.keySet();
     List<String> controlList = getKeys(keySet, 'C'); // 'C' = Control
     List<String> chemoList = getKeys(keySet, 'Q'); // 'Q' = Chemotaxis
@@ -60,11 +61,13 @@ public class Chemotaxis {
       System.out.println("key: " + key);
       float chIdx = calculateChIndex(trial.tracks);
       IJ.log("" + chIdx);
-      if (chIdx > maxChIndex)
+      if (chIdx > maxChIndex) {
         maxChIndex = chIdx;
+      }
       float ratioSL = calculateSLIndex(trial.tracks);
-      if (ratioSL > maxSLIndex)
+      if (ratioSL > maxSLIndex) {
         maxSLIndex = ratioSL;
+      }
       setChResults(rtRatios, trial.source, chIdx, ratioSL, trial.tracks.size());
     }
 
@@ -74,11 +77,13 @@ public class Chemotaxis {
       System.out.println("key: " + key);
       float chIdx = calculateChIndex(trial.tracks);
       IJ.log("" + chIdx);
-      if (chIdx > maxChIndex)
+      if (chIdx > maxChIndex) {
         maxChIndex = chIdx;
+      }
       float ratioSL = calculateSLIndex(trial.tracks);
-      if (ratioSL > maxSLIndex)
+      if (ratioSL > maxSLIndex) {
         maxSLIndex = ratioSL;
+      }
       setChResults(rtRatios, trial.source, chIdx, ratioSL, trial.tracks.size());
     }
 
@@ -102,12 +107,13 @@ public class Chemotaxis {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void analyzeFile() {
     Trial trial = VideoAnalyzer.extractTrial("Chemotaxis-File");
-    if (trial == null)
+    if (trial == null) {
       return;
+    }
     // Draw trajectories
     float chIdx = calculateChIndex(trial.tracks);
     float slIdx = calculateSLIndex(trial.tracks);
@@ -141,8 +147,9 @@ public class Chemotaxis {
       for (Iterator cond = conditionsKeys.iterator(); cond.hasNext();) {
         String condition = (String) cond.next();
         double OR = OR(control, condition, trials);
-        if (OR > thControl)
+        if (OR > thControl) {
           positiveSamples += 1 / TOTALSAMPLES;
+        }
         String filename = trials.get(condition).source;
         String ID = trials.get(condition).ID;
         setBootstrappingResults(rtRatios, OR, thControl, ID, filename);
@@ -193,19 +200,22 @@ public class Chemotaxis {
                                                                         // interval
                                                                         // [0,2*Pi]
         // IJ.log(""+angle);
-        if (angle > Math.PI) // expressing angle between interval [-Pi,Pi]
+        if (angle > Math.PI) {
           angle = -(2 * Math.PI - angle);
+        }
         if (Math.abs(angle) < angleChemotaxis) {
           nPos++;
-        } else // if(Math.abs(angle)>(Math.PI-angleAmplitude)){
+        } else {
           nNeg++;
+        }
       }
 
     }
-    if ((nPos + nNeg) > 0)
+    if ((nPos + nNeg) > 0) {
       chIdx = (nPos / (nPos + nNeg)); // (nPos+nNeg) = Total number of shifts
-    else
+    } else {
       chIdx = -1;
+    }
     return chIdx;
   }
 
@@ -244,17 +254,20 @@ public class Chemotaxis {
                                                                       // between
                                                                       // interval
                                                                       // [0,2*Pi]
-      if (angle > Math.PI) // expressing angle between interval [-Pi,Pi]
+      if (angle > Math.PI) {
         angle = -(2 * Math.PI - angle);
-      if (Math.abs(angle) < angleChemotaxis)
+      }
+      if (Math.abs(angle) < angleChemotaxis) {
         nPos++;
-      else
+      } else {
         nNeg++;
+      }
     }
-    if ((nPos + nNeg) > 0)
+    if ((nPos + nNeg) > 0) {
       ratioSL = (nPos / (nPos + nNeg));
-    else
+    } else {
       ratioSL = -1;
+    }
     return ratioSL;
   }
 
@@ -266,8 +279,9 @@ public class Chemotaxis {
   public int[] circularHistogram(List<Double> angles, int N) {
 
     int[] histogram = new int[N];
-    for (int i = 0; i < N; i++)
+    for (int i = 0; i < N; i++) {
       histogram[i] = 0;
+    }
     int BINSIZE = 360 / N;
     for (int i = 0; i < angles.size(); i++) {
       int bin = angles.get(i).intValue() / BINSIZE;
@@ -314,8 +328,9 @@ public class Chemotaxis {
                                                                       // between
                                                                       // interval
                                                                       // [0,2*Pi]
-      if (angle > Math.PI) // expressing angle between interval [-Pi,Pi]
+      if (angle > Math.PI) {
         angle = -(2 * Math.PI - angle);
+      }
       if (Math.abs(angle) < angleChemotaxis) {
         nPos++;
       } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
@@ -341,8 +356,9 @@ public class Chemotaxis {
       // for chemotaxis: YYYYMMDD-[ID]-Q[hormone+concentration]
       // for control: YYYYMMDD-[ID]-C
       String[] parts = id.split("-");
-      if (parts[parts.length - 1].charAt(0) == type)
+      if (parts[parts.length - 1].charAt(0) == type) {
         keyList.add(id);
+      }
     }
     return keyList;
   }
@@ -386,8 +402,9 @@ public class Chemotaxis {
       if (key.length() >= id.length()) {
         // prefix: YYYYMMDD-[ID]-Q
         String prefix = key.substring(0, id.length());
-        if (id.equals(prefix)) // Control identifier
+        if (id.equals(prefix)) {
           conditionsList.add(key);
+        }
       }
     }
     return conditionsList;
@@ -424,8 +441,9 @@ public class Chemotaxis {
       Trial t = (Trial) trials.get(k1);
       int[] instantAngles = countAngles(t.tracks);
       int sampleSize = instantAngles[0] + instantAngles[1];
-      if (sampleSize < minimum)
+      if (sampleSize < minimum) {
         minimum = sampleSize;
+      }
     }
     Params.MAXINSTANGLES = minimum;
   }
@@ -621,10 +639,11 @@ public class Chemotaxis {
           return;
         }
         // Utils.saveTrials(trials);
-        if (userSelection2 == 0)
+        if (userSelection2 == 0) {
           analyseChDirectory(trials);
-        else if (userSelection2 == 1)
+        } else if (userSelection2 == 1) {
           bootstrapping(trials);
+        }
       } else if (userSelection1 == 2) { // Simulations
         int MAXNBETAS = 10;
         int MAXNRESP = 10;
@@ -634,10 +653,11 @@ public class Chemotaxis {
         final boolean CHINDEX = true;
         final boolean BOOTSTRAPPING = false;
         boolean analysis = false;
-        if (userSelection2 == 0)
+        if (userSelection2 == 0) {
           analysis = CHINDEX;
-        else if (userSelection2 == 1)
+        } else if (userSelection2 == 1) {
           analysis = BOOTSTRAPPING;
+        }
         // results =
         // simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
         ////////////////////
@@ -677,10 +697,11 @@ public class Chemotaxis {
     rt.addValue("ID", ID);
     rt.addValue("OR", OR);
     rt.addValue("Threshold", th);
-    if (OR > (th))
+    if (OR > (th)) {
       rt.addValue("Result", "POSITIVE");
-    else
+    } else {
       rt.addValue("Result", "-");
+    }
     rt.addValue("Type", VideoAnalyzer.getTrialType(filename));
     rt.addValue("Filename", filename);
   }
@@ -777,8 +798,9 @@ public class Chemotaxis {
   public void simulate(double beta, double responsiveness) {
     Trial tr = null;
     tr = VideoAnalyzer.simulateTrial("Chemotaxis-Simulation", beta, responsiveness);//
-    if (tr == null)
+    if (tr == null) {
       return;
+    }
     float chIdx = calculateChIndex(tr.tracks);
     float slIdx = calculateSLIndex(tr.tracks);
     Paint.drawChemotaxis(tr.tracks, chIdx, slIdx, tr.width, tr.height, tr.source);

@@ -24,75 +24,75 @@ import data.Params;
 public class SettingsWindow extends JFrame {
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   SettingsWindow sw;
   /**
-  	 * 
-  	 */
+   * 
+   */
   MainWindow mw;
   // General
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField frameRateTF = new JTextField("" + Params.frameRate, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField micronPerPixelTF = new JTextField("" + Params.micronPerPixel, 4);
   // JTextField maleTF = new JTextField(Params.male,8);
   // JTextField dateTF = new JTextField(Params.date,8);
   // Recognition
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField minSizeTF = new JTextField("" + Params.minSize, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField minTrackLengthTF = new JTextField("" + Params.minTrackLength, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
   // Filtering
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
   // Chemotaxis
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
   // Motility
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
   /**
-  	 * 
-  	 */
+   * 
+   */
   JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
 
   /**
@@ -379,8 +379,8 @@ public class SettingsWindow extends JFrame {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void setParameters() {
     // General
     Params.frameRate = Float.parseFloat(frameRateTF.getText());

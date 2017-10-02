@@ -25,69 +25,69 @@ public class Motility {
 
   // Motility variables
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_sperm = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_vsl = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_vcl = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_vap = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_lin = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_wob = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_str = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_alhMean = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_alhMax = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_bcf = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_dance = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_mad = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_motile = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float total_nonMotile = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   private float countProgressiveSperm = 0;
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public Motility() {
   }
 
@@ -109,13 +109,14 @@ public class Motility {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void analyzeDirectory() {
 
     String[] listOfFiles = Utils.getFileNames();
-    if (listOfFiles == null || listOfFiles.length == 0)
+    if (listOfFiles == null || listOfFiles.length == 0) {
       return;
+    }
     String analysis = "Motility-Directory";
     ResultsTable rtIndividual = new ResultsTable();
     ResultsTable rtAverage = new ResultsTable();
@@ -124,8 +125,9 @@ public class Motility {
       Map<String, Trial> trials = null;
       String absoluteFilePath = listOfFiles[i];
       trials = VideoAnalyzer.extractTrials(absoluteFilePath, analysis);
-      if (trials == null)
+      if (trials == null) {
         return;
+      }
       Set keySet = trials.keySet();
       for (Iterator k = keySet.iterator(); k.hasNext();) {
         String key = (String) k.next();
@@ -143,12 +145,13 @@ public class Motility {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void analyzeFile() {
     Trial trial = VideoAnalyzer.extractTrial("Motility-File");
-    if (trial == null)
+    if (trial == null) {
       return;
+    }
     ResultsTable rtIndividual = new ResultsTable();
     calculateMotility(rtIndividual, trial);
     ResultsTable rtAverage = new ResultsTable();
@@ -249,7 +252,7 @@ public class Motility {
       float str_value = (vsl_value / vap_value) * 100;
       total_str += str_value;
       // Amplitude of lateral head
-      float alh_values[] = Kinematics.alh(aTrack, avgTrack);
+      float[] alh_values = Kinematics.alh(aTrack, avgTrack);
       total_alhMean += alh_values[0];
       total_alhMax += alh_values[1];
       // Beat-cross frequency
@@ -332,8 +335,8 @@ public class Motility {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void resetParams() {
     total_sperm = 0;
     total_vsl = 0;
@@ -363,10 +366,11 @@ public class Motility {
       mw.setVisible(true);
       return;
     }
-    if (userSelection == 0)
+    if (userSelection == 0) {
       analyzeFile();
-    else if (userSelection == 1)
+    } else if (userSelection == 1) {
       analyzeDirectory();
+    }
     mw.setVisible(true);
   }
 }

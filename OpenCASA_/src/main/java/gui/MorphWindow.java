@@ -48,98 +48,98 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   // Here we'll store the original images
   /**
-  	 * 
-  	 */
+   * 
+   */
   ImagePlus impOrig = null;
   // These ImagePlus will be used to draw over them
   /**
-  	 * 
-  	 */
+   * 
+   */
   ImagePlus impDraw = null;
   // These ImagePlus will be used to calculate mean gray values
   /**
-  	 * 
-  	 */
+   * 
+   */
   ImagePlus impGray = null;
   // These ImagePlus will be used to identify spermatozoa
   /**
-  	 * 
-  	 */
+   * 
+   */
   ImagePlus impTh = null;
   // These ImagePlus will be used to store outlines
   /**
-  	 * 
-  	 */
+   * 
+   */
   ImagePlus impOutline = null;
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   double threshold = -1.0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   String thresholdMethod = "Otsu";
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   JLabel imgLabel;
   /**
-  	 * 
-  	 */
+   * 
+   */
   JLabel title;
   /**
-  	 * 
-  	 */
+   * 
+   */
   MainWindow mainW;
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   boolean isThresholding = false;
   /**
-  	 * 
-  	 */
+   * 
+   */
   JSlider sldThreshold;
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   List<ImagePlus> images;
   /**
-  	 * 
-  	 */
+   * 
+   */
   int imgIndex;
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   JFrame frame;
   // Resize parameters
   /**
-  	 * 
-  	 */
+   * 
+   */
   double resizeFactor;
   /**
-  	 * 
-  	 */
+   * 
+   */
   double xFactor;
   /**
-  	 * 
-  	 */
+   * 
+   */
   double yFactor;
 
   // Variable used to store spermatozoa
   /**
-  	 * 
-  	 */
+   * 
+   */
   List<Spermatozoon> spermatozoa = new ArrayList<Spermatozoon>();
 
   // Results table
   /**
-  	 * 
-  	 */
+   * 
+   */
   ResultsTable morphometrics = new ResultsTable();
 
   /**
@@ -180,8 +180,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void close() {
     impOrig.changes = false;
     impDraw.changes = false;
@@ -191,8 +191,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-  	 *
-  	 */
+   *
+   */
   private void doMouseRefresh() {
     if (!isThresholding) {
       isThresholding = true;
@@ -210,8 +210,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   private void doSliderRefresh() {
     if (!isThresholding) {
       isThresholding = true;
@@ -262,8 +262,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void idenfitySperm() {
     int SpermNr = 0;
     for (ListIterator<Spermatozoon> j = spermatozoa.listIterator(); j.hasNext();) {
@@ -275,8 +275,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void initImage() {
     setImage(0); // Initialization with the first image available
     processImage(false);
@@ -382,8 +382,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void reset() {
     impOrig.close();
     impDraw.close();
@@ -395,8 +395,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void resetSelections() {
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
       Spermatozoon spermatozoon = (Spermatozoon) j.next();
@@ -406,8 +406,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void setImage() {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     double w = screenSize.getWidth();
@@ -447,8 +447,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void setResizeFactor() {
     double origW = impOrig.getWidth();
     double origH = impOrig.getHeight();
@@ -460,8 +460,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void showWindow() {
 
     JPanel panel = new JPanel(new GridBagLayout());

@@ -10,41 +10,41 @@ import ij.ImagePlus;
  */
 public class Trial implements Serializable {
   /**
-  	 * 
-  	 */
+   * 
+   */
   public String ID = "";
   /**
-  	 * 
-  	 */
+   * 
+   */
   public String type = "";
   /**
-  	 * 
-  	 */
+   * 
+   */
   public String source = "";// the name of the source file
   /**
-  	 * 
-  	 */
+   * 
+   */
   public SList tracks = null;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public ImagePlus imp = null;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public int width = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public int height = 0;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public int[] motileSperm = new int[2];// [0] - motile; [1] - nonMotile
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public Trial() {
   }
 

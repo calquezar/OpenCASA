@@ -11,8 +11,8 @@ import java.util.Collection;
 public class SList extends ArrayList implements Serializable {
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public SList() {
   }
 

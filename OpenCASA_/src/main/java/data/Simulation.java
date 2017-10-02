@@ -20,7 +20,7 @@ public abstract class Simulation {
   abstract void draw(ImageProcessor ip);
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   abstract public void run();
 }

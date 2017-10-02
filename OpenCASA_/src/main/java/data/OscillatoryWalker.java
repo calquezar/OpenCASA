@@ -120,20 +120,20 @@ public class OscillatoryWalker extends Simulation {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   int width = 800;
   /**
-  	 * 
-  	 */
+   * 
+   */
   int height = 800;
   /**
-  	 * 
-  	 */
+   * 
+   */
   int cellCount = 1;
   /**
-  	 * 
-  	 */
+   * 
+   */
   Cell[] sperm = new Cell[cellCount];
   /**
    * 
@@ -145,13 +145,13 @@ public class OscillatoryWalker extends Simulation {
 
   // Point[][] tracks = new Point[cellCount][SIMLENGTH];
   /**
-  	 * 
-  	 */
+   * 
+   */
   List<Spermatozoon> track = new ArrayList<Spermatozoon>();
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public OscillatoryWalker() {
     for (int x = cellCount - 1; x >= 0; x--) {
       sperm[x] = new Cell();
@@ -200,8 +200,8 @@ public class OscillatoryWalker extends Simulation {
   }
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void run() {
     createSimulation().show();
   }

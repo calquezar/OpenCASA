@@ -170,8 +170,8 @@ public class Viability implements Measurements, ChangeListener, MouseListener {
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void createGUI() {
 
     JPanel panel = new JPanel(new GridBagLayout());
@@ -524,8 +524,8 @@ public class Viability implements Measurements, ChangeListener, MouseListener {
 
   /******************************************************/
   /**
-  	 *
-  	 */
+   *
+   */
   private void doMouseRefresh() {
     if (!isThresholding) {
       isThresholding = true;
@@ -823,8 +823,8 @@ public class Viability implements Measurements, ChangeListener, MouseListener {
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void setAliveImage(boolean isEvent) {
     if (aliveThreshold == -1 || isEvent) {// First time
       if (selectedFilter == "Green")
@@ -849,8 +849,8 @@ public class Viability implements Measurements, ChangeListener, MouseListener {
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void setCanvas() {
     ImageWindow win = imp.getWindow();
     canvas = win.getCanvas();
@@ -859,8 +859,8 @@ public class Viability implements Measurements, ChangeListener, MouseListener {
 
   /******************************************************/
   /**
-  	 * 
-  	 */
+   * 
+   */
   public void setDeadsImage(boolean isEvent) {
     if (deadsThreshold == -1 || isEvent) {// First time
       deadsImpGray = ComputerVision.getRedChannel(deadsImpOrig);

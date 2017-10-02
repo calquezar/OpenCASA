@@ -10,71 +10,71 @@ public class Spermatozoon implements Serializable {
 
   /** @brief */
   /**
-  	 * 
-  	 */
+   * 
+   */
   public String id = "*";
   /**
-  	 * 
-  	 */
+   * 
+   */
   public boolean flag = false;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public boolean inTrack = false;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public int trackNr;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float x;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float y;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public int z;
   // Boundary data
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float bx;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float by;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float width;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float height;
   // Selection variables
   /**
-  	 * 
-  	 */
+   * 
+   */
   public boolean selected = false;
   // Morphometrics
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float total_area = -1;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float total_perimeter = -1;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float total_feret = -1;
   /**
-  	 * 
-  	 */
+   * 
+   */
   public float total_minFeret = -1;
 
   /**

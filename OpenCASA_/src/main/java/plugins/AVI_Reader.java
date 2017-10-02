@@ -55,9 +55,9 @@ import ij.process.ShortProcessor;
  *        '-1' (last frame -1), etc.
  *
  * Version History:
- * 	 2017-01-24
- * 		  Commented line 275 to hide dialog. The parameters isVirtual, convertToGray and flipVertical 
- * 		  are set to 'false' by default. The purpose of this adaptation is to automate the process of analyzing directories
+ *  2017-01-24
+ *   Commented line 275 to hide dialog. The parameters isVirtual, convertToGray and flipVertical 
+ *   are set to 'false' by default. The purpose of this adaptation is to automate the process of analyzing directories
  *   2008-04-29
  *        based on a plugin by Daniel Marsh and Wayne Rasband;
  *        modifications by Michael Schmid
@@ -99,8 +99,8 @@ import ij.process.ShortProcessor;
  *      - Creates a unique window name.
  *      - Opens MJPG files also if they do not contain Huffman tables
  *   2017-09-28
- *   	- Commented line 1268 (in current file) from the original plugin to hide dialog
- *   	- in order to apply the plugin automatically (by Carlos Alquézar)
+ *   - Commented line 1268 (in current file) from the original plugin to hide dialog
+ *   - in order to apply the plugin automatically (by Carlos Alquézar)
  *
  * The AVI format looks like this:
  * RIFF AVI                 RIFF HEADER, AVI CHUNK                  

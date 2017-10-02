@@ -17,13 +17,13 @@ import ij.ImagePlus;
 public class LoadImages {
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   MainWindow mainW;
 
   /**
-  	 * 
-  	 */
+   * 
+   */
   public LoadImages(MainWindow mw) {
     mainW = mw;
   }
