@@ -10,24 +10,24 @@ import java.util.Collection;
  */
 public class SList extends ArrayList implements Serializable {
 
-   /**
-   	 * 
-   	 */
-   public SList() {
-   }
+  /**
+  	 * 
+  	 */
+  public SList() {
+  }
 
-   /**
-    * @param c
-    */
-   public SList(Collection c) {
-      super(c);
-   }
+  /**
+   * @param c
+   */
+  public SList(Collection c) {
+    super(c);
+  }
 
-   /**
-    * @param initialCapacity
-    */
-   public SList(int initialCapacity) {
-      super(initialCapacity);
-   }
+  /**
+   * @param initialCapacity
+   */
+  public SList(int initialCapacity) {
+    super(initialCapacity);
+  }
 
 }

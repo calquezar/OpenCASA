@@ -28,19 +28,19 @@ import ij.ImagePlus;
 
 public class ViabilityWindow {
 
-   /**
-   	 * 
-   	 */
-   MainWindow mainW;
-   /**
-   	 * 
-   	 */
-   List<ImagePlus> images;
+  /**
+  	 * 
+  	 */
+  MainWindow mainW;
+  /**
+  	 * 
+  	 */
+  List<ImagePlus> images;
 
-   /**
-   	 */
-   public ViabilityWindow(MainWindow mw) {
-      mainW = mw;
-   }
+  /**
+  	 */
+  public ViabilityWindow(MainWindow mw) {
+    mainW = mw;
+  }
 
 }

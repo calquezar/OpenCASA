@@ -15,39 +15,39 @@ import ij.plugin.PlugIn;
  */
 public class OpenCASA_ implements PlugIn {
 
-   /**
-    * Main method
-    * 
-    * @param args
-    *           unused
-    * @throws UnsupportedLookAndFeelException
-    * @throws IllegalAccessException
-    * @throws InstantiationException
-    * @throws ClassNotFoundException
-    */
-   public static void main(String[] args) throws ClassNotFoundException, InstantiationException, IllegalAccessException,
-         UnsupportedLookAndFeelException {
+  /**
+   * Main method
+   * 
+   * @param args
+   *          unused
+   * @throws UnsupportedLookAndFeelException
+   * @throws IllegalAccessException
+   * @throws InstantiationException
+   * @throws ClassNotFoundException
+   */
+  public static void main(String[] args)
+      throws ClassNotFoundException, InstantiationException, IllegalAccessException, UnsupportedLookAndFeelException {
 
-      UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-      // set the plugins.dir property to make the plugin appear in the Plugins
-      // menu
-      Class<?> clazz = OpenCASA_.class;
-      String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();
-      String pluginsDir = url.substring("file:".length(), url.length() - clazz.getName().length() - ".class".length());
-      System.setProperty("plugins.dir", pluginsDir);
-      // start ImageJ
-      new ImageJ();
-      // run the plugin
-      IJ.runPlugIn(clazz.getName(), "");
+    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+    // set the plugins.dir property to make the plugin appear in the Plugins
+    // menu
+    Class<?> clazz = OpenCASA_.class;
+    String url = clazz.getResource("/" + clazz.getName().replace('.', '/') + ".class").toString();
+    String pluginsDir = url.substring("file:".length(), url.length() - clazz.getName().length() - ".class".length());
+    System.setProperty("plugins.dir", pluginsDir);
+    // start ImageJ
+    new ImageJ();
+    // run the plugin
+    IJ.runPlugIn(clazz.getName(), "");
 
-   }
+  }
 
-   /**
-    * This method overrides the superclass run's method. Start point of the
-    * plugin.
-    **/
-   @Override
-   public void run(String arg) {
-      (new MainWindow("OpenCASA")).setVisible(true);
-   }
+  /**
+   * This method overrides the superclass run's method. Start point of the
+   * plugin.
+   **/
+  @Override
+  public void run(String arg) {
+    (new MainWindow("OpenCASA")).setVisible(true);
+  }
 }

@@ -9,18 +9,18 @@ import ij.process.ImageProcessor;
  */
 public abstract class Simulation {
 
-   /**
-    * @return
-    */
-   abstract public ImagePlus createSimulation();
+  /**
+   * @return
+   */
+  abstract public ImagePlus createSimulation();
 
-   /**
-    * @param ip
-    */
-   abstract void draw(ImageProcessor ip);
+  /**
+   * @param ip
+   */
+  abstract void draw(ImageProcessor ip);
 
-   /**
-   	 * 
-   	 */
-   abstract public void run();
+  /**
+  	 * 
+  	 */
+  abstract public void run();
 }
