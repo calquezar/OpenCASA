@@ -125,10 +125,10 @@ public class MainWindow extends JFrame {
           // via = new Viability();
           // try{via.run(mw);}
           // catch(Exception e1){e1.printStackTrace();}
-          LoadImages ld = new LoadImages(mw);
-          viabilityW = new ViabilityWindow(mw);
-          viabilityW.setImages(ld.run());
-          viabilityW.showWindow();
+//          LoadImages ld = new LoadImages(mw);
+//          viabilityW = new ViabilityWindow(mw);
+//          viabilityW.setImages(ld.run());
+//          viabilityW.showWindow();
         } else if (label.equals("Morphometry")) {
           LoadImages ld = new LoadImages(mw);
           morphW = new MorphWindow(mw);
