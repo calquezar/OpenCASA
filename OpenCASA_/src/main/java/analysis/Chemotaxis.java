@@ -647,11 +647,7 @@ public class Chemotaxis {
           bootstrapping(trials);
         }
       } else if (userSelection1 == 2) { // Simulations
-        int MAXNBETAS = 10;
-        int MAXNRESP = 10;
-        int MAXSIMULATIONS = 20;
-        double[][] results = new double[MAXNBETAS][MAXNRESP];
-        double maxBeta = 2;
+
         final boolean CHINDEX = true;
         final boolean BOOTSTRAPPING = false;
         boolean analysis = false;
@@ -670,8 +666,29 @@ public class Chemotaxis {
           simulate(beta,responsiveness); // a single ch-index simulation
         } else if (userSelection2 == 1) {
           analysis = BOOTSTRAPPING;
+          GenericDialog gd = new GenericDialog("Set Simulation parameters");
+          gd.addNumericField("Min Beta ", 0, 1);
+          gd.addNumericField("Max Beta ", 2, 1);
+          gd.addNumericField("Min responsiveness (%) ", 0, 1);
+          gd.addNumericField("Max responsiveness (%) ", 100, 1);
+          gd.addNumericField("Max (control-condition) simulations for each pair (beta-resp) ", 50, 0);
+          gd.addNumericField("Total number of betas ", 10, 0);
+          gd.addNumericField("Total number of responsiveness ", 10, 0);
+          gd.showDialog();
+          if (gd.wasCanceled()) {
+            mw.setVisible(true);
+            return;
+          }
+          double MINBETA = gd.getNextNumber();
+          double MAXBETA = gd.getNextNumber();
+          double MINRESP= gd.getNextNumber()/100;//value must be between [0,1]
+          double MAXRESP = gd.getNextNumber()/100;//value must be between [0,1]
+          int MAXSIMULATIONS = (int)gd.getNextNumber();
+          int TOTALBETAS = (int) gd.getNextNumber();
+          int TOTALRESP = (int) gd.getNextNumber();
+//          double[][] results = new double[TOTALBETAS][TOTALRESP];
           // results =
-          // simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
+          simulate(analysis,TOTALBETAS,TOTALRESP,MINBETA,MAXBETA,MINRESP,MAXRESP,MAXSIMULATIONS);
         }
         mw.setVisible(true);
         // Print simulation results throw IJ.log
@@ -755,25 +772,25 @@ public class Chemotaxis {
    */
   /**
    * @param analysis
-   * @param MAXNBETAS
-   * @param MAXNRESP
-   * @param maxBeta
+   * @param TOTALBETAS
+   * @param TOTALRESP
+   * @param MAXBETA
    * @param MAXSIMULATIONS
    * @return
    */
-  public double[][] simulate(boolean analysis, int MAXNBETAS, int MAXNRESP, double maxBeta, int MAXSIMULATIONS) {
+  public double[][] simulate(boolean analysis, int TOTALBETAS, int TOTALRESP, double MINBETA, double MAXBETA, double MINRESP, double MAXRESP,int MAXSIMULATIONS) {
 
-    double[] Betas = new double[MAXNBETAS];
-    double[] Responsiveness = new double[MAXNRESP];
-    double[][] results = new double[MAXNBETAS][MAXNRESP];
+    double[] Betas = new double[TOTALBETAS];
+    double[] Responsiveness = new double[TOTALRESP];
+    double[][] results = new double[TOTALBETAS][TOTALRESP];
     Map<String, Trial> trials = null;
-    for (int i = 0; i < MAXNBETAS; i++) {
-      double beta = (i / (double) MAXNBETAS) * maxBeta;
+    for (int i = 0; i < TOTALBETAS; i++) {
+      double beta = (i / (double) TOTALBETAS) * (MAXBETA - MINBETA)+MINBETA;
       System.out.println("beta: " + beta);
       Betas[i] = beta;
-      for (int j = 0; j < MAXNRESP; j++) {
+      for (int j = 0; j < TOTALRESP; j++) {
         System.out.println("i: " + i + "; j: " + j);
-        double responsiveCells = j / (double) MAXNRESP;
+        double responsiveCells = (j / (double) TOTALRESP) * (MAXRESP - MINRESP)+MINRESP;
         Responsiveness[j] = responsiveCells;
         System.out.println("responsiveCells: " + responsiveCells);
         trials = VideoAnalyzer.simulateTrials("Chemotaxis-Simulation", beta, responsiveCells, MAXSIMULATIONS);//
