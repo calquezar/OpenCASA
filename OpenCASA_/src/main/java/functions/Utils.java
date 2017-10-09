@@ -263,23 +263,4 @@ public abstract class Utils {
     return null;
   }
   
-  public static void progressBar(){
-    JProgressBar progressBar = new JProgressBar(0, 100);
-    progressBar.setValue(0);
-    progressBar.setStringPainted(true);
-    JPanel panel = new JPanel();
-    panel.add(progressBar);
-    
-    JFrame frame = new JFrame("ProgressBarDemo");
-    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-    //Create and set up the content pane.
-    frame.setContentPane(panel);
-
-    //Display the window.
-    frame.pack();
-    frame.setVisible(true);
-    for(int i=0;i<1000000000;i++)
-      progressBar.setValue((int) (i/(float)10000000))
-  }
 }

@@ -119,9 +119,9 @@ public class Chemotaxis {
     // Draw trajectories
     float chIdx = calculateChIndex(trial.tracks);
     float slIdx = calculateSLIndex(trial.tracks);
-    Paint.drawChemotaxis(trial.tracks, chIdx, slIdx, trial.width, trial.height, trial.source);
     int[] hist = circularHistogram(getListOfAngles(trial.tracks), 45);
     int radius = trial.width;
+    Paint.drawChemotaxis(trial.tracks, chIdx, slIdx, trial.width, trial.height, trial.source);
     Paint.drawRoseDiagram(hist, radius, chIdx, trial.source);
   }
 
@@ -669,11 +669,13 @@ public class Chemotaxis {
           GenericDialog gd = new GenericDialog("Set Simulation parameters");
           gd.addNumericField("Min Beta ", 0, 1);
           gd.addNumericField("Max Beta ", 2, 1);
+          gd.addMessage("----------------------------------------------------------------------"); 
           gd.addNumericField("Min responsiveness (%) ", 0, 1);
           gd.addNumericField("Max responsiveness (%) ", 100, 1);
-          gd.addNumericField("Max (control-condition) simulations for each pair (beta-resp) ", 50, 0);
+          gd.addMessage("----------------------------------------------------------------------"); 
           gd.addNumericField("Total number of betas ", 10, 0);
           gd.addNumericField("Total number of responsiveness ", 10, 0);
+          gd.addNumericField("Max (control-condition) simulations for each pair (beta-resp) ", 50, 0);
           gd.showDialog();
           if (gd.wasCanceled()) {
             mw.setVisible(true);
@@ -683,9 +685,9 @@ public class Chemotaxis {
           double MAXBETA = gd.getNextNumber();
           double MINRESP= gd.getNextNumber()/100;//value must be between [0,1]
           double MAXRESP = gd.getNextNumber()/100;//value must be between [0,1]
-          int MAXSIMULATIONS = (int)gd.getNextNumber();
           int TOTALBETAS = (int) gd.getNextNumber();
           int TOTALRESP = (int) gd.getNextNumber();
+          int MAXSIMULATIONS = (int)gd.getNextNumber();
 //          double[][] results = new double[TOTALBETAS][TOTALRESP];
           // results =
           simulate(analysis,TOTALBETAS,TOTALRESP,MINBETA,MAXBETA,MINRESP,MAXRESP,MAXSIMULATIONS);
