@@ -12,12 +12,14 @@ import java.util.Set;
 import javax.swing.JOptionPane;
 
 import data.Params;
+import data.PersistentRandomWalker;
 import data.SList;
 import data.Spermatozoon;
 import data.Trial;
 import functions.Paint;
 import gui.MainWindow;
 import ij.IJ;
+import ij.gui.GenericDialog;
 import ij.measure.ResultsTable;
 
 /**
@@ -655,17 +657,22 @@ public class Chemotaxis {
         boolean analysis = false;
         if (userSelection2 == 0) {
           analysis = CHINDEX;
+          GenericDialog gd = new GenericDialog("Set Simulation parameters");
+          gd.addNumericField("Beta", 0, 2);
+          gd.addNumericField("Responsiveness (%)", 50, 2);
+          gd.showDialog();
+          if (gd.wasCanceled()) {
+            mw.setVisible(true);
+            return;
+          }
+          double beta = gd.getNextNumber();
+          double responsiveness = gd.getNextNumber()/100;//value must be between [0,1]
+          simulate(beta,responsiveness); // a single ch-index simulation
         } else if (userSelection2 == 1) {
           analysis = BOOTSTRAPPING;
+          // results =
+          // simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
         }
-        // results =
-        // simulate(analysis,MAXNBETAS,MAXNRESP,maxBeta,MAXSIMULATIONS);
-        ////////////////////
-        double beta = 2;
-        double responsiveness = 0.9;
-        // simulate(beta,responsiveness); // a single ch-index simulation
-        simulate(0, 0); // a single control ch-index simulation
-        ////////////////////
         mw.setVisible(true);
         // Print simulation results throw IJ.log
         // for(int i=0;i<MAXNBETAS;i++){
@@ -785,15 +792,10 @@ public class Chemotaxis {
     return results;
   }
 
-  /******************************************************/
-  /**
-   * @param analysis
-   *          - true: simulate ch-index; false: bootstrapping
-   * @return matrix of chIndexes relative to each pair beta-responsiveness level
-   */
   /**
    * @param beta
    * @param responsiveness
+   * @param length 
    */
   public void simulate(double beta, double responsiveness) {
     Trial tr = null;

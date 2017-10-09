@@ -193,7 +193,6 @@ public class PersistentRandomWalker extends Simulation {
    * @param responsiveCells
    */
   public PersistentRandomWalker(double b, double responsiveCells) {
-    SIMLENGTH = 500;
     for (int x = cellCount - 1; x >= 0; x--) {
       sperm[x] = new Cell(b, responsiveCells);
     }

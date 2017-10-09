@@ -125,8 +125,8 @@ public abstract class ComputerVision implements Measurements {
       float[] perimeterRes = rt.getColumn(ResultsTable.PERIMETER);
       float[] feretRes = rt.getColumn(ResultsTable.FERET);
       float[] minFeretRes = rt.getColumn(ResultsTable.MIN_FERET);
-      if (sxRes == null)
-        return null;
+      if (sxRes == null) //Nothing detected
+        continue;//jump to next frame
       for (int iPart = 0; iPart < sxRes.length; iPart++) {
         Spermatozoon aSpermatozoon = new Spermatozoon();
         aSpermatozoon.id = "***";
@@ -222,11 +222,13 @@ public abstract class ComputerVision implements Measurements {
     // int nFrames = imp.getStackSize();
     SList theTracks = new SList();
     int trackCount = 0;
-
+    if(spermatozoa == null)
+      return theTracks;
     for (int i = 0; i <= (nFrames - 1); i++) {
-
       IJ.showProgress((double) i / nFrames);
       IJ.showStatus("Calculating Tracks...");
+      if(spermatozoa[i] == null)//no spermatozoa detected in frame i
+        continue; //jump to next frame
       for (ListIterator j = spermatozoa[i].listIterator(); j.hasNext();) {
         Spermatozoon aSpermatozoon = (Spermatozoon) j.next();
         if (!aSpermatozoon.inTrack) {
