@@ -6,7 +6,7 @@ import java.util.Collection;
 
 /**
  * @author Carlos Alquezar
- *
+ * This class extends ArrayList to make it Serializable
  */
 public class SList extends ArrayList implements Serializable {
 
