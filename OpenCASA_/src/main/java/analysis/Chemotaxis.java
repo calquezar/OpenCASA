@@ -113,9 +113,8 @@ public class Chemotaxis {
    */
   public void analyzeFile() {
     Trial trial = VideoAnalyzer.extractTrial("Chemotaxis-File");
-    if (trial == null) {
+    if (trial == null)
       return;
-    }
     // Draw trajectories
     float chIdx = calculateChIndex(trial.tracks);
     float slIdx = calculateSLIndex(trial.tracks);
@@ -689,10 +688,9 @@ public class Chemotaxis {
           int TOTALRESP = (int) gd.getNextNumber();
           int MAXSIMULATIONS = (int)gd.getNextNumber();
 //          double[][] results = new double[TOTALBETAS][TOTALRESP];
-          // results =
+//          results = simulate(analysis,TOTALBETAS,TOTALRESP,MINBETA,MAXBETA,MINRESP,MAXRESP,MAXSIMULATIONS);
           simulate(analysis,TOTALBETAS,TOTALRESP,MINBETA,MAXBETA,MINRESP,MAXRESP,MAXSIMULATIONS);
         }
-        mw.setVisible(true);
         // Print simulation results throw IJ.log
         // for(int i=0;i<MAXNBETAS;i++){
         // for(int j=0;j<MAXNRESP;j++){

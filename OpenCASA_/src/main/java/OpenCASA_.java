@@ -2,11 +2,9 @@
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import data.Params;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImageJ;
-import ij.gui.Plot;
 import ij.plugin.PlugIn;
 
 /**

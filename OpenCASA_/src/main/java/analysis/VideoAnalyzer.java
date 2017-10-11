@@ -156,7 +156,6 @@ public abstract class VideoAnalyzer {
     AVI_Reader ar = new AVI_Reader();
     ar.run(absoluteFilePath);
     ImagePlus imp = ar.getImagePlus();
-
     return getTrialFromImp(imp, analysis, trialID, trialType, filename);
   }
 
@@ -176,22 +175,19 @@ public abstract class VideoAnalyzer {
     ImagePlus imp = impOrig;
     if (analysis.equals("Motility-File"))
       imp = impOrig.duplicate();
-    SList t = analyze(imp);
-    int[] motileSperm = SignalProcessing.motilityTest(t);
+    SList tracks = analyze(imp);
+    int[] motileSperm = SignalProcessing.motilityTest(tracks);
     // Only pass from here tracks with a minimum level of motility
-    t = SignalProcessing.filterTracksByMotility(t);
-    Trial tr = null;
+    tracks = SignalProcessing.filterTracksByMotility(tracks);
+    Trial trial = null;
     if (analysis.equals("Chemotaxis-File") || analysis.equals("Chemotaxis-Directory")
         || analysis.equals("Chemotaxis-Simulation"))
-      tr = new Trial(trialID, trialType, filename, t, impOrig.getWidth(), impOrig.getHeight());
+      trial = new Trial(trialID, trialType, filename, tracks, impOrig.getWidth(), impOrig.getHeight());
     else if (analysis.equals("Motility-File"))
-      tr = new Trial(trialID, trialType, filename, t, impOrig, motileSperm);
+      trial = new Trial(trialID, trialType, filename, tracks, impOrig, motileSperm);
     else if (analysis.equals("Motility-Directory"))
-      tr = new Trial(trialID, trialType, filename, t, null, motileSperm);
-    // new Thread(new Runnable() {public void run()
-    // {analyze(imp,filename);}}).start();
-    imp = null;
-    return tr;
+      trial = new Trial(trialID, trialType, filename, tracks, null, motileSperm);
+    return trial;
   }
 
   /******************************************************/

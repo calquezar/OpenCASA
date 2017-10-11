@@ -22,6 +22,7 @@ import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
 import functions.LoadImages;
+import ij.IJ;
 import ij.gui.GenericDialog;
 
 /**
@@ -112,14 +113,14 @@ public class MainWindow extends JFrame {
           try {
             ch.run(mw);
           } catch (Exception e1) {
-            e1.printStackTrace();
+            IJ.handleException(e1);
           }
         } else if (label.equals("Motility")) {
           mot = new Motility();
           try {
             mot.run(mw);
           } catch (Exception e1) {
-            e1.printStackTrace();
+            IJ.handleException(e1);
           }
         } else if (label.equals("Viability")) {
           // via = new Viability();
@@ -131,9 +132,11 @@ public class MainWindow extends JFrame {
 //          viabilityW.showWindow();
         } else if (label.equals("Morphometry")) {
           LoadImages ld = new LoadImages(mw);
+          if(ld!=null){
           morphW = new MorphWindow(mw);
           morphW.setImages(ld.run());
           morphW.showWindow();
+          }
         } else if (label.equals("Simulation")) {
           GenericDialog gd = new GenericDialog("Set Simulation parameters");
           gd.addNumericField("Beta", 0, 2);

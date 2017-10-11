@@ -34,12 +34,7 @@ public class LoadImages {
   public int analysisSelectionDialog() {
     Object[] options = { "File", "Directory" };
     int n = JOptionPane.showOptionDialog(null, "What do you want to analyze?", "Choose one analysis...",
-        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, // do
-                                                                       // not
-                                                                       // use
-                                                                       // a
-                                                                       // custom
-                                                                       // Icon
+        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, // do not use a custom Icon
         options, // the titles of buttons
         options[0]); // default button title
     return n;
