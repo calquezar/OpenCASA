@@ -25,7 +25,7 @@ public class FileManager {
   /**
    * @return
    */
-  public int analysisSelectionDialog() {
+  public int dialog() {
     Object[] options = { "File", "Directory" };
     int n = JOptionPane.showOptionDialog(null, "What do you want to analyze?", "Choose one analysis...",
         JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, // do not use a custom Icon
@@ -35,26 +35,10 @@ public class FileManager {
   }
 
   /**
-   * @return
-   */
-  public String getAbsoluteFileName() {
-    JFileChooser chooser = new JFileChooser();
-    chooser.setDialogTitle("Select a file...");
-    chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      // System.out.println("Directory: "+chooser.getSelectedFile());
-      File folder = chooser.getSelectedFile();
-      return folder.getAbsolutePath();
-    }
-    return null;
-  }
-
-  /**
    * @param path
    * @return
    */
-  public String getFileName(String path) {
+  public String getFilename(String path) {
     String[] parts = path.split("\\\\");
     return parts[parts.length - 1];
   }
@@ -62,30 +46,23 @@ public class FileManager {
   /**
    * @return
    */
-  public String[] getAbsoluteFileNames() {
-    JFileChooser chooser = new JFileChooser();
-    chooser.setDialogTitle("Select a folder...");
-    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      // System.out.println("Directory: "+chooser.getSelectedFile());
-      File folder = chooser.getSelectedFile();
-      File[] listOfFiles = folder.listFiles();
-      String[] listOfNames = new String[listOfFiles.length];
-      for (int i = 0; i < listOfFiles.length; i++)
-        listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
-      return listOfNames;
-    }
-    return null;
+  public String[] getListOfFiles() {
+      return getListOfFiles(selectFolder());
+  }
+
+  public String[] getListOfImages(String[] listOfFiles){
+    
+    
   }
   
   /**
    * @param dir
    * @return
    */
-  public String[] getAbsoluteFileNames(String dir) {
-
-    File folder = new File(dir);
+  public String[] getListOfFiles(String path) {
+    if(path==null)
+      return null;
+    File folder = new File(path);
     File[] listOfFiles = folder.listFiles();
     if(listOfFiles.length<=0)
       return null;
@@ -120,7 +97,7 @@ public class FileManager {
    */
   public List<ImagePlus> loadImageDirectory() {
 
-    String[] listOfFiles = getAbsoluteFileNames();
+    String[] listOfFiles = getListOfFiles();
     if (listOfFiles == null || listOfFiles.length == 0) {
       if (listOfFiles != null)
         JOptionPane.showMessageDialog(null, "Please, select a non-empty folder.");
@@ -174,7 +151,7 @@ public class FileManager {
    */
   public List<ImagePlus> loadImages() {
     // Ask user which analysis wants to apply
-    int userSelection = analysisSelectionDialog();
+    int userSelection = dialog();
     if (userSelection < 0)
       return null;
     if (userSelection == 0)
@@ -198,6 +175,7 @@ public class FileManager {
     }
     return null;
   } 
+
   /**
    * @return
    */
