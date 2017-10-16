@@ -9,45 +9,25 @@ import ij.ImagePlus;
  *
  */
 public class Trial implements Serializable {
-  /**
-   * 
-   */
+  /**   */
   public String ID = "";
-  /**
-   * 
-   */
+  /**   */
   public String type = "";
-  /**
-   * 
-   */
-  public String source = "";// the name of the source file
-  /**
-   * 
-   */
+  /** source's filename  */
+  public String source = "";
+  /**   */
   public SList tracks = null;
-  /**
-   * 
-   */
+  /**   */
   public ImagePlus imp = null;
-  /**
-   * 
-   */
+  /**   */
   public int width = 0;
-  /**
-   * 
-   */
+  /**   */
   public int height = 0;
-  /**
-   * 
-   */
-  public int[] motileSperm = new int[2];// [0] - motile; [1] - nonMotile
-
-  /**
-   * 
-   */
+  /** [0] - motile; [1] - nonMotile  */
+  public int[] motileSperm = new int[2];
+  /**   */
   public Trial() {
   }
-
   /**
    * @param ID
    * @param type
@@ -60,7 +40,6 @@ public class Trial implements Serializable {
     this.source = source;
     this.tracks = t;
   }
-
   /**
    * @param ID
    * @param type
@@ -77,7 +56,6 @@ public class Trial implements Serializable {
     this.imp = imp;
     this.motileSperm = motileSperm;
   }
-
   /**
    * @param ID
    * @param type

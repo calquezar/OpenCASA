@@ -82,7 +82,7 @@ public class MainWindow extends JFrame {
         if (label.equals("Chemotaxis")) {
           ch = new Chemotaxis();
           try {
-            ch.run(mw);
+//            ch.run(mw);
           } catch (Exception e1) {
             IJ.handleException(e1);
           }

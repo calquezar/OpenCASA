@@ -21,46 +21,25 @@ public class PersistentRandomWalker extends Simulation {
    */
   class Cell {
 
-    /**
-    * 
-    */
+    /**   */
     int sizex;
-    /**
-    * 
-    */
+    /**   */
     int sizey;
-    /**
-    * 
-    */
+    /**   */
     float x;
-    /**
-    * 
-    */
+    /**   */
     float y;
-    /**
-    * 
-    */
+    /**   */
     double angle;
-    /**
-    * 
-    */
+    /**   */
     float speed;
-    /**
-    * 
-    */
+    /**   */
     double Drot;
-    /**
-    * 
-    */
+    /**   */
     double beta;
-    /**
-    * 
-    */
+    /**   */
     double ro;
-
-    /**
-    * 
-    */
+    /**   */
     Cell() {
       Random rand = new Random();
       sizex = 10;
@@ -140,44 +119,23 @@ public class PersistentRandomWalker extends Simulation {
     }
   }
 
-  /**
-   * 
-   */
+  /**   */
   int w = 800;
-  /**
-   * 
-   */
+  /**   */
   int h = 800;
-  /**
-   * 
-   */
+  /**   */
   int cellCount = 100;
-  /**
-   * 
-   */
+  /**   */
   int obstaclesCount = 0;
-  /**
-   * 
-   */
+  /**   */
   Cell[] sperm = new Cell[cellCount];
-  /**
-   * 
-   */
+  /**   */
   Obstacle[] obstacles = new Obstacle[obstaclesCount];
-
-  /**
-   * 
-   */
+  /**   */
   int SIMLENGTH = 500;
-
-  /**
-   * 
-   */
+  /**   */
   Point[][] tracks = new Point[cellCount][SIMLENGTH];
-
-  /**
-   * 
-   */
+  /**   */
   public PersistentRandomWalker() {
 
     for (int x = cellCount - 1; x >= 0; x--) {

@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['thresholdimageplus',['thresholdImagePlus',['../classanalysis_1_1_viability.html#a4e6ac04dc56b6c85eae18e08fc62c3a8',1,'analysis.Viability.thresholdImagePlus()'],['../classfunctions_1_1_computer_vision.html#afdeaa756441ad50cbb20268dc5440c27',1,'functions.ComputerVision.thresholdImagePlus()'],['../classgui_1_1_morph_window.html#a694a7fad90fcf6ea1ea745479d118ca9',1,'gui.MorphWindow.thresholdImagePlus()']]],
+  ['thresholdimageplus',['thresholdImagePlus',['../classfunctions_1_1_computer_vision.html#afdeaa756441ad50cbb20268dc5440c27',1,'functions::ComputerVision']]],
   ['thresholdimageprocessor',['thresholdImageProcessor',['../classfunctions_1_1_computer_vision.html#a3106850d23d4dc70772b01bc0cc2f4f7',1,'functions::ComputerVision']]],
   ['thresholdstack',['thresholdStack',['../classfunctions_1_1_computer_vision.html#acc6f2aaf0d523e3789b7b203faf8dd47',1,'functions::ComputerVision']]],
   ['total_5farea',['total_area',['../classdata_1_1_spermatozoon.html#aa648cb4c26ff2fe261728f35e1951272',1,'data::Spermatozoon']]],

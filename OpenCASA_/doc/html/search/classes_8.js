@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['utils',['Utils',['../classfunctions_1_1_utils.html',1,'functions']]]
+  ['trial',['Trial',['../classdata_1_1_trial.html',1,'data']]]
 ];

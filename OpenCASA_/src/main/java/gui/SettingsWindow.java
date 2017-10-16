@@ -23,76 +23,44 @@ import data.Params;
  */
 public class SettingsWindow extends JFrame {
 
-  /**
-   * 
-   */
+  /**   */
   SettingsWindow sw;
-  /**
-   * 
-   */
+  /**   */
   MainWindow mw;
   // General
-  /**
-   * 
-   */
+  /**   */
   JTextField frameRateTF = new JTextField("" + Params.frameRate, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField micronPerPixelTF = new JTextField("" + Params.micronPerPixel, 4);
   // JTextField maleTF = new JTextField(Params.male,8);
   // JTextField dateTF = new JTextField(Params.date,8);
   // Recognition
-  /**
-   * 
-   */
+  /**   */
   JTextField minSizeTF = new JTextField("" + Params.minSize, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField minTrackLengthTF = new JTextField("" + Params.minTrackLength, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
   // Filtering
-  /**
-   * 
-   */
+  /**   */
   JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
   // Chemotaxis
-  /**
-   * 
-   */
+  /**   */
   JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
   // Motility
-  /**
-   * 
-   */
+  /**   */
   JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
-  /**
-   * 
-   */
+  /**   */
   JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
 
   /**
@@ -103,9 +71,8 @@ public class SettingsWindow extends JFrame {
     super(title);
     sw = this;
     this.setVisible(true);
-    // setLocationRelativeTo(null);
-    // this.setPreferredSize(new Dimension(600, 300));
-
+//    setLocationRelativeTo(null);
+//    this.setPreferredSize(new Dimension(600, 300));
     this.addWindowListener(new java.awt.event.WindowAdapter() {
       @Override
       public void windowClosing(java.awt.event.WindowEvent windowEvent) {
@@ -291,44 +258,7 @@ public class SettingsWindow extends JFrame {
 
     return box;
   }
-
-  // public JPanel createRecognitionBox(String title){
-  // JPanel box = new JPanel();
-  // box.setBackground(new Color(204,229,255));
-  // GridBagConstraints c = new GridBagConstraints();
-  // c.fill = GridBagConstraints.HORIZONTAL;
-  // c.gridx=0;
-  // c.gridy=0;
-  // ///////////////
-  // JLabel label = new JLabel("Minimum Size (um^2): ");
-  // box.add(label,c);
-  // c.gridx=1;
-  // box.add(minSizeTF,c);
-  // ///////////////
-  // label = new JLabel("Maximum Size (um^2): ");
-  // c.gridx=2;
-  // box.add(label,c);
-  // c.gridx=3;
-  // box.add(maxSizeTF,c);
-  // ///////////////
-  // label = new JLabel("Minimum Track Length(frames): ");
-  // c.gridy=1;
-  // c.gridx=0;
-  // box.add(label,c);
-  // c.gridx=1;
-  // box.add(minTrackLengthTF,c);
-  // ///////////////
-  // label = new JLabel("Maximum velocity between frames (um/s): ");
-  // c.gridx=2;
-  // box.add(label,c);
-  // c.gridx=3;
-  // box.add(maxDisplacementTF,c);
-  // ///////////////
-  // box.setBorder(BorderFactory.createTitledBorder(title));
-  //
-  // return box;
-  // }
-
+  
   /**
    * @param window
    */
@@ -377,7 +307,6 @@ public class SettingsWindow extends JFrame {
     this.pack();
 
   }
-
   /**
    * 
    */
@@ -389,9 +318,7 @@ public class SettingsWindow extends JFrame {
     Params.minSize = Float.parseFloat(minSizeTF.getText());
     Params.maxSize = Float.parseFloat(maxSizeTF.getText());
     Params.minTrackLength = Integer.parseInt(minTrackLengthTF.getText());
-    Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um
-                                                                            // =>
-                                                                            // pixels
+    Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um => pixels
     // Filtering
     Params.wSize = Integer.parseInt(windowSizeTF.getText());
     Params.vclMin = Float.parseFloat(vclMinTF.getText());
@@ -405,5 +332,4 @@ public class SettingsWindow extends JFrame {
     Params.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());
 
   }
-
 }

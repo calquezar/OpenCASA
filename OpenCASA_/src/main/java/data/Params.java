@@ -12,144 +12,65 @@ import java.util.prefs.Preferences;
  */
 public class Params {
 
-  // declare my variable at the top of my Java class
-  /**
-   * 
-   */
+  /**   */
   private static Preferences prefs;
-
-  /**
-   * 
-   */
+  /**   */
   public static double pixelWidth = 1.0;
-  /**
-   * 
-   */
+  /**   */
   public static double pixelHeight = 1.0;
-  /** @brief minimum sperm size */
-  /**
-   * 
-   */
+  /** minimum sperm size */
   public static float minSize = 40;
-  // maximum sperm size
-  /**
-   * 
-   */
-  public static float maxSize = 400;
-  // minimum length of sperm track in frames
-  /**
-   * 
-   */
+  /** maximum sperm size */
+  public static float maxSize = 400; 
+  /**  minimum length of sperm track (in frames) */
   public static int minTrackLength = 15;
-  // maximum velocity that is allowable between frames (this is the search
-  // radius for the next sperm location in a track... it will only look w/in
-  // this distance)
-  /**
-   * 
-   */
+  /** maximum displacement of one spermatozoon between 
+   *  consecutive frames (um) */
   public static float maxDisplacement = 10; // um
-  // Window size for moving average method
-  /**
-   * 
-   */
+  /** Window size for moving average method (um)  */
   public static int wSize = 9;
-  // Motility filter for motile and non motile sperm
-  /**
-   * 
-   */
+  /** Motility filter for motile and non motile sperm */
   public static float vclMin = 70;
-  // Decimation factor
-  /**
-   * 
-   */
+  /** This parameter is used to analyze the directionality angle
+   *  between instant t and instant (t+angleDelta).*/
   public static int angleDelta = 4;
-  // Angles used to clasify chemotactic trajectories
-  /**
-   * 
-   */
+  /**  Angles used to clasify chemotactic trajectories */
   public static float angleDirection = 0;
-  /**
-   * 
-   */
+  /**   */
   public static float angleAmplitude = 90;
-  // frame rate
-  /**
-   * 
-   */
+  /** frame rate  */
   public static float frameRate = 100;
-  // parameters used to compute BCF (equivalent to decimation factor)
-  /**
-   * 
-   */
+  /**  parameters used to compute BCF (equivalent to angleDelta) */
   public static int bcf_shift = 0;
-  // Parameter used to determine progressive motility sperm
-  /**
-   * 
-   */
+  /** Parameter used to determine progressive motility sperm  */
   public static float progressMotility = 80;
-  // Micrometers per pixel
   // 10x ==> 0.58
   // 40x ==> 0.1455
-  /**
-   * 
-   */
+  /**  Microns per pixel  */
   public static double micronPerPixel = 1;// 0.58; 10x ISAS
-  // print the xy co-ordinates for all tracks?
-  /**
-   * 
-   */
+  /** if true, print the xy co-ordinates for all tracks as tsv (tab separated values). */
   public static boolean printXY = false;
-  // Calculate motility parameters
-  // public static boolean calcMotilityParameters = true;
-  // public static boolean calcMeanMotilityParameters = true;
-  // Draw original trajectories
-  /**
-   * 
-   */
+  /** Draw original trajectories over the ImagePlus  */
   public static boolean drawOrigTrajectories = true;
-  // Draw original trajectories
-  /**
-   * 
-   */
+  /**  Draw original trajectories over the ImagePlus */
   public static boolean drawAvgTrajectories = true;
-  // Used to calculate OR ratios
-  /**
-   * 
-   */
+  /** Used to calculate OR ratios */
   public static int MAXINSTANGLES = 20000;
-  /**
-   * 
-   */
+  /**   */
   public static int NUMSAMPLES = 100;
-  /**
-   * 
-   */
+  /**   */
   public static float borderSize = 20;
-  /**
-   * 
-   */
+  /**   */
   public static String selectedFilter = "";
-  /**
-   * 
-   */
+  /**   */
   public static String male = "";
-  /**
-   * 
-   */
+  /**   */
   public static String date = "";
-
-  /**
-   * 
-   */
+  /**   */
   public static float vclLowerTh = 45;
-  /**
-   * 
-   */
+  /**   */
   public static float vclUpperTh = 75;
-
-  /**
-   * 
-   */
+  /**   */
   public static void resetParams() {
 
     // minSize = 20;

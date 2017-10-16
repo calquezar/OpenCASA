@@ -24,50 +24,28 @@ public class OscillatoryWalker extends Simulation {
    */
   class Cell {
 
-    /**
-    * 
-    */
+    /**   */
     int sizex;
-    /**
-    * 
-    */
+    /**   */
     int sizey;
-    /**
-    * 
-    */
+    /**   */
     float t;
-    /**
-    * 
-    */
+    /**   */
     float y;
-    /**
-    * 
-    */
+    /**   */
     float amplitude;
-    /**
-    * 
-    */
+    /**   */
     double w;
-    /**
-    * 
-    */
+    /**   */
     double f;
-    /**
-    * 
-    */
+    /**   */
     double phi;
-    /**
-    * 
-    */
+    /**   */
     double T;
-    /**
-    * 
-    */
+    /**   */
     float dist;
 
-    /**
-    * 
-    */
+    /**   */
     Cell() {
       sizex = 10;
       sizey = 8;
@@ -119,39 +97,22 @@ public class OscillatoryWalker extends Simulation {
     }
   }
 
-  /**
-   * 
-   */
+  /**   */
   int width = 800;
-  /**
-   * 
-   */
+  /**   */
   int height = 800;
-  /**
-   * 
-   */
+  /**   */
   int cellCount = 1;
-  /**
-   * 
-   */
+  /**   */
   Cell[] sperm = new Cell[cellCount];
-  /**
-   * 
-   */
-  /**
-   * 
-   */
+  /**   */
   int SIMLENGTH = 700;
 
   // Point[][] tracks = new Point[cellCount][SIMLENGTH];
-  /**
-   * 
-   */
+  /**   */
   List<Spermatozoon> track = new ArrayList<Spermatozoon>();
 
-  /**
-   * 
-   */
+  /**   */
   public OscillatoryWalker() {
     for (int x = cellCount - 1; x >= 0; x--) {
       sperm[x] = new Cell();

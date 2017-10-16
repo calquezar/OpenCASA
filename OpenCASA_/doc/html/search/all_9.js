@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['kinematics',['Kinematics',['../classfunctions_1_1_kinematics.html',1,'functions']]],
-  ['kinematics_2ejava',['Kinematics.java',['../_kinematics_8java.html',1,'']]]
+  ['loadimages',['LoadImages',['../classfunctions_1_1_load_images.html',1,'functions']]],
+  ['loadimages',['LoadImages',['../classfunctions_1_1_load_images.html#ad02af49a0bee20eb9b899dacf692af2f',1,'functions::LoadImages']]],
+  ['loadimages_2ejava',['LoadImages.java',['../_load_images_8java.html',1,'']]]
 ];
