@@ -50,7 +50,6 @@ public class MainWindow extends JFrame {
     mw = this;
     Params.resetParams();
   }
-
   /**
    * @param label
    * @param gridx
