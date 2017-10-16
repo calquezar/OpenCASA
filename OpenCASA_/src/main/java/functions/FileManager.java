@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
+import ij.io.DirectoryChooser;
 
 /**
  * @author Carlos Alquezar
@@ -50,10 +51,10 @@ public class FileManager {
       return getListOfFiles(selectFolder());
   }
 
-  public String[] getListOfImages(String[] listOfFiles){
-    
-    
-  }
+//  public String[] getListOfImages(String[] listOfFiles){
+//    
+//    
+//  }
   
   /**
    * @param dir
@@ -121,46 +122,46 @@ public class FileManager {
     return images;
   }
   
-  /**
-   * 
-   * @return
-   */
-  public List<ImagePlus> loadImageFile() {
-    String absoluteFilePath = getAbsoluteFileName();
-    if (absoluteFilePath == null) {
-      return null;
-    }
-    if(isAVI(absoluteFilePath)){
-      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
-      return null;
-    }
-    String parentsDirectory = getParentDirectory(absoluteFilePath);
-    ImagePlus imp = IJ.openImage(absoluteFilePath);
-    if (imp == null) {
-      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
-      return null;
-    }
-    imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
-    List<ImagePlus> images = new ArrayList<ImagePlus>();
-    images.add(imp);
-    return images;
-  }
-  /**
-   * 
-   * @return
-   */
-  public List<ImagePlus> loadImages() {
-    // Ask user which analysis wants to apply
-    int userSelection = dialog();
-    if (userSelection < 0)
-      return null;
-    if (userSelection == 0)
-      return loadImageFile();
-    else if (userSelection == 1)
-      return loadImageDirectory();
-    else
-      return null;
-  }
+//  /**
+//   * 
+//   * @return
+//   */
+//  public List<ImagePlus> loadImageFile() {
+//    String absoluteFilePath = getAbsoluteFileName();
+//    if (absoluteFilePath == null) {
+//      return null;
+//    }
+//    if(isAVI(absoluteFilePath)){
+//      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
+//      return null;
+//    }
+//    String parentsDirectory = getParentDirectory(absoluteFilePath);
+//    ImagePlus imp = IJ.openImage(absoluteFilePath);
+//    if (imp == null) {
+//      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
+//      return null;
+//    }
+//    imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
+//    List<ImagePlus> images = new ArrayList<ImagePlus>();
+//    images.add(imp);
+//    return images;
+//  }
+//  /**
+//   * 
+//   * @return
+//   */
+//  public List<ImagePlus> loadImages() {
+//    // Ask user which analysis wants to apply
+//    int userSelection = dialog();
+//    if (userSelection < 0)
+//      return null;
+//    if (userSelection == 0)
+//      return loadImageFile();
+//    else if (userSelection == 1)
+//      return loadImageDirectory();
+//    else
+//      return null;
+//  }
   /**
    * @return
    */
@@ -174,20 +175,15 @@ public class FileManager {
       return file.getAbsolutePath();
     }
     return null;
+    
+   
   } 
 
   /**
    * @return
    */
   public String selectFolder() {
-    JFileChooser chooser = new JFileChooser();
-    chooser.setDialogTitle("Select a folder...");
-    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      File folder = chooser.getSelectedFile();
-      return folder.getAbsolutePath();
-    }
-    return null;
+    DirectoryChooser dc = new DirectoryChooser("Select folder..");
+    return dc.getDirectory();
   }  
 }

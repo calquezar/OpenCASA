@@ -9,6 +9,9 @@ import gui.MainWindow;
 import ij.IJ;
 import ij.ImageJ;
 import ij.ImagePlus;
+import ij.io.DirectoryChooser;
+import ij.io.FileOpener;
+import ij.io.Opener;
 import ij.plugin.PlugIn;
 
 /**
@@ -42,7 +45,7 @@ public class OpenCASA_ implements PlugIn {
   @Override
   public void run(String arg) {
 //    (new MainWindow("OpenCASA")).setVisible(true);
-//    FileManager fm = new FileManager();
-//    System.out.println(fm.getAbsoluteFileName());
+    Opener op = new Opener()
+    
   }
 }
