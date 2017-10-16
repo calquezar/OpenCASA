@@ -20,7 +20,7 @@ import ij.process.ImageProcessor;
  * @author Carlos Alquezar
  *
  */
-public abstract class Paint {
+public class Paint {
 
   /******************************************************/
   /**
@@ -30,7 +30,7 @@ public abstract class Paint {
    * @param slIdx
    * @param sampleID
    */
-  public static void chemotaxisTemplate(ColorProcessor ip, int numTracks, float chIdx, float slIdx, String sampleID) {
+  public void chemotaxisTemplate(ColorProcessor ip, int numTracks, float chIdx, float slIdx, String sampleID) {
     // Alpha version of this method
     ip.setLineWidth(4);
     // center coords. of the cone used to clasify chemotactic trajectories
@@ -87,7 +87,7 @@ public abstract class Paint {
    * @param displacement
    * @return
    */
-  static int doOffset(int center, int maxSize, int displacement) {
+  int doOffset(int center, int maxSize, int displacement) {
     if ((center - displacement) < 2 * displacement) {
       return (center + 4 * displacement);
     } else {
@@ -101,9 +101,10 @@ public abstract class Paint {
    * @param theTracks
    *          2D-ArrayList with all the tracks
    */
-  public static void draw(ImagePlus imp, SList theTracks) {
+  public void draw(ImagePlus imp, SList theTracks) {
 
-    ComputerVision.convertToRGB(imp);
+    ComputerVision cv = new ComputerVision();
+    cv.convertToRGB(imp);
     int nFrames = imp.getStackSize();
     ImageStack stack = imp.getStack();
     if (imp.getCalibration().scaled()) {
@@ -116,6 +117,7 @@ public abstract class Paint {
     int trackNr = 0;
     int displayTrackNr = 0;
     SList avgTracks = SignalProcessing.averageTracks(theTracks);
+    Kinematics kinematics = new Kinematics();
     // Draw on each frame
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
       IJ.showProgress((double) iFrame / nFrames);
@@ -140,11 +142,11 @@ public abstract class Paint {
         trackCount3++;
         for (; jT.hasNext();) {
           Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
-          if (Kinematics.getVelocityTrackType(zTrack) == "Slow")
+          if (kinematics.getVelocityTrackType(zTrack) == "Slow")
             ip.setColor(Color.white);
-          else if (Kinematics.getVelocityTrackType(zTrack) == "Normal")
+          else if (kinematics.getVelocityTrackType(zTrack) == "Normal")
             ip.setColor(Color.yellow);
-          else if (Kinematics.getVelocityTrackType(zTrack) == "Fast")
+          else if (kinematics.getVelocityTrackType(zTrack) == "Fast")
             ip.setColor(Color.red);
           // ip.setValue(color);
           if (Params.drawOrigTrajectories) {
@@ -198,7 +200,7 @@ public abstract class Paint {
   // * @param chIdx
   // * @param slIdx
   // */
-  // public static void draw(ImagePlus imp,List theTracks,List avgTracks,float
+  // public void draw(ImagePlus imp,List theTracks,List avgTracks,float
   // chIdx,float slIdx){
   // int nFrames = imp.getStackSize();
   // ImageStack stack = imp.getStack();
@@ -309,7 +311,7 @@ public abstract class Paint {
    * @param imp
    * @param spermatozoa
    */
-  public static void drawBoundaries(ImagePlus imp, List spermatozoa) {
+  public void drawBoundaries(ImagePlus imp, List spermatozoa) {
     int xHeight = imp.getHeight();
     int yWidth = imp.getWidth();
     IJ.showStatus("Drawing boundaries...");
@@ -347,7 +349,7 @@ public abstract class Paint {
    * @param height
    * @param sampleID
    */
-  public static void drawChemotaxis(SList theTracks, float chIdx, float slIdx, int width, int height, String sampleID) {
+  public void drawChemotaxis(SList theTracks, float chIdx, float slIdx, int width, int height, String sampleID) {
 
     SList avgTracks = SignalProcessing.averageTracks(theTracks);
     String strPart;
@@ -401,7 +403,7 @@ public abstract class Paint {
    * @param impOrig
    * @param impTh
    */
-  public static void drawOutline(ImagePlus impOrig, ImagePlus impTh) {
+  public void drawOutline(ImagePlus impOrig, ImagePlus impTh) {
 
     IJ.showStatus("Changing background...");
     ColorProcessor ipOrig = (ColorProcessor) impOrig.getProcessor();
@@ -426,7 +428,7 @@ public abstract class Paint {
    * @param chIdx
    * @param sampleID
    */
-  public static void drawRoseDiagram(int[] histogram, int radius, float chIdx, String sampleID) {
+  public void drawRoseDiagram(int[] histogram, int radius, float chIdx, String sampleID) {
 
     // Calculate maximum value of the histogram
     // to use it later for normalization

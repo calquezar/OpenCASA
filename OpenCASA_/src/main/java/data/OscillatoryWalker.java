@@ -129,13 +129,14 @@ public class OscillatoryWalker extends Simulation {
       draw(ip);
       imStack.addSlice(ip);
     }
+    Kinematics kinematics = new Kinematics();
     for (int x = cellCount - 1; x >= 0; x--) {
       // System.out.println("Distance: "+sperm[x].dist);
       // System.out.println("Time: "+sperm[x].t);
       double vsl = track.get(0).distance(track.get(track.size() - 1)) / track.size();
       double vcl = sperm[x].dist / sperm[x].t;
       List<Spermatozoon> avgTrack = SignalProcessing.movingAverage(track);
-      double vap = Kinematics.vcl(avgTrack);
+      double vap = kinematics.vcl(avgTrack);
       double lin = vsl / vcl;
       double wob = vap / vcl;
       System.out.println("VSL: " + vsl);

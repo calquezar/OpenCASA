@@ -19,7 +19,7 @@ public class Kinematics {
    *          -
    * @return ALH (mean and max) (um)
    */
-  public static float[] alh(List track, List avgTrack) {
+  public float[] alh(List track, List avgTrack) {
 
     int length = avgTrack.size();
     float alh[] = new float[2];
@@ -51,7 +51,7 @@ public class Kinematics {
    *          -
    * @return BCF (Hz)
    */
-  // public static float bcf(List track,List avgTrack){
+  // public float bcf(List track,List avgTrack){
   //
   // int length = avgTrack.size();
   // int intersections=0;
@@ -80,7 +80,7 @@ public class Kinematics {
    * @param avgTrack
    * @return
    */
-  public static float bcf(List track, List avgTrack) {
+  public float bcf(List track, List avgTrack) {
 
     int nAvgPoints = avgTrack.size();
     float[] dists = new float[nAvgPoints];
@@ -89,11 +89,9 @@ public class Kinematics {
       Spermatozoon origS = (Spermatozoon) track.get(i + Params.wSize / 2 - 1);
       Spermatozoon avgS = (Spermatozoon) avgTrack.get(i);
       dists[i] = origS.distance(avgS);
-      // System.out.println("Distance: "+dists[i]);
     }
     dists = SignalProcessing.movingAverage(dists, 2);
     int intersections = countLocalMaximas(dists);
-    // System.out.println("intersections: "+intersections);
     float bcf_value = (float) intersections * Params.frameRate / (float) nAvgPoints;
     return bcf_value;
   }
@@ -102,7 +100,7 @@ public class Kinematics {
    * @param points
    * @return
    */
-  static int countLocalMaximas(float[] points) {
+  int countLocalMaximas(float[] points) {
     int nPoints = points.length;
     int count = 0;
     for (int i = 2; i < nPoints; i++) {
@@ -120,7 +118,7 @@ public class Kinematics {
    * @param track
    * @return
    */
-  public static String getVelocityTrackType(List track) {
+  public String getVelocityTrackType(List track) {
 
     List avgTrack = SignalProcessing.movingAverage(track);
     float vap = vcl(avgTrack);
@@ -138,7 +136,7 @@ public class Kinematics {
    *          - a track
    * @return MAD - (degrees)
    */
-  public static float mad(List track) {
+  public float mad(List track) {
 
     int length = track.size();
     ListIterator jT = track.listIterator();
@@ -163,7 +161,7 @@ public class Kinematics {
    *          - a track
    * @return VCL (um/second)
    */
-  public static float vcl(List track) {
+  public float vcl(List track) {
 
     int length = track.size();
     ListIterator jT = track.listIterator();
@@ -172,14 +170,10 @@ public class Kinematics {
     for (; jT.hasNext();) {
       Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
       distance += newSpermatozoon.distance(oldSpermatozoon);
-      // System.out.println("Distance:
-      // "+newSpermatozoon.distance(oldSpermatozoon));
       oldSpermatozoon = newSpermatozoon;
     }
-    // System.out.println("Distance: "+distance);
     // convert pixels to micrometers
     distance = distance * (float) Params.micronPerPixel;
-
     // Seconds
     float elapsedTime = (length - 1) / Params.frameRate;
     // return um/second
@@ -192,7 +186,7 @@ public class Kinematics {
    *          - a track
    * @return VSL (um/second)
    */
-  public static float vsl(List track) {
+  public float vsl(List track) {
 
     int length = track.size();
     Spermatozoon first = (Spermatozoon) track.get(0);

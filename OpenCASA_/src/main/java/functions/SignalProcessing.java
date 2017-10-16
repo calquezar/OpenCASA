@@ -115,15 +115,16 @@ public abstract class SignalProcessing {
    */
   public static boolean motilityTest(List track) {
 
+    Kinematics K = new Kinematics();
     int nPoints = track.size();
     Spermatozoon firstSpermatozoon = (Spermatozoon) track.get(0);
     Spermatozoon lastSpermatozoon = (Spermatozoon) track.get(nPoints - 1);
     float distance = lastSpermatozoon.distance(firstSpermatozoon);
     List avgTrack = movingAverage(track);
-    float vap = Kinematics.vcl(avgTrack) / Kinematics.vsl(avgTrack);
+    float vap = K.vcl(avgTrack) / K.vsl(avgTrack);
     // Kinematics filter
     double minPixelDistance = 10;// 10/Params.micronPerPixel;
-    if (Kinematics.vcl(track) > Params.vclMin && (distance > minPixelDistance) && (vap > 0))
+    if (K.vcl(track) > Params.vclMin && (distance > minPixelDistance) && (vap > 0))
       return true;
     else
       return false;

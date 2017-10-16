@@ -24,91 +24,17 @@ import ij.IJ;
  * @author Carlos Alquezar
  *
  */
-public abstract class Utils {
+public class Utils {
 
   /**
    * @param orig
    * @return
    */
-  public static int[] convertLongArrayToInt(long[] orig) {
+  public int[] convertLongArrayToInt(long[] orig) {
     int[] arrayInt = new int[orig.length];
     for (int i = 0; i < orig.length; i++)
       arrayInt[i] = (int) orig[i];
     return arrayInt;
-  }
-
-  /**
-   * @return
-   */
-  public static String getAbsoluteFileName() {
-    JFileChooser chooser = new JFileChooser();
-    // chooser.setCurrentDirectory(new
-    // java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 -
-    // Zaragoza\\data"));
-    chooser.setDialogTitle("Select a folder...");
-    chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      // System.out.println("Directory: "+chooser.getSelectedFile());
-      File folder = chooser.getSelectedFile();
-      return folder.getAbsolutePath();
-    }
-    return null;
-  }
-
-  /**
-   * @param path
-   * @return
-   */
-  public static String getFileName(String path) {
-    String[] parts = path.split("\\\\");
-    return parts[parts.length - 1];
-  }
-
-  /**
-   * @return
-   */
-  public static String[] getFileNames() {
-    JFileChooser chooser = new JFileChooser();
-    // chooser.setCurrentDirectory(new
-    // java.io.File("C:\\Users\\Carlos\\Documents\\Vet - Bioquimica\\1 -
-    // Zaragoza\\data"));
-    chooser.setDialogTitle("Select a folder...");
-    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      // System.out.println("Directory: "+chooser.getSelectedFile());
-      File folder = chooser.getSelectedFile();
-      File[] listOfFiles = folder.listFiles();
-      String[] listOfNames = new String[listOfFiles.length];
-      for (int i = 0; i < listOfFiles.length; i++)
-        listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
-      return listOfNames;
-    }
-    return null;
-  }
-
-  /**
-   * @param dir
-   * @return
-   */
-  public static String[] getFileNames(String dir) {
-
-    File folder = new File(dir);
-    File[] listOfFiles = folder.listFiles();
-    String[] listOfNames = new String[listOfFiles.length];
-    for (int i = 0; i < listOfFiles.length; i++)
-      listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
-    return listOfNames;
-  }
-
-  /**
-   * @param path
-   * @return
-   */
-  public static String getParentDirectory(String path) {
-    String[] parts = path.split("\\\\");
-    return parts[parts.length - 2];
   }
 
   /******************************************************/
@@ -117,7 +43,7 @@ public abstract class Utils {
    * @param spermatozoa
    * @return
    */
-  public static Spermatozoon getSpermatozoon(String id, List spermatozoa) {
+  public Spermatozoon getSpermatozoon(String id, List spermatozoa) {
     Spermatozoon spermatozoon = null;
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
       Spermatozoon candidate = (Spermatozoon) j.next();
@@ -129,25 +55,13 @@ public abstract class Utils {
     return spermatozoon;
   }
 
-  /**
-   * @param filename
-   * @return
-   */
-  public static boolean isAVI(String filename) {
-    String[] parts = filename.split("\\.");
-    if (parts[1].equals("avi"))
-      return true;
-    else
-      return false;
-  }
-
   /******************************************************/
   /**
    * @param theTracks
    *          2D-ArrayList with all the tracks
    * @return String with the results in tsv format (tab separated values)
    */
-  public static String printXYCoords(List theTracks) {
+  public String printXYCoords(List theTracks) {
     int nTracks = theTracks.size();
     // strings to print out all of the data gathered, point by point
     String xyPts = " ";
@@ -189,10 +103,11 @@ public abstract class Utils {
   /**
    * @return
    */
-  public static Map<String, Trial> readTrials() {
+  public Map<String, Trial> readTrials() {
     Map<String, Trial> trials = null;
     try {
-      String file = Utils.selectFile();
+      FileManager fm = new FileManager();
+      String file = fm.selectFile();
       if (file == null)
         return null;
       FileInputStream streamIn = new FileInputStream(file);
@@ -207,7 +122,7 @@ public abstract class Utils {
   /**
    * @param trials
    */
-  public static void saveTrials(Map<String, Trial> trials) {
+  public void saveTrials(Map<String, Trial> trials) {
 
     String filename = "";
     String dir = "";
@@ -230,37 +145,6 @@ public abstract class Utils {
     } catch (IOException ioe) {
       ioe.printStackTrace();
     }
-  }
-
-  /**
-   * @return
-   */
-  public static String selectFile() {
-    JFileChooser chooser = new JFileChooser();
-    chooser.setDialogTitle("Select a file...");
-    chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      File file = chooser.getSelectedFile();
-      return file.getAbsolutePath();
-    }
-    return null;
-  }
-
-  /**
-   * @return
-   */
-  public static String selectFolder() {
-    JFileChooser chooser = new JFileChooser();
-    chooser.setDialogTitle("Select a folder...");
-    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-    chooser.setAcceptAllFileFilterUsed(false);
-    if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
-      // System.out.println("Directory: "+chooser.getSelectedFile());
-      File folder = chooser.getSelectedFile();
-      return folder.getAbsolutePath();
-    }
-    return null;
   }
   
 }

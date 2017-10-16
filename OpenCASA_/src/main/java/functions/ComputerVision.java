@@ -25,14 +25,14 @@ import ij.process.ImageStatistics;
  * @author Carlos Alquezar
  *
  */
-public abstract class ComputerVision implements Measurements {
+public class ComputerVision implements Measurements {
 
   /******************************************************/
   /**
    * @param imp
    * @return
    */
-  public static double autoThresholdImagePlus(ImagePlus imp) {
+  public double autoThresholdImagePlus(ImagePlus imp) {
     return autoThresholdImagePlus(imp, "Otsu"); // Otsu as a default
                                                 // thresholding method
   }
@@ -43,18 +43,19 @@ public abstract class ComputerVision implements Measurements {
    * @param thresholdMethod
    * @return
    */
-  public static double autoThresholdImagePlus(ImagePlus imp, String thresholdMethod) {
+  public double autoThresholdImagePlus(ImagePlus imp, String thresholdMethod) {
     ImageProcessor ip = imp.getProcessor();
     double lowerThreshold = 0;
     ImageStatistics st = ip.getStatistics();
     long[] histlong = st.getHistogram();
-    int histogram[] = Utils.convertLongArrayToInt(histlong);
+    Utils utils = new Utils();
+    int histogram[] = utils.convertLongArrayToInt(histlong);
     AutoThresholder at = new AutoThresholder();
     lowerThreshold = (double) at.getThreshold(thresholdMethod, histogram);
     // Upper threshold set to maximum
     double upperThreshold = 255;
     // Threshold image processor
-    ComputerVision.thresholdImageProcessor(ip, lowerThreshold, upperThreshold);
+    thresholdImageProcessor(ip, lowerThreshold, upperThreshold);
     return lowerThreshold;
   }
 
@@ -65,8 +66,7 @@ public abstract class ComputerVision implements Measurements {
    * 
    *          This functions converts imp to grayscale.
    */
-  public static void convertToGrayscale(ImagePlus imp) {
-
+  public void convertToGrayscale(ImagePlus imp) {
     ImageConverter ic = new ImageConverter(imp);
     ic.convertToGray8();
   }
@@ -78,8 +78,7 @@ public abstract class ComputerVision implements Measurements {
    * 
    *          This functions converts imp to grayscale.
    */
-  public static void convertToRGB(ImagePlus imp) {
-
+  public void convertToRGB(ImagePlus imp) {
     ImageConverter ic = new ImageConverter(imp);
     ic.convertToRGB();
   }
@@ -90,7 +89,7 @@ public abstract class ComputerVision implements Measurements {
    *          ImagePlus
    * @return 2D-ArrayList with all spermatozoa detected for each frame
    */
-  public static List[] detectSpermatozoa(ImagePlus imp) {
+  public List[] detectSpermatozoa(ImagePlus imp) {
 
     int nFrames = imp.getStackSize();
     ImageStack stack = imp.getStack();
@@ -99,18 +98,16 @@ public abstract class ComputerVision implements Measurements {
     // Initialize results table
     ResultsTable rt = new ResultsTable();
     rt.reset();
-
     int minSize = (int) (Params.minSize * Math.pow((1 / Params.micronPerPixel), 2));
     int maxSize = (int) (Params.maxSize * Math.pow((1 / Params.micronPerPixel), 2));
-
     // create storage for Spermatozoa positions
     List[] spermatozoa = new ArrayList[nFrames];
-
     // *************************************************************
     // * Record spermatozoa positions for each frame in an ArrayList
     // *************************************************************/
-
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
+      IJ.showProgress((double) iFrame / nFrames);
+      IJ.showStatus("Identifying spermatozoa per frame...");      
       spermatozoa[iFrame - 1] = new ArrayList();
       rt.reset();
       ParticleAnalyzer pa = new ParticleAnalyzer(options, measurements, rt, minSize, maxSize);
@@ -143,9 +140,6 @@ public abstract class ComputerVision implements Measurements {
         aSpermatozoon.total_minFeret = minFeretRes[iPart];
         spermatozoa[iFrame - 1].add(aSpermatozoon);
       }
-      IJ.showProgress((double) iFrame / nFrames);
-      IJ.showStatus("Identifying spermatozoa per frame...");
-
     }
     return spermatozoa;
   }
@@ -155,7 +149,7 @@ public abstract class ComputerVision implements Measurements {
    * @param impColor
    * @return
    */
-  public static ImagePlus getBlueChannel(ImagePlus impColor) {
+  public ImagePlus getBlueChannel(ImagePlus impColor) {
     ImagePlus[] images = ChannelSplitter.split(impColor);
     return images[2];
   }
@@ -165,7 +159,7 @@ public abstract class ComputerVision implements Measurements {
    * @param impColor
    * @return
    */
-  public static ImagePlus getGreenChannel(ImagePlus impColor) {
+  public  ImagePlus getGreenChannel(ImagePlus impColor) {
     ImagePlus[] images = ChannelSplitter.split(impColor);
     return images[1];
   }
@@ -177,7 +171,7 @@ public abstract class ComputerVision implements Measurements {
    * @param impTh
    * @return
    */
-  public static float getMeanGrayValue(Spermatozoon part, ImagePlus impGray, ImagePlus impTh) {
+  public  float getMeanGrayValue(Spermatozoon part, ImagePlus impGray, ImagePlus impTh) {
 
     ImageProcessor ipTh = impTh.getProcessor();
     ImageProcessor ipGray = impGray.getProcessor();
@@ -205,7 +199,7 @@ public abstract class ComputerVision implements Measurements {
    * @param impColor
    * @return
    */
-  public static ImagePlus getRedChannel(ImagePlus impColor) {
+  public ImagePlus getRedChannel(ImagePlus impColor) {
     ImagePlus[] images = ChannelSplitter.split(impColor);
     return images[0];
   }
@@ -217,7 +211,7 @@ public abstract class ComputerVision implements Measurements {
    * @param nFrames
    * @return 2D-ArrayList with all tracks detected
    */
-  public static SList idenfityTracks(List[] spermatozoa, int nFrames) {
+  public  SList idenfityTracks(List[] spermatozoa, int nFrames) {
 
     // int nFrames = imp.getStackSize();
     SList theTracks = new SList();
@@ -315,7 +309,7 @@ public abstract class ComputerVision implements Measurements {
    * 
    * @param imp
    */
-  public static void outlineThresholdImage(ImagePlus imp) {
+  public void outlineThresholdImage(ImagePlus imp) {
     convertToGrayscale(imp);
     ImageProcessor ip = imp.getProcessor();
     BinaryProcessor bp = new BinaryProcessor((ByteProcessor) ip);
@@ -327,12 +321,12 @@ public abstract class ComputerVision implements Measurements {
    * @param imp
    * @param lowerThreshold
    */
-  public static void thresholdImagePlus(ImagePlus imp, double lowerThreshold) {
+  public void thresholdImagePlus(ImagePlus imp, double lowerThreshold) {
     ImageProcessor ip = imp.getProcessor();
     // Upper threshold set to maximum
     double upperThreshold = 255;
     // Threshold image processor
-    ComputerVision.thresholdImageProcessor(ip, lowerThreshold, upperThreshold);
+    thresholdImageProcessor(ip, lowerThreshold, upperThreshold);
   }
 
   /******************************************************/
@@ -341,7 +335,7 @@ public abstract class ComputerVision implements Measurements {
    * @param lowerThreshold
    * @param upperThreshold
    */
-  public static void thresholdImageProcessor(ImageProcessor ip, double lowerThreshold, double upperThreshold) {
+  public void thresholdImageProcessor(ImageProcessor ip, double lowerThreshold, double upperThreshold) {
     // Make binary
     int[] lut = new int[256];
     for (int j = 0; j < 256; j++) {
@@ -355,11 +349,10 @@ public abstract class ComputerVision implements Measurements {
 
   /******************************************************/
   /**
-   * @param imp
-   *          ImagePlus This function makes binary 'imp' applying an statistical
+   * @param ImagePlus This function makes binary 'imp' applying an statistical
    *          threshold
    */
-  public static void thresholdStack(ImagePlus imp) {
+  public void thresholdStack(ImagePlus imp) {
 
     ImageStack stack = imp.getStack();
     ImageProcessor ip = stack.getProcessor(1);
