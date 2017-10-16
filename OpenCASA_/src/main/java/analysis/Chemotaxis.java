@@ -41,6 +41,7 @@ public class Chemotaxis {
   public Chemotaxis() {
   }
 
+  
   /**
    * @param trials
    * @return
