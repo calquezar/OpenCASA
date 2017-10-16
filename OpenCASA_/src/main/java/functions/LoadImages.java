@@ -6,7 +6,6 @@ import java.util.List;
 import javax.swing.JOptionPane;
 
 import gui.MainWindow;
-import gui.MorphWindow;
 import ij.IJ;
 import ij.ImagePlus;
 

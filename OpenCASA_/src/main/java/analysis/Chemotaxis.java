@@ -612,7 +612,7 @@ public class Chemotaxis {
   public void run(MainWindow mw) throws IOException, ClassNotFoundException {
     mw.setVisible(false);
     // Ask if user wants to analyze a file or directory
-    Object[] options = { "File", "Directory", "Simulation" };
+    Object[] options = { "File", "Directory" /*,"Simulation"*/ };
     String question = "What do you want to analyze?";
     String title = "Choose one analysis...";
     int userSelection1 = analysisSelectionDialog(options, question, title);

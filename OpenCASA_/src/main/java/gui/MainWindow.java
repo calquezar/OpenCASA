@@ -16,14 +16,9 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
-import analysis.Motility;
-import analysis.Viability;
 import data.Params;
-import data.PersistentRandomWalker;
 import data.Simulation;
-import functions.LoadImages;
 import ij.IJ;
-import ij.gui.GenericDialog;
 
 /**
  * @author Carlos Alquezar
@@ -31,33 +26,10 @@ import ij.gui.GenericDialog;
  */
 public class MainWindow extends JFrame {
 
-  /**
-    * 
-    */
+
   private MainWindow mw;
-  /**
-    * 
-    */
   Chemotaxis ch;
-  /**
-    * 
-    */
-  Motility mot;
-  /**
-    * 
-    */
-  ViabilityWindow viabilityW;
-  /**
-    * 
-    */
-  MorphWindow morphW;
-  /**
-    * 
-    */
   Simulation sim;
-  /**
-    * 
-    */
   SettingsWindow sw;
 
   /**
@@ -116,12 +88,12 @@ public class MainWindow extends JFrame {
             IJ.handleException(e1);
           }
         } else if (label.equals("Motility")) {
-          mot = new Motility();
-          try {
-            mot.run(mw);
-          } catch (Exception e1) {
-            IJ.handleException(e1);
-          }
+//          mot = new Motility();
+//          try {
+//            mot.run(mw);
+//          } catch (Exception e1) {
+//            IJ.handleException(e1);
+//          }
         } else if (label.equals("Viability")) {
           // via = new Viability();
           // try{via.run(mw);}
@@ -131,32 +103,32 @@ public class MainWindow extends JFrame {
 //          viabilityW.setImages(ld.run());
 //          viabilityW.showWindow();
         } else if (label.equals("Morphometry")) {
-          LoadImages ld = new LoadImages(mw);
-          if(ld!=null){
-          morphW = new MorphWindow(mw);
-          morphW.setImages(ld.run());
-          morphW.showWindow();
-          }
+//          LoadImages ld = new LoadImages(mw);
+//          if(ld!=null){
+//          morphW = new MorphWindow(mw);
+//          morphW.setImages(ld.run());
+//          morphW.showWindow();
+//          }
         } else if (label.equals("Simulation")) {
-          GenericDialog gd = new GenericDialog("Set Simulation parameters");
-          gd.addNumericField("Beta", 0, 2);
-          gd.addNumericField("Responsiveness (%)", 50, 2);
-          gd.addNumericField("Length of the simulation (frames)", 500, 0);
-          gd.showDialog();
-          if (gd.wasCanceled()) {
-            return;
-          }
-          double beta = gd.getNextNumber();
-          double responsiveness = gd.getNextNumber() / 100; // value must
-                                                            // be between
-                                                            // [0,1]
-          int length = (int) gd.getNextNumber();
-          sim = new PersistentRandomWalker(beta, responsiveness, length);
-          try {
-            sim.run();
-          } catch (Exception e1) {
-            e1.printStackTrace();
-          }
+//          GenericDialog gd = new GenericDialog("Set Simulation parameters");
+//          gd.addNumericField("Beta", 0, 2);
+//          gd.addNumericField("Responsiveness (%)", 50, 2);
+//          gd.addNumericField("Length of the simulation (frames)", 500, 0);
+//          gd.showDialog();
+//          if (gd.wasCanceled()) {
+//            return;
+//          }
+//          double beta = gd.getNextNumber();
+//          double responsiveness = gd.getNextNumber() / 100; // value must
+//                                                            // be between
+//                                                            // [0,1]
+//          int length = (int) gd.getNextNumber();
+//          sim = new PersistentRandomWalker(beta, responsiveness, length);
+//          try {
+//            sim.run();
+//          } catch (Exception e1) {
+//            e1.printStackTrace();
+//          }
         } else if (label.equals("Settings")) {
           if (sw == null || !sw.isVisible()) {
             sw = new SettingsWindow("Settings");
@@ -179,7 +151,6 @@ public class MainWindow extends JFrame {
     addButton("Morphometry", 1, 1, new Color(255, 255, 255), "/morphometry.png", panel);
     addButton("Simulation", 0, 2, new Color(255, 255, 255), "/Settings.png", panel);
     addButton("Settings", 1, 2, new Color(255, 204, 153), "/Settings.png", panel);
-    // panel.setBackground(new Color(255,204,153));
     this.setContentPane(panel);
   }
 }
