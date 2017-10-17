@@ -1,9 +1,11 @@
 package functions;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
+import data.SList;
 import data.Spermatozoon;
 
 /**
@@ -90,7 +92,8 @@ public class Kinematics {
       Spermatozoon avgS = (Spermatozoon) avgTrack.get(i);
       dists[i] = origS.distance(avgS);
     }
-    dists = SignalProcessing.movingAverage(dists, 2);
+    SignalProcessing sp = new SignalProcessing();
+    dists = sp.movingAverage(dists, 2);
     int intersections = countLocalMaximas(dists);
     float bcf_value = (float) intersections * Params.frameRate / (float) nAvgPoints;
     return bcf_value;
@@ -120,7 +123,8 @@ public class Kinematics {
    */
   public String getVelocityTrackType(List track) {
 
-    List avgTrack = SignalProcessing.movingAverage(track);
+    SignalProcessing sp = new SignalProcessing();
+    List avgTrack = sp.movingAverage(track);
     float vap = vcl(avgTrack);
     if ((vsl(track) < Params.vclLowerTh) || (vcl(track) < Params.vclLowerTh) || (vap < Params.vclLowerTh))
       return "Slow";
@@ -155,6 +159,50 @@ public class Kinematics {
     return meanAngle;
   }
 
+  /******************************************************/
+  /**
+   * @param track
+   * @return
+   */
+  public boolean motilityTest(List track) {
+
+    Kinematics K = new Kinematics();
+    int nPoints = track.size();
+    Spermatozoon firstSpermatozoon = (Spermatozoon) track.get(0);
+    Spermatozoon lastSpermatozoon = (Spermatozoon) track.get(nPoints - 1);
+    float distance = lastSpermatozoon.distance(firstSpermatozoon);
+    SignalProcessing sp = new SignalProcessing();
+    List avgTrack = sp.movingAverage(track);
+    float vap = K.vcl(avgTrack) / K.vsl(avgTrack);
+    // Kinematics filter
+    double minPixelDistance = 10;// 10/Params.micronPerPixel;
+    if (K.vcl(track) > Params.vclMin && (distance > minPixelDistance) && (vap > 0))
+      return true;
+    else
+      return false;
+  }
+
+  /******************************************************/
+  /**
+   * @param theTracks
+   * @return
+   */
+  public int[] motilityTest(SList theTracks) {
+    int motile = 0;
+    int nonMotile = 0;
+    for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
+      List aTrack = (ArrayList) iT.next();
+      if (motilityTest(aTrack))
+        motile++;
+      else
+        nonMotile++;
+    }
+    int[] results = new int[2];
+    results[0] = motile;
+    results[1] = nonMotile;
+    return results;
+  }
+  
   /******************************************************/
   /**
    * @param track

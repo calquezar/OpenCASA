@@ -13,6 +13,7 @@ import java.util.Map;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
@@ -26,6 +27,20 @@ import ij.IJ;
  */
 public class Utils {
 
+  /**
+   * 
+   * @param options
+   * @param question
+   * @param title
+   * @return
+   */
+  public int analysisSelectionDialog(Object[] options, String question, String title) {
+    int n = JOptionPane.showOptionDialog(null, question, title, JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE,
+        null, // do not use a custom Icon
+        options, // the titles of buttons
+        options[0]); // default button title
+    return n;
+  }
   /**
    * @param orig
    * @return

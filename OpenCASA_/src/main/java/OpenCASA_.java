@@ -44,8 +44,7 @@ public class OpenCASA_ implements PlugIn {
    **/
   @Override
   public void run(String arg) {
-//    (new MainWindow("OpenCASA")).setVisible(true);
-    Opener op = new Opener()
+    (new MainWindow("OpenCASA")).setVisible(true);
     
   }
 }

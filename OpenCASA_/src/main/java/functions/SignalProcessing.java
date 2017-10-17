@@ -12,7 +12,7 @@ import data.Spermatozoon;
  * @author Carlos Alquezar
  *
  */
-public abstract class SignalProcessing {
+public class SignalProcessing {
 
   /******************************************************/
   /**
@@ -23,7 +23,7 @@ public abstract class SignalProcessing {
    *          2D-ArrayList with all the tracks
    * @return 2D-ArrayList with the averaged tracks
    */
-  public static SList averageTracks(SList theTracks) {
+  public SList averageTracks(SList theTracks) {
 
     SList avgTracks = new SList();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
@@ -44,7 +44,7 @@ public abstract class SignalProcessing {
    *          - decimation factor
    * @return Decimated track
    */
-  public static List decimateTrack(List track, int factor) {
+  public List decimateTrack(List track, int factor) {
     List decimatedTrack = new ArrayList();
     for (ListIterator iT = track.listIterator(); iT.hasNext();) {
       Spermatozoon p = (Spermatozoon) iT.next();
@@ -61,13 +61,11 @@ public abstract class SignalProcessing {
   /**
    * Function to decimate all tracks
    * 
-   * @param theTracks
-   *          2D-ArrayList with all the tracks
-   * @param factor
-   *          - decimation factor
+   * @param theTracks - 2D-ArrayList with all the tracks
+   * @param factor - decimation factor
    * @return 2D-ArrayList with all the tracks decimated
    */
-  public static List decimateTracks(List theTracks, int factor) {
+  public List decimateTracks(List theTracks, int factor) {
     List decimatedTracks = new ArrayList();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
@@ -78,11 +76,10 @@ public abstract class SignalProcessing {
 
   /******************************************************/
   /**
-   * @param theTracks
-   *          2D-ArrayList with all the tracks
+   * @param theTracks - 2D-ArrayList with all the tracks
    * @return 2D-ArrayList with all the tracks that have passed the filter
    */
-  public static SList filterTracksByLength(SList theTracks) {
+  public SList filterTracksByLength(SList theTracks) {
     SList filteredTracks = new SList();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
@@ -94,61 +91,18 @@ public abstract class SignalProcessing {
 
   /******************************************************/
   /**
-   * @param theTracks
-   *          2D-ArrayList with all the tracks
+   * @param theTracks - 2D-ArrayList with all the tracks
    * @return 2D-ArrayList with all the tracks that have passed the filter
    */
-  public static SList filterTracksByMotility(SList theTracks) {
+  public SList filterTracksByMotility(SList theTracks) {
     SList filteredTracks = new SList();
+    Kinematics K = new Kinematics();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
-      if (motilityTest(aTrack))
+      if (K.motilityTest(aTrack))
         filteredTracks.add(aTrack);
     }
     return filteredTracks;
-  }
-
-  /******************************************************/
-  /**
-   * @param track
-   * @return
-   */
-  public static boolean motilityTest(List track) {
-
-    Kinematics K = new Kinematics();
-    int nPoints = track.size();
-    Spermatozoon firstSpermatozoon = (Spermatozoon) track.get(0);
-    Spermatozoon lastSpermatozoon = (Spermatozoon) track.get(nPoints - 1);
-    float distance = lastSpermatozoon.distance(firstSpermatozoon);
-    List avgTrack = movingAverage(track);
-    float vap = K.vcl(avgTrack) / K.vsl(avgTrack);
-    // Kinematics filter
-    double minPixelDistance = 10;// 10/Params.micronPerPixel;
-    if (K.vcl(track) > Params.vclMin && (distance > minPixelDistance) && (vap > 0))
-      return true;
-    else
-      return false;
-  }
-
-  /******************************************************/
-  /**
-   * @param theTracks
-   * @return
-   */
-  public static int[] motilityTest(SList theTracks) {
-    int motile = 0;
-    int nonMotile = 0;
-    for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
-      List aTrack = (ArrayList) iT.next();
-      if (motilityTest(aTrack))
-        motile++;
-      else
-        nonMotile++;
-    }
-    int[] results = new int[2];
-    results[0] = motile;
-    results[1] = nonMotile;
-    return results;
   }
 
   /**
@@ -156,7 +110,7 @@ public abstract class SignalProcessing {
    * @param wSize
    * @return
    */
-  public static float[] movingAverage(float[] points, int wSize) {
+  public float[] movingAverage(float[] points, int wSize) {
     int nPoints = points.length;
     int count = 0;
     float[] avgPoints = new float[nPoints - wSize + 1];
@@ -173,7 +127,7 @@ public abstract class SignalProcessing {
    * @param track
    * @return
    */
-  public static List movingAverage(List track) {
+  public List movingAverage(List track) {
     return movingAverage(track, Params.wSize);
   }
 
@@ -187,7 +141,7 @@ public abstract class SignalProcessing {
    * @param wSize
    * @return ArrayList with the averaged track
    */
-  public static List movingAverage(List track, int wSize) {
+  public List movingAverage(List track, int wSize) {
     int nPoints = track.size();
     List avgTrack = new ArrayList();
     for (int j = wSize - 1; j < nPoints; j++) {

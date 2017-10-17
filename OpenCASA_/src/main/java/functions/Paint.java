@@ -116,7 +116,8 @@ public class Paint {
     // Variables used to draw chemotactic cone
     int trackNr = 0;
     int displayTrackNr = 0;
-    SList avgTracks = SignalProcessing.averageTracks(theTracks);
+    SignalProcessing sp = new SignalProcessing();
+    SList avgTracks = sp.averageTracks(theTracks);
     Kinematics kinematics = new Kinematics();
     // Draw on each frame
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
@@ -167,144 +168,10 @@ public class Paint {
           }
         }
       }
-      // //Draw average paths
-      // color=0;
-      // for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
-      // List zTrack=(ArrayList) iT.next();
-      // ListIterator jT=zTrack.listIterator();
-      // Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
-      // //Variables used to
-      // Spermatozoon firstSpermatozoon = new Spermatozoon();
-      // firstSpermatozoon.copy(oldSpermatozoon);
-      // for (;jT.hasNext();) {
-      // Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
-      // ip.setValue(color);
-      // if(Params.drawAvgTrajectories){
-      // ip.moveTo((int)oldSpermatozoon.x*upRes,
-      // (int)oldSpermatozoon.y*upRes);
-      // ip.lineTo((int)newSpermatozoon.x*upRes,
-      // (int)newSpermatozoon.y*upRes);
-      // }
-      // oldSpermatozoon=newSpermatozoon;
-      // }
-      // }
       System.out.println("Drawind frame: " + iFrame);
     }
     imp.updateAndRepaintWindow();
   }
-  // /******************************************************/
-  // /**
-  // * @param imp
-  // * @param theTracks 2D-ArrayList with all the tracks
-  // * @param avgTracks 2D-ArrayList with the averaged tracks
-  // * @param chIdx
-  // * @param slIdx
-  // */
-  // public void draw(ImagePlus imp,List theTracks,List avgTracks,float
-  // chIdx,float slIdx){
-  // int nFrames = imp.getStackSize();
-  // ImageStack stack = imp.getStack();
-  // if (imp.getCalibration().scaled()) {
-  // IJ.showMessage("MultiTracker", "Cannot display paths if image is spatially
-  // calibrated");
-  // return;
-  // }
-  // int upRes = 1;
-  // String strPart;
-  // //Variables used to draw chemotactic cone
-  // int trackNr=0;
-  // int displayTrackNr=0;
-  // //We create another ImageProcesor to draw chemotactic cone and relative
-  // trajectories
-  // ColorProcessor ipRelTraj = new ColorProcessor(imp.getWidth()*upRes,
-  // imp.getHeight()*upRes);
-  // ipRelTraj.setColor(Color.white);
-  // ipRelTraj.fill();
-  // if(Params.drawRelTrajectories){
-  // //Draw cone used to clasify chemotactic trajectories
-  // ipRelTraj.setColor(Color.green);
-  // chemotaxisTemplate(ipRelTraj,upRes,avgTracks.size(),chIdx,slIdx);
-  // }
-  // //Draw on each frame
-  // for (int iFrame=1; iFrame<=nFrames; iFrame++) {
-  // IJ.showProgress((double)iFrame/nFrames);
-  // IJ.showStatus("Drawing Tracks...");
-  // int trackCount2=0;
-  // int trackCount3=0;
-  // int color;
-  // int xHeight=stack.getHeight();
-  // int yWidth=stack.getWidth();
-  //
-  // ImageProcessor ip = stack.getProcessor(iFrame);
-  // ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
-  // trackNr=0;
-  // displayTrackNr=0;
-  // for (ListIterator iT=theTracks.listIterator();iT.hasNext();) {
-  // trackNr++;
-  // trackCount2++;
-  // List zTrack=(ArrayList) iT.next();
-  // displayTrackNr++;
-  // ListIterator jT=zTrack.listIterator();
-  // Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
-  // color = 150;
-  // trackCount3++;
-  // for (;jT.hasNext();) {
-  // Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
-  // ip.setValue(color);
-  // if(Params.drawOrigTrajectories){
-  // ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
-  // ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
-  // }
-  // oldSpermatozoon=newSpermatozoon;
-  // //Draw track numbers
-  // if(newSpermatozoon.z==iFrame){
-  // strPart=""+displayTrackNr;
-  // ip.setColor(Color.black);
-  // // we could do someboundary testing here to place the labels better when
-  // we are close to the edge
-  // ip.moveTo((int)(oldSpermatozoon.x/Params.pixelWidth+0),doOffset((int)(oldSpermatozoon.y/Params.pixelHeight),yWidth,5)
-  // );
-  // ip.drawString(strPart);
-  // }
-  // }
-  // }
-  // //Draw average paths
-  // color=0;
-  // for (ListIterator iT=avgTracks.listIterator();iT.hasNext();) {
-  // List zTrack=(ArrayList) iT.next();
-  // ListIterator jT=zTrack.listIterator();
-  // Spermatozoon oldSpermatozoon=(Spermatozoon) jT.next();
-  // //Variables used to
-  // Spermatozoon firstSpermatozoon = new Spermatozoon();
-  // firstSpermatozoon.copy(oldSpermatozoon);
-  // int xCenter = ip.getWidth()/2;
-  // int yCenter = ip.getHeight()/2;
-  // int xLast = xCenter;
-  // int yLast = yCenter;
-  //
-  // for (;jT.hasNext();) {
-  // Spermatozoon newSpermatozoon=(Spermatozoon) jT.next();
-  // ip.setValue(color);
-  // if(Params.drawAvgTrajectories){
-  // ip.moveTo((int)oldSpermatozoon.x*upRes, (int)oldSpermatozoon.y*upRes);
-  // ip.lineTo((int)newSpermatozoon.x*upRes, (int)newSpermatozoon.y*upRes);
-  // }
-  // if(Params.drawRelTrajectories){
-  // ipRelTraj.setColor(Color.black);
-  // ipRelTraj.moveTo(xLast,yLast);
-  // xLast = (int)(newSpermatozoon.x-firstSpermatozoon.x+xCenter);
-  // yLast = (int)(newSpermatozoon.y-firstSpermatozoon.y+yCenter);
-  // ipRelTraj.lineTo(xLast*upRes, yLast*upRes);
-  // }
-  // oldSpermatozoon=newSpermatozoon;
-  // }
-  // ipRelTraj.drawOval(xLast-3,yLast,6,6);
-  // }
-  // }
-  // imp.updateAndRepaintWindow();
-  // if(Params.drawRelTrajectories)
-  // new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
-  // }
 
   /******************************************************/
   /**
@@ -351,7 +218,8 @@ public class Paint {
    */
   public void drawChemotaxis(SList theTracks, float chIdx, float slIdx, int width, int height, String sampleID) {
 
-    SList avgTracks = SignalProcessing.averageTracks(theTracks);
+    SignalProcessing sp = new SignalProcessing();
+    SList avgTracks = sp.averageTracks(theTracks);
     String strPart;
     // Variables used to draw chemotactic cone
     int displayTrackNr = 0;

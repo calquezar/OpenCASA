@@ -18,21 +18,8 @@ import ij.io.DirectoryChooser;
  */
 public class FileManager {
 
-
   /**   */
   public FileManager() {
-  }
-
-  /**
-   * @return
-   */
-  public int dialog() {
-    Object[] options = { "File", "Directory" };
-    int n = JOptionPane.showOptionDialog(null, "What do you want to analyze?", "Choose one analysis...",
-        JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE, null, // do not use a custom Icon
-        options, // the titles of buttons
-        options[0]); // default button title
-    return n;
   }
 
   /**
@@ -43,18 +30,6 @@ public class FileManager {
     String[] parts = path.split("\\\\");
     return parts[parts.length - 1];
   }
-
-  /**
-   * @return
-   */
-  public String[] getListOfFiles() {
-      return getListOfFiles(selectFolder());
-  }
-
-//  public String[] getListOfImages(String[] listOfFiles){
-//    
-//    
-//  }
   
   /**
    * @param dir
@@ -92,13 +67,22 @@ public class FileManager {
     else
       return false;
   }
+  
+  /**
+   * 
+   * @return
+   */  
+  public List<ImagePlus> loadImageDirectory() {
+    String dir = selectFolder();
+    return loadImageDirectory(dir);
+  }
   /**
    * 
    * @return
    */
-  public List<ImagePlus> loadImageDirectory() {
+  public List<ImagePlus> loadImageDirectory(String dir) {
 
-    String[] listOfFiles = getListOfFiles();
+    String[] listOfFiles = getListOfFiles(dir);
     if (listOfFiles == null || listOfFiles.length == 0) {
       if (listOfFiles != null)
         JOptionPane.showMessageDialog(null, "Please, select a non-empty folder.");
@@ -107,13 +91,15 @@ public class FileManager {
     List<ImagePlus> images = new ArrayList<ImagePlus>();
     for (int i = 0; i < listOfFiles.length; i++) {
       String absoluteFilePath = listOfFiles[i];
+      if(isAVI(absoluteFilePath))
+        continue;
       String parentsDirectory = getParentDirectory(absoluteFilePath);
       ImagePlus imp = IJ.openImage(absoluteFilePath);
       if (imp != null) {
         imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
         images.add(imp);
       }
-      // else - possibly the file is not an image
+      // else - possibly the file is not an image nor AVI
     }
     if (images.size() < 1) {
       JOptionPane.showMessageDialog(null, "Please, select a valid folder.");
@@ -122,30 +108,31 @@ public class FileManager {
     return images;
   }
   
-//  /**
-//   * 
-//   * @return
-//   */
-//  public List<ImagePlus> loadImageFile() {
-//    String absoluteFilePath = getAbsoluteFileName();
-//    if (absoluteFilePath == null) {
-//      return null;
-//    }
-//    if(isAVI(absoluteFilePath)){
-//      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
-//      return null;
-//    }
-//    String parentsDirectory = getParentDirectory(absoluteFilePath);
-//    ImagePlus imp = IJ.openImage(absoluteFilePath);
-//    if (imp == null) {
-//      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
-//      return null;
-//    }
-//    imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
-//    List<ImagePlus> images = new ArrayList<ImagePlus>();
-//    images.add(imp);
-//    return images;
-//  }
+  /**
+   * 
+   * @return an array with only one ImagePlus, compatible with
+   * the input specification of other functions
+   */
+  public List<ImagePlus> loadImageFile() {
+    String absoluteFilePath = selectFile();
+    if (absoluteFilePath == null) {
+      return null;
+    }
+    if(isAVI(absoluteFilePath)){
+      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
+      return null;
+    }
+    String parentsDirectory = getParentDirectory(absoluteFilePath);
+    ImagePlus imp = IJ.openImage(absoluteFilePath);
+    if (imp == null) {
+      JOptionPane.showMessageDialog(null, "Please, select a valid file.");
+      return null;
+    }
+    imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
+    List<ImagePlus> images = new ArrayList<ImagePlus>();
+    images.add(imp);
+    return images;
+  }
 //  /**
 //   * 
 //   * @return
@@ -181,7 +168,7 @@ public class FileManager {
    * @return
    */
   public String selectFolder() {
-    DirectoryChooser dc = new DirectoryChooser("Select folder..");
+    DirectoryChooser dc = new DirectoryChooser("Select folder...");
     return dc.getDirectory();
   }  
 }
