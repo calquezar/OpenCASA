@@ -6,7 +6,9 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
+import data.Trial;
 import functions.FileManager;
+import functions.TrialManager;
 import functions.Utils;
 import gui.MainWindow;
 import ij.IJ;
@@ -31,7 +33,8 @@ public class Chemotaxis extends SwingWorker<Void, Void> {
   private void analyzeFile(){
     FileManager fm = new FileManager();
     String file = fm.selectFile();
-    
+    TrialManager tm = new TrialManager();
+    Trial t = tm.getTrialFromAVI(file);
   }
   
   @Override

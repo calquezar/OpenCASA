@@ -1,6 +1,9 @@
 package functions;
 
+import data.SList;
 import data.Trial;
+import ij.ImagePlus;
+import plugins.AVI_Reader;
 
 /**
  * @author Carlos Alquezar
@@ -24,26 +27,21 @@ public class TrialManager {
   
   /**
    * @param analysis
-   * @param absoluteFilePath
+   * @param path
    * @return
    */
-  public static Trial getTrialFromAVI(String analysis, String absoluteFilePath) {
-
-    String[] parts = absoluteFilePath.split("\\\\");
-    String filename = parts[parts.length - 1];
-    String trialType = "";
-    String trialID = "";
-    if (analysis.equals("Chemotaxis-File") || analysis.equals("Chemotaxis-Directory")) {
-      trialType = getTrialType(filename);
-      trialID = getID(filename);
-    } else if (analysis.equals("Motility-File") || analysis.equals("Motility-Directory")) {
-      trialID = filename;
-    }
-    // Load videos
+  public Trial getTrialFromAVI(String path) {
+    FileManager fm = new FileManager();
+    
+    String filename = fm.getFilename(path);
+    String parentDir = fm.getParentDirectory(path);
+    String relativePath = parentDir+"\\"+filename;
+    String trialID = filename;
+    // Load video
     AVI_Reader ar = new AVI_Reader();
-    ar.run(absoluteFilePath);
+    ar.run(path);
     ImagePlus imp = ar.getImagePlus();
-    return getTrialFromImp(imp, analysis, trialID, trialType, filename);
+    return getTrialFromImp(imp, trialID, relativePath);
   }
 
   /**
@@ -51,29 +49,22 @@ public class TrialManager {
    * @param analysis
    * @param trialID
    * @param trialType
-   * @param filename
+   * @param relativePath
    * @return
    */
-  public static Trial getTrialFromImp(ImagePlus impOrig, String analysis, String trialID, String trialType,
-      String filename) {
+  public Trial getTrialFromImp(ImagePlus impOrig, String trialID, String relativePath) {
     // Analyze the video
     // It's necessary to duplicate the ImagePlus if
     // we want to draw later sperm trajectories in the original video
-    ImagePlus imp = impOrig;
-    if (analysis.equals("Motility-File"))
-      imp = impOrig.duplicate();
-    SList tracks = analyze(imp);
-    int[] motileSperm = SignalProcessing.motilityTest(tracks);
+    ImagePlus imp = impOrig.duplicate();
+    VideoRecognition vr = new VideoRecognition();
+    SList tracks = vr.analyzeVideo(imp);
+    Kinematics K = new Kinematics();
+    int[] motileSperm = K.motilityTest(tracks);
     // Only pass from here tracks with a minimum level of motility
-    tracks = SignalProcessing.filterTracksByMotility(tracks);
-    Trial trial = null;
-    if (analysis.equals("Chemotaxis-File") || analysis.equals("Chemotaxis-Directory")
-        || analysis.equals("Chemotaxis-Simulation"))
-      trial = new Trial(trialID, trialType, filename, tracks, impOrig.getWidth(), impOrig.getHeight());
-    else if (analysis.equals("Motility-File"))
-      trial = new Trial(trialID, trialType, filename, tracks, impOrig, motileSperm);
-    else if (analysis.equals("Motility-Directory"))
-      trial = new Trial(trialID, trialType, filename, tracks, null, motileSperm);
+    SignalProcessing sp = new SignalProcessing();
+    tracks = sp.filterTracksByMotility(tracks) //ESTO HAY QUE QUITARLO DE AQUI. SE AÑADE UN FLAG O ALGO PARA PASAR DESPUES EL TEST DE MOTILIDAD
+    Trial trial =  new Trial(trialID, "", relativePath, tracks,impOrig, motileSperm, impOrig.getWidth(), impOrig.getHeight());
     return trial;
   }
 
