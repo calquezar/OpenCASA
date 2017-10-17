@@ -6,6 +6,7 @@ import javax.swing.JOptionPane;
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
+import functions.FileManager;
 import functions.Utils;
 import gui.MainWindow;
 import ij.IJ;
@@ -27,6 +28,12 @@ public class Chemotaxis extends SwingWorker<Void, Void> {
   /** */
   private TypeOfAnalysis analysis;
 
+  private void analyzeFile(){
+    FileManager fm = new FileManager();
+    String file = fm.selectFile();
+    
+  }
+  
   @Override
   public Void doInBackground() throws Exception {
     
