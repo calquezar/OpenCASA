@@ -59,12 +59,7 @@ public class TrialManager {
     ImagePlus imp = impOrig.duplicate();
     VideoRecognition vr = new VideoRecognition();
     SList tracks = vr.analyzeVideo(imp);
-    Kinematics K = new Kinematics();
-    int[] motileSperm = K.motilityTest(tracks);
-    // Only pass from here tracks with a minimum level of motility
-    SignalProcessing sp = new SignalProcessing();
-    tracks = sp.filterTracksByMotility(tracks) //ESTO HAY QUE QUITARLO DE AQUI. SE AÑADE UN FLAG O ALGO PARA PASAR DESPUES EL TEST DE MOTILIDAD
-    Trial trial =  new Trial(trialID, "", relativePath, tracks,impOrig, motileSperm, impOrig.getWidth(), impOrig.getHeight());
+    Trial trial =  new Trial(trialID, "", relativePath, tracks, impOrig.getWidth(), impOrig.getHeight());
     return trial;
   }
 

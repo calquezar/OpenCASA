@@ -17,8 +17,10 @@ import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
 import data.Params;
+import data.PersistentRandomWalker;
 import data.Simulation;
 import ij.IJ;
+import ij.gui.GenericDialog;
 
 /**
  * @author Carlos Alquezar
@@ -112,25 +114,7 @@ public class MainWindow extends JFrame {
 //          morphW.showWindow();
 //          }
         } else if (label.equals("Simulation")) {
-//          GenericDialog gd = new GenericDialog("Set Simulation parameters");
-//          gd.addNumericField("Beta", 0, 2);
-//          gd.addNumericField("Responsiveness (%)", 50, 2);
-//          gd.addNumericField("Length of the simulation (frames)", 500, 0);
-//          gd.showDialog();
-//          if (gd.wasCanceled()) {
-//            return;
-//          }
-//          double beta = gd.getNextNumber();
-//          double responsiveness = gd.getNextNumber() / 100; // value must
-//                                                            // be between
-//                                                            // [0,1]
-//          int length = (int) gd.getNextNumber();
-//          sim = new PersistentRandomWalker(beta, responsiveness, length);
-//          try {
-//            sim.run();
-//          } catch (Exception e1) {
-//            e1.printStackTrace();
-//          }
+          simulate();
         } else if (label.equals("Settings")) {
           if (sw == null || !sw.isVisible()) {
             sw = new SettingsWindow("Settings");
@@ -154,5 +138,27 @@ public class MainWindow extends JFrame {
     addButton("Simulation", 0, 2, new Color(255, 255, 255), "/Settings.png", panel);
     addButton("Settings", 1, 2, new Color(255, 204, 153), "/Settings.png", panel);
     this.setContentPane(panel);
+  }
+  
+  public void simulate(){
+    GenericDialog gd = new GenericDialog("Set Simulation parameters");
+    gd.addNumericField("Beta", 0, 2);
+    gd.addNumericField("Responsiveness (%)", 50, 2);
+    gd.addNumericField("Length of the simulation (frames)", 500, 0);
+    gd.showDialog();
+    if (gd.wasCanceled()) {
+      return;
+    }
+    double beta = gd.getNextNumber();
+    double responsiveness = gd.getNextNumber() / 100; // value must
+                                                      // be between
+                                                      // [0,1]
+    int length = (int) gd.getNextNumber();
+    sim = new PersistentRandomWalker(beta, responsiveness, length);
+    try {
+      sim.run();
+    } catch (Exception e1) {
+      e1.printStackTrace();
+    }
   }
 }

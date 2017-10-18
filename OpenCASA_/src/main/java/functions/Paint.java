@@ -10,6 +10,7 @@ import java.util.ListIterator;
 import data.Params;
 import data.SList;
 import data.Spermatozoon;
+import data.Trial;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -208,31 +209,31 @@ public class Paint {
 
   /******************************************************/
   /**
-   * @param theTracks
+   * @param trial.tracks
    *          2D-ArrayList with all the tracks
    * @param chIdx
    * @param slIdx
-   * @param width
-   * @param height
-   * @param sampleID
+   * @param trial.fieldWidth
+   * @param trial.fieldHeight
+   * @param trial.ID
    */
-  public void drawChemotaxis(SList theTracks, float chIdx, float slIdx, int width, int height, String sampleID) {
+  public void drawChemotaxis(Trial trial, float chIdx, float slIdx) {
 
     SignalProcessing sp = new SignalProcessing();
-    SList avgTracks = sp.averageTracks(theTracks);
+    SList avgTracks = sp.averageTracks(trial.tracks);
     String strPart;
     // Variables used to draw chemotactic cone
     int displayTrackNr = 0;
     // We create another ImageProcesor to draw chemotactic cone and relative
     // trajectories
-    ColorProcessor ipRelTraj = new ColorProcessor(width, height);
+    ColorProcessor ipRelTraj = new ColorProcessor(trial.fieldWidth, trial.fieldHeight);
     ipRelTraj.setColor(Color.white);
     ipRelTraj.fill();
-    int xCenter = width / 2;
-    int yCenter = height / 2;
+    int xCenter = trial.fieldWidth / 2;
+    int yCenter = trial.fieldHeight / 2;
     // Draw cone used to clasify chemotactic trajectories
     ipRelTraj.setColor(Color.green);
-    chemotaxisTemplate(ipRelTraj, avgTracks.size(), chIdx, slIdx, sampleID);
+    chemotaxisTemplate(ipRelTraj, avgTracks.size(), chIdx, slIdx, trial.ID);
     ipRelTraj.setColor(Color.red);
     ipRelTraj.setLineWidth(4);
     ipRelTraj.moveTo(xCenter, yCenter);
