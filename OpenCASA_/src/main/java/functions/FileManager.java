@@ -28,7 +28,7 @@ public class FileManager {
    */
   public String getFilename(String path) {
     String[] parts = path.split("\\\\");
-    return parts[parts.length - 1];
+    return removeExtension(parts[parts.length - 1]);
   }
   
   /**
@@ -67,7 +67,6 @@ public class FileManager {
     else
       return false;
   }
-  
   /**
    * 
    * @return
@@ -76,6 +75,7 @@ public class FileManager {
     String dir = selectFolder();
     return loadImageDirectory(dir);
   }
+  
   /**
    * 
    * @return
@@ -107,7 +107,6 @@ public class FileManager {
     }
     return images;
   }
-  
   /**
    * 
    * @return an array with only one ImagePlus, compatible with
@@ -132,6 +131,11 @@ public class FileManager {
     List<ImagePlus> images = new ArrayList<ImagePlus>();
     images.add(imp);
     return images;
+  }
+  
+  public String removeExtension(String filename){
+    String[] parts = filename.split("\\.");
+    return parts[0];
   }
 //  /**
 //   * 

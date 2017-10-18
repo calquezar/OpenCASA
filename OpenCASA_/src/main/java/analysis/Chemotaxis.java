@@ -1,8 +1,12 @@
 package analysis;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Map;
+import java.util.Set;
 
 import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
@@ -25,19 +29,49 @@ import ij.IJ;
 public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   private enum TypeOfAnalysis {
-    ChIndexFile, ChIndexDirectory, Bootstrapping, ChIndexSimulations, BootstrappingSimulations
+    INDEXESFILE, INDEXESDIRECTORY, BOOTSTRAPPING, INDEXESSIMULATIONS, BOOTSTRAPPINGSIMULATIONS,NONE
   }
   /** */
   private static final Float FLOAT = (Float) null;
   private Trial trial;
   /** */
-  private TypeOfAnalysis analysis;
+  private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
 
   private void analyseFile(){
     FileManager fm = new FileManager();
     String file = fm.selectFile();
     TrialManager tm = new TrialManager();
     trial = tm.getTrialFromAVI(file);
+  }
+  
+  private void analyseDirectory(){
+    //Get list of files
+    FileManager fm = new FileManager();
+    String folder = fm.selectFolder();
+    String controlFolder = folder+"\\control";
+    String testFolder = folder+"\\test";
+    String[] controlFiles = fm.getListOfFiles(controlFolder);
+    String[] testFiles = fm.getListOfFiles(testFolder);
+    //Extract Trials 
+    TrialManager tm = new TrialManager();
+    Map<String, Trial> controls = new HashMap<String, Trial>();
+    for (int i = 0; i<controlFiles.length;i++){
+      String file = controlFiles[i];
+      trial = tm.getTrialFromAVI(file);
+      controls.put(trial.type+"-"+trial.ID, trial);
+      System.out.println("TrialID: "+trial.ID+"; TrialType: "+trial.type);
+    }
+    Map<String, Trial> tests = new HashMap<String, Trial>();
+    for (int i = 0; i<testFiles.length;i++){
+      String file = testFiles[i];
+      trial = tm.getTrialFromAVI(file);
+      tests.put(trial.type+"-"+trial.ID, trial);
+      System.out.println("TrialID: "+trial.ID+"; TrialType: "+trial.type);
+    }
+    
+//AQUI VA EL ANTIGUO 
+    CHEMOTAXIS.analyseChDirectory
+    
   }
   
   /******************************************************/
@@ -175,16 +209,16 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   public Boolean doInBackground() throws Exception {
     
     switch (analysis) {
-      case ChIndexFile:
+      case INDEXESFILE:
         analyseFile();
         break;
-      case ChIndexDirectory:
+      case INDEXESDIRECTORY:
+      case BOOTSTRAPPING:
+        analyseDirectory();
         break;
-      case Bootstrapping:
+      case INDEXESSIMULATIONS:
         break;
-      case ChIndexSimulations:
-        break;
-      case BootstrappingSimulations:
+      case BOOTSTRAPPINGSIMULATIONS:
         break;
     }
 
@@ -193,21 +227,18 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   
   @Override
   protected void done() {
-
-    if(SwingUtilities.isEventDispatchThread())
-      System.out.println("is EDT");
+    //This method is executed in the EDT
     switch (analysis) {
-      case ChIndexFile:
+      case INDEXESFILE:
         drawResults();
         break;
-      case ChIndexDirectory:
+      case INDEXESDIRECTORY:
         break;
-      case Bootstrapping:
+      case BOOTSTRAPPING:
         break;
-      case ChIndexSimulations:
+      case INDEXESSIMULATIONS:
         break;
-      case BootstrappingSimulations:
-        System.out.println("bootstrapping simulations");
+      case BOOTSTRAPPINGSIMULATIONS:
         break;
     }
   }
@@ -260,12 +291,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     if (sourceSelection < 0) {
       return;
     } else if (sourceSelection == FILE) {// File
-      analysis = TypeOfAnalysis.ChIndexFile; // It's not possible to carry on
+      analysis = TypeOfAnalysis.INDEXESFILE; // It's not possible to carry on
                                              // bootstrapping analysis in a
                                              // single file
     } else if (sourceSelection == DIR || sourceSelection == SIMULATION) {// Directory or simulations
       // Ask user which analysis wants to apply
-      Object[] options2 = { "Ch-Index", "Bootstrapping" };
+      Object[] options2 = { "Ch-Index", "BOOTSTRAPPING" };
       question = "Which analysis do you want to apply to the data?";
       title = "Choose one analysis...";
       int analysisSelection = utils.analysisSelectionDialog(options2, question, title);
@@ -275,15 +306,15 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         return;
       if (sourceSelection == DIR) {
         if (analysisSelection == CHINDEX) {
-          analysis = TypeOfAnalysis.ChIndexDirectory;
+          analysis = TypeOfAnalysis.INDEXESDIRECTORY;
         } else if (analysisSelection == BOOTSTRAPPING) {
-          analysis = TypeOfAnalysis.Bootstrapping;
+          analysis = TypeOfAnalysis.BOOTSTRAPPING;
         }
       } else if (sourceSelection == SIMULATION) { // Simulations
         if (analysisSelection == CHINDEX)
-          analysis = TypeOfAnalysis.ChIndexSimulations;
+          analysis = TypeOfAnalysis.INDEXESSIMULATIONS;
       } else if (analysisSelection == BOOTSTRAPPING) {
-        analysis = TypeOfAnalysis.BootstrappingSimulations;
+        analysis = TypeOfAnalysis.BOOTSTRAPPINGSIMULATIONS;
       }
     }
   }
