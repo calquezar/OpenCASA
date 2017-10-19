@@ -1,6 +1,11 @@
 package functions;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import data.PersistentRandomWalker;
 import data.SList;
+import data.Simulation;
 import data.Trial;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
@@ -56,6 +61,36 @@ public class TrialManager {
     //Create and return trial
     Trial trial =  new Trial(ID, type, path, tracks, impOrig.getWidth(), impOrig.getHeight());
     return trial;
+  }
+  
+  /**
+   * @param trialID
+   * @param beta
+   * @param responsiveCells
+   * @return
+   */
+  public Trial simulateTrial(String trialID, double beta, double responsiveCells) {
+    Simulation sim = new PersistentRandomWalker(beta, responsiveCells);
+    ImagePlus imp = sim.createSimulation();
+    String trialType = "Beta: "+Double.toString(beta)+";Resp: "+Double.toString(responsiveCells);
+    String simName = trialType+"\\"+trialID;
+    Trial tr = getTrialFromImp(imp,simName);
+    return tr;
+  } 
+
+  /**
+   * @param beta
+   * @param responsiveCells
+   * @param MAXSIMULATIONS
+   * @return
+   */
+  public Map<String, Trial> simulateTrials(double beta, double responsiveCells,int MAXSIMULATIONS) {
+    Map<String, Trial> trials = new HashMap<String, Trial>();
+    for (int i = 0; i < MAXSIMULATIONS; i++) {
+      Trial tr = simulateTrial(Integer.toString(i),beta,responsiveCells);
+      trials.put(tr.ID, tr);
+    }
+    return trials;
   }
 
 }
