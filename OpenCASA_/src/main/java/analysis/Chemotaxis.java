@@ -1,14 +1,11 @@
 package analysis;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
-import java.util.Set;
 
-import javax.swing.SwingUtilities;
 import javax.swing.SwingWorker;
 
 import data.Params;
@@ -37,41 +34,28 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   /** */
   private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
 
+  
+  private void analyseCondition (Map<String, Trial> controls, Map<String, Trial> tests){
+
+  }
+  
+
+  private void analyseDirectory(){
+    List<String> testFolders = getTestFolders();
+    Map<String, Trial> cTrials = getControlTrials();
+    FileManager fm = new FileManager();
+    for( String f : testFolders){
+      List<String> tests = fm.getFiles(f);
+      Map<String, Trial> tTrials = getTestTrials(tests);
+      analyseCondition(cTrials,tTrials);
+    }
+  }
+  
   private void analyseFile(){
     FileManager fm = new FileManager();
     String file = fm.selectFile();
     TrialManager tm = new TrialManager();
     trial = tm.getTrialFromAVI(file);
-  }
-  
-  private void analyseDirectory(){
-    //Get list of files
-    FileManager fm = new FileManager();
-    String folder = fm.selectFolder();
-    String controlFolder = folder+"\\control";
-    String testFolder = folder+"\\test";
-    String[] controlFiles = fm.getListOfFiles(controlFolder);
-    String[] testFiles = fm.getListOfFiles(testFolder);
-    //Extract Trials 
-    TrialManager tm = new TrialManager();
-    Map<String, Trial> controls = new HashMap<String, Trial>();
-    for (int i = 0; i<controlFiles.length;i++){
-      String file = controlFiles[i];
-      trial = tm.getTrialFromAVI(file);
-      controls.put(trial.type+"-"+trial.ID, trial);
-      System.out.println("TrialID: "+trial.ID+"; TrialType: "+trial.type);
-    }
-    Map<String, Trial> tests = new HashMap<String, Trial>();
-    for (int i = 0; i<testFiles.length;i++){
-      String file = testFiles[i];
-      trial = tm.getTrialFromAVI(file);
-      tests.put(trial.type+"-"+trial.ID, trial);
-      System.out.println("TrialID: "+trial.ID+"; TrialType: "+trial.type);
-    }
-    
-//AQUI VA EL ANTIGUO 
-    CHEMOTAXIS.analyseChDirectory
-    
   }
   
   /******************************************************/
@@ -185,7 +169,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return ratioSL;
   }
-
+  
   /**
    * @param angles
    * @param N
@@ -223,8 +207,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
 
     return null;
-  }  
-  
+  }
+
   @Override
   protected void done() {
     //This method is executed in the EDT
@@ -241,8 +225,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       case BOOTSTRAPPINGSIMULATIONS:
         break;
     }
-  }
-
+  }  
+  
   private void drawResults(){
     if (trial == null)
       return;
@@ -254,8 +238,30 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     paint.drawChemotaxis(trial, chIdx, slIdx);
     paint.drawRoseDiagram(hist, radius, chIdx, trial.source);
   }
-  
 
+  private Map<String, Trial> getControlTrials(){
+    FileManager fm = new FileManager();
+    String folder = fm.selectFolder();
+    List<String> subFolders = fm.getSubfolders(folder);
+    String controlFolder = "";
+    for ( int i = 0;  i < subFolders.size(); i++){
+      String tempName = subFolders.get(i).toLowerCase();
+      tempName = fm.getFilename(tempName);
+      if(tempName.equals("control")){
+        controlFolder = subFolders.get(i);
+        break;
+      }
+    }
+    List<String> controlFiles = fm.getFiles(controlFolder);
+    Map<String, Trial> cTrials = new HashMap<String, Trial>();
+    TrialManager tm = new TrialManager();
+    for (int i = 0; i<controlFiles.size();i++){
+      String file = controlFiles.get(i);
+      trial = tm.getTrialFromAVI(file);
+      cTrials.put(trial.type+"-_-"+trial.ID, trial);
+    }
+    return cTrials;
+  }
   /**
    * @param theTracks
    * @return
@@ -276,6 +282,32 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       }
     }
     return instAngles;
+  }
+  
+  private List<String> getTestFolders(){
+    FileManager fm = new FileManager();
+    String folder = fm.selectFolder();
+    List<String> testFolders = fm.getSubfolders(folder);
+    for ( int i = 0;  i < testFolders.size(); i++){
+      String tempName = testFolders.get(i).toLowerCase();
+      tempName = fm.getFilename(tempName);
+      if(tempName.equals("control")){
+        testFolders.remove(i);
+      }
+    }
+    return testFolders;
+  }
+
+  private Map<String, Trial> getTestTrials( List<String> tests){
+    //Extract Trials 
+    TrialManager tm = new TrialManager();
+    Map<String, Trial> tTrials = new HashMap<String, Trial>();
+    for (int i = 0; i<tests.size();i++){
+      String file = tests.get(i);
+      trial = tm.getTrialFromAVI(file);
+      tTrials.put(trial.type+"-_-"+trial.ID, trial);
+    }
+    return tTrials;
   }  
 
   public void selectAnalysis() {

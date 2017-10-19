@@ -49,7 +49,7 @@ public class TrialManager {
     //Set metadata
     FileManager fm = new FileManager();
     String filename = fm.getFilename(path);
-    String ID = filename;
+    String ID = filename.toLowerCase();
     String type = fm.getParentDirectory(path).toLowerCase();// the call toLowerCase() is to avoid user mistakes
                                                                     // while naming folders. This variable is useful 
                                                                     // in directory analysis

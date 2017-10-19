@@ -35,7 +35,7 @@ public class FileManager {
    * @param dir
    * @return
    */
-  public String[] getListOfFiles(String path) {
+  public String[] getContent(String path) {
     if(path==null)
       return null;
     File folder = new File(path);
@@ -46,6 +46,29 @@ public class FileManager {
     for (int i = 0; i < listOfFiles.length; i++)
       listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
     return listOfNames;
+  }
+  
+  public List<String> getFiles(String path){
+    String[] content = getContent(path);
+    List<String> files = new ArrayList<String>();
+    for(int i=0;i<content.length;i++){
+      if(new File(content[i]).isFile()){
+        files.add(content[i]);
+      }
+    }
+    return files;    
+  }
+  
+  public List<String> getSubfolders(String path){
+    
+    String[] content = getContent(path);
+    List<String> subfolders = new ArrayList<String>();
+    for(int i=0;i<content.length;i++){
+      if(new File(content[i]).isDirectory()){
+        subfolders.add(content[i]);
+      }
+    }
+    return subfolders;
   }
   /**
    * @param path
@@ -82,7 +105,7 @@ public class FileManager {
    */
   public List<ImagePlus> loadImageDirectory(String dir) {
 
-    String[] listOfFiles = getListOfFiles(dir);
+    String[] listOfFiles = getContent(dir);
     if (listOfFiles == null || listOfFiles.length == 0) {
       if (listOfFiles != null)
         JOptionPane.showMessageDialog(null, "Please, select a non-empty folder.");
