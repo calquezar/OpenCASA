@@ -34,7 +34,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /** */
-  private static final Float FLOAT    = (Float) null;
+//  private static final Float FLOAT    = (Float) null;
   private Trial              trial;
   /** */
   private TypeOfAnalysis     analysis = TypeOfAnalysis.NONE;
@@ -50,6 +50,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       case BOOTSTRAPPINGSIMULATIONS:
         rt = bootstrappingAnalysis(controls, tests);
         break;
+      default:
     }
     return rt;
   }
@@ -97,7 +98,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param trials
    * @return
    */
-  public ResultsTable bootstrappingAnalysis(Map<String, Trial> controls, Map<String, Trial> tests) {
+  private ResultsTable bootstrappingAnalysis(Map<String, Trial> controls, Map<String, Trial> tests) {
 
     final int cMin = minSampleSize(controls);
     final int tMin = minSampleSize(tests);
@@ -128,7 +129,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param theTracks
    * @return
    */
-  public float calculateChIndex(List<List<Spermatozoon>> theTracks) {
+  private float calculateChIndex(List<List<Spermatozoon>> theTracks) {
     int trackNr = 0; // Number of tracks
     int nTracks = theTracks.size();
     int[] displacements = {0,0};
@@ -158,7 +159,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    *          2D-ArrayList that stores all the tracks
    * @return SL-Index
    */
-  public float calculateSLIndex(List<List<Spermatozoon>> theTracks) {
+  private float calculateSLIndex(List<List<Spermatozoon>> theTracks) {
 
     float nUpGradient = 0; // Number of shifts in the chemoattractant direction
     float nOtherDirs = 0; // Number of shifts in other direction
@@ -193,7 +194,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param n
    * @return
    */
-  public int[] circularHistogram(List<Double> angles, int n) {
+  private int[] circularHistogram(List<Double> angles, int n) {
 
     int[] histogram = new int[n];
     for (int i = 0; i < n; i++) {
@@ -211,7 +212,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param theTracks
    * @return
    */
-  public int[] countAngles(SList theTracks) {
+  private int[] countAngles(SList theTracks) {
     int[] angles = { 0, 0 };
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
@@ -226,7 +227,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param track
    * @return
    */
-  public int[] countInstantDisplacements(List<Spermatozoon> track) {
+  private int[] countInstantDisplacements(List<Spermatozoon> track) {
     int nUpGradient = 0;
     int nOtherDir = 0;
     int nPoints = track.size();
@@ -333,7 +334,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param theTracks
    * @return
    */
-  public List<Double> getListOfAngles(SList theTracks) {
+  private List<Double> getListOfAngles(SList theTracks) {
     List<Double> instAngles = new ArrayList<Double>();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List track = (ArrayList) iT.next();
@@ -437,7 +438,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   /**
    * @param trials
    */
-  public int minSampleSize(Map<String, Trial> trials) {
+  private int minSampleSize(Map<String, Trial> trials) {
 
     int minimum = 999999999;
     for (String k : trials.keySet()) {
@@ -457,7 +458,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param trials
    * @return
    */
-  public double or(Trial control, Trial test) {
+  private double or(Trial control, Trial test) {
 
     SList controlTracks = control.tracks;
     SList conditionTracks = test.tracks;    
@@ -556,7 +557,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param ID
    * @param source
    */
-  public void setBootstrappingResults(ResultsTable rt, double or, double th, Trial trial) {
+  private void setBootstrappingResults(ResultsTable rt, double or, double th, Trial trial) {
     rt.incrementCounter();
     rt.addValue("ID", trial.ID);
     rt.addValue("OR", or);
