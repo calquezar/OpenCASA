@@ -30,66 +30,67 @@ import ij.measure.ResultsTable;
 public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   private enum TypeOfAnalysis {
-    INDEXESFILE, INDEXESDIRECTORY, BOOTSTRAPPING, INDEXESSIMULATIONS, BOOTSTRAPPINGSIMULATIONS,NONE
+    INDEXESFILE, INDEXESDIRECTORY, BOOTSTRAPPING, INDEXESSIMULATIONS, BOOTSTRAPPINGSIMULATIONS, NONE
   }
+
   /** */
-  private static final Float FLOAT = (Float) null;
-  private Trial trial;
+  private static final Float FLOAT    = (Float) null;
+  private Trial              trial;
   /** */
-  private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
-  
-  private ResultsTable analyseCondition (Map<String, Trial> controls, Map<String, Trial> tests){
+  private TypeOfAnalysis     analysis = TypeOfAnalysis.NONE;
+
+  private ResultsTable analyseCondition(Map<String, Trial> controls, Map<String, Trial> tests) {
     ResultsTable rt = new ResultsTable();
     switch (analysis) {
       case INDEXESDIRECTORY:
       case INDEXESSIMULATIONS:
-        rt = indexesAnalysis(controls,tests);
+        rt = indexesAnalysis(controls, tests);
         break;
       case BOOTSTRAPPING:
       case BOOTSTRAPPINGSIMULATIONS:
-        rt = bootstrappingAnalysis(controls,tests);
+        rt = bootstrappingAnalysis(controls, tests);
         break;
     }
     return rt;
   }
-  
-  private void analyseDirectory(){
+
+  private void analyseDirectory() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
-    Map<String, Trial> cTrials = getControlTrials(folder);    
+    Map<String, Trial> cTrials = getControlTrials(folder);
     List<String> testFolders = getTestFolders(folder);
-    for( String f : testFolders){
+    for (String f : testFolders) {
       List<String> tests = fm.getFiles(f);
       Map<String, Trial> tTrials = getTestTrials(tests);
-      ResultsTable rt = analyseCondition(cTrials,tTrials);
+      ResultsTable rt = analyseCondition(cTrials, tTrials);
       String condition = fm.getFilename(f);
       rt.show(condition);
     }
   }
-  private void analyseFile(){
+
+  private void analyseFile() {
     FileManager fm = new FileManager();
     String file = fm.selectFile();
     TrialManager tm = new TrialManager();
     trial = tm.getTrialFromAVI(file);
   }
-  
-  private void analyseSimulations(){    
+
+  private void analyseSimulations() {
     GenericDialog gd = new GenericDialog("Set Simulation parameters");
     gd.addNumericField("Beta", 0, 2);
     gd.addNumericField("Responsiveness (%)", 50, 2);
     gd.addNumericField("Number of simulations", 50, 0);
     gd.showDialog();
-    if (gd.wasCanceled()) {
+    if (gd.wasCanceled())
       return;
-    }
     double BETA = gd.getNextNumber();
-    double RESPONSIVENESS = gd.getNextNumber()/100;//value must be between [0,1]
-    int TOTALSIMULATIONS = (int)gd.getNextNumber();
+    double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be between [0,1]
+    int TOTALSIMULATIONS = (int) gd.getNextNumber();
     TrialManager tm = new TrialManager();
     Map<String, Trial> controls = tm.simulateTrials(0, 0, TOTALSIMULATIONS);
-    Map<String, Trial> tests = tm.simulateTrials(BETA, RESPONSIVENESS, TOTALSIMULATIONS); 
-    ResultsTable rt = analyseCondition(controls,tests);
-    rt.show("Results from Simulation (Beta: "+BETA+",Responsiveness: "+RESPONSIVENESS+")");
+    Map<String, Trial> tests = tm.simulateTrials(BETA, RESPONSIVENESS, TOTALSIMULATIONS);
+    ResultsTable rt = analyseCondition(controls, tests);
+    rt.show("Results from Simulation (Beta: " + BETA + ",Responsiveness: " + RESPONSIVENESS + ")");
   }
 
   /**
@@ -100,21 +101,21 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
     int cMin = minSampleSize(controls);
     int tMin = minSampleSize(tests);
-    Params.MAXINSTANGLES = Math.min(cMin, tMin);    
+    Params.MAXINSTANGLES = Math.min(cMin, tMin);
     // Calculating OR threshold via subsampling
     double thControl = ORThreshold(controls);
-    ResultsTable rt = new ResultsTable();    
+    ResultsTable rt = new ResultsTable();
     for (String cKey : controls.keySet()) {
       Trial cTrial = (Trial) controls.get(cKey);
-      Trial tTrial = getTestTrial(cTrial.ID,tests);
-      if(tTrial!=null){
+      Trial tTrial = getTestTrial(cTrial.ID, tests);
+      if (tTrial != null) {
         double OR = OR(cTrial, tTrial);
         setBootstrappingResults(rt, OR, thControl, tTrial);
       }
     }
     return rt;
   }
-  
+
   /******************************************************/
   /**
    * Fuction to calculate the Ratio-Q
@@ -129,14 +130,13 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    */
   public float calculateChIndex(List theTracks) {
 
-    float nPos = 0; // Number of shifts in the chemoattractant direction
-    float nNeg = 0; // Number of shifts in other direction
+    float nUpGradient = 0; // Number of displacements in the gradient direction
+    float nOtherDirs = 0; // Number of displacements in other direction
     int trackNr = 0; // Number of tracks
     List angles = new ArrayList();
     int nTracks = theTracks.size();
-    double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
-    double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
     float chIdx = 0;
+    double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       IJ.showProgress((double) trackNr / nTracks);
       IJ.showStatus("Calculating Ch-Index...");
@@ -146,44 +146,27 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
         Spermatozoon oldSpermatozoon = (Spermatozoon) track.get(j);
         Spermatozoon newSpermatozoon = (Spermatozoon) track.get(j + Params.angleDelta);
-        float diffX = newSpermatozoon.x - oldSpermatozoon.x;
-        float diffY = newSpermatozoon.y - oldSpermatozoon.y;
-        double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute
-                                                                                 // angle
-        angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative
-                                                                        // angle
-                                                                        // between
-                                                                        // interval
-                                                                        // [0,2*Pi]
-        // IJ.log(""+angle);
-        if (angle > Math.PI) {
-          angle = -(2 * Math.PI - angle);
-        }
+        double angle = relativeAngle(oldSpermatozoon,newSpermatozoon); //Between [-PI,PI]
         if (Math.abs(angle) < angleChemotaxis) {
-          nPos++;
-        } else {
-          nNeg++;
+          nUpGradient++;
+        } else { //Any other direction
+          nOtherDirs++;
         }
       }
-
     }
-    if ((nPos + nNeg) > 0) {
-      chIdx = (nPos / (nPos + nNeg)); // (nPos+nNeg) = Total number of shifts
+    if ((nUpGradient + nOtherDirs) > 0) {
+      chIdx = (nUpGradient / (nUpGradient + nOtherDirs)); // (nUpGradient+nOtherDirs) = Total number of shifts
     } else {
       chIdx = -1;
     }
-    return chIdx;
+    return chIdx; //return index between [0,1]
   }
-  
+
   /******************************************************/
   /**
    * @param theTracks
    *          2D-ArrayList that stores all the tracks
-   * @return RatioSL
-   */
-  /**
-   * @param theTracks
-   * @return
+   * @return SL-Index
    */
   public float calculateSLIndex(List theTracks) {
 
@@ -191,7 +174,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     float nNeg = 0; // Number of shifts in other direction
     int trackNr = 0;
     int nTracks = theTracks.size();
-    double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
     double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
     float ratioSL = 0;
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
@@ -201,18 +183,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       List aTrack = (ArrayList) iT.next();
       Spermatozoon first = (Spermatozoon) aTrack.get(1);
       Spermatozoon last = (Spermatozoon) aTrack.get(aTrack.size() - 1);
-      float diffX = last.x - first.x;
-      float diffY = last.y - first.y;
-      double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute
-                                                                               // angle
-      angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative
-                                                                      // angle
-                                                                      // between
-                                                                      // interval
-                                                                      // [0,2*Pi]
-      if (angle > Math.PI) {
-        angle = -(2 * Math.PI - angle);
-      }
+      double angle = relativeAngle(first,last); //Between [-PI,PI]
       if (Math.abs(angle) < angleChemotaxis) {
         nPos++;
       } else {
@@ -226,7 +197,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return ratioSL;
   }
-  
+
   /**
    * @param angles
    * @param N
@@ -245,7 +216,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return histogram;
   }
-  
+
   /**
    * @param theTracks
    * @return
@@ -254,53 +225,53 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     int[] angles = { 0, 0 };
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
-      int[] instantAngles = countInstantDirections(aTrack);
+      int[] instantAngles = countInstantDisplacements(aTrack);
       angles[0] += instantAngles[0];
       angles[1] += instantAngles[1];
     }
     return angles;
+  }
+  
+  private double relativeAngle(Spermatozoon oldSpermatozoon, Spermatozoon newSpermatozoon){ //With gradient direction
+    double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
+    float diffX = newSpermatozoon.x - oldSpermatozoon.x;
+    float diffY = newSpermatozoon.y - oldSpermatozoon.y;
+    double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute angle
+    angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative angle between interval [0,2*Pi]
+    if (angle > Math.PI) {
+      angle = -(2 * Math.PI - angle);
+    }
+    return angle; //Between [-PI,PI]
   }
 
   /**
    * @param track
    * @return
    */
-  public int[] countInstantDirections(List track) {
-    int nPos = 0;
-    int nNeg = 0;
-    double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
-    double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
+  public int[] countInstantDisplacements(List track) {
+    int nUpGradient = 0;
+    int nOtherDirs = 0;
     int nPoints = track.size();
+    double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
     for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
       Spermatozoon oldSpermatozoon = (Spermatozoon) track.get(j);
       Spermatozoon newSpermatozoon = (Spermatozoon) track.get(j + Params.angleDelta);
-      float diffX = newSpermatozoon.x - oldSpermatozoon.x;
-      float diffY = newSpermatozoon.y - oldSpermatozoon.y;
-      double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute
-                                                                               // angle
-      angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative
-                                                                      // angle
-                                                                      // between
-                                                                      // interval
-                                                                      // [0,2*Pi]
-      if (angle > Math.PI) {
-        angle = -(2 * Math.PI - angle);
-      }
+      double angle = relativeAngle(oldSpermatozoon,newSpermatozoon);//Between interval [-PI,PI]
       if (Math.abs(angle) < angleChemotaxis) {
-        nPos++;
-      } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
-        nNeg++;
+        nUpGradient++;
+      } else {//if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
+        nOtherDirs++;
       }
     }
-    int[] results = new int[3];
-    results[0] = nPos;
-    results[1] = nNeg;
+    int[] results = new int[2];
+    results[0] = nUpGradient;
+    results[1] = nOtherDirs;
     return results;
   }
 
   @Override
   public Boolean doInBackground() throws Exception {
-    
+
     switch (analysis) {
       case INDEXESFILE:
         analyseFile();
@@ -316,11 +287,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
 
     return null;
-  }  
-  
+  }
+
   @Override
   protected void done() {
-    //This method is executed in the EDT
+    // This method is executed in the EDT
     switch (analysis) {
       case INDEXESFILE:
         drawResults();
@@ -336,7 +307,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
   }
 
-  private void drawResults(){
+  private void drawResults() {
     if (trial == null)
       return;
     float chIdx = calculateChIndex(trial.tracks);
@@ -347,14 +318,15 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     paint.drawChemotaxis(trial, chIdx, slIdx);
     paint.drawRoseDiagram(hist, radius, chIdx, trial.source);
   }
-  private Map<String, Trial> getControlTrials(String folder){
+
+  private Map<String, Trial> getControlTrials(String folder) {
     FileManager fm = new FileManager();
     List<String> subFolders = fm.getSubfolders(folder);
     String controlFolder = "";
-    for ( int i = 0;  i < subFolders.size(); i++){
+    for (int i = 0; i < subFolders.size(); i++) {
       String tempName = subFolders.get(i).toLowerCase();
       tempName = fm.getFilename(tempName);
-      if(tempName.equals("control")){
+      if (tempName.equals("control")) {
         controlFolder = subFolders.get(i);
         break;
       }
@@ -362,14 +334,14 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     List<String> controlFiles = fm.getFiles(controlFolder);
     Map<String, Trial> cTrials = new HashMap<String, Trial>();
     TrialManager tm = new TrialManager();
-    for (int i = 0; i<controlFiles.size();i++){
+    for (int i = 0; i < controlFiles.size(); i++) {
       String file = controlFiles.get(i);
       trial = tm.getTrialFromAVI(file);
-      cTrials.put(trial.type+"-_-"+trial.ID, trial);
+      cTrials.put(trial.type + "-_-" + trial.ID, trial);
     }
     return cTrials;
   }
-  
+
   /**
    * @param theTracks
    * @return
@@ -392,57 +364,60 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return instAngles;
   }
 
-  private List<String> getTestFolders(String folder){
+  private List<String> getTestFolders(String folder) {
     FileManager fm = new FileManager();
     List<String> testFolders = fm.getSubfolders(folder);
-    for ( int i = 0;  i < testFolders.size(); i++){
+    for (int i = 0; i < testFolders.size(); i++) {
       String tempName = testFolders.get(i).toLowerCase();
       tempName = fm.getFilename(tempName);
-      if(tempName.equals("control")){
+      if (tempName.equals("control")) {
         testFolders.remove(i);
       }
     }
     return testFolders;
   }
-  private Trial getTestTrial(String ID, Map<String, Trial> tests){
+
+  private Trial getTestTrial(String ID, Map<String, Trial> tests) {
     for (String k : tests.keySet()) {
-      Trial trial = (Trial)tests.get(k);
-      if(trial.ID.equalsIgnoreCase(ID))
+      Trial trial = (Trial) tests.get(k);
+      if (trial.ID.equalsIgnoreCase(ID))
         return trial;
     }
     return null;
   }
-  private Map<String, Trial> getTestTrials( List<String> tests){
-    //Extract Trials 
+
+  private Map<String, Trial> getTestTrials(List<String> tests) {
+    // Extract Trials
     TrialManager tm = new TrialManager();
     Map<String, Trial> tTrials = new HashMap<String, Trial>();
-    for (int i = 0; i<tests.size();i++){
+    for (int i = 0; i < tests.size(); i++) {
       String file = tests.get(i);
       trial = tm.getTrialFromAVI(file);
-      tTrials.put(trial.type+"-_-"+trial.ID, trial);
+      tTrials.put(trial.type + "-_-" + trial.ID, trial);
     }
     return tTrials;
   }
-  
-  private ResultsTable indexesAnalysis(Map<String, Trial> controls, Map<String, Trial> tests){
-    
+
+  private ResultsTable indexesAnalysis(Map<String, Trial> controls, Map<String, Trial> tests) {
+
     Set<String> ckeySet = controls.keySet();
-    Set<String> tkeySet = tests.keySet();   
+    Set<String> tkeySet = tests.keySet();
     ResultsTable rt = new ResultsTable();
-    for(String k: ckeySet){
+    for (String k : ckeySet) {
       Trial trial = (Trial) controls.get(k);
       float chIdx = calculateChIndex(trial.tracks);
       float slIdx = calculateSLIndex(trial.tracks);
-      setIndexesResults(rt,trial,chIdx,slIdx);
+      setIndexesResults(rt, trial, chIdx, slIdx);
     }
-    for(String k: tkeySet){
+    for (String k : tkeySet) {
       Trial trial = (Trial) tests.get(k);
       float chIdx = calculateChIndex(trial.tracks);
       float slIdx = calculateSLIndex(trial.tracks);
-      setIndexesResults(rt,trial,chIdx,slIdx);
+      setIndexesResults(rt, trial, chIdx, slIdx);
     }
     return rt;
   }
+
   /**
    * @param controlKeys
    * @param trials
@@ -456,8 +431,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       tracks.addAll(trial.tracks);
     }
     return tracks;
-  }  
-  
+  }
+
   /**
    * @param trials
    */
@@ -472,9 +447,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         minimum = sampleSize;
       }
     }
-    return minimum; 
+    return minimum;
   }
-  
+
   /**
    * @param control
    * @param condition
@@ -484,63 +459,30 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   public double OR(Trial control, Trial test) {
 
     SList controlTracks = control.tracks;
-    SList conditionTracks = test.tracks;
-
-    double[] numeratorValues = new double[] { 0.0, 0.0 }; // [0] - positive
-                                                          // directions; [1] -
-                                                          // negative
-                                                          // directions
-    double[] denominatorValues = new double[] { 0.0, 0.0 }; // [0] - positive
-                                                            // directions; [1]
-                                                            // - negative
-                                                            // directions
-
-    int count = 0, index = 0;
-    // Control Ratio
-    while ((count < Params.MAXINSTANGLES) && (index < controlTracks.size())) {
-      // while(index<controlTracks.size()){
-      int[] countInstDirections = countInstantDirections((List) controlTracks.get(index));
-      denominatorValues[0] += (double) countInstDirections[0]; // number of
-                                                               // instantaneous
-                                                               // angles in
-                                                               // the
-                                                               // positive
-                                                               // direction
-      denominatorValues[1] += (countInstDirections[0] + countInstDirections[1]);
-      count += countInstDirections[0] + countInstDirections[1];
-      index++;
-    }
-
-    // System.out.println("Count denominator angles: "+denominatorValues[1]);
-    // System.out.println("conditionTracks.size(): "+conditionTracks.size());
-
-    // java.util.Collections.shuffle(conditionTracks);
-
-    // Condition Ratio
-    count = 0;
-    index = 0;
-    while ((count < Params.MAXINSTANGLES) && (index < conditionTracks.size())) {
-      // while(index<conditionTracks.size()){
-      int[] countInstDirections = countInstantDirections((List) conditionTracks.get(index));
-      numeratorValues[0] += (double) countInstDirections[0]; // number of
-                                                             // instantaneous
-                                                             // angles in the
-                                                             // positive
-                                                             // direction
-      numeratorValues[1] += (double) (countInstDirections[0] + countInstDirections[1]);
-      count += countInstDirections[0] + countInstDirections[1];
-      index++;
-    }
-    // System.out.println("Count numerator angles: "+numeratorValues[1]);
-
+    SList conditionTracks = test.tracks;    
+    double[] numeratorValues = getOddsValues(conditionTracks);// Calculate numerator's odds value
+    double[] denominatorValues = getOddsValues(controlTracks);// Calculate denominator's odds value
     double numeratorRatio = numeratorValues[0] / numeratorValues[1];
     double denominatorRatio = denominatorValues[0] / denominatorValues[1];
     double OddsRatio = numeratorRatio / denominatorRatio;
-
-    // System.out.println("OR: "+OddsRatio+" ;nAngles:
-    // "+(numeratorValues[0]+numeratorValues[1]));
+   
     return OddsRatio;
-  }    
+  }
+  
+  private double[] getOddsValues(SList tracks){
+    
+    double[] values = new double[] { 0.0, 0.0 };//[0]-upgradient displacements;[1]-displacements to other directionality
+    int count = 0, index = 0;
+    while ((count < Params.MAXINSTANGLES) && (index < tracks.size())) {
+      int[] countInstDirections = countInstantDisplacements((List) tracks.get(index));
+      count += countInstDirections[0] + countInstDirections[1];
+      values[0] += (double) countInstDirections[0]; // number of  instantaneous angles in the positive direction
+      values[1] += (double) (countInstDirections[0] + countInstDirections[1]);
+      index++;
+    }
+    return values;
+  }
+
   /**
    * @param controlTracks
    * @return
@@ -549,81 +491,23 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
     SList controlTracks = mergeControlTracks(controls);
     List<Double> ORs = new ArrayList<Double>();
-
     for (int i = 0; i < Params.NUMSAMPLES; i++) {
       IJ.showProgress((double) i / Params.NUMSAMPLES);
       IJ.showStatus("Calculating Control Threshold. Shuffle " + i);
-      double[] numeratorValues = new double[] { 0.0, 0.0 }; // [0] - positive
-                                                            // directions;
-                                                            // [1] - negative
-                                                            // directions
-      double[] denominatorValues = new double[] { 0.0, 0.0 }; // [0] -
-                                                              // positive
-                                                              // directions;
-                                                              // [1] -
-                                                              // negative
-                                                              // directions
-      
       java.util.Collections.shuffle(controlTracks);
-      // Calculate numerator's odds value
-      int count = 0, index = 0;
-      while ((count < Params.MAXINSTANGLES) && (index < controlTracks.size())) {
-        int[] countInstDirections = countInstantDirections((List) controlTracks.get(index));
-        count += countInstDirections[0] + countInstDirections[1];
-        numeratorValues[0] += (double) countInstDirections[0]; // number of
-                                                               // instantaneous
-                                                               // angles in
-                                                               // the
-                                                               // positive
-                                                               // direction
-        numeratorValues[1] += (double) (countInstDirections[0] + countInstDirections[1]);
-        index++;
-      }
+      double[] numeratorValues = getOddsValues(controlTracks);// Calculate numerator's odds value
       java.util.Collections.shuffle(controlTracks);
-      // Calculate denominator's odds value
-      count = 0;
-      index = 0;
-      while ((count < Params.MAXINSTANGLES) && (index < controlTracks.size())) {
-        int[] countInstDirections = countInstantDirections((List) controlTracks.get(index));
-        denominatorValues[0] += (double) countInstDirections[0]; // number
-                                                                 // of
-                                                                 // instantaneous
-                                                                 // angles
-                                                                 // in the
-                                                                 // positive
-                                                                 // direction
-        denominatorValues[1] += (double) (countInstDirections[0] + countInstDirections[1]); // number
-                                                                                            // of
-                                                                                            // instantaneous
-                                                                                            // angles
-                                                                                            // in
-                                                                                            // the
-                                                                                            // opposite
-                                                                                            // direction
-        count += countInstDirections[0] + countInstDirections[1];
-        index++;
-      }
+      double[] denominatorValues = getOddsValues(controlTracks);// Calculate denominator's odds value
       double numeratorRatio = numeratorValues[0] / numeratorValues[1];
       double denominatorRatio = denominatorValues[0] / denominatorValues[1];
-      double OddsRatio = numeratorRatio / denominatorRatio;
-      ORs.add(OddsRatio);
-      // IJ.log(""+OddsRatio);
-      // System.out.println("OddsRatio: "+OddsRatio);
+      double oddsRatio = numeratorRatio / denominatorRatio;
+      ORs.add(oddsRatio);
+//      IJ.log(""+oddsRatio);
     }
     Collections.sort(ORs);
-    // System.out.println(ORs.toString());
-    // System.out.println("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
-    // System.out.println("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
-    // System.out.println("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
-    // System.out.println("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
-    // System.out.println("p97: "+ORs.get((int) (NUMSAMPLES*0.97)));
-    // System.out.println("p99: "+ORs.get((int) (NUMSAMPLES*0.99)));
-    // IJ.log("p25: "+ORs.get((int) (NUMSAMPLES*0.25)));
-    // IJ.log("p50: "+ORs.get((int) (NUMSAMPLES*0.5)));
-    // IJ.log("p75: "+ORs.get((int) (NUMSAMPLES*0.75)));
-    // IJ.log("p95: "+ORs.get((int) (NUMSAMPLES*0.95)));
     return ORs.get((int) (Params.NUMSAMPLES * 0.95));
   }
+
   public void selectAnalysis() {
     // Ask if user wants to analyze a file or directory
     Object[] options = { "File", "Directory", " Multiple Simulations" };
@@ -657,16 +541,15 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
           analysis = TypeOfAnalysis.BOOTSTRAPPING;
         }
       } else if (sourceSelection == SIMULATION) { // Simulations
-        if (analysisSelection == CHINDEX){
+        if (analysisSelection == CHINDEX) {
           analysis = TypeOfAnalysis.INDEXESSIMULATIONS;
-        }
-       else if (analysisSelection == BOOTSTRAPPING) {
+        } else if (analysisSelection == BOOTSTRAPPING) {
           analysis = TypeOfAnalysis.BOOTSTRAPPINGSIMULATIONS;
         }
       }
     }
-  }  
-  
+  }
+
   /**
    * @param rt
    * @param OR

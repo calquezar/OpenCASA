@@ -7,6 +7,7 @@ import data.PersistentRandomWalker;
 import data.SList;
 import data.Simulation;
 import data.Trial;
+import ij.IJ;
 import ij.ImagePlus;
 import plugins.AVI_Reader;
 
@@ -87,6 +88,8 @@ public class TrialManager {
   public Map<String, Trial> simulateTrials(double beta, double responsiveCells,int MAXSIMULATIONS) {
     Map<String, Trial> trials = new HashMap<String, Trial>();
     for (int i = 0; i < MAXSIMULATIONS; i++) {
+      IJ.showProgress((double) i / (double)MAXSIMULATIONS);
+      IJ.showStatus("Simulating trial "+i+"...");
       Trial tr = simulateTrial(Integer.toString(i),beta,responsiveCells);
       trials.put(tr.ID, tr);
     }
