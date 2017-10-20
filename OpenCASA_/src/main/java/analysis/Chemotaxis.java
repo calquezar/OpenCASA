@@ -142,7 +142,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     float nUpGradient = displacements[0]; // Number of displacements in the gradient direction
     float nOtherDirs = displacements[1]; // Number of displacements in other direction
-    IJ.log("nUpGradient: "+nUpGradient+"; nOtherDirs: "+nOtherDirs);
+//    IJ.log("nUpGradient: "+nUpGradient+"; nOtherDirs: "+nOtherDirs);
     float chIdx = 0;
     if ((nUpGradient + nOtherDirs) > 0) {
       chIdx = nUpGradient / (nUpGradient + nOtherDirs); // (nUpGradient+nOtherDirs) = Total number of shifts
