@@ -34,7 +34,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /** */
-//  private static final Float FLOAT    = (Float) null;
   private Trial              trial;
   /** */
   private TypeOfAnalysis     analysis = TypeOfAnalysis.NONE;
