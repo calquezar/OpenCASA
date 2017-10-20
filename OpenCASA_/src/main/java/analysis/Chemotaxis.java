@@ -83,9 +83,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     gd.showDialog();
     if (gd.wasCanceled())
       return;
-    double BETA = gd.getNextNumber();
-    double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be between [0,1]
-    int TOTALSIMULATIONS = (int) gd.getNextNumber();
+    final double BETA = gd.getNextNumber();
+    final double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be between [0,1]
+    final int TOTALSIMULATIONS = (int) gd.getNextNumber();
     TrialManager tm = new TrialManager();
     Map<String, Trial> controls = tm.simulateTrials(0, 0, TOTALSIMULATIONS);
     Map<String, Trial> tests = tm.simulateTrials(BETA, RESPONSIVENESS, TOTALSIMULATIONS);
@@ -99,18 +99,18 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    */
   public ResultsTable bootstrappingAnalysis(Map<String, Trial> controls, Map<String, Trial> tests) {
 
-    int cMin = minSampleSize(controls);
-    int tMin = minSampleSize(tests);
+    final int cMin = minSampleSize(controls);
+    final int tMin = minSampleSize(tests);
     Params.MAXINSTANGLES = Math.min(cMin, tMin);
     // Calculating OR threshold via subsampling
-    double thControl = ORThreshold(controls);
+    double thControl = orThreshold(controls);
     ResultsTable rt = new ResultsTable();
     for (String cKey : controls.keySet()) {
       Trial cTrial = (Trial) controls.get(cKey);
       Trial tTrial = getTestTrial(cTrial.ID, tests);
       if (tTrial != null) {
-        double OR = OR(cTrial, tTrial);
-        setBootstrappingResults(rt, OR, thControl, tTrial);
+        double or = or(cTrial, tTrial);
+        setBootstrappingResults(rt, or, thControl, tTrial);
       }
     }
     return rt;
@@ -145,7 +145,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     IJ.log("nUpGradient: "+nUpGradient+"; nOtherDirs: "+nOtherDirs);
     float chIdx = 0;
     if ((nUpGradient + nOtherDirs) > 0) {
-      chIdx = (nUpGradient / (nUpGradient + nOtherDirs)); // (nUpGradient+nOtherDirs) = Total number of shifts
+      chIdx = nUpGradient / (nUpGradient + nOtherDirs); // (nUpGradient+nOtherDirs) = Total number of shifts
     } else {
       chIdx = -1;
     }
@@ -181,7 +181,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       }
     }
     if ((nUpGradient + nOtherDirs) > 0) {
-      ratioSL = (nUpGradient / (nUpGradient + nOtherDirs));
+      ratioSL = nUpGradient / (nUpGradient + nOtherDirs);
     } else {
       ratioSL = -1;
     }
@@ -190,16 +190,16 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   /**
    * @param angles
-   * @param N
+   * @param n
    * @return
    */
-  public int[] circularHistogram(List<Double> angles, int N) {
+  public int[] circularHistogram(List<Double> angles, int n) {
 
-    int[] histogram = new int[N];
-    for (int i = 0; i < N; i++) {
+    int[] histogram = new int[n];
+    for (int i = 0; i < n; i++) {
       histogram[i] = 0;
     }
-    int BINSIZE = 360 / N;
+    final int BINSIZE = 360 / n;
     for (int i = 0; i < angles.size(); i++) {
       int bin = angles.get(i).intValue() / BINSIZE;
       histogram[bin]++;
@@ -257,7 +257,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   @Override
-  public Boolean doInBackground() throws Exception {
+  public Boolean doInBackground() {
 
     switch (analysis) {
       case INDEXESFILE:
@@ -353,7 +353,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private double[] getOddsValues(SList tracks){
     
     double[] values = new double[] { 0.0, 0.0 };//[0]-upgradient displacements;[1]-displacements to other directionality
-    int count = 0, index = 0;
+    int count = 0;
+    int index = 0;
     while ((count < Params.MAXINSTANGLES) && (index < tracks.size())) {
       int[] countInstDirections = countInstantDisplacements((List) tracks.get(index));
       count += countInstDirections[0] + countInstDirections[1];
@@ -377,10 +378,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return testFolders;
   }
 
-  private Trial getTestTrial(String ID, Map<String, Trial> tests) {
+  private Trial getTestTrial(String id, Map<String, Trial> tests) {
     for (String k : tests.keySet()) {
       Trial trial = (Trial) tests.get(k);
-      if (trial.ID.equalsIgnoreCase(ID))
+      if (trial.ID.equalsIgnoreCase(id))
         return trial;
     }
     return null;
@@ -456,7 +457,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param trials
    * @return
    */
-  public double OR(Trial control, Trial test) {
+  public double or(Trial control, Trial test) {
 
     SList controlTracks = control.tracks;
     SList conditionTracks = test.tracks;    
@@ -464,34 +465,34 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     double[] denominatorValues = getOddsValues(controlTracks);// Calculate denominator's odds value
     double numeratorRatio = numeratorValues[0] / numeratorValues[1];
     double denominatorRatio = denominatorValues[0] / denominatorValues[1];
-    double OddsRatio = numeratorRatio / denominatorRatio;
+    double oddsRatio = numeratorRatio / denominatorRatio;
    
-    return OddsRatio;
+    return oddsRatio;
   }
   
   /**
    * @param controlTracks
    * @return
    */
-  private double ORThreshold(Map<String, Trial> controls) {
+  private double orThreshold(Map<String, Trial> controls) {
 
     SList controlTracks = mergeControlTracks(controls);
-    List<Double> ORs = new ArrayList<Double>();
+    List<Double> oRs = new ArrayList<Double>();
     for (int i = 0; i < Params.NUMSAMPLES; i++) {
       IJ.showProgress((double) i / Params.NUMSAMPLES);
       IJ.showStatus("Calculating Control Threshold. Shuffle " + i);
-      java.util.Collections.shuffle(controlTracks);
+      Collections.shuffle(controlTracks);
       double[] numeratorValues = getOddsValues(controlTracks);// Calculate numerator's odds value
-      java.util.Collections.shuffle(controlTracks);
+      Collections.shuffle(controlTracks);
       double[] denominatorValues = getOddsValues(controlTracks);// Calculate denominator's odds value
       double numeratorRatio = numeratorValues[0] / numeratorValues[1];
       double denominatorRatio = denominatorValues[0] / denominatorValues[1];
       double oddsRatio = numeratorRatio / denominatorRatio;
-      ORs.add(oddsRatio);
+      oRs.add(oddsRatio);
 //      IJ.log(""+oddsRatio);
     }
-    Collections.sort(ORs);
-    return ORs.get((int) (Params.NUMSAMPLES * 0.95));
+    Collections.sort(oRs);
+    return oRs.get((int) (Params.NUMSAMPLES * 0.95));
   }
 
   private double relativeAngle(Spermatozoon oldSpermatozoon, Spermatozoon newSpermatozoon){ //With gradient direction
@@ -550,17 +551,17 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   /**
    * @param rt
-   * @param OR
+   * @param or
    * @param th
    * @param ID
    * @param source
    */
-  public void setBootstrappingResults(ResultsTable rt, double OR, double th, Trial trial) {
+  public void setBootstrappingResults(ResultsTable rt, double or, double th, Trial trial) {
     rt.incrementCounter();
     rt.addValue("ID", trial.ID);
-    rt.addValue("OR", OR);
+    rt.addValue("OR", or);
     rt.addValue("Threshold", th);
-    if (OR > (th)) {
+    if (or > (th)) {
       rt.addValue("Result", "POSITIVE");
     } else {
       rt.addValue("Result", "-");
