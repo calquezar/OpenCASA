@@ -10,12 +10,14 @@ import java.awt.event.WindowEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import data.Params;
+import ij.IJ;
 
 /**
  * @author Carlos Alquezar
@@ -24,12 +26,24 @@ import data.Params;
 public class SettingsWindow extends JFrame {
 
   /**   */
-  SettingsWindow sw;
+  JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
   /**   */
-  MainWindow mw;
+  JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
+  // Chemotaxis
+  /**   */
+  JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
+  /**   */
+  JCheckBox compareOppositeDirCB = new JCheckBox();
+  // Motility
+  /**   */
+  JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
   // General
   /**   */
   JTextField frameRateTF = new JTextField("" + Params.frameRate, 4);
+  /**   */
+  JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
+  /**   */
+  JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
   /**   */
   JTextField micronPerPixelTF = new JTextField("" + Params.micronPerPixel, 4);
   // JTextField maleTF = new JTextField(Params.male,8);
@@ -38,30 +52,20 @@ public class SettingsWindow extends JFrame {
   /**   */
   JTextField minSizeTF = new JTextField("" + Params.minSize, 4);
   /**   */
-  JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
-  /**   */
   JTextField minTrackLengthTF = new JTextField("" + Params.minTrackLength, 4);
   /**   */
-  JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
+  MainWindow mw;
+  /**   */
+  JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
+  /**   */
+  JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
+  /**   */
+  SettingsWindow sw;
+  /**   */
+  JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
   // Filtering
   /**   */
   JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
-  /**   */
-  JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
-  /**   */
-  JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
-  // Chemotaxis
-  /**   */
-  JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
-  /**   */
-  JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
-  /**   */
-  JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
-  // Motility
-  /**   */
-  JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
-  /**   */
-  JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
 
   /**
    * @param title
@@ -110,6 +114,14 @@ public class SettingsWindow extends JFrame {
     box.add(label, c);
     c.gridx += 1;
     box.add(numSamplesBootsTF, c);
+    ///////////////
+    label = new JLabel("Compare opposite directions: ");
+    c.gridx += 1;
+    box.add(label, c);
+    c.gridx += 1;
+    compareOppositeDirCB.setSelected(Params.compareOppositeDirections);
+    box.add(compareOppositeDirCB, c);
+    
     ///////////////
     box.setBorder(BorderFactory.createTitledBorder(title));
 
@@ -327,6 +339,7 @@ public class SettingsWindow extends JFrame {
     Params.angleDirection = Float.parseFloat(angleDirectionTF.getText());
     Params.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
     Params.NUMSAMPLES = Integer.parseInt(numSamplesBootsTF.getText());
+    Params.compareOppositeDirections = compareOppositeDirCB.isSelected();
     // Motility
     Params.bcf_shift = Integer.parseInt(bcfShiftTF.getText());
     Params.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());

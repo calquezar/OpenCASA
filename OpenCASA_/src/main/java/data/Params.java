@@ -25,6 +25,8 @@ public class Params {
   public static int     bcf_shift            = 0;
   /**   */
   public static float   borderSize           = 20;
+  /** */
+  public static boolean compareOppositeDirections = false;
   /**   */
   public static String  date                 = "";
   /** Draw original trajectories over the ImagePlus */
@@ -80,45 +82,6 @@ public class Params {
   /**   */
   public static void resetParams() {
 
-    // minSize = 20;
-    // maxSize = 200;
-    // minTrackLength = 20;
-    // maxDisplacement = 15;
-    // wSize = 5;
-    // vclMin = 50;
-    // angleDelta = 5;
-    // angleDirection = 0;
-    // angleAmplitude = 60;
-    // frameRate = 100;
-    // bcf_shift = 0;
-    // progressMotility = 80;
-    // micronPerPixel = 0.58;
-    // printXY = false;
-    // calcMotilityParameters = false;
-    // calcMeanMotilityParameters = false;
-    // drawOrigTrajectories = true;
-    // drawAvgTrajectories = true;
-
-    // // GOAT
-    // minSize = 100; //um^2
-    // maxSize = 10000;//um^2
-    // minTrackLength = 5;
-    // maxDisplacement = 10;
-    // wSize = 2;
-    // vclMin = 1;
-    // angleDelta = 1;
-    // angleDirection = 0;
-    // angleAmplitude = 60;
-    // frameRate = 25;
-    // bcf_shift = 0;
-    // progressMotility = 80;
-    // micronPerPixel = 0.58;
-    // printXY = false;
-    //// calcMotilityParameters = false;
-    //// calcMeanMotilityParameters = false;
-    // drawOrigTrajectories = true;
-    // drawAvgTrajectories = true;
-
     try {
       FileInputStream streamIn = new FileInputStream(System.getProperty("user.dir") + "\\prefs.config");
       ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
@@ -137,6 +100,7 @@ public class Params {
     angleDelta = prefs.getInt("angleDelta", angleDelta);
     angleDirection = prefs.getFloat("angleDirection", angleDirection);
     angleAmplitude = prefs.getFloat("angleAmplitude", angleAmplitude);
+    compareOppositeDirections = prefs.getBoolean("compareOppositeDirections", compareOppositeDirections);
     frameRate = prefs.getFloat("frameRate", frameRate);
     bcf_shift = prefs.getInt("bcf_shift", bcf_shift);
     progressMotility = prefs.getFloat("progressMotility", progressMotility);
@@ -159,6 +123,7 @@ public class Params {
     prefs.putInt("angleDelta", angleDelta);
     prefs.putFloat("angleDirection", angleDirection);
     prefs.putFloat("angleAmplitude", angleAmplitude);
+    prefs.putBoolean("compareOppositeDirections", compareOppositeDirections);
     prefs.putFloat("frameRate", frameRate);
     prefs.putInt("bcf_shift", bcf_shift);
     prefs.putFloat("progressMotility", progressMotility);
