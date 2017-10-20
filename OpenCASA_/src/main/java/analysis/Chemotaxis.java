@@ -222,18 +222,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return angles;
   }
   
-  private double relativeAngle(Spermatozoon oldSpermatozoon, Spermatozoon newSpermatozoon){ //With gradient direction
-    double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
-    float diffX = newSpermatozoon.x - oldSpermatozoon.x;
-    float diffY = newSpermatozoon.y - oldSpermatozoon.y;
-    double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute angle
-    angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative angle between interval [0,2*Pi]
-    if (angle > Math.PI) {
-      angle = -(2 * Math.PI - angle);
-    }
-    return angle; //Between [-PI,PI]
-  }
-
   /**
    * @param track
    * @return
@@ -362,6 +350,20 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return instAngles;
   }
 
+  private double[] getOddsValues(SList tracks){
+    
+    double[] values = new double[] { 0.0, 0.0 };//[0]-upgradient displacements;[1]-displacements to other directionality
+    int count = 0, index = 0;
+    while ((count < Params.MAXINSTANGLES) && (index < tracks.size())) {
+      int[] countInstDirections = countInstantDisplacements((List) tracks.get(index));
+      count += countInstDirections[0] + countInstDirections[1];
+      values[0] += (double) countInstDirections[0]; // number of  instantaneous angles in the positive direction
+      values[1] += (double) (countInstDirections[0] + countInstDirections[1]);
+      index++;
+    }
+    return values;
+  }
+
   private List<String> getTestFolders(String folder) {
     FileManager fm = new FileManager();
     List<String> testFolders = fm.getSubfolders(folder);
@@ -467,20 +469,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return OddsRatio;
   }
   
-  private double[] getOddsValues(SList tracks){
-    
-    double[] values = new double[] { 0.0, 0.0 };//[0]-upgradient displacements;[1]-displacements to other directionality
-    int count = 0, index = 0;
-    while ((count < Params.MAXINSTANGLES) && (index < tracks.size())) {
-      int[] countInstDirections = countInstantDisplacements((List) tracks.get(index));
-      count += countInstDirections[0] + countInstDirections[1];
-      values[0] += (double) countInstDirections[0]; // number of  instantaneous angles in the positive direction
-      values[1] += (double) (countInstDirections[0] + countInstDirections[1]);
-      index++;
-    }
-    return values;
-  }
-
   /**
    * @param controlTracks
    * @return
@@ -504,6 +492,18 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     Collections.sort(ORs);
     return ORs.get((int) (Params.NUMSAMPLES * 0.95));
+  }
+
+  private double relativeAngle(Spermatozoon oldSpermatozoon, Spermatozoon newSpermatozoon){ //With gradient direction
+    double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
+    float diffX = newSpermatozoon.x - oldSpermatozoon.x;
+    float diffY = newSpermatozoon.y - oldSpermatozoon.y;
+    double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute angle
+    angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative angle between interval [0,2*Pi]
+    if (angle > Math.PI) {
+      angle = -(2 * Math.PI - angle);
+    }
+    return angle; //Between [-PI,PI]
   }
 
   public void selectAnalysis() {
