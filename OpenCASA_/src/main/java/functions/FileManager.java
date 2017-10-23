@@ -11,6 +11,7 @@ import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.DirectoryChooser;
+import third_Party.AVI_Reader;
 
 /**
  * @author Carlos Alquezar
@@ -21,7 +22,17 @@ public class FileManager {
   /**   */
   public FileManager() {
   }
-
+/**
+ * 
+ * @param path
+ * @return
+ */
+  public ImagePlus getAVI(String path){
+    AVI_Reader ar = new AVI_Reader();
+    ar.run(path);
+    ImagePlus imp = ar.getImagePlus();
+    return imp;
+  }
   /**
    * @param path
    * @return

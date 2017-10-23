@@ -16,6 +16,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
+import analysis.Motility;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
@@ -88,12 +89,15 @@ public class MainWindow extends JFrame {
             IJ.handleException(e1);
           }
         } else if (label.equals("Motility")) {
-//          mot = new Motility();
-//          try {
-//            mot.run(mw);
-//          } catch (Exception e1) {
-//            IJ.handleException(e1);
-//          }
+          Motility mot = new Motility();
+          try {
+            mw.setVisible(false);
+            mot.selectAnalysis();
+            mot.execute();
+            mw.setVisible(true);
+          } catch (Exception e1) {
+            IJ.handleException(e1);
+          }          
         } else if (label.equals("Viability")) {
           // via = new Viability();
           // try{via.run(mw);}

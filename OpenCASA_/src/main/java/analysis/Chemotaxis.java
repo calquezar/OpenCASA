@@ -270,7 +270,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return results;
   }
 /**
- * This method is inherit from SwingWorker class and is the starting point after the execute() method is called.
+ * This method is inherit from SwingWorker class and it is the starting point after the execute() method is called.
  */
   @Override
   public Boolean doInBackground() {
@@ -426,20 +426,20 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 /**
  * This method returns all trials extracted from the given set of AVI files.
- * @param tests List of avi filenames to be analysed.
+ * @param filenames List of avi filenames to be analysed.
  * @return All extracted trials
  */
-  private Map<String, Trial> getTrials(List<String> tests) {
+  private Map<String, Trial> getTrials(List<String> filenames) {
     // Extract Trials
     TrialManager tm = new TrialManager();
-    Map<String, Trial> tTrials = new HashMap<String, Trial>();
-    for (int i = 0; i < tests.size(); i++) {
-      String file = tests.get(i);
+    Map<String, Trial> trials = new HashMap<String, Trial>();
+    for (int i = 0; i < filenames.size(); i++) {
+      String file = filenames.get(i);
       Trial trial = tm.getTrialFromAVI(file);
       if(trial!=null)
-        tTrials.put(trial.type + "-_-" + trial.ID, trial); //Expression "-_-" is just a separator
+        trials.put(trial.type + "-_-" + trial.ID, trial); //Expression "-_-" is just a separator
     }
-    return tTrials;
+    return trials;
   }
 /**
  * This method calculates Ch-Index and SL-index for the given set of trials
@@ -568,10 +568,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     Object[] options = { "File", "Directory", " Multiple Simulations" };
     String question = "What do you want to analyze?";
     String title = "Choose one analysis...";
-    Utils utils = new Utils();
     final int FILE = 0;
     final int DIR = 1;
     final int SIMULATION = 2;
+    Utils utils = new Utils();    
     int sourceSelection = utils.analysisSelectionDialog(options, question, title);
     if (sourceSelection < 0) {
       return;

@@ -37,9 +37,7 @@ public class TrialManager {
     if (!fm.isAVI(path))
       return new Trial();
     // Load video
-    AVI_Reader ar = new AVI_Reader();
-    ar.run(path);
-    ImagePlus imp = ar.getImagePlus();
+    ImagePlus imp = fm.getAVI(path);
     return getTrialFromImp(imp, path);
   }
 
