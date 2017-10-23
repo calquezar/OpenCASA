@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classdata_1_1_trial.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacedata.html">data</a></li><li class="navelem"><a class="el" href="classdata_1_1_trial.html">Trial</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -87,9 +104,7 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a899e52b89fd0b71f488d80b36cb15c4e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e2cea67b588a2ca90544a03c65ca615"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a8e2cea67b588a2ca90544a03c65ca615">Trial</a> (String <a class="el" href="classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc">ID</a>, String <a class="el" href="classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6">type</a>, String <a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">source</a>, <a class="el" href="classdata_1_1_s_list.html">SList</a> t)</td></tr>
 <tr class="separator:a8e2cea67b588a2ca90544a03c65ca615"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a31d704a7dcda485a1f9a9c867c6a89cb"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a31d704a7dcda485a1f9a9c867c6a89cb">Trial</a> (String <a class="el" href="classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc">ID</a>, String <a class="el" href="classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6">type</a>, String <a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">source</a>, <a class="el" href="classdata_1_1_s_list.html">SList</a> t, ImagePlus <a class="el" href="classdata_1_1_trial.html#a42e3bb431b6dc35c8ebe6bb4beeaed40">imp</a>, int[] <a class="el" href="classdata_1_1_trial.html#ae42fc17fd806ecd59edd00cbefe58b15">motileSperm</a>)</td></tr>
-<tr class="separator:a31d704a7dcda485a1f9a9c867c6a89cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb87eef325b6688001efb620ee9c67d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#aeb87eef325b6688001efb620ee9c67d0">Trial</a> (String <a class="el" href="classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc">ID</a>, String <a class="el" href="classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6">type</a>, String <a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">source</a>, <a class="el" href="classdata_1_1_s_list.html">SList</a> t, int <a class="el" href="classdata_1_1_trial.html#a5cf7874ce4d4ed68b879f8effd9d8250">width</a>, int <a class="el" href="classdata_1_1_trial.html#a3f4598abef50860c1cda0f71c3e211b7">height</a>)</td></tr>
+<tr class="memitem:aeb87eef325b6688001efb620ee9c67d0"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#aeb87eef325b6688001efb620ee9c67d0">Trial</a> (String <a class="el" href="classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc">ID</a>, String <a class="el" href="classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6">type</a>, String <a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">source</a>, <a class="el" href="classdata_1_1_s_list.html">SList</a> t, int width, int height)</td></tr>
 <tr class="separator:aeb87eef325b6688001efb620ee9c67d0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-attribs"></a>
@@ -102,20 +117,18 @@ Public Attributes</h2></td></tr>
 <tr class="separator:a8b6b42b49402824628eb897a19cedfa8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a076434be940c0d3db36c6be5c0c5325b"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdata_1_1_s_list.html">SList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a076434be940c0d3db36c6be5c0c5325b">tracks</a> = null</td></tr>
 <tr class="separator:a076434be940c0d3db36c6be5c0c5325b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a42e3bb431b6dc35c8ebe6bb4beeaed40"><td class="memItemLeft" align="right" valign="top">ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a42e3bb431b6dc35c8ebe6bb4beeaed40">imp</a> = null</td></tr>
-<tr class="separator:a42e3bb431b6dc35c8ebe6bb4beeaed40"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5cf7874ce4d4ed68b879f8effd9d8250"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a5cf7874ce4d4ed68b879f8effd9d8250">width</a> = 0</td></tr>
-<tr class="separator:a5cf7874ce4d4ed68b879f8effd9d8250"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3f4598abef50860c1cda0f71c3e211b7"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a3f4598abef50860c1cda0f71c3e211b7">height</a> = 0</td></tr>
-<tr class="separator:a3f4598abef50860c1cda0f71c3e211b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae42fc17fd806ecd59edd00cbefe58b15"><td class="memItemLeft" align="right" valign="top">int []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#ae42fc17fd806ecd59edd00cbefe58b15">motileSperm</a> = new int[2]</td></tr>
-<tr class="separator:ae42fc17fd806ecd59edd00cbefe58b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae02018a01247c15960525b3c18bb6b0a"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#ae02018a01247c15960525b3c18bb6b0a">fieldWidth</a> = 0</td></tr>
+<tr class="separator:ae02018a01247c15960525b3c18bb6b0a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a2601824c14a8559596ff8ea52258da69"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classdata_1_1_trial.html#a2601824c14a8559596ff8ea52258da69">fieldHeight</a> = 0</td></tr>
+<tr class="separator:a2601824c14a8559596ff8ea52258da69"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00011">11</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a899e52b89fd0b71f488d80b36cb15c4e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a899e52b89fd0b71f488d80b36cb15c4e">&sect;&nbsp;</a></span>Trial() <span class="overload">[1/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a899e52b89fd0b71f488d80b36cb15c4e">&sect;&nbsp;</a></span>Trial() <span class="overload">[1/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -129,10 +142,12 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00025">25</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
+
 </div>
 </div>
 <a id="a8e2cea67b588a2ca90544a03c65ca615"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8e2cea67b588a2ca90544a03c65ca615">&sect;&nbsp;</a></span>Trial() <span class="overload">[2/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#a8e2cea67b588a2ca90544a03c65ca615">&sect;&nbsp;</a></span>Trial() <span class="overload">[2/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -178,73 +193,12 @@ Public Attributes</h2></td></tr>
   </dd>
 </dl>
 
-</div>
-</div>
-<a id="a31d704a7dcda485a1f9a9c867c6a89cb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a31d704a7dcda485a1f9a9c867c6a89cb">&sect;&nbsp;</a></span>Trial() <span class="overload">[3/4]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">data.Trial.Trial </td>
-          <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>ID</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>type</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>source</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classdata_1_1_s_list.html">SList</a>&#160;</td>
-          <td class="paramname"><em>t</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">ImagePlus&#160;</td>
-          <td class="paramname"><em>imp</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int []&#160;</td>
-          <td class="paramname"><em>motileSperm</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">ID</td><td></td></tr>
-    <tr><td class="paramname">type</td><td></td></tr>
-    <tr><td class="paramname">source</td><td></td></tr>
-    <tr><td class="paramname">t</td><td></td></tr>
-    <tr><td class="paramname">imp</td><td></td></tr>
-    <tr><td class="paramname">motileSperm</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00033">33</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
 
 </div>
 </div>
 <a id="aeb87eef325b6688001efb620ee9c67d0"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb87eef325b6688001efb620ee9c67d0">&sect;&nbsp;</a></span>Trial() <span class="overload">[4/4]</span></h2>
+<h2 class="memtitle"><span class="permalink"><a href="#aeb87eef325b6688001efb620ee9c67d0">&sect;&nbsp;</a></span>Trial() <span class="overload">[3/3]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -298,26 +252,46 @@ Public Attributes</h2></td></tr>
     <tr><td class="paramname">type</td><td></td></tr>
     <tr><td class="paramname">source</td><td></td></tr>
     <tr><td class="paramname">t</td><td></td></tr>
-    <tr><td class="paramname">width</td><td></td></tr>
-    <tr><td class="paramname">height</td><td></td></tr>
+    <tr><td class="paramname">imp</td><td></td></tr>
+    <tr><td class="paramname">motileSperm</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00047">47</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Data Documentation</h2>
-<a id="a3f4598abef50860c1cda0f71c3e211b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3f4598abef50860c1cda0f71c3e211b7">&sect;&nbsp;</a></span>height</h2>
+<a id="a2601824c14a8559596ff8ea52258da69"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2601824c14a8559596ff8ea52258da69">&sect;&nbsp;</a></span>fieldHeight</h2>
 
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">int data.Trial.height = 0</td>
+          <td class="memname">int data.Trial.fieldHeight = 0</td>
         </tr>
       </table>
 </div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00023">23</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
+
+</div>
+</div>
+<a id="ae02018a01247c15960525b3c18bb6b0a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae02018a01247c15960525b3c18bb6b0a">&sect;&nbsp;</a></span>fieldWidth</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int data.Trial.fieldWidth = 0</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00021">21</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
 
 </div>
 </div>
@@ -333,33 +307,7 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a42e3bb431b6dc35c8ebe6bb4beeaed40"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a42e3bb431b6dc35c8ebe6bb4beeaed40">&sect;&nbsp;</a></span>imp</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">ImagePlus data.Trial.imp = null</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
-
-</div>
-</div>
-<a id="ae42fc17fd806ecd59edd00cbefe58b15"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae42fc17fd806ecd59edd00cbefe58b15">&sect;&nbsp;</a></span>motileSperm</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int [] data.Trial.motileSperm = new int[2]</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00013">13</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
 
 </div>
 </div>
@@ -374,6 +322,9 @@ Public Attributes</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
+<p>source's filename </p>
+
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00017">17</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
 
 </div>
 </div>
@@ -389,6 +340,8 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00019">19</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
+
 </div>
 </div>
 <a id="a7e89b0f9bd136158424475ef348c40e6"></a>
@@ -403,31 +356,23 @@ Public Attributes</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-</div>
-</div>
-<a id="a5cf7874ce4d4ed68b879f8effd9d8250"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5cf7874ce4d4ed68b879f8effd9d8250">&sect;&nbsp;</a></span>width</h2>
-
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">int data.Trial.width = 0</td>
-        </tr>
-      </table>
-</div><div class="memdoc">
+<p>Definition at line <a class="el" href="_trial_8java_source.html#l00015">15</a> of file <a class="el" href="_trial_8java_source.html">Trial.java</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/data/<a class="el" href="_trial_8java.html">Trial.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/data/<a class="el" href="_trial_8java_source.html">Trial.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacedata.html">data</a></li><li class="navelem"><a class="el" href="classdata_1_1_trial.html">Trial</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

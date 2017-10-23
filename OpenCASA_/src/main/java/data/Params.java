@@ -36,6 +36,8 @@ public class Params {
   /** frame rate */
   public static float   frameRate            = 100;
   /**   */
+  public static String  genericField         = "";  
+  /**   */
   public static String  male                 = "";
   /**
    * maximum displacement of one spermatozoon between consecutive frames (um)
@@ -69,8 +71,6 @@ public class Params {
   /** Parameter used to determine progressive motility sperm */
   public static float        progressMotility = 80;
   /**   */
-  public static String       selectedFilter   = "";
-  /**   */
   public static float        vclLowerTh       = 45;
   /** Motility filter for motile and non motile sperm */
   public static float        vclMin           = 70;
@@ -102,6 +102,9 @@ public class Params {
     angleAmplitude = prefs.getFloat("angleAmplitude", angleAmplitude);
     compareOppositeDirections = prefs.getBoolean("compareOppositeDirections", compareOppositeDirections);
     frameRate = prefs.getFloat("frameRate", frameRate);
+//    male = prefs.get("male", male);
+//    date = prefs.get("date", date);
+//    genericField = prefs.get("genericField", genericField);
     bcf_shift = prefs.getInt("bcf_shift", bcf_shift);
     progressMotility = prefs.getFloat("progressMotility", progressMotility);
     micronPerPixel = prefs.getDouble("micronPerPixel", micronPerPixel);
@@ -125,6 +128,9 @@ public class Params {
     prefs.putFloat("angleAmplitude", angleAmplitude);
     prefs.putBoolean("compareOppositeDirections", compareOppositeDirections);
     prefs.putFloat("frameRate", frameRate);
+//    prefs.put("male", male);
+//    prefs.put("date", date);
+//    prefs.put("genericField", genericField);
     prefs.putInt("bcf_shift", bcf_shift);
     prefs.putFloat("progressMotility", progressMotility);
     prefs.putDouble("micronPerPixel", micronPerPixel);

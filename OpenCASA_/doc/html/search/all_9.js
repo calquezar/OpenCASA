@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['loadimages',['LoadImages',['../classfunctions_1_1_load_images.html',1,'functions']]],
-  ['loadimages',['LoadImages',['../classfunctions_1_1_load_images.html#ad02af49a0bee20eb9b899dacf692af2f',1,'functions::LoadImages']]],
-  ['loadimages_2ejava',['LoadImages.java',['../_load_images_8java.html',1,'']]]
+  ['jpeg_5fcompression',['JPEG_COMPRESSION',['../classthird___party_1_1_a_v_i___reader.html#a6e950b01e3308a25915da47063657900',1,'third_Party::AVI_Reader']]],
+  ['jpeg_5fcompression2',['JPEG_COMPRESSION2',['../classthird___party_1_1_a_v_i___reader.html#a38fa9e3cad9c0a5a7df0ddd3d11aad0e',1,'third_Party::AVI_Reader']]],
+  ['jpeg_5fcompression3',['JPEG_COMPRESSION3',['../classthird___party_1_1_a_v_i___reader.html#a2a2f40a58431f6f38931303068eb2816',1,'third_Party::AVI_Reader']]]
 ];

@@ -18,10 +18,7 @@ import ij.process.ImageProcessor;
  */
 public class OscillatoryWalker extends Simulation {
 
-  /**
-   * @author Carlos Alquezar
-   *
-   */
+
   class Cell {
 
     /**   */
@@ -150,8 +147,7 @@ public class OscillatoryWalker extends Simulation {
   }
 
   /**
-   * @param ImageProcessor
-   *          ip
+   * @param ImageProcessor ip
    */
   void draw(ImageProcessor ip) {
     ip.setColor(Color.black);

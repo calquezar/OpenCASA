@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_kinematics.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_kinematics.html">Kinematics</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">functions.Kinematics Member List</div>  </div>
@@ -71,18 +88,23 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#aa7bd8b43900594ff677d52d59037ac05">alh</a>(List track, List avgTrack)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a6da238288d8fc5572e419393f6fa9bae">bcf</a>(List track, List avgTrack)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a20cdebc8892e3cfd5f5ae4523969a448">getVelocityTrackType</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a3b81477075ade3a6962771289c2d4e98">mad</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a88a0aff00356ce737e9f971e034c73b4">vcl</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a5bbd93331732576ca5c3a04e086e871d">vsl</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#af0c7becd51be858be80720df28fb7ee9">alh</a>(List track, List avgTrack)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#ae007676d41c40d4222405d08a9af54e8">bcf</a>(List track, List avgTrack)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#acf4ee8b2b823ed447e7aaab91dabb1a3">getVelocityTrackType</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#acf1c1999d290fd3f7cb00990ce94f92a">mad</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a747a4336abc7441718d399feb5532b1b">motilityTest</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#aabf78a562592940ca564f7148ecf7c8c">motilityTest</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#a847ecc29fe7ba0c2fdaffadee829150b">vcl</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html#ada3eee53fd83da143deb24b208b71ab7">vsl</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_kinematics.html">functions.Kinematics</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

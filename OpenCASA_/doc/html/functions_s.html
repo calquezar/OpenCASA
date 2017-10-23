@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -45,6 +52,20 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions_s.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,82 +88,87 @@ $(function() {
 : <a class="el" href="classdata_1_1_params.html#aa639af05ac856b76d27b1df4dccf21d3">data.Params</a>
 </li>
 <li>saveTrials()
-: <a class="el" href="classfunctions_1_1_utils.html#a8ceae45471884fa93002d169a3cfad23">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#a3722ba041468f921073055cb8a68f4e7">functions.Utils</a>
+</li>
+<li>scanLineSize
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a270bcae68f2d35537d6eb66edce16058">third_Party.AVI_Reader</a>
+</li>
+<li>selectAnalysis()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a8557a0d82b6af1e99d502bf3f885f566">analysis.Chemotaxis</a>
 </li>
 <li>selected
 : <a class="el" href="classdata_1_1_spermatozoon.html#ad258cef706caec4159ecdd4405240066">data.Spermatozoon</a>
 </li>
-<li>selectedFilter
-: <a class="el" href="classdata_1_1_params.html#a3a4cd63af24827b994ca9d22d2aabbb8">data.Params</a>
-</li>
 <li>selectFile()
-: <a class="el" href="classfunctions_1_1_utils.html#ab6319ada99a3e56c852deedba639c885">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#aeb98f0638c58e80aef6382759ba051ef">functions.FileManager</a>
 </li>
 <li>selectFolder()
-: <a class="el" href="classfunctions_1_1_utils.html#a6fb43e0b514d5483fbd537616142b9b7">functions.Utils</a>
-</li>
-<li>setAliveImage()
-: <a class="el" href="classanalysis_1_1_viability.html#a1626fb6bffb6374fe2cb7c1960120650">analysis.Viability</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#a01dbb6b5ae72a5d056d62cbeeb3c9622">functions.FileManager</a>
 </li>
 <li>setBootstrappingResults()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#a01049cd25c5d79a8f7405164bb2206fd">analysis.Chemotaxis</a>
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6d70637d4ebd9b3826ac2375aeae49ee">analysis.Chemotaxis</a>
 </li>
-<li>setCanvas()
-: <a class="el" href="classanalysis_1_1_viability.html#a30c4306012334958e1ada3fe75b63698">analysis.Viability</a>
+<li>setFramesPerSecond()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a78973ba2fec408d8cd6551dd6929651f">third_Party.AVI_Reader</a>
 </li>
-<li>setChResults()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#a036fe503909080671b1502453d7a20a1">analysis.Chemotaxis</a>
-</li>
-<li>setDeadsImage()
-: <a class="el" href="classanalysis_1_1_viability.html#af4cfcaa9e2c78bfe7f57fd13d0037832">analysis.Viability</a>
-</li>
-<li>setImage()
-: <a class="el" href="classgui_1_1_morph_window.html#a2c8187dd4bb506db5dfab2d2690d0f96">gui.MorphWindow</a>
-</li>
-<li>setImages()
-: <a class="el" href="classgui_1_1_morph_window.html#a933a5a45830e4666b2e7e8ce1f92041f">gui.MorphWindow</a>
+<li>setIndexesResults()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6b22975aa5a2bd0ed2a0eb1df422e4d4">analysis.Chemotaxis</a>
 </li>
 <li>setParameters()
 : <a class="el" href="classgui_1_1_settings_window.html#a0bce017d9e6e802a154df92dfd7bf50d">gui.SettingsWindow</a>
 </li>
-<li>setResizeFactor()
-: <a class="el" href="classgui_1_1_morph_window.html#a82a833ac6548e04f4bc9dd7468b3c58b">gui.MorphWindow</a>
-</li>
-<li>setText()
-: <a class="el" href="classgui_1_1_message_window.html#a700c7f1c59f4b969b43368d72f00c547">gui.MessageWindow</a>
-</li>
 <li>SettingsWindow()
 : <a class="el" href="classgui_1_1_settings_window.html#a6c7ef7d86a39d50983deab7713eab3af">gui.SettingsWindow</a>
 </li>
-<li>showWindow()
-: <a class="el" href="classgui_1_1_morph_window.html#aaae52f6b44c44b770a2069a9662c7303">gui.MorphWindow</a>
+<li>showDialog()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#afceeac5fe2c92fbc4a2bf188bf7b27e4">third_Party.AVI_Reader</a>
 </li>
 <li>simulate()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#ab359910db2a523778b19e67b13017236">analysis.Chemotaxis</a>
+: <a class="el" href="classgui_1_1_main_window.html#a1f95e6403092b338ba9a6b2f31764e4a">gui.MainWindow</a>
 </li>
 <li>simulateTrial()
-: <a class="el" href="classanalysis_1_1_video_analyzer.html#a951e0f611a79cf2c0098f0cb19db2d01">analysis.VideoAnalyzer</a>
+: <a class="el" href="classfunctions_1_1_trial_manager.html#a14593a8d88918c1079834f0b7a538926">functions.TrialManager</a>
 </li>
 <li>simulateTrials()
-: <a class="el" href="classanalysis_1_1_video_analyzer.html#a8cc70ebf5b5b803d8d7baad4c06d817d">analysis.VideoAnalyzer</a>
+: <a class="el" href="classfunctions_1_1_trial_manager.html#aeb218993d7c8f19a602b1dd0a3e3f592">functions.TrialManager</a>
+</li>
+<li>SIZE_MASK
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#ac50ce7513ebc95b0f78d6920bd306f52">third_Party.AVI_Reader</a>
 </li>
 <li>SList()
-: <a class="el" href="classdata_1_1_s_list.html#ad892cebdaf5f9f3fc0b6cae74804e08c">data.SList</a>
+: <a class="el" href="classdata_1_1_s_list.html#ab9690c3b39b712daa30e0e00ddc6a3a7">data.SList</a>
 </li>
 <li>source
 : <a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">data.Trial</a>
 </li>
-<li>stateChanged()
-: <a class="el" href="classanalysis_1_1_viability.html#ae77ef24ed23136d1e9a06999d6ea7d09">analysis.Viability</a>
-, <a class="el" href="classgui_1_1_morph_window.html#ab05861942f2bc6ddaac2cf87bdfc1c2b">gui.MorphWindow</a>
+<li>stack
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a3718d0e6f5e4617dcc81a8e481361c7e">third_Party.AVI_Reader</a>
+</li>
+<li>startTime
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#ae51c21e096fc7d3c16c4b098e8772b50">third_Party.AVI_Reader</a>
+</li>
+<li>staticConvertToGray
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a1c9b6b612edba7d066f7385771c15613">third_Party.AVI_Reader</a>
+</li>
+<li>staticFlipVertical
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#abf21677829232d48cb9bc1efcdfd1557">third_Party.AVI_Reader</a>
+</li>
+<li>staticIsVirtual
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a4d27bb277c107c931e0f80ce7947f5ea">third_Party.AVI_Reader</a>
+</li>
+<li>streamNumber
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#aa13826806384d5f2ba71ef4b285ff94f">third_Party.AVI_Reader</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

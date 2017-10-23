@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_computer_vision.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,84 +80,61 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_computer_vision.html">ComputerVision</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classfunctions_1_1_computer_vision-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">functions.ComputerVision Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">functions.ComputerVision Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for functions.ComputerVision:</div>
-<div class="dyncontent">
- <div class="center">
-  <img src="classfunctions_1_1_computer_vision.png" usemap="#functions.ComputerVision_map" alt=""/>
-  <map id="functions.ComputerVision_map" name="functions.ComputerVision_map">
-</map>
- </div></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3667dd7bba5ac59d0f532b5ee51181ca"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a3667dd7bba5ac59d0f532b5ee51181ca">autoThresholdImagePlus</a> (ImagePlus imp)</td></tr>
-<tr class="separator:a3667dd7bba5ac59d0f532b5ee51181ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a2c9966d292c9603c4d82f2f13bf93fcf"><td class="memItemLeft" align="right" valign="top">static double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a2c9966d292c9603c4d82f2f13bf93fcf">autoThresholdImagePlus</a> (ImagePlus imp, String thresholdMethod)</td></tr>
-<tr class="separator:a2c9966d292c9603c4d82f2f13bf93fcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa671b9aeedf2acbf2a20eeeece016580"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#aa671b9aeedf2acbf2a20eeeece016580">convertToGrayscale</a> (ImagePlus imp)</td></tr>
-<tr class="separator:aa671b9aeedf2acbf2a20eeeece016580"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a41ade0785d17a8dbb7e1047b517fccd6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a41ade0785d17a8dbb7e1047b517fccd6">convertToRGB</a> (ImagePlus imp)</td></tr>
-<tr class="separator:a41ade0785d17a8dbb7e1047b517fccd6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2fc83a160d636376d2f67a25a75e7ae"><td class="memItemLeft" align="right" valign="top">static List []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#ae2fc83a160d636376d2f67a25a75e7ae">detectSpermatozoa</a> (ImagePlus imp)</td></tr>
-<tr class="separator:ae2fc83a160d636376d2f67a25a75e7ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae32c9b7e2d792c075d909bbbaf6d3ad1"><td class="memItemLeft" align="right" valign="top">static ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#ae32c9b7e2d792c075d909bbbaf6d3ad1">getBlueChannel</a> (ImagePlus impColor)</td></tr>
-<tr class="separator:ae32c9b7e2d792c075d909bbbaf6d3ad1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a26681bdad3d9852d6958af72fba60e59"><td class="memItemLeft" align="right" valign="top">static ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a26681bdad3d9852d6958af72fba60e59">getGreenChannel</a> (ImagePlus impColor)</td></tr>
-<tr class="separator:a26681bdad3d9852d6958af72fba60e59"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a099a48efb6b84899ac4eed2639f1398f"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a099a48efb6b84899ac4eed2639f1398f">getMeanGrayValue</a> (<a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a> part, ImagePlus impGray, ImagePlus impTh)</td></tr>
-<tr class="separator:a099a48efb6b84899ac4eed2639f1398f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ad03d75bd936979713771cf4ac1309414"><td class="memItemLeft" align="right" valign="top">static ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#ad03d75bd936979713771cf4ac1309414">getRedChannel</a> (ImagePlus impColor)</td></tr>
-<tr class="separator:ad03d75bd936979713771cf4ac1309414"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aeb41f5f77beb1e7141d85441709ffe81"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classdata_1_1_s_list.html">SList</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#aeb41f5f77beb1e7141d85441709ffe81">idenfityTracks</a> (List[] spermatozoa, int nFrames)</td></tr>
-<tr class="separator:aeb41f5f77beb1e7141d85441709ffe81"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab0f09aac0cc50b71b9e13fe98de94415"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#ab0f09aac0cc50b71b9e13fe98de94415">outlineThresholdImage</a> (ImagePlus imp)</td></tr>
-<tr class="separator:ab0f09aac0cc50b71b9e13fe98de94415"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afdeaa756441ad50cbb20268dc5440c27"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#afdeaa756441ad50cbb20268dc5440c27">thresholdImagePlus</a> (ImagePlus imp, double lowerThreshold)</td></tr>
-<tr class="separator:afdeaa756441ad50cbb20268dc5440c27"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3106850d23d4dc70772b01bc0cc2f4f7"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a3106850d23d4dc70772b01bc0cc2f4f7">thresholdImageProcessor</a> (ImageProcessor ip, double lowerThreshold, double upperThreshold)</td></tr>
-<tr class="separator:a3106850d23d4dc70772b01bc0cc2f4f7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:acc6f2aaf0d523e3789b7b203faf8dd47"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#acc6f2aaf0d523e3789b7b203faf8dd47">thresholdStack</a> (ImagePlus imp)</td></tr>
-<tr class="separator:acc6f2aaf0d523e3789b7b203faf8dd47"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a2e8986c5f6706b0a644b252aea5cd041"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a2e8986c5f6706b0a644b252aea5cd041">autoThresholdImagePlus</a> (ImagePlus imp)</td></tr>
+<tr class="separator:a2e8986c5f6706b0a644b252aea5cd041"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a64c86edaf4c0d4847d3e32b5db2dbdcf"><td class="memItemLeft" align="right" valign="top">double&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a64c86edaf4c0d4847d3e32b5db2dbdcf">autoThresholdImagePlus</a> (ImagePlus imp, String thresholdMethod)</td></tr>
+<tr class="separator:a64c86edaf4c0d4847d3e32b5db2dbdcf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6756d74ae35c9c9ed0f35b51b7257fba"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a6756d74ae35c9c9ed0f35b51b7257fba">convertToGrayscale</a> (ImagePlus imp)</td></tr>
+<tr class="separator:a6756d74ae35c9c9ed0f35b51b7257fba"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a70eb63f34a34ceceab19157a3a26570b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a70eb63f34a34ceceab19157a3a26570b">convertToRGB</a> (ImagePlus imp)</td></tr>
+<tr class="separator:a70eb63f34a34ceceab19157a3a26570b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a68845595c1ffa570fa6d3aaead4ed847"><td class="memItemLeft" align="right" valign="top">ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a68845595c1ffa570fa6d3aaead4ed847">getBlueChannel</a> (ImagePlus impColor)</td></tr>
+<tr class="separator:a68845595c1ffa570fa6d3aaead4ed847"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac7a646d52e5e856a80235f3c9035aa33"><td class="memItemLeft" align="right" valign="top">ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#ac7a646d52e5e856a80235f3c9035aa33">getGreenChannel</a> (ImagePlus impColor)</td></tr>
+<tr class="separator:ac7a646d52e5e856a80235f3c9035aa33"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7e2d88eabe140248d8ae6ddfdae4582f"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a7e2d88eabe140248d8ae6ddfdae4582f">getMeanGrayValue</a> (<a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a> part, ImagePlus impGray, ImagePlus impTh)</td></tr>
+<tr class="separator:a7e2d88eabe140248d8ae6ddfdae4582f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6c652c689aa411bd6da3ae7478b1227c"><td class="memItemLeft" align="right" valign="top">ImagePlus&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a6c652c689aa411bd6da3ae7478b1227c">getRedChannel</a> (ImagePlus impColor)</td></tr>
+<tr class="separator:a6c652c689aa411bd6da3ae7478b1227c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa32901635cb5b18c0edeb63559a330a7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#aa32901635cb5b18c0edeb63559a330a7">outlineThresholdImage</a> (ImagePlus imp)</td></tr>
+<tr class="separator:aa32901635cb5b18c0edeb63559a330a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada06ea31d30a536e7ed5dc97fa66e423"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#ada06ea31d30a536e7ed5dc97fa66e423">thresholdImagePlus</a> (ImagePlus imp, double lowerThreshold)</td></tr>
+<tr class="separator:ada06ea31d30a536e7ed5dc97fa66e423"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af0744bb8e9c2ab1ae9b3cd9d159a4201"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#af0744bb8e9c2ab1ae9b3cd9d159a4201">thresholdImageProcessor</a> (ImageProcessor ip, double lowerThreshold, double upperThreshold)</td></tr>
+<tr class="separator:af0744bb8e9c2ab1ae9b3cd9d159a4201"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4e003eb5581184680940ca7072a71da3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_computer_vision.html#a4e003eb5581184680940ca7072a71da3">thresholdStack</a> (ImagePlus imp)</td></tr>
+<tr class="separator:a4e003eb5581184680940ca7072a71da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00028">28</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3667dd7bba5ac59d0f532b5ee51181ca"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3667dd7bba5ac59d0f532b5ee51181ca">&sect;&nbsp;</a></span>autoThresholdImagePlus() <span class="overload">[1/2]</span></h2>
+<a id="a2e8986c5f6706b0a644b252aea5cd041"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a2e8986c5f6706b0a644b252aea5cd041">&sect;&nbsp;</a></span>autoThresholdImagePlus() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static double functions.ComputerVision.autoThresholdImagePlus </td>
+          <td class="memname">double functions.ComputerVision.autoThresholdImagePlus </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -145,19 +144,18 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00036">36</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="a2c9966d292c9603c4d82f2f13bf93fcf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a2c9966d292c9603c4d82f2f13bf93fcf">&sect;&nbsp;</a></span>autoThresholdImagePlus() <span class="overload">[2/2]</span></h2>
+<a id="a64c86edaf4c0d4847d3e32b5db2dbdcf"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a64c86edaf4c0d4847d3e32b5db2dbdcf">&sect;&nbsp;</a></span>autoThresholdImagePlus() <span class="overload">[2/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static double functions.ComputerVision.autoThresholdImagePlus </td>
+          <td class="memname">double functions.ComputerVision.autoThresholdImagePlus </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em>, </td>
@@ -174,11 +172,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -189,30 +182,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00047">47</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="aa671b9aeedf2acbf2a20eeeece016580"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa671b9aeedf2acbf2a20eeeece016580">&sect;&nbsp;</a></span>convertToGrayscale()</h2>
+<a id="a6756d74ae35c9c9ed0f35b51b7257fba"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6756d74ae35c9c9ed0f35b51b7257fba">&sect;&nbsp;</a></span>convertToGrayscale()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.ComputerVision.convertToGrayscale </td>
+          <td class="memname">void functions.ComputerVision.convertToGrayscale </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -222,30 +209,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <p>This functions converts imp to grayscale. </p>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00070">70</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="a41ade0785d17a8dbb7e1047b517fccd6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a41ade0785d17a8dbb7e1047b517fccd6">&sect;&nbsp;</a></span>convertToRGB()</h2>
+<a id="a70eb63f34a34ceceab19157a3a26570b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a70eb63f34a34ceceab19157a3a26570b">&sect;&nbsp;</a></span>convertToRGB()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.ComputerVision.convertToRGB </td>
+          <td class="memname">void functions.ComputerVision.convertToRGB </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -255,63 +236,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <p>This functions converts imp to grayscale. </p>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00082">82</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="ae2fc83a160d636376d2f67a25a75e7ae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae2fc83a160d636376d2f67a25a75e7ae">&sect;&nbsp;</a></span>detectSpermatozoa()</h2>
+<a id="a68845595c1ffa570fa6d3aaead4ed847"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a68845595c1ffa570fa6d3aaead4ed847">&sect;&nbsp;</a></span>getBlueChannel()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static List [] functions.ComputerVision.detectSpermatozoa </td>
-          <td>(</td>
-          <td class="paramtype">ImagePlus&#160;</td>
-          <td class="paramname"><em>imp</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">imp</td><td>ImagePlus </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>2D-ArrayList with all spermatozoa detected for each frame </dd></dl>
-
-</div>
-</div>
-<a id="ae32c9b7e2d792c075d909bbbaf6d3ad1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae32c9b7e2d792c075d909bbbaf6d3ad1">&sect;&nbsp;</a></span>getBlueChannel()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static ImagePlus functions.ComputerVision.getBlueChannel </td>
+          <td class="memname">ImagePlus functions.ComputerVision.getBlueChannel </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>impColor</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -321,30 +263,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00094">94</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="a26681bdad3d9852d6958af72fba60e59"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a26681bdad3d9852d6958af72fba60e59">&sect;&nbsp;</a></span>getGreenChannel()</h2>
+<a id="ac7a646d52e5e856a80235f3c9035aa33"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac7a646d52e5e856a80235f3c9035aa33">&sect;&nbsp;</a></span>getGreenChannel()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static ImagePlus functions.ComputerVision.getGreenChannel </td>
+          <td class="memname">ImagePlus functions.ComputerVision.getGreenChannel </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>impColor</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -354,19 +290,18 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00104">104</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="a099a48efb6b84899ac4eed2639f1398f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a099a48efb6b84899ac4eed2639f1398f">&sect;&nbsp;</a></span>getMeanGrayValue()</h2>
+<a id="a7e2d88eabe140248d8ae6ddfdae4582f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7e2d88eabe140248d8ae6ddfdae4582f">&sect;&nbsp;</a></span>getMeanGrayValue()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static float functions.ComputerVision.getMeanGrayValue </td>
+          <td class="memname">float functions.ComputerVision.getMeanGrayValue </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a>&#160;</td>
           <td class="paramname"><em>part</em>, </td>
@@ -389,11 +324,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -405,30 +335,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00116">116</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="ad03d75bd936979713771cf4ac1309414"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ad03d75bd936979713771cf4ac1309414">&sect;&nbsp;</a></span>getRedChannel()</h2>
+<a id="a6c652c689aa411bd6da3ae7478b1227c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6c652c689aa411bd6da3ae7478b1227c">&sect;&nbsp;</a></span>getRedChannel()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static ImagePlus functions.ComputerVision.getRedChannel </td>
+          <td class="memname">ImagePlus functions.ComputerVision.getRedChannel </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>impColor</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -438,89 +362,38 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00144">144</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="aeb41f5f77beb1e7141d85441709ffe81"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aeb41f5f77beb1e7141d85441709ffe81">&sect;&nbsp;</a></span>idenfityTracks()</h2>
+<a id="aa32901635cb5b18c0edeb63559a330a7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa32901635cb5b18c0edeb63559a330a7">&sect;&nbsp;</a></span>outlineThresholdImage()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classdata_1_1_s_list.html">SList</a> functions.ComputerVision.idenfityTracks </td>
-          <td>(</td>
-          <td class="paramtype">List []&#160;</td>
-          <td class="paramname"><em>spermatozoa</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>nFrames</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">spermatozoa</td><td>2D-ArrayList with all spermatozoa detected for each frame </td></tr>
-    <tr><td class="paramname">nFrames</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>2D-ArrayList with all tracks detected </dd></dl>
-
-</div>
-</div>
-<a id="ab0f09aac0cc50b71b9e13fe98de94415"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0f09aac0cc50b71b9e13fe98de94415">&sect;&nbsp;</a></span>outlineThresholdImage()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static void functions.ComputerVision.outlineThresholdImage </td>
+          <td class="memname">void functions.ComputerVision.outlineThresholdImage </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
+
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00154">154</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
 
 </div>
 </div>
-<a id="afdeaa756441ad50cbb20268dc5440c27"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afdeaa756441ad50cbb20268dc5440c27">&sect;&nbsp;</a></span>thresholdImagePlus()</h2>
+<a id="ada06ea31d30a536e7ed5dc97fa66e423"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada06ea31d30a536e7ed5dc97fa66e423">&sect;&nbsp;</a></span>thresholdImagePlus()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.ComputerVision.thresholdImagePlus </td>
+          <td class="memname">void functions.ComputerVision.thresholdImagePlus </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em>, </td>
@@ -537,11 +410,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -551,19 +419,18 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00166">166</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="a3106850d23d4dc70772b01bc0cc2f4f7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3106850d23d4dc70772b01bc0cc2f4f7">&sect;&nbsp;</a></span>thresholdImageProcessor()</h2>
+<a id="af0744bb8e9c2ab1ae9b3cd9d159a4201"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0744bb8e9c2ab1ae9b3cd9d159a4201">&sect;&nbsp;</a></span>thresholdImageProcessor()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.ComputerVision.thresholdImageProcessor </td>
+          <td class="memname">void functions.ComputerVision.thresholdImageProcessor </td>
           <td>(</td>
           <td class="paramtype">ImageProcessor&#160;</td>
           <td class="paramname"><em>ip</em>, </td>
@@ -586,11 +453,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -601,49 +463,49 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00180">180</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
-<a id="acc6f2aaf0d523e3789b7b203faf8dd47"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#acc6f2aaf0d523e3789b7b203faf8dd47">&sect;&nbsp;</a></span>thresholdStack()</h2>
+<a id="a4e003eb5581184680940ca7072a71da3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4e003eb5581184680940ca7072a71da3">&sect;&nbsp;</a></span>thresholdStack()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.ComputerVision.thresholdStack </td>
+          <td class="memname">void functions.ComputerVision.thresholdStack </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">imp</td><td>ImagePlus This function makes binary 'imp' applying an statistical threshold </td></tr>
+    <tr><td class="paramname">ImagePlus</td><td>This function makes binary 'imp' applying an statistical threshold </td></tr>
   </table>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_computer_vision_8java_source.html#l00197">197</a> of file <a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_computer_vision_8java.html">ComputerVision.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_computer_vision_8java_source.html">ComputerVision.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_computer_vision.html">ComputerVision</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

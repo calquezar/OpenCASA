@@ -1,7 +1,18 @@
 var searchData=
 [
-  ['thresholdimageplus',['thresholdImagePlus',['../classfunctions_1_1_computer_vision.html#afdeaa756441ad50cbb20268dc5440c27',1,'functions::ComputerVision']]],
-  ['thresholdimageprocessor',['thresholdImageProcessor',['../classfunctions_1_1_computer_vision.html#a3106850d23d4dc70772b01bc0cc2f4f7',1,'functions::ComputerVision']]],
-  ['thresholdstack',['thresholdStack',['../classfunctions_1_1_computer_vision.html#acc6f2aaf0d523e3789b7b203faf8dd47',1,'functions::ComputerVision']]],
-  ['trial',['Trial',['../classdata_1_1_trial.html#a899e52b89fd0b71f488d80b36cb15c4e',1,'data.Trial.Trial()'],['../classdata_1_1_trial.html#a8e2cea67b588a2ca90544a03c65ca615',1,'data.Trial.Trial(String ID, String type, String source, SList t)'],['../classdata_1_1_trial.html#a31d704a7dcda485a1f9a9c867c6a89cb',1,'data.Trial.Trial(String ID, String type, String source, SList t, ImagePlus imp, int[] motileSperm)'],['../classdata_1_1_trial.html#aeb87eef325b6688001efb620ee9c67d0',1,'data.Trial.Trial(String ID, String type, String source, SList t, int width, int height)']]]
+  ['saveparams',['saveParams',['../classdata_1_1_params.html#aa639af05ac856b76d27b1df4dccf21d3',1,'data::Params']]],
+  ['savetrials',['saveTrials',['../classfunctions_1_1_utils.html#a3722ba041468f921073055cb8a68f4e7',1,'functions::Utils']]],
+  ['selectanalysis',['selectAnalysis',['../classanalysis_1_1_chemotaxis.html#a8557a0d82b6af1e99d502bf3f885f566',1,'analysis::Chemotaxis']]],
+  ['selectfile',['selectFile',['../classfunctions_1_1_file_manager.html#aeb98f0638c58e80aef6382759ba051ef',1,'functions::FileManager']]],
+  ['selectfolder',['selectFolder',['../classfunctions_1_1_file_manager.html#a01dbb6b5ae72a5d056d62cbeeb3c9622',1,'functions::FileManager']]],
+  ['setbootstrappingresults',['setBootstrappingResults',['../classanalysis_1_1_chemotaxis.html#a6d70637d4ebd9b3826ac2375aeae49ee',1,'analysis::Chemotaxis']]],
+  ['setframespersecond',['setFramesPerSecond',['../classthird___party_1_1_a_v_i___reader.html#a78973ba2fec408d8cd6551dd6929651f',1,'third_Party::AVI_Reader']]],
+  ['setindexesresults',['setIndexesResults',['../classanalysis_1_1_chemotaxis.html#a6b22975aa5a2bd0ed2a0eb1df422e4d4',1,'analysis::Chemotaxis']]],
+  ['setparameters',['setParameters',['../classgui_1_1_settings_window.html#a0bce017d9e6e802a154df92dfd7bf50d',1,'gui::SettingsWindow']]],
+  ['settingswindow',['SettingsWindow',['../classgui_1_1_settings_window.html#a6c7ef7d86a39d50983deab7713eab3af',1,'gui::SettingsWindow']]],
+  ['showdialog',['showDialog',['../classthird___party_1_1_a_v_i___reader.html#afceeac5fe2c92fbc4a2bf188bf7b27e4',1,'third_Party::AVI_Reader']]],
+  ['simulate',['simulate',['../classgui_1_1_main_window.html#a1f95e6403092b338ba9a6b2f31764e4a',1,'gui::MainWindow']]],
+  ['simulatetrial',['simulateTrial',['../classfunctions_1_1_trial_manager.html#a14593a8d88918c1079834f0b7a538926',1,'functions::TrialManager']]],
+  ['simulatetrials',['simulateTrials',['../classfunctions_1_1_trial_manager.html#aeb218993d7c8f19a602b1dd0a3e3f592',1,'functions::TrialManager']]],
+  ['slist',['SList',['../classdata_1_1_s_list.html#ab9690c3b39b712daa30e0e00ddc6a3a7',1,'data.SList.SList()'],['../classdata_1_1_s_list.html#ad892cebdaf5f9f3fc0b6cae74804e08c',1,'data.SList.SList(Collection c)'],['../classdata_1_1_s_list.html#ad8beac14f5eef5ae41cfea8766d39304',1,'data.SList.SList(int initialCapacity)']]]
 ];

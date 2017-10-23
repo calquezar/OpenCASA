@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -45,6 +52,20 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions_g.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -63,89 +84,94 @@ $(function() {
 <div class="textblock">Here is a list of all class members with links to the classes they belong to:</div>
 
 <h3><a id="index_g"></a>- g -</h3><ul>
-<li>generateResults()
-: <a class="el" href="classgui_1_1_morph_window.html#a8035426d5063071ed4c5ef80cd693ddb">gui.MorphWindow</a>
-</li>
-<li>getAbsoluteFileName()
-: <a class="el" href="classfunctions_1_1_utils.html#afac1ff6c5ffe5704217144efe96d0008">functions.Utils</a>
+<li>genericField
+: <a class="el" href="classdata_1_1_params.html#a6275ffda5e8943f49543fe17134151c0">data.Params</a>
 </li>
 <li>getBlueChannel()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#ae32c9b7e2d792c075d909bbbaf6d3ad1">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a68845595c1ffa570fa6d3aaead4ed847">functions.ComputerVision</a>
 </li>
-<li>getFileName()
-: <a class="el" href="classfunctions_1_1_utils.html#ada34524c41f4ab85b7b7b5b92d03e4bb">functions.Utils</a>
+<li>getContent()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a8a8165fc0f5f0b31dd20695da79a77d1">functions.FileManager</a>
 </li>
-<li>getFileNames()
-: <a class="el" href="classfunctions_1_1_utils.html#a57cf1d6c5fb006af17f1c412bcfc7472">functions.Utils</a>
+<li>getControlTrials()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#aca55f710d4c18a6e0ac3936b9f2c354e">analysis.Chemotaxis</a>
+</li>
+<li>getFilename()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a5b22bc37a0ada69ed447a34bdef68f6b">functions.FileManager</a>
+</li>
+<li>getFiles()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a252da250b5d0b7b72c22d851cb85f6d6">functions.FileManager</a>
 </li>
 <li>getGreenChannel()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a26681bdad3d9852d6958af72fba60e59">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#ac7a646d52e5e856a80235f3c9035aa33">functions.ComputerVision</a>
 </li>
 <li>getHeight()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a9f0298a77a2f64de07163cd15f0f76e3">plugins.AVI_Reader</a>
-</li>
-<li>getID()
-: <a class="el" href="classanalysis_1_1_video_analyzer.html#a8160e293e9c6e8dc4631661ee5cf57fa">analysis.VideoAnalyzer</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#aa67e28fcf751e79407a8e33309c4df59">third_Party.AVI_Reader</a>
 </li>
 <li>getImagePlus()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a744024404a4410f538d5c054de2cbfad">plugins.AVI_Reader</a>
-</li>
-<li>getKeys()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#a24c2511b480cc570d3dbcf6e3d4be728">analysis.Chemotaxis</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a857b41097078525ba73d3d62fe99047e">third_Party.AVI_Reader</a>
 </li>
 <li>getListOfAngles()
 : <a class="el" href="classanalysis_1_1_chemotaxis.html#ae950951adeb9a4946cd299017496819e">analysis.Chemotaxis</a>
 </li>
 <li>getMeanGrayValue()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a099a48efb6b84899ac4eed2639f1398f">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a7e2d88eabe140248d8ae6ddfdae4582f">functions.ComputerVision</a>
+</li>
+<li>getOddsValues()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6bac66e910c9e87183efe6f7e771e3fb">analysis.Chemotaxis</a>
 </li>
 <li>getParentDirectory()
-: <a class="el" href="classfunctions_1_1_utils.html#a940367a6f69c9a2041881234e2c64a31">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#afe655776ad5c59d6b3df6f4d18db1cd0">functions.FileManager</a>
 </li>
 <li>getProcessor()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#ac07bb33097a0463d1b24a94e40392af5">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a0ce25d675c642fe70f4b9568e6514dc0">third_Party.AVI_Reader</a>
 </li>
 <li>getRedChannel()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#ad03d75bd936979713771cf4ac1309414">functions.ComputerVision</a>
-</li>
-<li>getRelatedConditions()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#a3cbe6f5ee658b8fc9a120c1168aa7a73">analysis.Chemotaxis</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a6c652c689aa411bd6da3ae7478b1227c">functions.ComputerVision</a>
 </li>
 <li>getSize()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a35b09255d1bb2e12176551d379f6042f">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a3bd3cdd8c8ece98211ccf6b866093dc5">third_Party.AVI_Reader</a>
 </li>
 <li>getSliceLabel()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a7b8de54f729c44ca924159b217c946ca">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a5847e6c3323a34b06326a61e874616b2">third_Party.AVI_Reader</a>
 </li>
 <li>getSpermatozoon()
-: <a class="el" href="classanalysis_1_1_viability.html#ae68e99b2cc08e73c977681278be9afe3">analysis.Viability</a>
-, <a class="el" href="classfunctions_1_1_utils.html#a150d932dd5b2b95a5f0588a10c46baeb">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#a8cb54de4a2bac04ef8dc3dc09adf6dbe">functions.Utils</a>
 </li>
-<li>getThresholdFromSlider()
-: <a class="el" href="classanalysis_1_1_viability.html#a79929b4f27f525dfd843c0106dd296a6">analysis.Viability</a>
+<li>getSubfolders()
+: <a class="el" href="classfunctions_1_1_file_manager.html#acd60931c8cd27cbc3ecc6eaf77950a77">functions.FileManager</a>
+</li>
+<li>getTestFolders()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#afffeded1309008ccf14401e37d85ebab">analysis.Chemotaxis</a>
+</li>
+<li>getTestTrial()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a609e29973a5d66c1e254af1fa5e17292">analysis.Chemotaxis</a>
+</li>
+<li>getTestTrials()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a0b6c2ea51ce0cae05364c7353fe867eb">analysis.Chemotaxis</a>
 </li>
 <li>getTrialFromAVI()
-: <a class="el" href="classanalysis_1_1_video_analyzer.html#a9c5938d3ef044befeff18c082f5a001f">analysis.VideoAnalyzer</a>
+: <a class="el" href="classfunctions_1_1_trial_manager.html#a45a6e5a5d5ad03a208d60fc4b8408480">functions.TrialManager</a>
 </li>
 <li>getTrialFromImp()
-: <a class="el" href="classanalysis_1_1_video_analyzer.html#a51649f4c2b66e94a885fb0b352bfadff">analysis.VideoAnalyzer</a>
-</li>
-<li>getTrialType()
-: <a class="el" href="classanalysis_1_1_video_analyzer.html#ae03604381db48b2a0dcc0080696b9948">analysis.VideoAnalyzer</a>
+: <a class="el" href="classfunctions_1_1_trial_manager.html#a5cc3dc0bd82790942230ad3c5b8b1683">functions.TrialManager</a>
 </li>
 <li>getVelocityTrackType()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a20cdebc8892e3cfd5f5ae4523969a448">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#acf4ee8b2b823ed447e7aaab91dabb1a3">functions.Kinematics</a>
 </li>
 <li>getWidth()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a01379b080b7c89a590977c014ae03693">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#afd0dc38d34abecc1cc6a8e85700fb8aa">third_Party.AVI_Reader</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['kinematics',['Kinematics',['../classfunctions_1_1_kinematics.html',1,'functions']]]
+  ['filemanager',['FileManager',['../classfunctions_1_1_file_manager.html',1,'functions']]]
 ];

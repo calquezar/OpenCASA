@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classgui_1_1_settings_window.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacegui.html">gui</a></li><li class="navelem"><a class="el" href="classgui_1_1_settings_window.html">SettingsWindow</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
@@ -84,23 +101,27 @@ Inheritance diagram for gui.SettingsWindow:</div>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a6c7ef7d86a39d50983deab7713eab3af"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a6c7ef7d86a39d50983deab7713eab3af">SettingsWindow</a> (String title)  throws HeadlessException </td></tr>
 <tr class="separator:a6c7ef7d86a39d50983deab7713eab3af"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aba6975eef5d3cf9c0aeee06033acd137"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#aba6975eef5d3cf9c0aeee06033acd137">createChemotaxisBox</a> (String title)</td></tr>
-<tr class="separator:aba6975eef5d3cf9c0aeee06033acd137"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae26c8b2e75a09e443ad2da561d2a1b0d"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#ae26c8b2e75a09e443ad2da561d2a1b0d">createFilterBox</a> (String title)</td></tr>
-<tr class="separator:ae26c8b2e75a09e443ad2da561d2a1b0d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af761d5db767f099dcfd0af5485e09641"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#af761d5db767f099dcfd0af5485e09641">createGeneralBox</a> (String title)</td></tr>
-<tr class="separator:af761d5db767f099dcfd0af5485e09641"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:abf7b85ff9f45554eb76caf4b018f4106"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#abf7b85ff9f45554eb76caf4b018f4106">createMotilityBox</a> (String title)</td></tr>
-<tr class="separator:abf7b85ff9f45554eb76caf4b018f4106"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5f47f55215b65977e461205d3d066b6c"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a5f47f55215b65977e461205d3d066b6c">createRecognitionBox</a> (String title)</td></tr>
-<tr class="separator:a5f47f55215b65977e461205d3d066b6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a14e6cd49acf85a893e7c1bc1868ba97d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a14e6cd49acf85a893e7c1bc1868ba97d">run</a> (<a class="el" href="classgui_1_1_main_window.html">MainWindow</a> window)</td></tr>
-<tr class="separator:a14e6cd49acf85a893e7c1bc1868ba97d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af72338f4cb07bcee96cb863a427689d2"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#af72338f4cb07bcee96cb863a427689d2">createChemotaxisBox</a> ()</td></tr>
+<tr class="separator:af72338f4cb07bcee96cb863a427689d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aab40f9631b7b09452f874a7ec6d3b8d4"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#aab40f9631b7b09452f874a7ec6d3b8d4">createFilterBox</a> ()</td></tr>
+<tr class="separator:aab40f9631b7b09452f874a7ec6d3b8d4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a195945ec0635493b6c0392ecbe890079"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a195945ec0635493b6c0392ecbe890079">createGeneralBox</a> ()</td></tr>
+<tr class="separator:a195945ec0635493b6c0392ecbe890079"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a85e57eb7793f979b8251e23717a19773"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a85e57eb7793f979b8251e23717a19773">createMotilityBox</a> ()</td></tr>
+<tr class="separator:a85e57eb7793f979b8251e23717a19773"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a82ba0868084673a7bf8c4c97998c3130"><td class="memItemLeft" align="right" valign="top">JPanel&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a82ba0868084673a7bf8c4c97998c3130">createRecognitionBox</a> ()</td></tr>
+<tr class="separator:a82ba0868084673a7bf8c4c97998c3130"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad2fbca31ec3a1e013570d4a791cabe00"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#ad2fbca31ec3a1e013570d4a791cabe00">run</a> ()</td></tr>
+<tr class="memdesc:ad2fbca31ec3a1e013570d4a791cabe00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Build Settings window with all parameters.  <a href="#ad2fbca31ec3a1e013570d4a791cabe00">More...</a><br /></td></tr>
+<tr class="separator:ad2fbca31ec3a1e013570d4a791cabe00"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0bce017d9e6e802a154df92dfd7bf50d"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_settings_window.html#a0bce017d9e6e802a154df92dfd7bf50d">setParameters</a> ()</td></tr>
+<tr class="memdesc:a0bce017d9e6e802a154df92dfd7bf50d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Set Params static fields with the values introduced by the user.  <a href="#a0bce017d9e6e802a154df92dfd7bf50d">More...</a><br /></td></tr>
 <tr class="separator:a0bce017d9e6e802a154df92dfd7bf50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00026">26</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="a6c7ef7d86a39d50983deab7713eab3af"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a6c7ef7d86a39d50983deab7713eab3af">&sect;&nbsp;</a></span>SettingsWindow()</h2>
@@ -119,22 +140,18 @@ Public Member Functions</h2></td></tr>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">title</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">HeadlessException</td><td></td></tr>
+    <tr><td class="paramname">title</td><td>- Window's title </td></tr>
   </table>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00075">75</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
+
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aba6975eef5d3cf9c0aeee06033acd137"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aba6975eef5d3cf9c0aeee06033acd137">&sect;&nbsp;</a></span>createChemotaxisBox()</h2>
+<a id="af72338f4cb07bcee96cb863a427689d2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af72338f4cb07bcee96cb863a427689d2">&sect;&nbsp;</a></span>createChemotaxisBox()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -142,24 +159,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">JPanel gui.SettingsWindow.createChemotaxisBox </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>title</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">title</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>JPanel with all elements </dd></dl>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00086">86</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 
 </div>
 </div>
-<a id="ae26c8b2e75a09e443ad2da561d2a1b0d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ae26c8b2e75a09e443ad2da561d2a1b0d">&sect;&nbsp;</a></span>createFilterBox()</h2>
+<a id="aab40f9631b7b09452f874a7ec6d3b8d4"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab40f9631b7b09452f874a7ec6d3b8d4">&sect;&nbsp;</a></span>createFilterBox()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -167,24 +179,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">JPanel gui.SettingsWindow.createFilterBox </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>title</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">title</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>JPanel with all elements </dd></dl>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00127">127</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 
 </div>
 </div>
-<a id="af761d5db767f099dcfd0af5485e09641"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af761d5db767f099dcfd0af5485e09641">&sect;&nbsp;</a></span>createGeneralBox()</h2>
+<a id="a195945ec0635493b6c0392ecbe890079"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a195945ec0635493b6c0392ecbe890079">&sect;&nbsp;</a></span>createGeneralBox()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -192,24 +199,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">JPanel gui.SettingsWindow.createGeneralBox </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>title</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">title</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>JPanel with all elements </dd></dl>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00160">160</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 
 </div>
 </div>
-<a id="abf7b85ff9f45554eb76caf4b018f4106"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#abf7b85ff9f45554eb76caf4b018f4106">&sect;&nbsp;</a></span>createMotilityBox()</h2>
+<a id="a85e57eb7793f979b8251e23717a19773"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a85e57eb7793f979b8251e23717a19773">&sect;&nbsp;</a></span>createMotilityBox()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -217,24 +219,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">JPanel gui.SettingsWindow.createMotilityBox </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>title</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">title</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>JPanel with all elements </dd></dl>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00205">205</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 
 </div>
 </div>
-<a id="a5f47f55215b65977e461205d3d066b6c"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5f47f55215b65977e461205d3d066b6c">&sect;&nbsp;</a></span>createRecognitionBox()</h2>
+<a id="a82ba0868084673a7bf8c4c97998c3130"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a82ba0868084673a7bf8c4c97998c3130">&sect;&nbsp;</a></span>createRecognitionBox()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -242,24 +239,19 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">JPanel gui.SettingsWindow.createRecognitionBox </td>
           <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>title</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">title</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>JPanel with all elements </dd></dl>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00232">232</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 
 </div>
 </div>
-<a id="a14e6cd49acf85a893e7c1bc1868ba97d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a14e6cd49acf85a893e7c1bc1868ba97d">&sect;&nbsp;</a></span>run()</h2>
+<a id="ad2fbca31ec3a1e013570d4a791cabe00"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad2fbca31ec3a1e013570d4a791cabe00">&sect;&nbsp;</a></span>run()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -267,18 +259,15 @@ Public Member Functions</h2></td></tr>
         <tr>
           <td class="memname">void gui.SettingsWindow.run </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classgui_1_1_main_window.html">MainWindow</a>&#160;</td>
-          <td class="paramname"><em>window</em></td><td>)</td>
+          <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
 </div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">window</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Build Settings window with all parameters. </p>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00272">272</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
 
 </div>
 </div>
@@ -297,17 +286,25 @@ Public Member Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
+<p>Set Params static fields with the values introduced by the user. </p>
+
+<p>Definition at line <a class="el" href="_settings_window_8java_source.html#l00318">318</a> of file <a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/gui/<a class="el" href="_settings_window_8java.html">SettingsWindow.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/gui/<a class="el" href="_settings_window_8java_source.html">SettingsWindow.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacegui.html">gui</a></li><li class="navelem"><a class="el" href="classgui_1_1_settings_window.html">SettingsWindow</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

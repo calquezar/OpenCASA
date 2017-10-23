@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['videoanalyzer',['VideoAnalyzer',['../classanalysis_1_1_video_analyzer.html',1,'analysis']]]
+  ['videorecognition',['VideoRecognition',['../classfunctions_1_1_video_recognition.html',1,'functions']]]
 ];

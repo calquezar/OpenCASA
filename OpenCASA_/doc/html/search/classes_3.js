@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['loadimages',['LoadImages',['../classfunctions_1_1_load_images.html',1,'functions']]]
+  ['kinematics',['Kinematics',['../classfunctions_1_1_kinematics.html',1,'functions']]]
 ];

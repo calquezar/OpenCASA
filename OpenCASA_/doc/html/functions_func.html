@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -45,6 +52,20 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions_func.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -67,69 +88,93 @@ $(function() {
 : <a class="el" href="classgui_1_1_main_window.html#a75a766e7cd7c69c630d2a9047504c744">gui.MainWindow</a>
 </li>
 <li>alh()
-: <a class="el" href="classfunctions_1_1_kinematics.html#aa7bd8b43900594ff677d52d59037ac05">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#af0c7becd51be858be80720df28fb7ee9">functions.Kinematics</a>
+</li>
+<li>analyseCondition()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a1e6d0b418003342c4d4a4f3ec903ac30">analysis.Chemotaxis</a>
+</li>
+<li>analyseDirectory()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a16aed1c21211e9e1cc9d07686f0dd61b">analysis.Chemotaxis</a>
+</li>
+<li>analyseFile()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a3ac49daa45af6d1bb2a4198a262c8cde">analysis.Chemotaxis</a>
+</li>
+<li>analyseSimulations()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#aa4f9c10e7e300cde5c04cade2d46d8f4">analysis.Chemotaxis</a>
 </li>
 <li>analysisSelectionDialog()
-: <a class="el" href="classfunctions_1_1_load_images.html#ac86c15d646b67eb4c12288443bfc4e70">functions.LoadImages</a>
+: <a class="el" href="classfunctions_1_1_utils.html#aa05d9891949a0277c602e4d1d2fd1e90">functions.Utils</a>
 </li>
-<li>analyzeDirectory()
-: <a class="el" href="classfunctions_1_1_load_images.html#a3cfe2c73841f7356263953ae3a0d6b54">functions.LoadImages</a>
-</li>
-<li>analyzeFile()
-: <a class="el" href="classfunctions_1_1_load_images.html#aa79a8641ed6799a63b48876730720df6">functions.LoadImages</a>
+<li>analyzeVideo()
+: <a class="el" href="classfunctions_1_1_video_recognition.html#aecb7cba869c85a2183622dadea10817e">functions.VideoRecognition</a>
 </li>
 <li>autoThresholdImagePlus()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a3667dd7bba5ac59d0f532b5ee51181ca">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a2e8986c5f6706b0a644b252aea5cd041">functions.ComputerVision</a>
 </li>
 <li>averageTracks()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#ac1e95c27acefd809badf0ac141481fe7">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#a32622b4476a5f2399fdfe579beaad6ae">functions.SignalProcessing</a>
 </li>
 </ul>
 
 
 <h3><a id="index_b"></a>- b -</h3><ul>
 <li>bcf()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a6da238288d8fc5572e419393f6fa9bae">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#ae007676d41c40d4222405d08a9af54e8">functions.Kinematics</a>
+</li>
+<li>bootstrappingAnalysis()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a7390632723966a7e24ae9439885d7f82">analysis.Chemotaxis</a>
 </li>
 </ul>
 
 
 <h3><a id="index_c"></a>- c -</h3><ul>
-<li>Chemotaxis()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#ad74bbeded53d291e240bdeaf5c47be8a">analysis.Chemotaxis</a>
+<li>calculateChIndex()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#adb66b5aab84c248bbf75313e68b2bd10">analysis.Chemotaxis</a>
+</li>
+<li>calculateSLIndex()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a78eb06a29f73da7c09513782fa3aa5c5">analysis.Chemotaxis</a>
 </li>
 <li>chemotaxisTemplate()
-: <a class="el" href="classfunctions_1_1_paint.html#aef5cba0342145788330b77ebcdb41140">functions.Paint</a>
+: <a class="el" href="classfunctions_1_1_paint.html#a5143820b1a4eaf128f8ae5d2bc178b74">functions.Paint</a>
+</li>
+<li>circularHistogram()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a4a2ad96cbafd5109c182ca9223743815">analysis.Chemotaxis</a>
 </li>
 <li>convertLongArrayToInt()
-: <a class="el" href="classfunctions_1_1_utils.html#ab0c8abed925cb2442b92a25746ee9dc1">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#a051c88ecefbeab0b5184ceaa424ca3da">functions.Utils</a>
 </li>
 <li>convertToGrayscale()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#aa671b9aeedf2acbf2a20eeeece016580">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a6756d74ae35c9c9ed0f35b51b7257fba">functions.ComputerVision</a>
 </li>
 <li>convertToRGB()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a41ade0785d17a8dbb7e1047b517fccd6">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a70eb63f34a34ceceab19157a3a26570b">functions.ComputerVision</a>
 </li>
 <li>copy()
 : <a class="el" href="classdata_1_1_spermatozoon.html#a9dd1168f88d03e5848583cc987e4abad">data.Spermatozoon</a>
 </li>
+<li>countAngles()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a02b51757e113383f0ac7b2182fd06989">analysis.Chemotaxis</a>
+</li>
+<li>countInstantDisplacements()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a0b4a1fcd5db258591eb4b54a54496c95">analysis.Chemotaxis</a>
+</li>
 <li>createChemotaxisBox()
-: <a class="el" href="classgui_1_1_settings_window.html#aba6975eef5d3cf9c0aeee06033acd137">gui.SettingsWindow</a>
+: <a class="el" href="classgui_1_1_settings_window.html#af72338f4cb07bcee96cb863a427689d2">gui.SettingsWindow</a>
 </li>
 <li>createFilterBox()
-: <a class="el" href="classgui_1_1_settings_window.html#ae26c8b2e75a09e443ad2da561d2a1b0d">gui.SettingsWindow</a>
+: <a class="el" href="classgui_1_1_settings_window.html#aab40f9631b7b09452f874a7ec6d3b8d4">gui.SettingsWindow</a>
 </li>
 <li>createGeneralBox()
-: <a class="el" href="classgui_1_1_settings_window.html#af761d5db767f099dcfd0af5485e09641">gui.SettingsWindow</a>
+: <a class="el" href="classgui_1_1_settings_window.html#a195945ec0635493b6c0392ecbe890079">gui.SettingsWindow</a>
 </li>
 <li>createGUI()
 : <a class="el" href="classgui_1_1_main_window.html#a94dd11c548e55fda609b5a63901be3ae">gui.MainWindow</a>
 </li>
 <li>createMotilityBox()
-: <a class="el" href="classgui_1_1_settings_window.html#abf7b85ff9f45554eb76caf4b018f4106">gui.SettingsWindow</a>
+: <a class="el" href="classgui_1_1_settings_window.html#a85e57eb7793f979b8251e23717a19773">gui.SettingsWindow</a>
 </li>
 <li>createRecognitionBox()
-: <a class="el" href="classgui_1_1_settings_window.html#a5f47f55215b65977e461205d3d066b6c">gui.SettingsWindow</a>
+: <a class="el" href="classgui_1_1_settings_window.html#a82ba0868084673a7bf8c4c97998c3130">gui.SettingsWindow</a>
 </li>
 <li>createSimulation()
 : <a class="el" href="classdata_1_1_oscillatory_walker.html#a356247c8210f336019f966e089c3db53">data.OscillatoryWalker</a>
@@ -141,120 +186,187 @@ $(function() {
 
 <h3><a id="index_d"></a>- d -</h3><ul>
 <li>decimateTrack()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#a79490c1e082b643b1add2a824ad2dc69">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#a73f1a172c01018d2af784da509f345cd">functions.SignalProcessing</a>
 </li>
 <li>decimateTracks()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#a377661ad86ee09e7cd92f387ccbf72b2">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#a45769c80cc59811ed1b71867421c43e0">functions.SignalProcessing</a>
 </li>
 <li>deleteSlice()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a5fa8df5595ab3953648af6ba771d7260">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a8ab8de0b3441fc072aa023892c98a230">third_Party.AVI_Reader</a>
 </li>
 <li>detectSpermatozoa()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#ae2fc83a160d636376d2f67a25a75e7ae">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_video_recognition.html#aa0002f65a103b2e20aff43c844c5fd4b">functions.VideoRecognition</a>
 </li>
 <li>distance()
 : <a class="el" href="classdata_1_1_spermatozoon.html#ab196ee3b30006103adc7bcba58176700">data.Spermatozoon</a>
 </li>
+<li>doInBackground()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a0788092afeec6817875d5df7fbab3838">analysis.Chemotaxis</a>
+</li>
+<li>done()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#aee1f40aa9bbee7a992e0d7023a734f7d">analysis.Chemotaxis</a>
+</li>
 <li>draw()
-: <a class="el" href="classfunctions_1_1_paint.html#a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6">functions.Paint</a>
+: <a class="el" href="classfunctions_1_1_paint.html#ab3d77d873b085ac395639e8728624e0e">functions.Paint</a>
 </li>
 <li>drawBoundaries()
-: <a class="el" href="classfunctions_1_1_paint.html#a8c75862b505da1b5fec63b97263a0598">functions.Paint</a>
+: <a class="el" href="classfunctions_1_1_paint.html#abacc955981e3624bce2f4973c519da23">functions.Paint</a>
 </li>
 <li>drawChemotaxis()
-: <a class="el" href="classfunctions_1_1_paint.html#a948a41121a5855131abb0299fcad4d1d">functions.Paint</a>
+: <a class="el" href="classfunctions_1_1_paint.html#a01627771b7657ca56b0bace3e71c747f">functions.Paint</a>
 </li>
 <li>drawOutline()
-: <a class="el" href="classfunctions_1_1_paint.html#a1e8ad672ee01f84ce490e59ea7cad85e">functions.Paint</a>
+: <a class="el" href="classfunctions_1_1_paint.html#aedd7ed0c33147e64afa6d857a379cff2">functions.Paint</a>
+</li>
+<li>drawResults()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a5c89ef1345c87b03d57c524dd6deda00">analysis.Chemotaxis</a>
 </li>
 <li>drawRoseDiagram()
-: <a class="el" href="classfunctions_1_1_paint.html#a0b444650d851df051bd20d70fcbcff7a">functions.Paint</a>
+: <a class="el" href="classfunctions_1_1_paint.html#aaca4fde154d4fcb649e8a4c3ce408afe">functions.Paint</a>
+</li>
+</ul>
+
+
+<h3><a id="index_e"></a>- e -</h3><ul>
+<li>error()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#aff3fc9eaa729eaec5eb046fefd4d04fc">third_Party.AVI_Reader</a>
+</li>
+<li>exceptionMessage()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a0036bc3816e079367360ff7f0a713682">third_Party.AVI_Reader</a>
 </li>
 </ul>
 
 
 <h3><a id="index_f"></a>- f -</h3><ul>
+<li>FileManager()
+: <a class="el" href="classfunctions_1_1_file_manager.html#ae9b482778b867021de8c5996981fdb86">functions.FileManager</a>
+</li>
 <li>filterTracksByLength()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#a81631bff27488211a75eb6a074a63987">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#a15eac07aa640d004db950dd2cf133a8c">functions.SignalProcessing</a>
 </li>
 <li>filterTracksByMotility()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#a4137e4df5fbcf36eaa51c29188a56632">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#aa8bce328ec654c7ba065b4d35b605301">functions.SignalProcessing</a>
+</li>
+<li>findFourccAndRead()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#abe195a2bd8d05269e650b346693b3f80">third_Party.AVI_Reader</a>
+</li>
+<li>findFourccAndSkip()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a4c4590dd4505a88b0a26aee5d575df20">third_Party.AVI_Reader</a>
+</li>
+<li>fourccString()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a038e3c7cc6e7d22182bd5e83725f971f">third_Party.AVI_Reader</a>
+</li>
+<li>frameLabel()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a336978e2eb7112d383ea131ff8bd0193">third_Party.AVI_Reader</a>
 </li>
 </ul>
 
 
 <h3><a id="index_g"></a>- g -</h3><ul>
-<li>getAbsoluteFileName()
-: <a class="el" href="classfunctions_1_1_utils.html#afac1ff6c5ffe5704217144efe96d0008">functions.Utils</a>
-</li>
 <li>getBlueChannel()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#ae32c9b7e2d792c075d909bbbaf6d3ad1">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a68845595c1ffa570fa6d3aaead4ed847">functions.ComputerVision</a>
 </li>
-<li>getFileName()
-: <a class="el" href="classfunctions_1_1_utils.html#ada34524c41f4ab85b7b7b5b92d03e4bb">functions.Utils</a>
+<li>getContent()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a8a8165fc0f5f0b31dd20695da79a77d1">functions.FileManager</a>
 </li>
-<li>getFileNames()
-: <a class="el" href="classfunctions_1_1_utils.html#a57cf1d6c5fb006af17f1c412bcfc7472">functions.Utils</a>
+<li>getControlTrials()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#aca55f710d4c18a6e0ac3936b9f2c354e">analysis.Chemotaxis</a>
+</li>
+<li>getFilename()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a5b22bc37a0ada69ed447a34bdef68f6b">functions.FileManager</a>
+</li>
+<li>getFiles()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a252da250b5d0b7b72c22d851cb85f6d6">functions.FileManager</a>
 </li>
 <li>getGreenChannel()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a26681bdad3d9852d6958af72fba60e59">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#ac7a646d52e5e856a80235f3c9035aa33">functions.ComputerVision</a>
 </li>
 <li>getHeight()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a9f0298a77a2f64de07163cd15f0f76e3">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#aa67e28fcf751e79407a8e33309c4df59">third_Party.AVI_Reader</a>
 </li>
 <li>getImagePlus()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a744024404a4410f538d5c054de2cbfad">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a857b41097078525ba73d3d62fe99047e">third_Party.AVI_Reader</a>
+</li>
+<li>getListOfAngles()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#ae950951adeb9a4946cd299017496819e">analysis.Chemotaxis</a>
 </li>
 <li>getMeanGrayValue()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a099a48efb6b84899ac4eed2639f1398f">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a7e2d88eabe140248d8ae6ddfdae4582f">functions.ComputerVision</a>
+</li>
+<li>getOddsValues()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6bac66e910c9e87183efe6f7e771e3fb">analysis.Chemotaxis</a>
 </li>
 <li>getParentDirectory()
-: <a class="el" href="classfunctions_1_1_utils.html#a940367a6f69c9a2041881234e2c64a31">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#afe655776ad5c59d6b3df6f4d18db1cd0">functions.FileManager</a>
 </li>
 <li>getProcessor()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#ac07bb33097a0463d1b24a94e40392af5">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a0ce25d675c642fe70f4b9568e6514dc0">third_Party.AVI_Reader</a>
 </li>
 <li>getRedChannel()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#ad03d75bd936979713771cf4ac1309414">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a6c652c689aa411bd6da3ae7478b1227c">functions.ComputerVision</a>
 </li>
 <li>getSize()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a35b09255d1bb2e12176551d379f6042f">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a3bd3cdd8c8ece98211ccf6b866093dc5">third_Party.AVI_Reader</a>
 </li>
 <li>getSliceLabel()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a7b8de54f729c44ca924159b217c946ca">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a5847e6c3323a34b06326a61e874616b2">third_Party.AVI_Reader</a>
 </li>
 <li>getSpermatozoon()
-: <a class="el" href="classfunctions_1_1_utils.html#a150d932dd5b2b95a5f0588a10c46baeb">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#a8cb54de4a2bac04ef8dc3dc09adf6dbe">functions.Utils</a>
+</li>
+<li>getSubfolders()
+: <a class="el" href="classfunctions_1_1_file_manager.html#acd60931c8cd27cbc3ecc6eaf77950a77">functions.FileManager</a>
+</li>
+<li>getTestFolders()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#afffeded1309008ccf14401e37d85ebab">analysis.Chemotaxis</a>
+</li>
+<li>getTestTrial()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a609e29973a5d66c1e254af1fa5e17292">analysis.Chemotaxis</a>
+</li>
+<li>getTestTrials()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a0b6c2ea51ce0cae05364c7353fe867eb">analysis.Chemotaxis</a>
+</li>
+<li>getTrialFromAVI()
+: <a class="el" href="classfunctions_1_1_trial_manager.html#a45a6e5a5d5ad03a208d60fc4b8408480">functions.TrialManager</a>
+</li>
+<li>getTrialFromImp()
+: <a class="el" href="classfunctions_1_1_trial_manager.html#a5cc3dc0bd82790942230ad3c5b8b1683">functions.TrialManager</a>
 </li>
 <li>getVelocityTrackType()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a20cdebc8892e3cfd5f5ae4523969a448">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#acf4ee8b2b823ed447e7aaab91dabb1a3">functions.Kinematics</a>
 </li>
 <li>getWidth()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#a01379b080b7c89a590977c014ae03693">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#afd0dc38d34abecc1cc6a8e85700fb8aa">third_Party.AVI_Reader</a>
 </li>
 </ul>
 
 
 <h3><a id="index_i"></a>- i -</h3><ul>
 <li>idenfityTracks()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#aeb41f5f77beb1e7141d85441709ffe81">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_video_recognition.html#a1c115e9b24970df9fd8cba7dc4359fb0">functions.VideoRecognition</a>
+</li>
+<li>indexesAnalysis()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a7810b5bd3f166f7241f9a90d84a96cf1">analysis.Chemotaxis</a>
 </li>
 <li>isAVI()
-: <a class="el" href="classfunctions_1_1_utils.html#af52875c8724a9e539fc492c008a3140f">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#a4869c9c7f09b402aeecd0771e46be578">functions.FileManager</a>
 </li>
 </ul>
 
 
 <h3><a id="index_l"></a>- l -</h3><ul>
-<li>LoadImages()
-: <a class="el" href="classfunctions_1_1_load_images.html#ad02af49a0bee20eb9b899dacf692af2f">functions.LoadImages</a>
+<li>loadImageDirectory()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a8c1a041e6eb3ca88747ab9b4b4c5f21c">functions.FileManager</a>
+</li>
+<li>loadImageFile()
+: <a class="el" href="classfunctions_1_1_file_manager.html#acecebdab16ca77cab3a3aebc1e0745f2">functions.FileManager</a>
 </li>
 </ul>
 
 
 <h3><a id="index_m"></a>- m -</h3><ul>
 <li>mad()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a3b81477075ade3a6962771289c2d4e98">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#acf1c1999d290fd3f7cb00990ce94f92a">functions.Kinematics</a>
 </li>
 <li>main()
 : <a class="el" href="class_open_c_a_s_a__.html#acd855cd5bd9942a677fc78b711a437f1">OpenCASA_</a>
@@ -263,23 +375,38 @@ $(function() {
 : <a class="el" href="classgui_1_1_main_window.html#adc9826bb15222fe721307c223dd30883">gui.MainWindow</a>
 </li>
 <li>makeStack()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#aa74d3458a058efef50834cf1ff7d18a6">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#ae699b81fde03f1f2acf246a66ca12770">third_Party.AVI_Reader</a>
+</li>
+<li>mergeControlTracks()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#ab68b82055db98c9153243bd7d4061093">analysis.Chemotaxis</a>
+</li>
+<li>minSampleSize()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a90877dd32f46e25fc5d4914dcc243367">analysis.Chemotaxis</a>
 </li>
 <li>motilityTest()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#ad73a093ee2e98b84d18fe9e560b35ffb">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#a747a4336abc7441718d399feb5532b1b">functions.Kinematics</a>
 </li>
 <li>movingAverage()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#a171a33b1447faaf4e52cf7e3b87d735f">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#a11d60132570764e3b0f69dbfee0533ea">functions.SignalProcessing</a>
 </li>
 </ul>
 
 
 <h3><a id="index_o"></a>- o -</h3><ul>
+<li>openAndReadHeader()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a3ed951465a3d01864dfcd07e0f62fff4">third_Party.AVI_Reader</a>
+</li>
+<li>or()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a892e16753f6fdd727a1db3ab3ebd1037">analysis.Chemotaxis</a>
+</li>
+<li>orThreshold()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a62ce01d256f9d7f60f76b7adec7024b4">analysis.Chemotaxis</a>
+</li>
 <li>OscillatoryWalker()
 : <a class="el" href="classdata_1_1_oscillatory_walker.html#a13aaa094f020ec488181f0febbd47404">data.OscillatoryWalker</a>
 </li>
 <li>outlineThresholdImage()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#ab0f09aac0cc50b71b9e13fe98de94415">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#aa32901635cb5b18c0edeb63559a330a7">functions.ComputerVision</a>
 </li>
 </ul>
 
@@ -288,15 +415,51 @@ $(function() {
 <li>PersistentRandomWalker()
 : <a class="el" href="classdata_1_1_persistent_random_walker.html#aebad243d552881ec0a23986df526565f">data.PersistentRandomWalker</a>
 </li>
+<li>posSizeString()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a060dc5f95135dda72fcb1fc27ddc0c3f">third_Party.AVI_Reader</a>
+</li>
 <li>printXYCoords()
-: <a class="el" href="classfunctions_1_1_utils.html#a5bc7913a46b0f1eb68e6df01d872c4e7">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#ad60333f3393e69c8074ef1fd79a34c09">functions.Utils</a>
 </li>
 </ul>
 
 
 <h3><a id="index_r"></a>- r -</h3><ul>
+<li>readAVI()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#abd09c719eac6258ba43f4f22ba6e587e">third_Party.AVI_Reader</a>
+</li>
+<li>readAvi2Index()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#ad22821cde3b5326489f24ad437513919">third_Party.AVI_Reader</a>
+</li>
+<li>readAVIX()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a05011c9bdfcfe2e5b3489416fb12ff87">third_Party.AVI_Reader</a>
+</li>
+<li>readCompressedFrame()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a7a8a9e1a6cdb0c23f0920887559e20fa">third_Party.AVI_Reader</a>
+</li>
+<li>readContents()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a85350caab45622b078587a67833fe2b4">third_Party.AVI_Reader</a>
+</li>
+<li>readFixedLengthFrame()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a398f49f5494ee8c68e125e2910c09c71">third_Party.AVI_Reader</a>
+</li>
+<li>readFrame()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a4a25d354ac0e1c0771dde30e7e7379ae">third_Party.AVI_Reader</a>
+</li>
+<li>readOldFrameIndex()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#aea9045a6694e8ada35565a2072f9dc85">third_Party.AVI_Reader</a>
+</li>
 <li>readTrials()
-: <a class="el" href="classfunctions_1_1_utils.html#a71165e40a10d4a400f78ee43f918d9ee">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#a75d9f258b35282fa3722d99f856030b2">functions.Utils</a>
+</li>
+<li>readType()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a163cd0565b88b3dead8638bb2b78e0ee">third_Party.AVI_Reader</a>
+</li>
+<li>relativeAngle()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#ac867eb56c4bc6bc4664e3837d7f08043">analysis.Chemotaxis</a>
+</li>
+<li>removeExtension()
+: <a class="el" href="classfunctions_1_1_file_manager.html#a400317e6aea5b1fb927bdbd66393a1a4">functions.FileManager</a>
 </li>
 <li>resetParams()
 : <a class="el" href="classdata_1_1_params.html#acaec384e0b9028393ae5c04e58ee1c59">data.Params</a>
@@ -305,10 +468,9 @@ $(function() {
 : <a class="el" href="classdata_1_1_oscillatory_walker.html#ab73a3ff7f6f1d2d21eb1fca0ab4b2492">data.OscillatoryWalker</a>
 , <a class="el" href="classdata_1_1_persistent_random_walker.html#a544a033f373727ed6e269402d645f7d6">data.PersistentRandomWalker</a>
 , <a class="el" href="classdata_1_1_simulation.html#a656cd428e294d33e3ccf55463d80dbdf">data.Simulation</a>
-, <a class="el" href="classfunctions_1_1_load_images.html#a3ebe4a5bb1728e149e1502a631ea1b80">functions.LoadImages</a>
-, <a class="el" href="classgui_1_1_settings_window.html#a14e6cd49acf85a893e7c1bc1868ba97d">gui.SettingsWindow</a>
+, <a class="el" href="classgui_1_1_settings_window.html#ad2fbca31ec3a1e013570d4a791cabe00">gui.SettingsWindow</a>
 , <a class="el" href="class_open_c_a_s_a__.html#a8b590b17377b0091d63e5a5af48c9b99">OpenCASA_</a>
-, <a class="el" href="classplugins_1_1_a_v_i___reader.html#ae3e5dc27be9c63e91e7acb9171918c68">plugins.AVI_Reader</a>
+, <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a9986cc553cf34bcad781fe508172f4ab">third_Party.AVI_Reader</a>
 </li>
 </ul>
 
@@ -318,19 +480,43 @@ $(function() {
 : <a class="el" href="classdata_1_1_params.html#aa639af05ac856b76d27b1df4dccf21d3">data.Params</a>
 </li>
 <li>saveTrials()
-: <a class="el" href="classfunctions_1_1_utils.html#a8ceae45471884fa93002d169a3cfad23">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_utils.html#a3722ba041468f921073055cb8a68f4e7">functions.Utils</a>
+</li>
+<li>selectAnalysis()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a8557a0d82b6af1e99d502bf3f885f566">analysis.Chemotaxis</a>
 </li>
 <li>selectFile()
-: <a class="el" href="classfunctions_1_1_utils.html#ab6319ada99a3e56c852deedba639c885">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#aeb98f0638c58e80aef6382759ba051ef">functions.FileManager</a>
 </li>
 <li>selectFolder()
-: <a class="el" href="classfunctions_1_1_utils.html#a6fb43e0b514d5483fbd537616142b9b7">functions.Utils</a>
+: <a class="el" href="classfunctions_1_1_file_manager.html#a01dbb6b5ae72a5d056d62cbeeb3c9622">functions.FileManager</a>
+</li>
+<li>setBootstrappingResults()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6d70637d4ebd9b3826ac2375aeae49ee">analysis.Chemotaxis</a>
+</li>
+<li>setFramesPerSecond()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a78973ba2fec408d8cd6551dd6929651f">third_Party.AVI_Reader</a>
+</li>
+<li>setIndexesResults()
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6b22975aa5a2bd0ed2a0eb1df422e4d4">analysis.Chemotaxis</a>
 </li>
 <li>setParameters()
 : <a class="el" href="classgui_1_1_settings_window.html#a0bce017d9e6e802a154df92dfd7bf50d">gui.SettingsWindow</a>
 </li>
 <li>SettingsWindow()
 : <a class="el" href="classgui_1_1_settings_window.html#a6c7ef7d86a39d50983deab7713eab3af">gui.SettingsWindow</a>
+</li>
+<li>showDialog()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#afceeac5fe2c92fbc4a2bf188bf7b27e4">third_Party.AVI_Reader</a>
+</li>
+<li>simulate()
+: <a class="el" href="classgui_1_1_main_window.html#a1f95e6403092b338ba9a6b2f31764e4a">gui.MainWindow</a>
+</li>
+<li>simulateTrial()
+: <a class="el" href="classfunctions_1_1_trial_manager.html#a14593a8d88918c1079834f0b7a538926">functions.TrialManager</a>
+</li>
+<li>simulateTrials()
+: <a class="el" href="classfunctions_1_1_trial_manager.html#aeb218993d7c8f19a602b1dd0a3e3f592">functions.TrialManager</a>
 </li>
 <li>SList()
 : <a class="el" href="classdata_1_1_s_list.html#ab9690c3b39b712daa30e0e00ddc6a3a7">data.SList</a>
@@ -340,34 +526,43 @@ $(function() {
 
 <h3><a id="index_t"></a>- t -</h3><ul>
 <li>thresholdImagePlus()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#afdeaa756441ad50cbb20268dc5440c27">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#ada06ea31d30a536e7ed5dc97fa66e423">functions.ComputerVision</a>
 </li>
 <li>thresholdImageProcessor()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#a3106850d23d4dc70772b01bc0cc2f4f7">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#af0744bb8e9c2ab1ae9b3cd9d159a4201">functions.ComputerVision</a>
 </li>
 <li>thresholdStack()
-: <a class="el" href="classfunctions_1_1_computer_vision.html#acc6f2aaf0d523e3789b7b203faf8dd47">functions.ComputerVision</a>
+: <a class="el" href="classfunctions_1_1_computer_vision.html#a4e003eb5581184680940ca7072a71da3">functions.ComputerVision</a>
+</li>
+<li>timeString()
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a6e9e2a42694051e63732ac5fd8188d53">third_Party.AVI_Reader</a>
 </li>
 <li>Trial()
-: <a class="el" href="classdata_1_1_trial.html#a8e2cea67b588a2ca90544a03c65ca615">data.Trial</a>
+: <a class="el" href="classdata_1_1_trial.html#a899e52b89fd0b71f488d80b36cb15c4e">data.Trial</a>
 </li>
 </ul>
 
 
 <h3><a id="index_v"></a>- v -</h3><ul>
 <li>vcl()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a88a0aff00356ce737e9f971e034c73b4">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#a847ecc29fe7ba0c2fdaffadee829150b">functions.Kinematics</a>
+</li>
+<li>VideoRecognition()
+: <a class="el" href="classfunctions_1_1_video_recognition.html#a1322db2ebc24d3be0edf0355bd8d6bd8">functions.VideoRecognition</a>
 </li>
 <li>vsl()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a5bbd93331732576ca5c3a04e086e871d">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#ada3eee53fd83da143deb24b208b71ab7">functions.Kinematics</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

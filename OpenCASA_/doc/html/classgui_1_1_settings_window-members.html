@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classgui_1_1_settings_window.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacegui.html">gui</a></li><li class="navelem"><a class="el" href="classgui_1_1_settings_window.html">SettingsWindow</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">gui.SettingsWindow Member List</div>  </div>
@@ -71,20 +88,23 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#aba6975eef5d3cf9c0aeee06033acd137">createChemotaxisBox</a>(String title)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#ae26c8b2e75a09e443ad2da561d2a1b0d">createFilterBox</a>(String title)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#af761d5db767f099dcfd0af5485e09641">createGeneralBox</a>(String title)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#abf7b85ff9f45554eb76caf4b018f4106">createMotilityBox</a>(String title)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a5f47f55215b65977e461205d3d066b6c">createRecognitionBox</a>(String title)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a14e6cd49acf85a893e7c1bc1868ba97d">run</a>(MainWindow window)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#af72338f4cb07bcee96cb863a427689d2">createChemotaxisBox</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#aab40f9631b7b09452f874a7ec6d3b8d4">createFilterBox</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a195945ec0635493b6c0392ecbe890079">createGeneralBox</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a85e57eb7793f979b8251e23717a19773">createMotilityBox</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a82ba0868084673a7bf8c4c97998c3130">createRecognitionBox</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#ad2fbca31ec3a1e013570d4a791cabe00">run</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a0bce017d9e6e802a154df92dfd7bf50d">setParameters</a>()</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classgui_1_1_settings_window.html#a6c7ef7d86a39d50983deab7713eab3af">SettingsWindow</a>(String title)</td><td class="entry"><a class="el" href="classgui_1_1_settings_window.html">gui.SettingsWindow</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

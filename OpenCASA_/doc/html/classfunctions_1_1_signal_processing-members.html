@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_signal_processing.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_signal_processing.html">SignalProcessing</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">functions.SignalProcessing Member List</div>  </div>
@@ -71,22 +88,23 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#ac1e95c27acefd809badf0ac141481fe7">averageTracks</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a79490c1e082b643b1add2a824ad2dc69">decimateTrack</a>(List track, int factor)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a377661ad86ee09e7cd92f387ccbf72b2">decimateTracks</a>(List theTracks, int factor)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a81631bff27488211a75eb6a074a63987">filterTracksByLength</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a4137e4df5fbcf36eaa51c29188a56632">filterTracksByMotility</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#ad73a093ee2e98b84d18fe9e560b35ffb">motilityTest</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a7ccd359ad7300c52afb07fccc2e6b0e5">motilityTest</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a171a33b1447faaf4e52cf7e3b87d735f">movingAverage</a>(float[] points, int wSize)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#acb04e929874db3fa34e2ca000e03d07f">movingAverage</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a38a2bcce64db8059a237b2b1ff26d5d9">movingAverage</a>(List track, int wSize)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a32622b4476a5f2399fdfe579beaad6ae">averageTracks</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a73f1a172c01018d2af784da509f345cd">decimateTrack</a>(List track, int factor)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a45769c80cc59811ed1b71867421c43e0">decimateTracks</a>(List theTracks, int factor)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a15eac07aa640d004db950dd2cf133a8c">filterTracksByLength</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#aa8bce328ec654c7ba065b4d35b605301">filterTracksByMotility</a>(SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#ad51ba7998d9440651087c841becb62cc">movingAverage</a>(float[] points, int wSize)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#ae61b39d1fc3f9185eace02b6799a17c2">movingAverage</a>(List track)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html#a11d60132570764e3b0f69dbfee0533ea">movingAverage</a>(List track, int wSize)</td><td class="entry"><a class="el" href="classfunctions_1_1_signal_processing.html">functions.SignalProcessing</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

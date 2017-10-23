@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_paint.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_paint.html">Paint</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">functions.Paint Member List</div>  </div>
@@ -71,18 +88,21 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#aef5cba0342145788330b77ebcdb41140">chemotaxisTemplate</a>(ColorProcessor ip, int numTracks, float chIdx, float slIdx, String sampleID)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6">draw</a>(ImagePlus imp, SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a8c75862b505da1b5fec63b97263a0598">drawBoundaries</a>(ImagePlus imp, List spermatozoa)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a948a41121a5855131abb0299fcad4d1d">drawChemotaxis</a>(SList theTracks, float chIdx, float slIdx, int width, int height, String sampleID)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a1e8ad672ee01f84ce490e59ea7cad85e">drawOutline</a>(ImagePlus impOrig, ImagePlus impTh)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a0b444650d851df051bd20d70fcbcff7a">drawRoseDiagram</a>(int[] histogram, int radius, float chIdx, String sampleID)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a5143820b1a4eaf128f8ae5d2bc178b74">chemotaxisTemplate</a>(ColorProcessor ip, int numTracks, float chIdx, float slIdx, String sampleID)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#ab3d77d873b085ac395639e8728624e0e">draw</a>(ImagePlus imp, SList theTracks)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#abacc955981e3624bce2f4973c519da23">drawBoundaries</a>(ImagePlus imp, List spermatozoa)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#a01627771b7657ca56b0bace3e71c747f">drawChemotaxis</a>(Trial trial, float chIdx, float slIdx)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#aedd7ed0c33147e64afa6d857a379cff2">drawOutline</a>(ImagePlus impOrig, ImagePlus impTh)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classfunctions_1_1_paint.html#aaca4fde154d4fcb649e8a4c3ce408afe">drawRoseDiagram</a>(int[] histogram, int radius, float chIdx, String sampleID)</td><td class="entry"><a class="el" href="classfunctions_1_1_paint.html">functions.Paint</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

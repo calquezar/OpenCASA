@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -45,6 +52,20 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('functions_m.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -64,7 +85,7 @@ $(function() {
 
 <h3><a id="index_m"></a>- m -</h3><ul>
 <li>mad()
-: <a class="el" href="classfunctions_1_1_kinematics.html#a3b81477075ade3a6962771289c2d4e98">functions.Kinematics</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#acf1c1999d290fd3f7cb00990ce94f92a">functions.Kinematics</a>
 </li>
 <li>main()
 : <a class="el" href="class_open_c_a_s_a__.html#acd855cd5bd9942a677fc78b711a437f1">OpenCASA_</a>
@@ -73,7 +94,7 @@ $(function() {
 : <a class="el" href="classgui_1_1_main_window.html#adc9826bb15222fe721307c223dd30883">gui.MainWindow</a>
 </li>
 <li>makeStack()
-: <a class="el" href="classplugins_1_1_a_v_i___reader.html#aa74d3458a058efef50834cf1ff7d18a6">plugins.AVI_Reader</a>
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#ae699b81fde03f1f2acf246a66ca12770">third_Party.AVI_Reader</a>
 </li>
 <li>male
 : <a class="el" href="classdata_1_1_params.html#aa0074476f2183ad992a4f5f0004925f3">data.Params</a>
@@ -88,16 +109,13 @@ $(function() {
 : <a class="el" href="classdata_1_1_params.html#a0b5480b310b8fab26374dfb11c257426">data.Params</a>
 </li>
 <li>mergeControlTracks()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#a30adb8da4ac21be0b9d29bc779a28d1a">analysis.Chemotaxis</a>
-</li>
-<li>MessageWindow()
-: <a class="el" href="classgui_1_1_message_window.html#aed3c4b9ff93041a46af53560faede161">gui.MessageWindow</a>
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#ab68b82055db98c9153243bd7d4061093">analysis.Chemotaxis</a>
 </li>
 <li>micronPerPixel
 : <a class="el" href="classdata_1_1_params.html#a4370f2d688da806ade8a760f722090df">data.Params</a>
 </li>
 <li>minSampleSize()
-: <a class="el" href="classanalysis_1_1_chemotaxis.html#a6980697c139bf9a7fcb1a5339c0e8235">analysis.Chemotaxis</a>
+: <a class="el" href="classanalysis_1_1_chemotaxis.html#a90877dd32f46e25fc5d4914dcc243367">analysis.Chemotaxis</a>
 </li>
 <li>minSize
 : <a class="el" href="classdata_1_1_params.html#a4420d49d7e553e552cd1175ca4bb0907">data.Params</a>
@@ -105,51 +123,31 @@ $(function() {
 <li>minTrackLength
 : <a class="el" href="classdata_1_1_params.html#aa96ff9cb050c192a7c22eb603c1449a7">data.Params</a>
 </li>
-<li>Morphometry()
-: <a class="el" href="classanalysis_1_1_morphometry.html#addc842adf8b4d89ebe7377be202f0961">analysis.Morphometry</a>
-</li>
-<li>MorphWindow()
-: <a class="el" href="classgui_1_1_morph_window.html#ab1670a72f62f9a9233fbcd5aeb0c3486">gui.MorphWindow</a>
-</li>
-<li>motileSperm
-: <a class="el" href="classdata_1_1_trial.html#ae42fc17fd806ecd59edd00cbefe58b15">data.Trial</a>
-</li>
-<li>Motility()
-: <a class="el" href="classanalysis_1_1_motility.html#aeff7487e7626960e6ca2fda26b120413">analysis.Motility</a>
+<li>MJPG_COMPRESSION
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#a0339593a5d0faed6f1da7d41a631bbfa">third_Party.AVI_Reader</a>
 </li>
 <li>motilityTest()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#ad73a093ee2e98b84d18fe9e560b35ffb">functions.SignalProcessing</a>
-</li>
-<li>mouseClicked()
-: <a class="el" href="classanalysis_1_1_viability.html#ae756abf3786e93f8a1cb773c2db98b94">analysis.Viability</a>
-, <a class="el" href="classgui_1_1_morph_window.html#ad2d8c63ce83a7bf0dcfb9ae63b470a6e">gui.MorphWindow</a>
-</li>
-<li>mouseEntered()
-: <a class="el" href="classanalysis_1_1_viability.html#a849bd7a8f038e1cb9cb91c0210d2f5a2">analysis.Viability</a>
-, <a class="el" href="classgui_1_1_morph_window.html#a403894e0bdb72ee627d1ca7ff57af53d">gui.MorphWindow</a>
-</li>
-<li>mouseExited()
-: <a class="el" href="classanalysis_1_1_viability.html#a8b1c76b05c9be632e6d94a1a9aeaf0a2">analysis.Viability</a>
-, <a class="el" href="classgui_1_1_morph_window.html#ac4f1e35c9f593ab1e8d58a2404e99452">gui.MorphWindow</a>
-</li>
-<li>mousePressed()
-: <a class="el" href="classanalysis_1_1_viability.html#a246f06dfd42784adf24bdf8a1040874d">analysis.Viability</a>
-, <a class="el" href="classgui_1_1_morph_window.html#a6d9bddbab383f4f1f44dc16a1a295401">gui.MorphWindow</a>
-</li>
-<li>mouseReleased()
-: <a class="el" href="classanalysis_1_1_viability.html#af68b8ac917d28aa076c597dc98dcd6e2">analysis.Viability</a>
-, <a class="el" href="classgui_1_1_morph_window.html#ac02a5b2596413d2fbc0d44ad8060ad39">gui.MorphWindow</a>
+: <a class="el" href="classfunctions_1_1_kinematics.html#a747a4336abc7441718d399feb5532b1b">functions.Kinematics</a>
 </li>
 <li>movingAverage()
-: <a class="el" href="classfunctions_1_1_signal_processing.html#a38a2bcce64db8059a237b2b1ff26d5d9">functions.SignalProcessing</a>
+: <a class="el" href="classfunctions_1_1_signal_processing.html#ad51ba7998d9440651087c841becb62cc">functions.SignalProcessing</a>
+</li>
+<li>moviPosition
+: <a class="el" href="classthird___party_1_1_a_v_i___reader.html#abcd92cbd1dcb6a276e2917ab5cd8f4bd">third_Party.AVI_Reader</a>
+</li>
+<li>mw
+: <a class="el" href="classgui_1_1_main_window.html#ac4845ac2ea0ce23ffa6231981e662c48">gui.MainWindow</a>
 </li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

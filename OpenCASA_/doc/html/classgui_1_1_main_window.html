@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classgui_1_1_main_window.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,14 +80,11 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacegui.html">gui</a></li><li class="navelem"><a class="el" href="classgui_1_1_main_window.html">MainWindow</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pri-methods">Private Member Functions</a> &#124;
+<a href="#pri-attribs">Private Attributes</a> &#124;
 <a href="classgui_1_1_main_window-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">gui.MainWindow Class Reference</div>  </div>
@@ -83,14 +102,31 @@ Inheritance diagram for gui.MainWindow:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adc9826bb15222fe721307c223dd30883"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_main_window.html#adc9826bb15222fe721307c223dd30883">MainWindow</a> (String title)  throws HeadlessException </td></tr>
+<tr class="memdesc:adc9826bb15222fe721307c223dd30883"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructor. The main graphical user interface is created.  <a href="#adc9826bb15222fe721307c223dd30883">More...</a><br /></td></tr>
 <tr class="separator:adc9826bb15222fe721307c223dd30883"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-methods"></a>
+Private Member Functions</h2></td></tr>
 <tr class="memitem:a75a766e7cd7c69c630d2a9047504c744"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_main_window.html#a75a766e7cd7c69c630d2a9047504c744">addButton</a> (final String label, int gridx, int gridy, Color background, String iconPath, JPanel panel)</td></tr>
+<tr class="memdesc:a75a766e7cd7c69c630d2a9047504c744"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method add to the given JPanel a button with the specified parameters.  <a href="#a75a766e7cd7c69c630d2a9047504c744">More...</a><br /></td></tr>
 <tr class="separator:a75a766e7cd7c69c630d2a9047504c744"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a94dd11c548e55fda609b5a63901be3ae"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_main_window.html#a94dd11c548e55fda609b5a63901be3ae">createGUI</a> ()</td></tr>
+<tr class="memdesc:a94dd11c548e55fda609b5a63901be3ae"><td class="mdescLeft">&#160;</td><td class="mdescRight">This method creates the main user interface.  <a href="#a94dd11c548e55fda609b5a63901be3ae">More...</a><br /></td></tr>
 <tr class="separator:a94dd11c548e55fda609b5a63901be3ae"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1f95e6403092b338ba9a6b2f31764e4a"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_main_window.html#a1f95e6403092b338ba9a6b2f31764e4a">simulate</a> ()</td></tr>
+<tr class="memdesc:a1f95e6403092b338ba9a6b2f31764e4a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Shows a Generic Dialog to ask user which simulation parameters have to be used for the simulation.  <a href="#a1f95e6403092b338ba9a6b2f31764e4a">More...</a><br /></td></tr>
+<tr class="separator:a1f95e6403092b338ba9a6b2f31764e4a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pri-attribs"></a>
+Private Attributes</h2></td></tr>
+<tr class="memitem:ac4845ac2ea0ce23ffa6231981e662c48"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classgui_1_1_main_window.html">MainWindow</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classgui_1_1_main_window.html#ac4845ac2ea0ce23ffa6231981e662c48">mw</a></td></tr>
+<tr class="memdesc:ac4845ac2ea0ce23ffa6231981e662c48"><td class="mdescLeft">&#160;</td><td class="mdescRight">Self reference used in action listeners to show and hide main window.  <a href="#ac4845ac2ea0ce23ffa6231981e662c48">More...</a><br /></td></tr>
+<tr class="separator:ac4845ac2ea0ce23ffa6231981e662c48"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+<div class="textblock"><p>This window shows all functional modules available. </p><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_main_window_8java_source.html#l00029">29</a> of file <a class="el" href="_main_window_8java_source.html">MainWindow.java</a>.</p>
 </div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
 <a id="adc9826bb15222fe721307c223dd30883"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#adc9826bb15222fe721307c223dd30883">&sect;&nbsp;</a></span>MainWindow()</h2>
@@ -107,22 +143,16 @@ Public Member Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Constructor. The main graphical user interface is created.</p>
+
+<p>Constructor. The main graphical user interface is created. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">title</td><td><ul>
-<li>String that is used as title of the window. </li>
-</ul>
-</td></tr>
+    <tr><td class="paramname">title</td><td>- String that is used as window's title </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="exception"><dt>Exceptions</dt><dd>
-  <table class="exception">
-    <tr><td class="paramname">HeadlessException</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
+
+<p>Definition at line <a class="el" href="_main_window_8java_source.html#l00038">38</a> of file <a class="el" href="_main_window_8java_source.html">MainWindow.java</a>.</p>
 
 </div>
 </div>
@@ -132,6 +162,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void gui.MainWindow.addButton </td>
@@ -175,18 +208,27 @@ Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
+<p>This method add to the given JPanel a button with the specified parameters. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">label</td><td></td></tr>
-    <tr><td class="paramname">gridx</td><td></td></tr>
-    <tr><td class="paramname">gridy</td><td></td></tr>
-    <tr><td class="paramname">background</td><td></td></tr>
-    <tr><td class="paramname">iconPath</td><td></td></tr>
-    <tr><td class="paramname">panel</td><td></td></tr>
+    <tr><td class="paramname">label</td><td>- String that is shown as button's label </td></tr>
+    <tr><td class="paramname">gridx</td><td>- relative layout's x location </td></tr>
+    <tr><td class="paramname">gridy</td><td>- relative layout's y location </td></tr>
+    <tr><td class="paramname">background</td><td>- Background color </td></tr>
+    <tr><td class="paramname">iconPath</td><td>- Path relative to the icon's image </td></tr>
+    <tr><td class="paramname">panel</td><td>- panel where the button is going to be added </td></tr>
   </table>
   </dd>
 </dl>
+
+<p>Definition at line <a class="el" href="_main_window_8java_source.html#l00059">59</a> of file <a class="el" href="_main_window_8java_source.html">MainWindow.java</a>.</p>
 
 </div>
 </div>
@@ -195,6 +237,9 @@ Public Member Functions</h2></td></tr>
 
 <div class="memitem">
 <div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
       <table class="memname">
         <tr>
           <td class="memname">void gui.MainWindow.createGUI </td>
@@ -203,20 +248,88 @@ Public Member Functions</h2></td></tr>
           <td></td>
         </tr>
       </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
 </div><div class="memdoc">
+
 <p>This method creates the main user interface. </p>
+
+<p>Definition at line <a class="el" href="_main_window_8java_source.html#l00134">134</a> of file <a class="el" href="_main_window_8java_source.html">MainWindow.java</a>.</p>
+
+</div>
+</div>
+<a id="a1f95e6403092b338ba9a6b2f31764e4a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1f95e6403092b338ba9a6b2f31764e4a">&sect;&nbsp;</a></span>simulate()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void gui.MainWindow.simulate </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Shows a Generic Dialog to ask user which simulation parameters have to be used for the simulation. </p>
+
+<p>Definition at line <a class="el" href="_main_window_8java_source.html#l00148">148</a> of file <a class="el" href="_main_window_8java_source.html">MainWindow.java</a>.</p>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="ac4845ac2ea0ce23ffa6231981e662c48"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac4845ac2ea0ce23ffa6231981e662c48">&sect;&nbsp;</a></span>mw</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classgui_1_1_main_window.html">MainWindow</a> gui.MainWindow.mw</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">private</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Self reference used in action listeners to show and hide main window. </p>
+
+<p>Definition at line <a class="el" href="_main_window_8java_source.html#l00032">32</a> of file <a class="el" href="_main_window_8java_source.html">MainWindow.java</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/gui/<a class="el" href="_main_window_8java.html">MainWindow.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/gui/<a class="el" href="_main_window_8java_source.html">MainWindow.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacegui.html">gui</a></li><li class="navelem"><a class="el" href="classgui_1_1_main_window.html">MainWindow</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -32,12 +32,14 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private enum TypeOfAnalysis {
     INDEXESFILE, INDEXESDIRECTORY, BOOTSTRAPPING, INDEXESSIMULATIONS, BOOTSTRAPPINGSIMULATIONS, NONE
   }
-
-  /** */
-  private Trial              trial;
-  /** */
   private TypeOfAnalysis     analysis = TypeOfAnalysis.NONE;
-
+  
+  /**
+   * This method runs the correct analysis looking at the analysis variable set by the user.
+   * @param controls - control trials
+   * @param tests - test trials that are going to be compare with control trials
+   * @return - ResultsTable with the results of the analysis
+   */
   private ResultsTable analyseCondition(Map<String, Trial> controls, Map<String, Trial> tests) {
     ResultsTable rt = new ResultsTable();
     switch (analysis) {
@@ -53,7 +55,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return rt;
   }
-
+/**
+ * This method asks user for the main folder that contains the data that is going to be analysed.
+ * The content of this folder has to be one folder named "control" with the control videos, and
+ * one or more folders corresponding with each condition that user wants to compare with reference controls.
+ */
   private void analyseDirectory() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
@@ -67,14 +73,21 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       rt.show(condition);
     }
   }
-
+/**
+ * This method asks user for the file that is going to be analysed, extract the corresponding trial
+ * and show results.
+ */
   private void analyseFile() {
     FileManager fm = new FileManager();
     String file = fm.selectFile();
     TrialManager tm = new TrialManager();
-    trial = tm.getTrialFromAVI(file);
+    Trial trial = tm.getTrialFromAVI(file);
+    drawResults(trial);
   }
-
+/**
+ * This method asks user which simulation parameters have to be used in the simulations, generate the corresponding 
+ * trials, analyse them and show results
+ */
   private void analyseSimulations() {
     GenericDialog gd = new GenericDialog("Set Simulation parameters");
     gd.addNumericField("Beta", 0, 2);
@@ -94,8 +107,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * @param trials
-   * @return
+   * This method applies the bootstrapping analysis for the given set of trials.
+   * @param controls - control trials
+   * @param tests - test trials that are going to be compare with control trials
+   * @return ResultsTable with the bootstrapping analysis
    */
   private ResultsTable bootstrappingAnalysis(Map<String, Trial> controls, Map<String, Trial> tests) {
 
@@ -118,15 +133,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   /******************************************************/
   /**
-   * Fuction to calculate the Ratio-Q
-   * 
-   * @param theTracks
-   *          2D-ArrayList with all the tracks
-   * @return the Ratio-Q
-   */
-  /**
-   * @param theTracks
-   * @return
+   * This method calculates the CH-index for the given set of trajectories.
+   * @param theTracks - 2D-ArrayList with all the tracks
+   * @return Ch-Index
    */
   private float calculateChIndex(List<List<Spermatozoon>> theTracks) {
     int trackNr = 0; // Number of tracks
@@ -154,8 +163,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   /******************************************************/
   /**
-   * @param theTracks
-   *          2D-ArrayList that stores all the tracks
+   * This method calculates the SL-index for the given set of trajectories.
+   * @param theTracks - 2D-ArrayList that stores all the tracks
    * @return SL-Index
    */
   private float calculateSLIndex(List<List<Spermatozoon>> theTracks) {
@@ -189,9 +198,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * @param angles
-   * @param n
-   * @return
+   * This method calculates the histogram for the given set of angles.
+   * @param angles - The angles (in degrees).
+   * @param n - Total number of bins for the histogram.
+   * @return Array of the number of elements for each bin.
    */
   private int[] circularHistogram(List<Double> angles, int n) {
 
@@ -208,8 +218,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * @param theTracks
-   * @return
+   * This method counts, for the given set of trajectories, how many angles go in the gradient direction
+   * and how many in the opposite (or other) direction, depending on the value of the 
+   * parameter "Compare Opposite Directions" set by the user on the Settings Window.
+   * @param theTracks - The array with all trajectories
+   * @return An array with the two values ([0] - upgradient: [1] - other directions).
    */
   private int[] countAngles(SList theTracks) {
     int[] angles = { 0, 0 };
@@ -279,22 +292,21 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   @Override
   protected void done() {
     // This method is executed in the EDT
-    switch (analysis) {
-      case INDEXESFILE:
-        drawResults();
-        break;
-      case INDEXESDIRECTORY:
-        break;
-      case BOOTSTRAPPING:
-        break;
-      case INDEXESSIMULATIONS:
-        break;
-      case BOOTSTRAPPINGSIMULATIONS:
-        break;
-    }
+//    switch (analysis) {
+//      case INDEXESFILE:
+//        break;
+//      case INDEXESDIRECTORY:
+//        break;
+//      case BOOTSTRAPPING:
+//        break;
+//      case INDEXESSIMULATIONS:
+//        break;
+//      case BOOTSTRAPPINGSIMULATIONS:
+//        break;
+//    }
   }
 
-  private void drawResults() {
+  private void drawResults(Trial trial) {
     if (trial == null)
       return;
     float chIdx = calculateChIndex(trial.tracks);
@@ -323,8 +335,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     TrialManager tm = new TrialManager();
     for (int i = 0; i < controlFiles.size(); i++) {
       String file = controlFiles.get(i);
-      trial = tm.getTrialFromAVI(file);
-      cTrials.put(trial.type + "-_-" + trial.ID, trial);
+      Trial trial = tm.getTrialFromAVI(file);
+      if(trial!=null)
+        cTrials.put(trial.type + "-_-" + trial.ID, trial);
     }
     return cTrials;
   }
@@ -393,8 +406,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     Map<String, Trial> tTrials = new HashMap<String, Trial>();
     for (int i = 0; i < tests.size(); i++) {
       String file = tests.get(i);
-      trial = tm.getTrialFromAVI(file);
-      tTrials.put(trial.type + "-_-" + trial.ID, trial);
+      Trial trial = tm.getTrialFromAVI(file);
+      if(trial!=null)
+        tTrials.put(trial.type + "-_-" + trial.ID, trial);
     }
     return tTrials;
   }
@@ -568,6 +582,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     rt.addValue("Type", trial.type);
     rt.addValue("Source", trial.source);
+    if(!Params.male.isEmpty())
+      rt.addValue("Male", Params.male);
+    if(!Params.date.isEmpty())
+      rt.addValue("Date", Params.date);
+    if(!Params.genericField.isEmpty())
+      rt.addValue("Generic Field", Params.genericField);    
   }
 
   /**
@@ -588,5 +608,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     rt.addValue("ArcChemotaxis (Degrees)", Params.angleAmplitude);
     rt.addValue("ID", trial.ID);
     rt.addValue("Source", trial.source);
+    if(!Params.male.isEmpty())
+      rt.addValue("Male", Params.male);
+    if(!Params.date.isEmpty())
+      rt.addValue("Date", Params.date);
+    if(!Params.genericField.isEmpty())
+      rt.addValue("Generic Field", Params.genericField);
   }
 }

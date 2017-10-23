@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_paint.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,49 +80,43 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_paint.html">Paint</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classfunctions_1_1_paint-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">functions.Paint Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">functions.Paint Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aef5cba0342145788330b77ebcdb41140"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#aef5cba0342145788330b77ebcdb41140">chemotaxisTemplate</a> (ColorProcessor ip, int numTracks, float chIdx, float slIdx, String sampleID)</td></tr>
-<tr class="separator:aef5cba0342145788330b77ebcdb41140"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6">draw</a> (ImagePlus imp, <a class="el" href="classdata_1_1_s_list.html">SList</a> theTracks)</td></tr>
-<tr class="separator:a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8c75862b505da1b5fec63b97263a0598"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a8c75862b505da1b5fec63b97263a0598">drawBoundaries</a> (ImagePlus imp, List spermatozoa)</td></tr>
-<tr class="separator:a8c75862b505da1b5fec63b97263a0598"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a948a41121a5855131abb0299fcad4d1d"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a948a41121a5855131abb0299fcad4d1d">drawChemotaxis</a> (<a class="el" href="classdata_1_1_s_list.html">SList</a> theTracks, float chIdx, float slIdx, int width, int height, String sampleID)</td></tr>
-<tr class="separator:a948a41121a5855131abb0299fcad4d1d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1e8ad672ee01f84ce490e59ea7cad85e"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a1e8ad672ee01f84ce490e59ea7cad85e">drawOutline</a> (ImagePlus impOrig, ImagePlus impTh)</td></tr>
-<tr class="separator:a1e8ad672ee01f84ce490e59ea7cad85e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a0b444650d851df051bd20d70fcbcff7a"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a0b444650d851df051bd20d70fcbcff7a">drawRoseDiagram</a> (int[] histogram, int radius, float chIdx, String sampleID)</td></tr>
-<tr class="separator:a0b444650d851df051bd20d70fcbcff7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:a5143820b1a4eaf128f8ae5d2bc178b74"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a5143820b1a4eaf128f8ae5d2bc178b74">chemotaxisTemplate</a> (ColorProcessor ip, int numTracks, float chIdx, float slIdx, String sampleID)</td></tr>
+<tr class="separator:a5143820b1a4eaf128f8ae5d2bc178b74"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab3d77d873b085ac395639e8728624e0e"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#ab3d77d873b085ac395639e8728624e0e">draw</a> (ImagePlus imp, <a class="el" href="classdata_1_1_s_list.html">SList</a> theTracks)</td></tr>
+<tr class="separator:ab3d77d873b085ac395639e8728624e0e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:abacc955981e3624bce2f4973c519da23"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#abacc955981e3624bce2f4973c519da23">drawBoundaries</a> (ImagePlus imp, List spermatozoa)</td></tr>
+<tr class="separator:abacc955981e3624bce2f4973c519da23"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a01627771b7657ca56b0bace3e71c747f"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#a01627771b7657ca56b0bace3e71c747f">drawChemotaxis</a> (<a class="el" href="classdata_1_1_trial.html">Trial</a> trial, float chIdx, float slIdx)</td></tr>
+<tr class="separator:a01627771b7657ca56b0bace3e71c747f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aedd7ed0c33147e64afa6d857a379cff2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#aedd7ed0c33147e64afa6d857a379cff2">drawOutline</a> (ImagePlus impOrig, ImagePlus impTh)</td></tr>
+<tr class="separator:aedd7ed0c33147e64afa6d857a379cff2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aaca4fde154d4fcb649e8a4c3ce408afe"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_paint.html#aaca4fde154d4fcb649e8a4c3ce408afe">drawRoseDiagram</a> (int[] histogram, int radius, float chIdx, String sampleID)</td></tr>
+<tr class="separator:aaca4fde154d4fcb649e8a4c3ce408afe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00024">24</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aef5cba0342145788330b77ebcdb41140"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aef5cba0342145788330b77ebcdb41140">&sect;&nbsp;</a></span>chemotaxisTemplate()</h2>
+<a id="a5143820b1a4eaf128f8ae5d2bc178b74"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a5143820b1a4eaf128f8ae5d2bc178b74">&sect;&nbsp;</a></span>chemotaxisTemplate()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Paint.chemotaxisTemplate </td>
+          <td class="memname">void functions.Paint.chemotaxisTemplate </td>
           <td>(</td>
           <td class="paramtype">ColorProcessor&#160;</td>
           <td class="paramname"><em>ip</em>, </td>
@@ -135,11 +151,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -152,19 +163,18 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00034">34</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
+
 </div>
 </div>
-<a id="a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6cdbf8fb0cd0e0c1742f0ea0bf9f76c6">&sect;&nbsp;</a></span>draw()</h2>
+<a id="ab3d77d873b085ac395639e8728624e0e"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab3d77d873b085ac395639e8728624e0e">&sect;&nbsp;</a></span>draw()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Paint.draw </td>
+          <td class="memname">void functions.Paint.draw </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em>, </td>
@@ -181,11 +191,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -195,19 +200,18 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00105">105</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
+
 </div>
 </div>
-<a id="a8c75862b505da1b5fec63b97263a0598"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8c75862b505da1b5fec63b97263a0598">&sect;&nbsp;</a></span>drawBoundaries()</h2>
+<a id="abacc955981e3624bce2f4973c519da23"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#abacc955981e3624bce2f4973c519da23">&sect;&nbsp;</a></span>drawBoundaries()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Paint.drawBoundaries </td>
+          <td class="memname">void functions.Paint.drawBoundaries </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>imp</em>, </td>
@@ -224,41 +228,30 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">imp</td><td></td></tr>
-    <tr><td class="paramname">theTracks</td><td>2D-ArrayList with all the tracks </td></tr>
-    <tr><td class="paramname">avgTracks</td><td>2D-ArrayList with the averaged tracks </td></tr>
-    <tr><td class="paramname">chIdx</td><td></td></tr>
-    <tr><td class="paramname">slIdx</td><td></td></tr>
     <tr><td class="paramname">imp</td><td></td></tr>
     <tr><td class="paramname">spermatozoa</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00182">182</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
+
 </div>
 </div>
-<a id="a948a41121a5855131abb0299fcad4d1d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a948a41121a5855131abb0299fcad4d1d">&sect;&nbsp;</a></span>drawChemotaxis()</h2>
+<a id="a01627771b7657ca56b0bace3e71c747f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01627771b7657ca56b0bace3e71c747f">&sect;&nbsp;</a></span>drawChemotaxis()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Paint.drawChemotaxis </td>
+          <td class="memname">void functions.Paint.drawChemotaxis </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classdata_1_1_s_list.html">SList</a>&#160;</td>
-          <td class="paramname"><em>theTracks</em>, </td>
+          <td class="paramtype"><a class="el" href="classdata_1_1_trial.html">Trial</a>&#160;</td>
+          <td class="paramname"><em>trial</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
@@ -270,25 +263,7 @@ Static Public Member Functions</h2></td></tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">float&#160;</td>
-          <td class="paramname"><em>slIdx</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>width</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>height</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>sampleID</em>&#160;</td>
+          <td class="paramname"><em>slIdx</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -296,37 +271,31 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">theTracks</td><td>2D-ArrayList with all the tracks </td></tr>
+    <tr><td class="paramname">trial.tracks</td><td>2D-ArrayList with all the tracks </td></tr>
     <tr><td class="paramname">chIdx</td><td></td></tr>
     <tr><td class="paramname">slIdx</td><td></td></tr>
-    <tr><td class="paramname">width</td><td></td></tr>
-    <tr><td class="paramname">height</td><td></td></tr>
-    <tr><td class="paramname">sampleID</td><td></td></tr>
+    <tr><td class="paramname">trial.fieldWidth</td><td></td></tr>
+    <tr><td class="paramname">trial.fieldHeight</td><td></td></tr>
+    <tr><td class="paramname">trial.ID</td><td></td></tr>
   </table>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00220">220</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
+
 </div>
 </div>
-<a id="a1e8ad672ee01f84ce490e59ea7cad85e"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a1e8ad672ee01f84ce490e59ea7cad85e">&sect;&nbsp;</a></span>drawOutline()</h2>
+<a id="aedd7ed0c33147e64afa6d857a379cff2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aedd7ed0c33147e64afa6d857a379cff2">&sect;&nbsp;</a></span>drawOutline()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Paint.drawOutline </td>
+          <td class="memname">void functions.Paint.drawOutline </td>
           <td>(</td>
           <td class="paramtype">ImagePlus&#160;</td>
           <td class="paramname"><em>impOrig</em>, </td>
@@ -343,11 +312,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -357,19 +321,18 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00275">275</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
+
 </div>
 </div>
-<a id="a0b444650d851df051bd20d70fcbcff7a"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a0b444650d851df051bd20d70fcbcff7a">&sect;&nbsp;</a></span>drawRoseDiagram()</h2>
+<a id="aaca4fde154d4fcb649e8a4c3ce408afe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaca4fde154d4fcb649e8a4c3ce408afe">&sect;&nbsp;</a></span>drawRoseDiagram()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Paint.drawRoseDiagram </td>
+          <td class="memname">void functions.Paint.drawRoseDiagram </td>
           <td>(</td>
           <td class="paramtype">int []&#160;</td>
           <td class="paramname"><em>histogram</em>, </td>
@@ -398,11 +361,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -414,17 +372,23 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
+<p>Definition at line <a class="el" href="_paint_8java_source.html#l00300">300</a> of file <a class="el" href="_paint_8java_source.html">Paint.java</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_paint_8java.html">Paint.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_paint_8java_source.html">Paint.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_paint.html">Paint</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

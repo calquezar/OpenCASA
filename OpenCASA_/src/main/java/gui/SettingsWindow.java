@@ -25,51 +25,34 @@ import ij.IJ;
  */
 public class SettingsWindow extends JFrame {
 
-  /**   */
+
   JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
-  /**   */
   JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
   // Chemotaxis
-  /**   */
   JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
-  /**   */
   JCheckBox compareOppositeDirCB = new JCheckBox();
   // Motility
-  /**   */
   JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
   // General
-  /**   */
   JTextField frameRateTF = new JTextField("" + Params.frameRate, 4);
-  /**   */
   JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
-  /**   */
   JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
-  /**   */
   JTextField micronPerPixelTF = new JTextField("" + Params.micronPerPixel, 4);
-  // JTextField maleTF = new JTextField(Params.male,8);
-  // JTextField dateTF = new JTextField(Params.date,8);
+  JTextField maleTF = new JTextField(Params.male,8);
+  JTextField dateTF = new JTextField(Params.date,8);
+  JTextField genericTF = new JTextField(Params.genericField,8);
   // Recognition
-  /**   */
   JTextField minSizeTF = new JTextField("" + Params.minSize, 4);
-  /**   */
   JTextField minTrackLengthTF = new JTextField("" + Params.minTrackLength, 4);
-  /**   */
-  MainWindow mw;
-  /**   */
   JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
-  /**   */
   JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
-  /**   */
-  SettingsWindow sw;
-  /**   */
   JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
   // Filtering
-  /**   */
   JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
+  SettingsWindow sw; // Self reference used in action listeners
 
   /**
-   * @param title
-   * @throws HeadlessException
+   * @param title - Window's title
    */
   public SettingsWindow(String title) throws HeadlessException {
     super(title);
@@ -77,20 +60,12 @@ public class SettingsWindow extends JFrame {
     this.setVisible(true);
 //    setLocationRelativeTo(null);
 //    this.setPreferredSize(new Dimension(600, 300));
-    this.addWindowListener(new java.awt.event.WindowAdapter() {
-      @Override
-      public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-        if (mw != null)
-          mw.enable();
-      }
-    });
   }
 
   /**
-   * @param title
-   * @return
+   * @return JPanel with all elements
    */
-  public JPanel createChemotaxisBox(String title) {
+  public JPanel createChemotaxisBox() {
     JPanel box = new JPanel();
     box.setBackground(new Color(204, 229, 255));
     GridBagConstraints c = new GridBagConstraints();
@@ -123,16 +98,15 @@ public class SettingsWindow extends JFrame {
     box.add(compareOppositeDirCB, c);
     
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder(title));
+    box.setBorder(BorderFactory.createTitledBorder("Chemotaxis"));
 
     return box;
   }
 
   /**
-   * @param title
-   * @return
+   * @return JPanel with all elements
    */
-  public JPanel createFilterBox(String title) {
+  public JPanel createFilterBox() {
     JPanel box = new JPanel();
     // box.setBackground(new Color(229,255,204));
     GridBagConstraints c = new GridBagConstraints();
@@ -157,16 +131,15 @@ public class SettingsWindow extends JFrame {
     c.gridx = 5;
     box.add(angleDeltaTF, c);
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder(title));
+    box.setBorder(BorderFactory.createTitledBorder("Filtering"));
 
     return box;
   }
 
   /**
-   * @param title
-   * @return
+   * @return JPanel with all elements
    */
-  public JPanel createGeneralBox(String title) {
+  public JPanel createGeneralBox() {
     JPanel box = new JPanel();
     // box.setBackground(new Color(229,255,204));
     GridBagConstraints c = new GridBagConstraints();
@@ -185,28 +158,33 @@ public class SettingsWindow extends JFrame {
     c.gridx = 3;
     box.add(micronPerPixelTF, c);
     ///////////////
-    // label = new JLabel("Male: ");
-    // c.gridx=4;
-    // box.add(label,c);
-    // c.gridx=5;
-    // box.add(maleTF,c);
-    // ///////////////
-    // label = new JLabel("Date: ");
-    // c.gridx=6;
-    // box.add(label,c);
-    // c.gridx=7;
-    // box.add(dateTF,c);
+     label = new JLabel("Male: ");
+     c.gridx=4;
+     box.add(label,c);
+     c.gridx=5;
+     box.add(maleTF,c);
+     ///////////////
+     label = new JLabel("Date: ");
+     c.gridx=6;
+     box.add(label,c);
+     c.gridx=7;
+     box.add(dateTF,c);
+     ///////////////
+     label = new JLabel("Generic: ");
+     c.gridx=6;
+     box.add(label,c);
+     c.gridx=7;
+     box.add(genericTF,c);     
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder(title));
+    box.setBorder(BorderFactory.createTitledBorder("General"));
 
     return box;
   }
 
   /**
-   * @param title
-   * @return
+   * @return JPanel with all elements
    */
-  public JPanel createMotilityBox(String title) {
+  public JPanel createMotilityBox() {
     JPanel box = new JPanel();
     // box.setBackground(new Color(229,255,204));
     GridBagConstraints c = new GridBagConstraints();
@@ -225,16 +203,15 @@ public class SettingsWindow extends JFrame {
     c.gridx = 3;
     box.add(progressiveMotilityTF, c);
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder(title));
+    box.setBorder(BorderFactory.createTitledBorder("Motility"));
 
     return box;
   }
 
-  /**
-   * @param title
-   * @return
+  /** 
+   * @return JPanel with all elements
    */
-  public JPanel createRecognitionBox(String title) {
+  public JPanel createRecognitionBox() {
     JPanel box = new JPanel();
     box.setBackground(new Color(204, 229, 255));
     GridBagConstraints c = new GridBagConstraints();
@@ -266,33 +243,31 @@ public class SettingsWindow extends JFrame {
     c.gridx = 3;
     box.add(maxDisplacementTF, c);
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder(title));
+    box.setBorder(BorderFactory.createTitledBorder("Recognition"));
 
     return box;
   }
   
   /**
-   * @param window
+   * @brief Build Settings window with all parameters.
    */
-  public void run(MainWindow window) {
+  public void run() {
 
-    mw = window;
-    mw.disable();
     GridBagConstraints c = new GridBagConstraints();
     c.fill = GridBagConstraints.HORIZONTAL;
     c.ipady = 0;
     c.gridx = 0;
     c.gridy = 0;
     JPanel panel = new JPanel(new GridBagLayout());
-    panel.add(createGeneralBox("General"), c);
+    panel.add(createGeneralBox(), c);
     c.gridy += 1;
-    panel.add(createRecognitionBox("Recognition"), c);
+    panel.add(createRecognitionBox(), c);
     c.gridy += 1;
-    panel.add(createFilterBox("Filtering"), c);
+    panel.add(createFilterBox(), c);
     c.gridy += 1;
-    panel.add(createChemotaxisBox("Chemotaxis"), c);
+    panel.add(createChemotaxisBox(), c);
     c.gridy += 1;
-    panel.add(createMotilityBox("Motility"), c);
+    panel.add(createMotilityBox(), c);
     JButton saveBtn = new JButton("Save");
     // Add action listener
     saveBtn.addActionListener(new ActionListener() {
@@ -320,12 +295,15 @@ public class SettingsWindow extends JFrame {
 
   }
   /**
-   * 
+   * @brief Set Params static fields with the values introduced by the user.
    */
   public void setParameters() {
     // General
     Params.frameRate = Float.parseFloat(frameRateTF.getText());
     Params.micronPerPixel = Double.parseDouble(micronPerPixelTF.getText());
+    Params.male = maleTF.getText();
+    Params.date = dateTF.getText();
+    Params.genericField = genericTF.getText();
     // Recognition
     Params.minSize = Float.parseFloat(minSizeTF.getText());
     Params.maxSize = Float.parseFloat(maxSizeTF.getText());

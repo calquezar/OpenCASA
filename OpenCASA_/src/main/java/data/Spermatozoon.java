@@ -44,8 +44,7 @@ public class Spermatozoon implements Serializable {
   /**   */
   public float total_minFeret = -1;
   /**
-   * @param source
-   *          - Spermatozoon to be copied
+   * @param source - Spermatozoon to be copied
    */
   public void copy(Spermatozoon source) {
     this.id = source.id;

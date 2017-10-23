@@ -114,52 +114,5 @@ public class Utils {
     }
     return output;
   }
-
-  /**
-   * @return
-   */
-  public Map<String, Trial> readTrials() {
-    Map<String, Trial> trials = null;
-    try {
-      FileManager fm = new FileManager();
-      String file = fm.selectFile();
-      if (file == null)
-        return null;
-      FileInputStream streamIn = new FileInputStream(file);
-      ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-      trials = (HashMap<String, Trial>) objectinputstream.readObject();
-    } catch (Exception e) {
-      e.printStackTrace();
-    }
-    return trials;
-  }
-
-  /**
-   * @param trials
-   */
-  public void saveTrials(Map<String, Trial> trials) {
-
-    String filename = "";
-    String dir = "";
-    JFileChooser c = new JFileChooser();
-    int rVal = c.showSaveDialog(null);
-    if (rVal == JFileChooser.APPROVE_OPTION) {
-      filename = c.getSelectedFile().getName();
-      dir = c.getCurrentDirectory().toString();
-    }
-    System.out.println(dir);
-    try {
-      // String folder = Utils.selectFolder();
-      if (dir == null || dir.equals(""))
-        return;
-      FileOutputStream fos = new FileOutputStream(dir + "\\" + filename);
-      ObjectOutputStream oos = new ObjectOutputStream(fos);
-      oos.writeObject(trials);
-      oos.close();
-      fos.close();
-    } catch (IOException ioe) {
-      ioe.printStackTrace();
-    }
-  }
   
 }

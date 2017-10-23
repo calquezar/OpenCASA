@@ -23,23 +23,17 @@ import ij.IJ;
 import ij.gui.GenericDialog;
 
 /**
+ * This window shows all functional modules available.
  * @author Carlos Alquezar
- *
  */
 public class MainWindow extends JFrame {
 
-
+  /** @brief Self reference used in action listeners to show and hide main window. */
   private MainWindow mw;
-  Chemotaxis ch;
-  Simulation sim;
-  SettingsWindow sw;
 
   /**
-   * Constructor. The main graphical user interface is created.
-   * 
-   * @param title
-   *          - String that is used as title of the window.
-   * @throws HeadlessException
+   * @brief Constructor. The main graphical user interface is created.
+   * @param title - String that is used as window's title
    */
   public MainWindow(String title) throws HeadlessException {
     super(title);
@@ -52,15 +46,17 @@ public class MainWindow extends JFrame {
     mw = this;
     Params.resetParams();
   }
+  
   /**
-   * @param label
-   * @param gridx
-   * @param gridy
-   * @param background
-   * @param iconPath
-   * @param panel
+   * @brief This method add to the given JPanel a button with the specified parameters
+   * @param label - String that is shown as button's label
+   * @param gridx - relative layout's x location
+   * @param gridy - relative layout's y location
+   * @param background - Background color
+   * @param iconPath - Path relative to the icon's image
+   * @param panel - panel where the button is going to be added
    */
-  public void addButton(final String label, int gridx, int gridy, Color background, String iconPath, JPanel panel) {
+  private void addButton(final String label, int gridx, int gridy, Color background, String iconPath, JPanel panel) {
 
     GridBagConstraints c = new GridBagConstraints();
     c.weightx = 0.5;
@@ -82,7 +78,7 @@ public class MainWindow extends JFrame {
     btn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (label.equals("Chemotaxis")) {
-          ch = new Chemotaxis();
+          Chemotaxis ch = new Chemotaxis();
           try {
             mw.setVisible(false);
             ch.selectAnalysis();
@@ -116,10 +112,16 @@ public class MainWindow extends JFrame {
         } else if (label.equals("Simulation")) {
           simulate();
         } else if (label.equals("Settings")) {
-          if (sw == null || !sw.isVisible()) {
-            sw = new SettingsWindow("Settings");
-            sw.run(mw);
-          }
+          SettingsWindow sw = new SettingsWindow("Settings");
+          sw.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+              if (mw != null)
+                mw.setVisible(true);
+            }
+          });
+          mw.setVisible(false);
+          sw.run(); 
         }
       }
     });
@@ -127,9 +129,9 @@ public class MainWindow extends JFrame {
   }
 
   /**
-   * This method creates the main user interface.
+   * @brief This method creates the main user interface.
    */
-  public void createGUI() {
+  private void createGUI() {
     JPanel panel = new JPanel(new GridBagLayout());
     addButton("Motility", 0, 0, new Color(255, 255, 255), "/motility.png", panel);
     addButton("Chemotaxis", 1, 0, new Color(255, 255, 255), "/chemotaxis.png", panel);
@@ -140,21 +142,21 @@ public class MainWindow extends JFrame {
     this.setContentPane(panel);
   }
   
-  public void simulate(){
+  /**
+   * @brief Shows a Generic Dialog to ask user which simulation parameters have to be used for the simulation.
+   */  
+  private void simulate(){
     GenericDialog gd = new GenericDialog("Set Simulation parameters");
     gd.addNumericField("Beta", 0, 2);
     gd.addNumericField("Responsiveness (%)", 50, 2);
     gd.addNumericField("Length of the simulation (frames)", 500, 0);
     gd.showDialog();
-    if (gd.wasCanceled()) {
+    if (gd.wasCanceled())
       return;
-    }
     double beta = gd.getNextNumber();
-    double responsiveness = gd.getNextNumber() / 100; // value must
-                                                      // be between
-                                                      // [0,1]
+    double responsiveness = gd.getNextNumber() / 100; // value must be between [0,1]
     int length = (int) gd.getNextNumber();
-    sim = new PersistentRandomWalker(beta, responsiveness, length);
+    Simulation sim = new PersistentRandomWalker(beta, responsiveness, length);
     try {
       sim.run();
     } catch (Exception e1) {

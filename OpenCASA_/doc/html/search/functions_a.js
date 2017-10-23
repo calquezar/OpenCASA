@@ -1,5 +1,8 @@
 var searchData=
 [
-  ['persistentrandomwalker',['PersistentRandomWalker',['../classdata_1_1_persistent_random_walker.html#aebad243d552881ec0a23986df526565f',1,'data.PersistentRandomWalker.PersistentRandomWalker()'],['../classdata_1_1_persistent_random_walker.html#ab3557f381e498bed6b6105975a727c61',1,'data.PersistentRandomWalker.PersistentRandomWalker(double b, double responsiveCells)'],['../classdata_1_1_persistent_random_walker.html#acff5b6ea2be557575528243f2cee0a46',1,'data.PersistentRandomWalker.PersistentRandomWalker(double b, double responsiveCells, int simlength)']]],
-  ['printxycoords',['printXYCoords',['../classfunctions_1_1_utils.html#a5bc7913a46b0f1eb68e6df01d872c4e7',1,'functions::Utils']]]
+  ['openandreadheader',['openAndReadHeader',['../classthird___party_1_1_a_v_i___reader.html#a3ed951465a3d01864dfcd07e0f62fff4',1,'third_Party::AVI_Reader']]],
+  ['or',['or',['../classanalysis_1_1_chemotaxis.html#a892e16753f6fdd727a1db3ab3ebd1037',1,'analysis::Chemotaxis']]],
+  ['orthreshold',['orThreshold',['../classanalysis_1_1_chemotaxis.html#a62ce01d256f9d7f60f76b7adec7024b4',1,'analysis::Chemotaxis']]],
+  ['oscillatorywalker',['OscillatoryWalker',['../classdata_1_1_oscillatory_walker.html#a13aaa094f020ec488181f0febbd47404',1,'data::OscillatoryWalker']]],
+  ['outlinethresholdimage',['outlineThresholdImage',['../classfunctions_1_1_computer_vision.html#aa32901635cb5b18c0edeb63559a330a7',1,'functions::ComputerVision']]]
 ];

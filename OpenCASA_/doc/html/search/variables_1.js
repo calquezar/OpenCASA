@@ -1,7 +1,22 @@
 var searchData=
 [
   ['bcf_5fshift',['bcf_shift',['../classdata_1_1_params.html#a3020ee8a7826f5dc952133299c71f192',1,'data::Params']]],
+  ['bibitcount',['biBitCount',['../classthird___party_1_1_a_v_i___reader.html#a4a949422fb2bb2aa1b70307b7591def9',1,'third_Party::AVI_Reader']]],
+  ['biclrimportant',['biClrImportant',['../classthird___party_1_1_a_v_i___reader.html#a1b8bc08588b4d1c07756176010cecd58',1,'third_Party::AVI_Reader']]],
+  ['biclrused',['biClrUsed',['../classthird___party_1_1_a_v_i___reader.html#a0be6592d9bd99ecad01a7877e6caeadb',1,'third_Party::AVI_Reader']]],
+  ['bicompression',['biCompression',['../classthird___party_1_1_a_v_i___reader.html#a31a4fa4c68cbc3c5fc109a866190c528',1,'third_Party::AVI_Reader']]],
+  ['biheight',['biHeight',['../classthird___party_1_1_a_v_i___reader.html#abf18fc31d04ba9d41a2cf2127a5b4eaf',1,'third_Party::AVI_Reader']]],
+  ['biplanes',['biPlanes',['../classthird___party_1_1_a_v_i___reader.html#aa9e38fa52fb30a225ae304cbc51f6a9f',1,'third_Party::AVI_Reader']]],
+  ['bisize',['biSize',['../classthird___party_1_1_a_v_i___reader.html#abd76827a0d420fc84cea9939fa729629',1,'third_Party::AVI_Reader']]],
+  ['bisizeimage',['biSizeImage',['../classthird___party_1_1_a_v_i___reader.html#a2f4d53cdf9cb569e0717514dc7a0e9e0',1,'third_Party::AVI_Reader']]],
+  ['bitmask24',['BITMASK24',['../classthird___party_1_1_a_v_i___reader.html#a060fa4dce1c907b733737ef07d44ceca',1,'third_Party::AVI_Reader']]],
+  ['biwidth',['biWidth',['../classthird___party_1_1_a_v_i___reader.html#a8996757bd683838a4c14dc3802bc4d80',1,'third_Party::AVI_Reader']]],
+  ['bixpelspermeter',['biXPelsPerMeter',['../classthird___party_1_1_a_v_i___reader.html#a7da1a1be394a0f561653e1c1be3b3c19',1,'third_Party::AVI_Reader']]],
+  ['biypelspermeter',['biYPelsPerMeter',['../classthird___party_1_1_a_v_i___reader.html#a736023d549bc0b8cdd7d4519f344a613',1,'third_Party::AVI_Reader']]],
+  ['bootstrapping',['BOOTSTRAPPING',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#a05a46812ab27665d8e79a0bfdffa7e0b',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
+  ['bootstrappingsimulations',['BOOTSTRAPPINGSIMULATIONS',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#aad76a4e1132f9fcfff8acc1bf5c1a087',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
   ['bordersize',['borderSize',['../classdata_1_1_params.html#ac796e44afc599250c1d7ece16a513046',1,'data::Params']]],
+  ['buffersize',['BUFFERSIZE',['../classthird___party_1_1_a_v_i___reader.html#a2ae593bd5a753069baf4f052e4436ff6',1,'third_Party::AVI_Reader']]],
   ['bx',['bx',['../classdata_1_1_spermatozoon.html#a4f53181b1c101f22ccd658f27fce829f',1,'data::Spermatozoon']]],
   ['by',['by',['../classdata_1_1_spermatozoon.html#a201623c63d1b788bc5a566b1adace994',1,'data::Spermatozoon']]]
 ];

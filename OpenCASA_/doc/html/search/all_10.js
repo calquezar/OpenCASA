@@ -1,16 +1,19 @@
 var searchData=
 [
-  ['thresholdimageplus',['thresholdImagePlus',['../classfunctions_1_1_computer_vision.html#afdeaa756441ad50cbb20268dc5440c27',1,'functions::ComputerVision']]],
-  ['thresholdimageprocessor',['thresholdImageProcessor',['../classfunctions_1_1_computer_vision.html#a3106850d23d4dc70772b01bc0cc2f4f7',1,'functions::ComputerVision']]],
-  ['thresholdstack',['thresholdStack',['../classfunctions_1_1_computer_vision.html#acc6f2aaf0d523e3789b7b203faf8dd47',1,'functions::ComputerVision']]],
-  ['total_5farea',['total_area',['../classdata_1_1_spermatozoon.html#aa648cb4c26ff2fe261728f35e1951272',1,'data::Spermatozoon']]],
-  ['total_5fferet',['total_feret',['../classdata_1_1_spermatozoon.html#ab7117d1c66b31094ed0bf6142e0b4e5e',1,'data::Spermatozoon']]],
-  ['total_5fminferet',['total_minFeret',['../classdata_1_1_spermatozoon.html#a8fb0f02813e37a6dcc8349322d8d9638',1,'data::Spermatozoon']]],
-  ['total_5fperimeter',['total_perimeter',['../classdata_1_1_spermatozoon.html#ae17fa0b57c63aa9c630815f7efd3761a',1,'data::Spermatozoon']]],
-  ['tracknr',['trackNr',['../classdata_1_1_spermatozoon.html#afcaaa2cdbb93291bacad63cb623cb9b9',1,'data::Spermatozoon']]],
-  ['tracks',['tracks',['../classdata_1_1_trial.html#a076434be940c0d3db36c6be5c0c5325b',1,'data::Trial']]],
-  ['trial',['Trial',['../classdata_1_1_trial.html#a899e52b89fd0b71f488d80b36cb15c4e',1,'data.Trial.Trial()'],['../classdata_1_1_trial.html#a8e2cea67b588a2ca90544a03c65ca615',1,'data.Trial.Trial(String ID, String type, String source, SList t)'],['../classdata_1_1_trial.html#a31d704a7dcda485a1f9a9c867c6a89cb',1,'data.Trial.Trial(String ID, String type, String source, SList t, ImagePlus imp, int[] motileSperm)'],['../classdata_1_1_trial.html#aeb87eef325b6688001efb620ee9c67d0',1,'data.Trial.Trial(String ID, String type, String source, SList t, int width, int height)']]],
-  ['trial',['Trial',['../classdata_1_1_trial.html',1,'data']]],
-  ['trial_2ejava',['Trial.java',['../_trial_8java.html',1,'']]],
-  ['type',['type',['../classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6',1,'data::Trial']]]
+  ['rafile',['raFile',['../classthird___party_1_1_a_v_i___reader.html#a8618c6504f71d01eaf20a48c933aa036',1,'third_Party::AVI_Reader']]],
+  ['rafilepath',['raFilePath',['../classthird___party_1_1_a_v_i___reader.html#ae622bf22747273cf481d814dfa90eb6f',1,'third_Party::AVI_Reader']]],
+  ['readavi',['readAVI',['../classthird___party_1_1_a_v_i___reader.html#abd09c719eac6258ba43f4f22ba6e587e',1,'third_Party::AVI_Reader']]],
+  ['readavi2index',['readAvi2Index',['../classthird___party_1_1_a_v_i___reader.html#ad22821cde3b5326489f24ad437513919',1,'third_Party::AVI_Reader']]],
+  ['readavix',['readAVIX',['../classthird___party_1_1_a_v_i___reader.html#a05011c9bdfcfe2e5b3489416fb12ff87',1,'third_Party::AVI_Reader']]],
+  ['readcompressedframe',['readCompressedFrame',['../classthird___party_1_1_a_v_i___reader.html#a7a8a9e1a6cdb0c23f0920887559e20fa',1,'third_Party::AVI_Reader']]],
+  ['readcontents',['readContents',['../classthird___party_1_1_a_v_i___reader.html#a85350caab45622b078587a67833fe2b4',1,'third_Party::AVI_Reader']]],
+  ['readfixedlengthframe',['readFixedLengthFrame',['../classthird___party_1_1_a_v_i___reader.html#a398f49f5494ee8c68e125e2910c09c71',1,'third_Party::AVI_Reader']]],
+  ['readframe',['readFrame',['../classthird___party_1_1_a_v_i___reader.html#a4a25d354ac0e1c0771dde30e7e7379ae',1,'third_Party::AVI_Reader']]],
+  ['readoldframeindex',['readOldFrameIndex',['../classthird___party_1_1_a_v_i___reader.html#aea9045a6694e8ada35565a2072f9dc85',1,'third_Party::AVI_Reader']]],
+  ['readtrials',['readTrials',['../classfunctions_1_1_utils.html#a75d9f258b35282fa3722d99f856030b2',1,'functions::Utils']]],
+  ['readtype',['readType',['../classthird___party_1_1_a_v_i___reader.html#a163cd0565b88b3dead8638bb2b78e0ee',1,'third_Party::AVI_Reader']]],
+  ['relativeangle',['relativeAngle',['../classanalysis_1_1_chemotaxis.html#ac867eb56c4bc6bc4664e3837d7f08043',1,'analysis::Chemotaxis']]],
+  ['removeextension',['removeExtension',['../classfunctions_1_1_file_manager.html#a400317e6aea5b1fb927bdbd66393a1a4',1,'functions::FileManager']]],
+  ['resetparams',['resetParams',['../classdata_1_1_params.html#acaec384e0b9028393ae5c04e58ee1c59',1,'data::Params']]],
+  ['run',['run',['../classdata_1_1_oscillatory_walker.html#ab73a3ff7f6f1d2d21eb1fca0ab4b2492',1,'data.OscillatoryWalker.run()'],['../classdata_1_1_persistent_random_walker.html#a544a033f373727ed6e269402d645f7d6',1,'data.PersistentRandomWalker.run()'],['../classdata_1_1_simulation.html#a656cd428e294d33e3ccf55463d80dbdf',1,'data.Simulation.run()'],['../classgui_1_1_settings_window.html#ad2fbca31ec3a1e013570d4a791cabe00',1,'gui.SettingsWindow.run()'],['../class_open_c_a_s_a__.html#a8b590b17377b0091d63e5a5af48c9b99',1,'OpenCASA_.run()'],['../classthird___party_1_1_a_v_i___reader.html#a9986cc553cf34bcad781fe508172f4ab',1,'third_Party.AVI_Reader.run()']]]
 ];

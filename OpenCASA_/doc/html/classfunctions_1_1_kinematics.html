@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_kinematics.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,49 +80,47 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_kinematics.html">Kinematics</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classfunctions_1_1_kinematics-members.html">List of all members</a>  </div>
   <div class="headertitle">
 <div class="title">functions.Kinematics Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aa7bd8b43900594ff677d52d59037ac05"><td class="memItemLeft" align="right" valign="top">static float []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#aa7bd8b43900594ff677d52d59037ac05">alh</a> (List track, List avgTrack)</td></tr>
-<tr class="separator:aa7bd8b43900594ff677d52d59037ac05"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6da238288d8fc5572e419393f6fa9bae"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a6da238288d8fc5572e419393f6fa9bae">bcf</a> (List track, List avgTrack)</td></tr>
-<tr class="separator:a6da238288d8fc5572e419393f6fa9bae"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a20cdebc8892e3cfd5f5ae4523969a448"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a20cdebc8892e3cfd5f5ae4523969a448">getVelocityTrackType</a> (List track)</td></tr>
-<tr class="separator:a20cdebc8892e3cfd5f5ae4523969a448"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a3b81477075ade3a6962771289c2d4e98"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a3b81477075ade3a6962771289c2d4e98">mad</a> (List track)</td></tr>
-<tr class="separator:a3b81477075ade3a6962771289c2d4e98"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a88a0aff00356ce737e9f971e034c73b4"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a88a0aff00356ce737e9f971e034c73b4">vcl</a> (List track)</td></tr>
-<tr class="separator:a88a0aff00356ce737e9f971e034c73b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bbd93331732576ca5c3a04e086e871d"><td class="memItemLeft" align="right" valign="top">static float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a5bbd93331732576ca5c3a04e086e871d">vsl</a> (List track)</td></tr>
-<tr class="separator:a5bbd93331732576ca5c3a04e086e871d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:af0c7becd51be858be80720df28fb7ee9"><td class="memItemLeft" align="right" valign="top">float []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#af0c7becd51be858be80720df28fb7ee9">alh</a> (List track, List avgTrack)</td></tr>
+<tr class="separator:af0c7becd51be858be80720df28fb7ee9"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae007676d41c40d4222405d08a9af54e8"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#ae007676d41c40d4222405d08a9af54e8">bcf</a> (List track, List avgTrack)</td></tr>
+<tr class="separator:ae007676d41c40d4222405d08a9af54e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf4ee8b2b823ed447e7aaab91dabb1a3"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#acf4ee8b2b823ed447e7aaab91dabb1a3">getVelocityTrackType</a> (List track)</td></tr>
+<tr class="separator:acf4ee8b2b823ed447e7aaab91dabb1a3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acf1c1999d290fd3f7cb00990ce94f92a"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#acf1c1999d290fd3f7cb00990ce94f92a">mad</a> (List track)</td></tr>
+<tr class="separator:acf1c1999d290fd3f7cb00990ce94f92a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a747a4336abc7441718d399feb5532b1b"><td class="memItemLeft" align="right" valign="top">boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a747a4336abc7441718d399feb5532b1b">motilityTest</a> (List track)</td></tr>
+<tr class="separator:a747a4336abc7441718d399feb5532b1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aabf78a562592940ca564f7148ecf7c8c"><td class="memItemLeft" align="right" valign="top">int []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#aabf78a562592940ca564f7148ecf7c8c">motilityTest</a> (<a class="el" href="classdata_1_1_s_list.html">SList</a> theTracks)</td></tr>
+<tr class="separator:aabf78a562592940ca564f7148ecf7c8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a847ecc29fe7ba0c2fdaffadee829150b"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#a847ecc29fe7ba0c2fdaffadee829150b">vcl</a> (List track)</td></tr>
+<tr class="separator:a847ecc29fe7ba0c2fdaffadee829150b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ada3eee53fd83da143deb24b208b71ab7"><td class="memItemLeft" align="right" valign="top">float&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_kinematics.html#ada3eee53fd83da143deb24b208b71ab7">vsl</a> (List track)</td></tr>
+<tr class="separator:ada3eee53fd83da143deb24b208b71ab7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00015">15</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa7bd8b43900594ff677d52d59037ac05"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa7bd8b43900594ff677d52d59037ac05">&sect;&nbsp;</a></span>alh()</h2>
+<a id="af0c7becd51be858be80720df28fb7ee9"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af0c7becd51be858be80720df28fb7ee9">&sect;&nbsp;</a></span>alh()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static float [] functions.Kinematics.alh </td>
+          <td class="memname">float [] functions.Kinematics.alh </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>track</em>, </td>
@@ -117,11 +137,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -138,19 +153,18 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>ALH (mean and max) (um) </dd></dl>
 
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00024">24</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
 </div>
 </div>
-<a id="a6da238288d8fc5572e419393f6fa9bae"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6da238288d8fc5572e419393f6fa9bae">&sect;&nbsp;</a></span>bcf()</h2>
+<a id="ae007676d41c40d4222405d08a9af54e8"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae007676d41c40d4222405d08a9af54e8">&sect;&nbsp;</a></span>bcf()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static float functions.Kinematics.bcf </td>
+          <td class="memname">float functions.Kinematics.bcf </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>track</em>, </td>
@@ -167,11 +181,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -196,30 +205,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00085">85</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
 </div>
 </div>
-<a id="a20cdebc8892e3cfd5f5ae4523969a448"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a20cdebc8892e3cfd5f5ae4523969a448">&sect;&nbsp;</a></span>getVelocityTrackType()</h2>
+<a id="acf4ee8b2b823ed447e7aaab91dabb1a3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf4ee8b2b823ed447e7aaab91dabb1a3">&sect;&nbsp;</a></span>getVelocityTrackType()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static String functions.Kinematics.getVelocityTrackType </td>
+          <td class="memname">String functions.Kinematics.getVelocityTrackType </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>track</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -229,30 +232,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00124">124</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
 </div>
 </div>
-<a id="a3b81477075ade3a6962771289c2d4e98"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3b81477075ade3a6962771289c2d4e98">&sect;&nbsp;</a></span>mad()</h2>
+<a id="acf1c1999d290fd3f7cb00990ce94f92a"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#acf1c1999d290fd3f7cb00990ce94f92a">&sect;&nbsp;</a></span>mad()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static float functions.Kinematics.mad </td>
+          <td class="memname">float functions.Kinematics.mad </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>track</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -265,30 +262,78 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>MAD - (degrees) </dd></dl>
 
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00143">143</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
 </div>
 </div>
-<a id="a88a0aff00356ce737e9f971e034c73b4"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a88a0aff00356ce737e9f971e034c73b4">&sect;&nbsp;</a></span>vcl()</h2>
+<a id="a747a4336abc7441718d399feb5532b1b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a747a4336abc7441718d399feb5532b1b">&sect;&nbsp;</a></span>motilityTest() <span class="overload">[1/2]</span></h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static float functions.Kinematics.vcl </td>
+          <td class="memname">boolean functions.Kinematics.motilityTest </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>track</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">track</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00167">167</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
+</div>
+</div>
+<a id="aabf78a562592940ca564f7148ecf7c8c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aabf78a562592940ca564f7148ecf7c8c">&sect;&nbsp;</a></span>motilityTest() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int [] functions.Kinematics.motilityTest </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="classdata_1_1_s_list.html">SList</a>&#160;</td>
+          <td class="paramname"><em>theTracks</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">theTracks</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00190">190</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
+</div>
+</div>
+<a id="a847ecc29fe7ba0c2fdaffadee829150b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a847ecc29fe7ba0c2fdaffadee829150b">&sect;&nbsp;</a></span>vcl()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">float functions.Kinematics.vcl </td>
+          <td>(</td>
+          <td class="paramtype">List&#160;</td>
+          <td class="paramname"><em>track</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -301,30 +346,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>VCL (um/second) </dd></dl>
 
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00212">212</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
 </div>
 </div>
-<a id="a5bbd93331732576ca5c3a04e086e871d"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bbd93331732576ca5c3a04e086e871d">&sect;&nbsp;</a></span>vsl()</h2>
+<a id="ada3eee53fd83da143deb24b208b71ab7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ada3eee53fd83da143deb24b208b71ab7">&sect;&nbsp;</a></span>vsl()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static float functions.Kinematics.vsl </td>
+          <td class="memname">float functions.Kinematics.vsl </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>track</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -337,17 +376,23 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>VSL (um/second) </dd></dl>
 
+<p>Definition at line <a class="el" href="_kinematics_8java_source.html#l00237">237</a> of file <a class="el" href="_kinematics_8java_source.html">Kinematics.java</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_kinematics_8java.html">Kinematics.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_kinematics_8java_source.html">Kinematics.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_kinematics.html">Kinematics</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

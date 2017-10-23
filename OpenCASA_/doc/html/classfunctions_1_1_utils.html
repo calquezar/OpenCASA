@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classfunctions_1_1_utils.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,74 +80,94 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_utils.html">Utils</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="classfunctions_1_1_utils-members.html">List of all members</a>  </div>
   <div class="headertitle">
-<div class="title">functions.Utils Class Reference<span class="mlabels"><span class="mlabel">abstract</span></span></div>  </div>
+<div class="title">functions.Utils Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-methods"></a>
-Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab0c8abed925cb2442b92a25746ee9dc1"><td class="memItemLeft" align="right" valign="top">static int []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#ab0c8abed925cb2442b92a25746ee9dc1">convertLongArrayToInt</a> (long[] orig)</td></tr>
-<tr class="separator:ab0c8abed925cb2442b92a25746ee9dc1"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afac1ff6c5ffe5704217144efe96d0008"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#afac1ff6c5ffe5704217144efe96d0008">getAbsoluteFileName</a> ()</td></tr>
-<tr class="separator:afac1ff6c5ffe5704217144efe96d0008"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ada34524c41f4ab85b7b7b5b92d03e4bb"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#ada34524c41f4ab85b7b7b5b92d03e4bb">getFileName</a> (String path)</td></tr>
-<tr class="separator:ada34524c41f4ab85b7b7b5b92d03e4bb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a57cf1d6c5fb006af17f1c412bcfc7472"><td class="memItemLeft" align="right" valign="top">static String []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a57cf1d6c5fb006af17f1c412bcfc7472">getFileNames</a> ()</td></tr>
-<tr class="separator:a57cf1d6c5fb006af17f1c412bcfc7472"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afcded9dcf50f9686febaa19a447da220"><td class="memItemLeft" align="right" valign="top">static String []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#afcded9dcf50f9686febaa19a447da220">getFileNames</a> (String dir)</td></tr>
-<tr class="separator:afcded9dcf50f9686febaa19a447da220"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a940367a6f69c9a2041881234e2c64a31"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a940367a6f69c9a2041881234e2c64a31">getParentDirectory</a> (String path)</td></tr>
-<tr class="separator:a940367a6f69c9a2041881234e2c64a31"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a150d932dd5b2b95a5f0588a10c46baeb"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a150d932dd5b2b95a5f0588a10c46baeb">getSpermatozoon</a> (String id, List spermatozoa)</td></tr>
-<tr class="separator:a150d932dd5b2b95a5f0588a10c46baeb"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af52875c8724a9e539fc492c008a3140f"><td class="memItemLeft" align="right" valign="top">static boolean&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#af52875c8724a9e539fc492c008a3140f">isAVI</a> (String filename)</td></tr>
-<tr class="separator:af52875c8724a9e539fc492c008a3140f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5bc7913a46b0f1eb68e6df01d872c4e7"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a5bc7913a46b0f1eb68e6df01d872c4e7">printXYCoords</a> (List theTracks)</td></tr>
-<tr class="separator:a5bc7913a46b0f1eb68e6df01d872c4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a71165e40a10d4a400f78ee43f918d9ee"><td class="memItemLeft" align="right" valign="top">static Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a71165e40a10d4a400f78ee43f918d9ee">readTrials</a> ()</td></tr>
-<tr class="separator:a71165e40a10d4a400f78ee43f918d9ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a8ceae45471884fa93002d169a3cfad23"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a8ceae45471884fa93002d169a3cfad23">saveTrials</a> (Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt; trials)</td></tr>
-<tr class="separator:a8ceae45471884fa93002d169a3cfad23"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab6319ada99a3e56c852deedba639c885"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#ab6319ada99a3e56c852deedba639c885">selectFile</a> ()</td></tr>
-<tr class="separator:ab6319ada99a3e56c852deedba639c885"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6fb43e0b514d5483fbd537616142b9b7"><td class="memItemLeft" align="right" valign="top">static String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a6fb43e0b514d5483fbd537616142b9b7">selectFolder</a> ()</td></tr>
-<tr class="separator:a6fb43e0b514d5483fbd537616142b9b7"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-methods"></a>
+Public Member Functions</h2></td></tr>
+<tr class="memitem:aa05d9891949a0277c602e4d1d2fd1e90"><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#aa05d9891949a0277c602e4d1d2fd1e90">analysisSelectionDialog</a> (Object[] options, String question, String title)</td></tr>
+<tr class="separator:aa05d9891949a0277c602e4d1d2fd1e90"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a051c88ecefbeab0b5184ceaa424ca3da"><td class="memItemLeft" align="right" valign="top">int []&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a051c88ecefbeab0b5184ceaa424ca3da">convertLongArrayToInt</a> (long[] orig)</td></tr>
+<tr class="separator:a051c88ecefbeab0b5184ceaa424ca3da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8cb54de4a2bac04ef8dc3dc09adf6dbe"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a8cb54de4a2bac04ef8dc3dc09adf6dbe">getSpermatozoon</a> (String id, List spermatozoa)</td></tr>
+<tr class="separator:a8cb54de4a2bac04ef8dc3dc09adf6dbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ad60333f3393e69c8074ef1fd79a34c09"><td class="memItemLeft" align="right" valign="top">String&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#ad60333f3393e69c8074ef1fd79a34c09">printXYCoords</a> (List theTracks)</td></tr>
+<tr class="separator:ad60333f3393e69c8074ef1fd79a34c09"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a75d9f258b35282fa3722d99f856030b2"><td class="memItemLeft" align="right" valign="top">Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a75d9f258b35282fa3722d99f856030b2">readTrials</a> ()</td></tr>
+<tr class="separator:a75d9f258b35282fa3722d99f856030b2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3722ba041468f921073055cb8a68f4e7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_utils.html#a3722ba041468f921073055cb8a68f4e7">saveTrials</a> (Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt; trials)</td></tr>
+<tr class="separator:a3722ba041468f921073055cb8a68f4e7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
+
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00028">28</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab0c8abed925cb2442b92a25746ee9dc1"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab0c8abed925cb2442b92a25746ee9dc1">&sect;&nbsp;</a></span>convertLongArrayToInt()</h2>
+<a id="aa05d9891949a0277c602e4d1d2fd1e90"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa05d9891949a0277c602e4d1d2fd1e90">&sect;&nbsp;</a></span>analysisSelectionDialog()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static int [] functions.Utils.convertLongArrayToInt </td>
+          <td class="memname">int functions.Utils.analysisSelectionDialog </td>
+          <td>(</td>
+          <td class="paramtype">Object []&#160;</td>
+          <td class="paramname"><em>options</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>question</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">String&#160;</td>
+          <td class="paramname"><em>title</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">options</td><td></td></tr>
+    <tr><td class="paramname">question</td><td></td></tr>
+    <tr><td class="paramname">title</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00037">37</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
+
+</div>
+</div>
+<a id="a051c88ecefbeab0b5184ceaa424ca3da"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a051c88ecefbeab0b5184ceaa424ca3da">&sect;&nbsp;</a></span>convertLongArrayToInt()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int [] functions.Utils.convertLongArrayToInt </td>
           <td>(</td>
           <td class="paramtype">long []&#160;</td>
           <td class="paramname"><em>orig</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -135,170 +177,18 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00048">48</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
+
 </div>
 </div>
-<a id="afac1ff6c5ffe5704217144efe96d0008"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afac1ff6c5ffe5704217144efe96d0008">&sect;&nbsp;</a></span>getAbsoluteFileName()</h2>
+<a id="a8cb54de4a2bac04ef8dc3dc09adf6dbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a8cb54de4a2bac04ef8dc3dc09adf6dbe">&sect;&nbsp;</a></span>getSpermatozoon()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static String functions.Utils.getAbsoluteFileName </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="ada34524c41f4ab85b7b7b5b92d03e4bb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ada34524c41f4ab85b7b7b5b92d03e4bb">&sect;&nbsp;</a></span>getFileName()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String functions.Utils.getFileName </td>
-          <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a57cf1d6c5fb006af17f1c412bcfc7472"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a57cf1d6c5fb006af17f1c412bcfc7472">&sect;&nbsp;</a></span>getFileNames() <span class="overload">[1/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String [] functions.Utils.getFileNames </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="afcded9dcf50f9686febaa19a447da220"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#afcded9dcf50f9686febaa19a447da220">&sect;&nbsp;</a></span>getFileNames() <span class="overload">[2/2]</span></h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String [] functions.Utils.getFileNames </td>
-          <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>dir</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">dir</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a940367a6f69c9a2041881234e2c64a31"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a940367a6f69c9a2041881234e2c64a31">&sect;&nbsp;</a></span>getParentDirectory()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String functions.Utils.getParentDirectory </td>
-          <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>path</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">path</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a150d932dd5b2b95a5f0588a10c46baeb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a150d932dd5b2b95a5f0588a10c46baeb">&sect;&nbsp;</a></span>getSpermatozoon()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static <a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a> functions.Utils.getSpermatozoon </td>
+          <td class="memname"><a class="el" href="classdata_1_1_spermatozoon.html">Spermatozoon</a> functions.Utils.getSpermatozoon </td>
           <td>(</td>
           <td class="paramtype">String&#160;</td>
           <td class="paramname"><em>id</em>, </td>
@@ -315,11 +205,6 @@ Static Public Member Functions</h2></td></tr>
           <td></td><td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -330,63 +215,24 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00061">61</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
+
 </div>
 </div>
-<a id="af52875c8724a9e539fc492c008a3140f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#af52875c8724a9e539fc492c008a3140f">&sect;&nbsp;</a></span>isAVI()</h2>
+<a id="ad60333f3393e69c8074ef1fd79a34c09"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ad60333f3393e69c8074ef1fd79a34c09">&sect;&nbsp;</a></span>printXYCoords()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static boolean functions.Utils.isAVI </td>
-          <td>(</td>
-          <td class="paramtype">String&#160;</td>
-          <td class="paramname"><em>filename</em></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">filename</td><td></td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a5bc7913a46b0f1eb68e6df01d872c4e7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5bc7913a46b0f1eb68e6df01d872c4e7">&sect;&nbsp;</a></span>printXYCoords()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String functions.Utils.printXYCoords </td>
+          <td class="memname">String functions.Utils.printXYCoords </td>
           <td>(</td>
           <td class="paramtype">List&#160;</td>
           <td class="paramname"><em>theTracks</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -396,56 +242,44 @@ Static Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>String with the results in tsv format (tab separated values) </dd></dl>
 
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00079">79</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
+
 </div>
 </div>
-<a id="a71165e40a10d4a400f78ee43f918d9ee"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a71165e40a10d4a400f78ee43f918d9ee">&sect;&nbsp;</a></span>readTrials()</h2>
+<a id="a75d9f258b35282fa3722d99f856030b2"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a75d9f258b35282fa3722d99f856030b2">&sect;&nbsp;</a></span>readTrials()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static Map&lt;String, <a class="el" href="classdata_1_1_trial.html">Trial</a>&gt; functions.Utils.readTrials </td>
+          <td class="memname">Map&lt;String, <a class="el" href="classdata_1_1_trial.html">Trial</a>&gt; functions.Utils.readTrials </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00121">121</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
+
 </div>
 </div>
-<a id="a8ceae45471884fa93002d169a3cfad23"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a8ceae45471884fa93002d169a3cfad23">&sect;&nbsp;</a></span>saveTrials()</h2>
+<a id="a3722ba041468f921073055cb8a68f4e7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3722ba041468f921073055cb8a68f4e7">&sect;&nbsp;</a></span>saveTrials()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static void functions.Utils.saveTrials </td>
+          <td class="memname">void functions.Utils.saveTrials </td>
           <td>(</td>
           <td class="paramtype">Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt;&#160;</td>
           <td class="paramname"><em>trials</em></td><td>)</td>
           <td></td>
         </tr>
       </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
 </div><div class="memdoc">
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
@@ -454,69 +288,23 @@ Static Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-</div>
-</div>
-<a id="ab6319ada99a3e56c852deedba639c885"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab6319ada99a3e56c852deedba639c885">&sect;&nbsp;</a></span>selectFile()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String functions.Utils.selectFile </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
-
-</div>
-</div>
-<a id="a6fb43e0b514d5483fbd537616142b9b7"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a6fb43e0b514d5483fbd537616142b9b7">&sect;&nbsp;</a></span>selectFolder()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static String functions.Utils.selectFolder </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+<p>Definition at line <a class="el" href="_utils_8java_source.html#l00140">140</a> of file <a class="el" href="_utils_8java_source.html">Utils.java</a>.</p>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_utils_8java.html">Utils.java</a></li>
+<li>C:/Users/USUARIO/git/opencasa/OpenCASA_/src/main/java/functions/<a class="el" href="_utils_8java_source.html">Utils.java</a></li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="namespacefunctions.html">functions</a></li><li class="navelem"><a class="el" href="classfunctions_1_1_utils.html">Utils</a></li>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

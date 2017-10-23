@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classdata_1_1_params.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacedata.html">data</a></li><li class="navelem"><a class="el" href="classdata_1_1_params.html">Params</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">data.Params Member List</div>  </div>
@@ -76,10 +93,12 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#ab8cca844aab470b899000a0ae173fa3d">angleDirection</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a3020ee8a7826f5dc952133299c71f192">bcf_shift</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#ac796e44afc599250c1d7ece16a513046">borderSize</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a15ab67301706f88e33d3c9532ca59df5">date</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a5fcc600d05d751e8dd356eed93b84e4d">drawAvgTrajectories</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a92b100694cc55d146fb567c436e381b1">drawOrigTrajectories</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#ab470f4cd5fec89d5c50fd6ac755de315">frameRate</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#af7132f84e981028030864fdcd6ffb69b">compareOppositeDirections</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a15ab67301706f88e33d3c9532ca59df5">date</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a5fcc600d05d751e8dd356eed93b84e4d">drawAvgTrajectories</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a92b100694cc55d146fb567c436e381b1">drawOrigTrajectories</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#ab470f4cd5fec89d5c50fd6ac755de315">frameRate</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a6275ffda5e8943f49543fe17134151c0">genericField</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#aa0074476f2183ad992a4f5f0004925f3">male</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#aadae426370e617e97311a82ad375cc72">maxDisplacement</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a75b0fd05be5ba6add69fc0f80bd061f1">MAXINSTANGLES</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
@@ -90,21 +109,24 @@ $(function() {
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a19256e475cdd87f25f9837538a453b45">NUMSAMPLES</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#aafc5c427ff22945bb54074cb739bb203">pixelHeight</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a09987def1fe202d308ca10bbf93cf428">pixelWidth</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a23a4b36f8e3f056ea982381cb046979c">printXY</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a01488591799a038ed334b52bdbb8e311">progressMotility</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#acaec384e0b9028393ae5c04e58ee1c59">resetParams</a>()</td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#aa639af05ac856b76d27b1df4dccf21d3">saveParams</a>()</td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a3a4cd63af24827b994ca9d22d2aabbb8">selectedFilter</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a359af19420efb43ee3d162c91ed4cff2">prefs</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">private</span><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a23a4b36f8e3f056ea982381cb046979c">printXY</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a01488591799a038ed334b52bdbb8e311">progressMotility</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#acaec384e0b9028393ae5c04e58ee1c59">resetParams</a>()</td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#aa639af05ac856b76d27b1df4dccf21d3">saveParams</a>()</td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#aef1b7097855e65f08bd0abf9d43c9ee4">vclLowerTh</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#a74991573b8c139b28cc198a9d3810e48">vclMin</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_params.html#a52bb204040acb64f42c863fb5680a422">vclUpperTh</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_params.html#adf39b4a2cd358df78172672dbe38260b">wSize</a></td><td class="entry"><a class="el" href="classdata_1_1_params.html">data.Params</a></td><td class="entry"><span class="mlabel">static</span></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>

@@ -9,6 +9,13 @@
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<script type="text/javascript">
+  $(document).ready(initResizable);
+</script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -44,6 +51,21 @@ $(function() {
 });
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+$(document).ready(function(){initNavTree('classdata_1_1_trial.html','');});
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -58,11 +80,6 @@ $(function() {
 </iframe>
 </div>
 
-<div id="nav-path" class="navpath">
-  <ul>
-<li class="navelem"><a class="el" href="namespacedata.html">data</a></li><li class="navelem"><a class="el" href="classdata_1_1_trial.html">Trial</a></li>  </ul>
-</div>
-</div><!-- top -->
 <div class="header">
   <div class="headertitle">
 <div class="title">data.Trial Member List</div>  </div>
@@ -71,24 +88,24 @@ $(function() {
 
 <p>This is the complete list of members for <a class="el" href="classdata_1_1_trial.html">data.Trial</a>, including all inherited members.</p>
 <table class="directory">
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a3f4598abef50860c1cda0f71c3e211b7">height</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc">ID</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a42e3bb431b6dc35c8ebe6bb4beeaed40">imp</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#ae42fc17fd806ecd59edd00cbefe58b15">motileSperm</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">source</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#a076434be940c0d3db36c6be5c0c5325b">tracks</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a899e52b89fd0b71f488d80b36cb15c4e">Trial</a>()</td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#a8e2cea67b588a2ca90544a03c65ca615">Trial</a>(String ID, String type, String source, SList t)</td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a31d704a7dcda485a1f9a9c867c6a89cb">Trial</a>(String ID, String type, String source, SList t, ImagePlus imp, int[] motileSperm)</td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a2601824c14a8559596ff8ea52258da69">fieldHeight</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#ae02018a01247c15960525b3c18bb6b0a">fieldWidth</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc">ID</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#a8b6b42b49402824628eb897a19cedfa8">source</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a076434be940c0d3db36c6be5c0c5325b">tracks</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#a899e52b89fd0b71f488d80b36cb15c4e">Trial</a>()</td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
+  <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a8e2cea67b588a2ca90544a03c65ca615">Trial</a>(String ID, String type, String source, SList t)</td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
   <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#aeb87eef325b6688001efb620ee9c67d0">Trial</a>(String ID, String type, String source, SList t, int width, int height)</td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
   <tr class="even"><td class="entry"><a class="el" href="classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6">type</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
-  <tr><td class="entry"><a class="el" href="classdata_1_1_trial.html#a5cf7874ce4d4ed68b879f8effd9d8250">width</a></td><td class="entry"><a class="el" href="classdata_1_1_trial.html">data.Trial</a></td><td class="entry"></td></tr>
 </table></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Generated by &#160;<a href="http://www.doxygen.org/index.html">
-<img class="footer" src="doxygen.png" alt="doxygen"/>
-</a> 1.8.12
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="footer">Generated by
+    <a href="http://www.doxygen.org/index.html">
+    <img class="footer" src="doxygen.png" alt="doxygen"/></a> 1.8.12 </li>
+  </ul>
+</div>
 </body>
 </html>
