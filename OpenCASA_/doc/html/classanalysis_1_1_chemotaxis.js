@@ -19,7 +19,7 @@ var classanalysis_1_1_chemotaxis =
     [ "getListOfAngles", "classanalysis_1_1_chemotaxis.html#ae950951adeb9a4946cd299017496819e", null ],
     [ "getOddsValues", "classanalysis_1_1_chemotaxis.html#a6bac66e910c9e87183efe6f7e771e3fb", null ],
     [ "getTestFolders", "classanalysis_1_1_chemotaxis.html#afffeded1309008ccf14401e37d85ebab", null ],
-    [ "getTrials", "classanalysis_1_1_chemotaxis.html#aae2067cd12c0d376776f4f05de1a476f", null ],
+    [ "getTrials", "classanalysis_1_1_chemotaxis.html#a8b74b8362bf0a7afa1e471a79a81fc97", null ],
     [ "indexesAnalysis", "classanalysis_1_1_chemotaxis.html#a7810b5bd3f166f7241f9a90d84a96cf1", null ],
     [ "mergeTracks", "classanalysis_1_1_chemotaxis.html#a684a9647c7437ff50b9022e086ef473d", null ],
     [ "minSampleSize", "classanalysis_1_1_chemotaxis.html#a90877dd32f46e25fc5d4914dcc243367", null ],

@@ -12,6 +12,7 @@ var hierarchy =
     ] ],
     [ "functions.TrialManager", "classfunctions_1_1_trial_manager.html", null ],
     [ "analysis.Chemotaxis.TypeOfAnalysis", "enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html", null ],
+    [ "analysis.Motility.TypeOfAnalysis", "enumanalysis_1_1_motility_1_1_type_of_analysis.html", null ],
     [ "functions.Utils", "classfunctions_1_1_utils.html", null ],
     [ "ArrayList", null, [
       [ "data.SList", "classdata_1_1_s_list.html", null ]
@@ -33,7 +34,8 @@ var hierarchy =
       [ "data.Trial", "classdata_1_1_trial.html", null ]
     ] ],
     [ "SwingWorker", null, [
-      [ "analysis.Chemotaxis", "classanalysis_1_1_chemotaxis.html", null ]
+      [ "analysis.Chemotaxis", "classanalysis_1_1_chemotaxis.html", null ],
+      [ "analysis.Motility", "classanalysis_1_1_motility.html", null ]
     ] ],
     [ "VirtualStack", null, [
       [ "third_Party.AVI_Reader", "classthird___party_1_1_a_v_i___reader.html", null ]

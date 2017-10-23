@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['getavi',['getAVI',['../classfunctions_1_1_file_manager.html#a7e812f9d24b43b7c41d40416b30383af',1,'functions::FileManager']]],
   ['getbluechannel',['getBlueChannel',['../classfunctions_1_1_computer_vision.html#a68845595c1ffa570fa6d3aaead4ed847',1,'functions::ComputerVision']]],
   ['getcontent',['getContent',['../classfunctions_1_1_file_manager.html#a8a8165fc0f5f0b31dd20695da79a77d1',1,'functions::FileManager']]],
   ['getcontroltrials',['getControlTrials',['../classanalysis_1_1_chemotaxis.html#aca55f710d4c18a6e0ac3936b9f2c354e',1,'analysis::Chemotaxis']]],
@@ -21,7 +22,7 @@ var searchData=
   ['gettestfolders',['getTestFolders',['../classanalysis_1_1_chemotaxis.html#afffeded1309008ccf14401e37d85ebab',1,'analysis::Chemotaxis']]],
   ['gettrialfromavi',['getTrialFromAVI',['../classfunctions_1_1_trial_manager.html#a45a6e5a5d5ad03a208d60fc4b8408480',1,'functions::TrialManager']]],
   ['gettrialfromimp',['getTrialFromImp',['../classfunctions_1_1_trial_manager.html#a5cc3dc0bd82790942230ad3c5b8b1683',1,'functions::TrialManager']]],
-  ['gettrials',['getTrials',['../classanalysis_1_1_chemotaxis.html#aae2067cd12c0d376776f4f05de1a476f',1,'analysis::Chemotaxis']]],
+  ['gettrials',['getTrials',['../classanalysis_1_1_chemotaxis.html#a8b74b8362bf0a7afa1e471a79a81fc97',1,'analysis.Chemotaxis.getTrials()'],['../classanalysis_1_1_motility.html#a60f7a11ae188639c98e7bc9381861a79',1,'analysis.Motility.getTrials()']]],
   ['getvelocitytracktype',['getVelocityTrackType',['../classfunctions_1_1_kinematics.html#acf4ee8b2b823ed447e7aaab91dabb1a3',1,'functions::Kinematics']]],
   ['getwidth',['getWidth',['../classthird___party_1_1_a_v_i___reader.html#afd0dc38d34abecc1cc6a8e85700fb8aa',1,'third_Party::AVI_Reader']]]
 ];

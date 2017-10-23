@@ -12,6 +12,6 @@ var searchData=
   ['readtype',['readType',['../classthird___party_1_1_a_v_i___reader.html#a163cd0565b88b3dead8638bb2b78e0ee',1,'third_Party::AVI_Reader']]],
   ['relativeangle',['relativeAngle',['../classanalysis_1_1_chemotaxis.html#ac7c26a0335e79c33d436f731a1f2d7c4',1,'analysis::Chemotaxis']]],
   ['removeextension',['removeExtension',['../classfunctions_1_1_file_manager.html#a400317e6aea5b1fb927bdbd66393a1a4',1,'functions::FileManager']]],
-  ['resetparams',['resetParams',['../classdata_1_1_params.html#acaec384e0b9028393ae5c04e58ee1c59',1,'data::Params']]],
+  ['resetparams',['resetParams',['../classanalysis_1_1_motility.html#a0e475c03338b1cb573cbcfc15e3b1c2f',1,'analysis.Motility.resetParams()'],['../classdata_1_1_params.html#acaec384e0b9028393ae5c04e58ee1c59',1,'data.Params.resetParams()']]],
   ['run',['run',['../classdata_1_1_oscillatory_walker.html#ab73a3ff7f6f1d2d21eb1fca0ab4b2492',1,'data.OscillatoryWalker.run()'],['../classdata_1_1_persistent_random_walker.html#a544a033f373727ed6e269402d645f7d6',1,'data.PersistentRandomWalker.run()'],['../classdata_1_1_simulation.html#a656cd428e294d33e3ccf55463d80dbdf',1,'data.Simulation.run()'],['../classgui_1_1_settings_window.html#ad2fbca31ec3a1e013570d4a791cabe00',1,'gui.SettingsWindow.run()'],['../class_open_c_a_s_a__.html#a8b590b17377b0091d63e5a5af48c9b99',1,'OpenCASA_.run()'],['../classthird___party_1_1_a_v_i___reader.html#a9986cc553cf34bcad781fe508172f4ab',1,'third_Party.AVI_Reader.run()']]]
 ];

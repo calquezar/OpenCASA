@@ -8,6 +8,6 @@ var searchData=
   ['no_5fcompression_5fy16',['NO_COMPRESSION_Y16',['../classthird___party_1_1_a_v_i___reader.html#adb6767b5b747f411aa4b70fe8f9e8994',1,'third_Party::AVI_Reader']]],
   ['no_5fcompression_5fy8',['NO_COMPRESSION_Y8',['../classthird___party_1_1_a_v_i___reader.html#a3789f5d56eb31a9779e684c7deb6ee3a',1,'third_Party::AVI_Reader']]],
   ['no_5fcompression_5fy800',['NO_COMPRESSION_Y800',['../classthird___party_1_1_a_v_i___reader.html#aff28fa92f59b85a19c8d53b6fcabe69e',1,'third_Party::AVI_Reader']]],
-  ['none',['NONE',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#ae7b4ee8f18a0e97c04350bfde71aeb80',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
+  ['none',['NONE',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#ae7b4ee8f18a0e97c04350bfde71aeb80',1,'analysis.Chemotaxis.TypeOfAnalysis.NONE()'],['../enumanalysis_1_1_motility_1_1_type_of_analysis.html#a0f8b9421a6cfa6c90581648490c3d139',1,'analysis.Motility.TypeOfAnalysis.NONE()']]],
   ['numsamples',['NUMSAMPLES',['../classdata_1_1_params.html#a19256e475cdd87f25f9837538a453b45',1,'data::Params']]]
 ];

@@ -123,7 +123,7 @@ public class Paint {
     // Draw on each frame
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
       IJ.showProgress((double) iFrame / nFrames);
-      IJ.showStatus("Drawing Tracks...");
+      IJ.showStatus("Drawing Tracks (frame "+iFrame+"/"+nFrames+")...");
       int trackCount2 = 0;
       int trackCount3 = 0;
       int color;
@@ -169,7 +169,7 @@ public class Paint {
           }
         }
       }
-      System.out.println("Drawind frame: " + iFrame);
+//      System.out.println("Drawind frame: " + iFrame);
     }
     imp.updateAndRepaintWindow();
   }

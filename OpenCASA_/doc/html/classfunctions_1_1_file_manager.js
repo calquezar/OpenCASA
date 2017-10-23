@@ -1,6 +1,7 @@
 var classfunctions_1_1_file_manager =
 [
     [ "FileManager", "classfunctions_1_1_file_manager.html#ae9b482778b867021de8c5996981fdb86", null ],
+    [ "getAVI", "classfunctions_1_1_file_manager.html#a7e812f9d24b43b7c41d40416b30383af", null ],
     [ "getContent", "classfunctions_1_1_file_manager.html#a8a8165fc0f5f0b31dd20695da79a77d1", null ],
     [ "getFilename", "classfunctions_1_1_file_manager.html#a5b22bc37a0ada69ed447a34bdef68f6b", null ],
     [ "getFiles", "classfunctions_1_1_file_manager.html#a252da250b5d0b7b72c22d851cb85f6d6", null ],

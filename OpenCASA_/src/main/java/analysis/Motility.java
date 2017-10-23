@@ -45,7 +45,11 @@ public class Motility extends SwingWorker<Boolean, String> {
   private float countProgressiveSperm = 0;  
   
   public Motility() {}
-  
+  /**
+   * This method asks user for the directory that contains all subfolders that are going to be analysed.
+   * For each subfolder, the average motility parameters will be calculated. The method finish showing a 
+   * ResultsTable with the motility information.
+   */  
   private void analyseDirectories(){
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
@@ -68,7 +72,11 @@ public class Motility extends SwingWorker<Boolean, String> {
     }
     rtTotal.show("Total Motility");
   }
-  
+  /**
+   * This method asks user for the directory that contains all AVI files that are going to be analysed.
+   * For each file, the individual and average motility parameters will be calculated. The method finish showing
+   * the corresponding results tables with the motility information.
+   */    
   private void analyseDirectory(){
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
@@ -100,19 +108,20 @@ public class Motility extends SwingWorker<Boolean, String> {
     ResultsTable rtAverage = new ResultsTable();
     calculateMotility(rtIndividual, trial);
     calculateAverageMotility(rtAverage, trial);
-    // Draw trajectories
-    ImagePlus imp = fm.getAVI(file);
-    imp.show();
-    Paint paint = new Paint();
-    paint.draw(imp, trial.tracks);
+    //Show results
     rtIndividual.show("Individual Motility");
     rtAverage.show("Average Motility");
+    // Draw trajectories
+    ImagePlus imp = fm.getAVI(file);
+    Paint paint = new Paint();
+    paint.draw(imp, trial.tracks);
+    imp.show();
   }
   
-  /******************************************************/
   /**
-   * @param rt
-   * @param trial
+   * This method calculates the average motility values for the given trial.
+   * @param rt - ResultsTable where the motility information will be added.
+   * @param trial - Trial with all trajectories that will be analysed.
    */
   private void calculateAverageMotility(ResultsTable rt, Trial trial) {
 
@@ -169,8 +178,9 @@ public class Motility extends SwingWorker<Boolean, String> {
   }
   
   /**
-   * @param rt
-   * @param trial
+   * This method calculates the individual motility values for the given trial.
+   * @param rt - ResultsTable where the motility information will be added.
+   * @param trial - Trial with all trajectories that will be analysed.
    */
   private void calculateMotility(ResultsTable rt, Trial trial) {
 
@@ -248,8 +258,9 @@ public class Motility extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * @param rt
-   * @param filename
+   * This method calculates the total average motility values for a folder.
+   * @param rt - ResultsTable where the motility information will be added.
+   * @param filename - the folder name. This information will be added to the results table.
    */
   private void calculateTotalMotility(ResultsTable rt, String filename) {
 
@@ -329,7 +340,7 @@ public class Motility extends SwingWorker<Boolean, String> {
     return trials;
   }
   /**
-   * 
+   * This method resets all motility parameters of the motility analysis
    */
   private void resetParams() {
     total_sperm = 0;

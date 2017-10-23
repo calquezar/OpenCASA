@@ -1,7 +1,10 @@
 var searchData=
 [
+  ['calculateaveragemotility',['calculateAverageMotility',['../classanalysis_1_1_motility.html#aa06e05773008381ca480a7042bcae2ae',1,'analysis::Motility']]],
   ['calculatechindex',['calculateChIndex',['../classanalysis_1_1_chemotaxis.html#adb66b5aab84c248bbf75313e68b2bd10',1,'analysis::Chemotaxis']]],
+  ['calculatemotility',['calculateMotility',['../classanalysis_1_1_motility.html#ac7f305f6d6e407b1d23b7c63753829f6',1,'analysis::Motility']]],
   ['calculateslindex',['calculateSLIndex',['../classanalysis_1_1_chemotaxis.html#a78eb06a29f73da7c09513782fa3aa5c5',1,'analysis::Chemotaxis']]],
+  ['calculatetotalmotility',['calculateTotalMotility',['../classanalysis_1_1_motility.html#acae9f4ea805d7bc2450dad85adf51330',1,'analysis::Motility']]],
   ['chemotaxistemplate',['chemotaxisTemplate',['../classfunctions_1_1_paint.html#a5143820b1a4eaf128f8ae5d2bc178b74',1,'functions::Paint']]],
   ['circularhistogram',['circularHistogram',['../classanalysis_1_1_chemotaxis.html#a4a2ad96cbafd5109c182ca9223743815',1,'analysis::Chemotaxis']]],
   ['convertlongarraytoint',['convertLongArrayToInt',['../classfunctions_1_1_utils.html#a051c88ecefbeab0b5184ceaa424ca3da',1,'functions::Utils']]],

@@ -2,7 +2,7 @@ var searchData=
 [
   ['saveparams',['saveParams',['../classdata_1_1_params.html#aa639af05ac856b76d27b1df4dccf21d3',1,'data::Params']]],
   ['savetrials',['saveTrials',['../classfunctions_1_1_trial_manager.html#a3b2d8c9d2a25589d6929c9e0ad0fbe29',1,'functions::TrialManager']]],
-  ['selectanalysis',['selectAnalysis',['../classanalysis_1_1_chemotaxis.html#a8557a0d82b6af1e99d502bf3f885f566',1,'analysis::Chemotaxis']]],
+  ['selectanalysis',['selectAnalysis',['../classanalysis_1_1_chemotaxis.html#a8557a0d82b6af1e99d502bf3f885f566',1,'analysis.Chemotaxis.selectAnalysis()'],['../classanalysis_1_1_motility.html#a06dfbcfa64fc19be91d213365af1374b',1,'analysis.Motility.selectAnalysis()']]],
   ['selectfile',['selectFile',['../classfunctions_1_1_file_manager.html#aeb98f0638c58e80aef6382759ba051ef',1,'functions::FileManager']]],
   ['selectfolder',['selectFolder',['../classfunctions_1_1_file_manager.html#a01dbb6b5ae72a5d056d62cbeeb3c9622',1,'functions::FileManager']]],
   ['setbootstrappingresults',['setBootstrappingResults',['../classanalysis_1_1_chemotaxis.html#a6d70637d4ebd9b3826ac2375aeae49ee',1,'analysis::Chemotaxis']]],

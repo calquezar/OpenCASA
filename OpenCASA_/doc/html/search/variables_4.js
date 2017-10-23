@@ -3,6 +3,7 @@ var searchData=
   ['fccstreamhandler',['fccStreamHandler',['../classthird___party_1_1_a_v_i___reader.html#adcbc1efe812b80e03f786802aca91c9f',1,'third_Party::AVI_Reader']]],
   ['fieldheight',['fieldHeight',['../classdata_1_1_trial.html#a2601824c14a8559596ff8ea52258da69',1,'data::Trial']]],
   ['fieldwidth',['fieldWidth',['../classdata_1_1_trial.html#ae02018a01247c15960525b3c18bb6b0a',1,'data::Trial']]],
+  ['file',['FILE',['../enumanalysis_1_1_motility_1_1_type_of_analysis.html#a6caa0644da1b6e5c0291005e315f77f3',1,'analysis::Motility::TypeOfAnalysis']]],
   ['filesize',['fileSize',['../classthird___party_1_1_a_v_i___reader.html#a8c2b5b20326297322c3386972e2df424',1,'third_Party::AVI_Reader']]],
   ['firstframe',['firstFrame',['../classthird___party_1_1_a_v_i___reader.html#ac3215b5ca71c819b5596da8de72d1c51',1,'third_Party::AVI_Reader']]],
   ['flag',['flag',['../classdata_1_1_spermatozoon.html#a8d6db711ec6a07af89c0ce858f354a85',1,'data::Spermatozoon']]],

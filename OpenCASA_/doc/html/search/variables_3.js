@@ -3,6 +3,8 @@ var searchData=
   ['datacompression',['dataCompression',['../classthird___party_1_1_a_v_i___reader.html#a2162fee9234157ca1547716e83a26f37',1,'third_Party::AVI_Reader']]],
   ['datatopdown',['dataTopDown',['../classthird___party_1_1_a_v_i___reader.html#a5ee060949ab9bce8c73729050bc737a2',1,'third_Party::AVI_Reader']]],
   ['date',['date',['../classdata_1_1_params.html#a15ab67301706f88e33d3c9532ca59df5',1,'data::Params']]],
+  ['directories',['DIRECTORIES',['../enumanalysis_1_1_motility_1_1_type_of_analysis.html#a596125c0b9bca004b110b39e7b8f9eae',1,'analysis::Motility::TypeOfAnalysis']]],
+  ['directory',['DIRECTORY',['../enumanalysis_1_1_motility_1_1_type_of_analysis.html#acbd0977b98d1e136501e460e3219a345',1,'analysis::Motility::TypeOfAnalysis']]],
   ['drawavgtrajectories',['drawAvgTrajectories',['../classdata_1_1_params.html#a5fcc600d05d751e8dd356eed93b84e4d',1,'data::Params']]],
   ['draworigtrajectories',['drawOrigTrajectories',['../classdata_1_1_params.html#a92b100694cc55d146fb567c436e381b1',1,'data::Params']]],
   ['dwflags',['dwFlags',['../classthird___party_1_1_a_v_i___reader.html#a5f50db97ac24d22f928d9fe84349df6b',1,'third_Party::AVI_Reader']]],

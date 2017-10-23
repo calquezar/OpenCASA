@@ -1,7 +1,10 @@
 var searchData=
 [
+  ['calculateaveragemotility',['calculateAverageMotility',['../classanalysis_1_1_motility.html#aa06e05773008381ca480a7042bcae2ae',1,'analysis::Motility']]],
   ['calculatechindex',['calculateChIndex',['../classanalysis_1_1_chemotaxis.html#adb66b5aab84c248bbf75313e68b2bd10',1,'analysis::Chemotaxis']]],
+  ['calculatemotility',['calculateMotility',['../classanalysis_1_1_motility.html#ac7f305f6d6e407b1d23b7c63753829f6',1,'analysis::Motility']]],
   ['calculateslindex',['calculateSLIndex',['../classanalysis_1_1_chemotaxis.html#a78eb06a29f73da7c09513782fa3aa5c5',1,'analysis::Chemotaxis']]],
+  ['calculatetotalmotility',['calculateTotalMotility',['../classanalysis_1_1_motility.html#acae9f4ea805d7bc2450dad85adf51330',1,'analysis::Motility']]],
   ['chemotaxis',['Chemotaxis',['../classanalysis_1_1_chemotaxis.html',1,'analysis']]],
   ['chemotaxis_2ejava',['Chemotaxis.java',['../_chemotaxis_8java.html',1,'']]],
   ['chemotaxistemplate',['chemotaxisTemplate',['../classfunctions_1_1_paint.html#a5143820b1a4eaf128f8ae5d2bc178b74',1,'functions::Paint']]],
@@ -17,6 +20,7 @@ var searchData=
   ['copy',['copy',['../classdata_1_1_spermatozoon.html#a9dd1168f88d03e5848583cc987e4abad',1,'data::Spermatozoon']]],
   ['countangles',['countAngles',['../classanalysis_1_1_chemotaxis.html#a02b51757e113383f0ac7b2182fd06989',1,'analysis::Chemotaxis']]],
   ['countinstantdisplacements',['countInstantDisplacements',['../classanalysis_1_1_chemotaxis.html#a0b4a1fcd5db258591eb4b54a54496c95',1,'analysis::Chemotaxis']]],
+  ['countprogressivesperm',['countProgressiveSperm',['../classanalysis_1_1_motility.html#a4082448fc43543bfe9d0512e1bb07422',1,'analysis::Motility']]],
   ['createchemotaxisbox',['createChemotaxisBox',['../classgui_1_1_settings_window.html#af72338f4cb07bcee96cb863a427689d2',1,'gui::SettingsWindow']]],
   ['createfilterbox',['createFilterBox',['../classgui_1_1_settings_window.html#aab40f9631b7b09452f874a7ec6d3b8d4',1,'gui::SettingsWindow']]],
   ['creategeneralbox',['createGeneralBox',['../classgui_1_1_settings_window.html#a195945ec0635493b6c0392ecbe890079',1,'gui::SettingsWindow']]],
