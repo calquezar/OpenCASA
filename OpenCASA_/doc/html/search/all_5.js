@@ -11,6 +11,7 @@ var searchData=
   ['filtertracksbymotility',['filterTracksByMotility',['../classfunctions_1_1_signal_processing.html#aa8bce328ec654c7ba065b4d35b605301',1,'functions::SignalProcessing']]],
   ['findfourccandread',['findFourccAndRead',['../classthird___party_1_1_a_v_i___reader.html#abe195a2bd8d05269e650b346693b3f80',1,'third_Party::AVI_Reader']]],
   ['findfourccandskip',['findFourccAndSkip',['../classthird___party_1_1_a_v_i___reader.html#a4c4590dd4505a88b0a26aee5d575df20',1,'third_Party::AVI_Reader']]],
+  ['findtrial',['findTrial',['../classanalysis_1_1_chemotaxis.html#aa7788114ba541b4d51bd4391118184b4',1,'analysis::Chemotaxis']]],
   ['firstframe',['firstFrame',['../classthird___party_1_1_a_v_i___reader.html#ac3215b5ca71c819b5596da8de72d1c51',1,'third_Party::AVI_Reader']]],
   ['flag',['flag',['../classdata_1_1_spermatozoon.html#a8d6db711ec6a07af89c0ce858f354a85',1,'data::Spermatozoon']]],
   ['flipvertical',['flipVertical',['../classthird___party_1_1_a_v_i___reader.html#af80522b94aad967163e1c1f632ccae18',1,'third_Party::AVI_Reader']]],

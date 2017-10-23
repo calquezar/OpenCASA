@@ -20,10 +20,9 @@ var searchData=
   ['getspermatozoon',['getSpermatozoon',['../classfunctions_1_1_utils.html#a8cb54de4a2bac04ef8dc3dc09adf6dbe',1,'functions::Utils']]],
   ['getsubfolders',['getSubfolders',['../classfunctions_1_1_file_manager.html#acd60931c8cd27cbc3ecc6eaf77950a77',1,'functions::FileManager']]],
   ['gettestfolders',['getTestFolders',['../classanalysis_1_1_chemotaxis.html#afffeded1309008ccf14401e37d85ebab',1,'analysis::Chemotaxis']]],
-  ['gettesttrial',['getTestTrial',['../classanalysis_1_1_chemotaxis.html#a609e29973a5d66c1e254af1fa5e17292',1,'analysis::Chemotaxis']]],
-  ['gettesttrials',['getTestTrials',['../classanalysis_1_1_chemotaxis.html#a0b6c2ea51ce0cae05364c7353fe867eb',1,'analysis::Chemotaxis']]],
   ['gettrialfromavi',['getTrialFromAVI',['../classfunctions_1_1_trial_manager.html#a45a6e5a5d5ad03a208d60fc4b8408480',1,'functions::TrialManager']]],
   ['gettrialfromimp',['getTrialFromImp',['../classfunctions_1_1_trial_manager.html#a5cc3dc0bd82790942230ad3c5b8b1683',1,'functions::TrialManager']]],
+  ['gettrials',['getTrials',['../classanalysis_1_1_chemotaxis.html#aae2067cd12c0d376776f4f05de1a476f',1,'analysis::Chemotaxis']]],
   ['getvelocitytracktype',['getVelocityTrackType',['../classfunctions_1_1_kinematics.html#acf4ee8b2b823ed447e7aaab91dabb1a3',1,'functions::Kinematics']]],
   ['getwidth',['getWidth',['../classthird___party_1_1_a_v_i___reader.html#afd0dc38d34abecc1cc6a8e85700fb8aa',1,'third_Party::AVI_Reader']]],
   ['gui',['gui',['../namespacegui.html',1,'']]]

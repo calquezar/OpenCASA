@@ -10,7 +10,7 @@ var searchData=
   ['maxdisplacement',['maxDisplacement',['../classdata_1_1_params.html#aadae426370e617e97311a82ad375cc72',1,'data::Params']]],
   ['maxinstangles',['MAXINSTANGLES',['../classdata_1_1_params.html#a75b0fd05be5ba6add69fc0f80bd061f1',1,'data::Params']]],
   ['maxsize',['maxSize',['../classdata_1_1_params.html#a0b5480b310b8fab26374dfb11c257426',1,'data::Params']]],
-  ['mergecontroltracks',['mergeControlTracks',['../classanalysis_1_1_chemotaxis.html#ab68b82055db98c9153243bd7d4061093',1,'analysis::Chemotaxis']]],
+  ['mergetracks',['mergeTracks',['../classanalysis_1_1_chemotaxis.html#a684a9647c7437ff50b9022e086ef473d',1,'analysis::Chemotaxis']]],
   ['micronperpixel',['micronPerPixel',['../classdata_1_1_params.html#a4370f2d688da806ade8a760f722090df',1,'data::Params']]],
   ['minsamplesize',['minSampleSize',['../classanalysis_1_1_chemotaxis.html#a90877dd32f46e25fc5d4914dcc243367',1,'analysis::Chemotaxis']]],
   ['minsize',['minSize',['../classdata_1_1_params.html#a4420d49d7e553e552cd1175ca4bb0907',1,'data::Params']]],

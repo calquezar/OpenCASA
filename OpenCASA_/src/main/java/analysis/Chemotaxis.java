@@ -23,9 +23,8 @@ import ij.gui.GenericDialog;
 import ij.measure.ResultsTable;
 
 /**
- * 
+ * This class implements all the functions related to chemotaxis analysis.
  * @author Carlos Alquezar
- *
  */
 public class Chemotaxis extends SwingWorker<Boolean, String> {
 

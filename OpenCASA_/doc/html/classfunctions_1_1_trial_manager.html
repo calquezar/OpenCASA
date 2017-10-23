@@ -95,6 +95,10 @@ Public Member Functions</h2></td></tr>
 <tr class="separator:a45a6e5a5d5ad03a208d60fc4b8408480"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5cc3dc0bd82790942230ad3c5b8b1683"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdata_1_1_trial.html">Trial</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_trial_manager.html#a5cc3dc0bd82790942230ad3c5b8b1683">getTrialFromImp</a> (ImagePlus impOrig, String path)</td></tr>
 <tr class="separator:a5cc3dc0bd82790942230ad3c5b8b1683"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a0d909078f5c9f7d8cbac636fffbc70cb"><td class="memItemLeft" align="right" valign="top">Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_trial_manager.html#a0d909078f5c9f7d8cbac636fffbc70cb">readTrials</a> ()</td></tr>
+<tr class="separator:a0d909078f5c9f7d8cbac636fffbc70cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3b2d8c9d2a25589d6929c9e0ad0fbe29"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_trial_manager.html#a3b2d8c9d2a25589d6929c9e0ad0fbe29">saveTrials</a> (Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt; trials)</td></tr>
+<tr class="separator:a3b2d8c9d2a25589d6929c9e0ad0fbe29"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a14593a8d88918c1079834f0b7a538926"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classdata_1_1_trial.html">Trial</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_trial_manager.html#a14593a8d88918c1079834f0b7a538926">simulateTrial</a> (String trialID, double beta, double responsiveCells)</td></tr>
 <tr class="separator:a14593a8d88918c1079834f0b7a538926"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeb218993d7c8f19a602b1dd0a3e3f592"><td class="memItemLeft" align="right" valign="top">Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classfunctions_1_1_trial_manager.html#aeb218993d7c8f19a602b1dd0a3e3f592">simulateTrials</a> (double beta, double responsiveCells, int MAXSIMULATIONS)</td></tr>
@@ -103,7 +107,7 @@ Public Member Functions</h2></td></tr>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><dl class="section author"><dt>Author</dt><dd>Carlos Alquezar </dd></dl>
 
-<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00018">18</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00025">25</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a45a6e5a5d5ad03a208d60fc4b8408480"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a45a6e5a5d5ad03a208d60fc4b8408480">&sect;&nbsp;</a></span>getTrialFromAVI()</h2>
@@ -129,7 +133,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00026">26</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00033">33</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
 
 </div>
 </div>
@@ -170,7 +174,53 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00047">47</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00054">54</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+
+</div>
+</div>
+<a id="a0d909078f5c9f7d8cbac636fffbc70cb"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0d909078f5c9f7d8cbac636fffbc70cb">&sect;&nbsp;</a></span>readTrials()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">Map&lt;String, <a class="el" href="classdata_1_1_trial.html">Trial</a>&gt; functions.TrialManager.readTrials </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="section return"><dt>Returns</dt><dd></dd></dl>
+
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00077">77</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+
+</div>
+</div>
+<a id="a3b2d8c9d2a25589d6929c9e0ad0fbe29"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3b2d8c9d2a25589d6929c9e0ad0fbe29">&sect;&nbsp;</a></span>saveTrials()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void functions.TrialManager.saveTrials </td>
+          <td>(</td>
+          <td class="paramtype">Map&lt; String, <a class="el" href="classdata_1_1_trial.html">Trial</a> &gt;&#160;</td>
+          <td class="paramname"><em>trials</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">trials</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00096">96</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
 
 </div>
 </div>
@@ -215,7 +265,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00073">73</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00127">127</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
 
 </div>
 </div>
@@ -260,7 +310,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
-<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00088">88</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
+<p>Definition at line <a class="el" href="_trial_manager_8java_source.html#l00142">142</a> of file <a class="el" href="_trial_manager_8java_source.html">TrialManager.java</a>.</p>
 
 </div>
 </div>
