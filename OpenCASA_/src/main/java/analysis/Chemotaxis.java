@@ -67,7 +67,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     List<String> testFolders = getTestFolders(folder);
     for (String f : testFolders) {
       List<String> tests = fm.getFiles(f);
-      Map<String, Trial> tTrials = getTestTrials(tests);
+      Map<String, Trial> tTrials = getTrials(tests);
       ResultsTable rt = analyseCondition(cTrials, tTrials);
       String condition = fm.getFilename(f);
       rt.show(condition);
@@ -117,12 +117,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     final int cMin = minSampleSize(controls);
     final int tMin = minSampleSize(tests);
     Params.MAXINSTANGLES = Math.min(cMin, tMin);
-    // Calculating OR threshold via subsampling
+    // Calculating OR threshold via resampling
     double thControl = orThreshold(controls);
     ResultsTable rt = new ResultsTable();
     for (String cKey : controls.keySet()) {
       Trial cTrial = (Trial) controls.get(cKey);
-      Trial tTrial = getTestTrial(cTrial.ID, tests);
+      Trial tTrial = findTrial(cTrial.ID, tests);
       if (tTrial != null) {
         double or = or(cTrial, tTrial);
         setBootstrappingResults(rt, or, thControl, tTrial);
@@ -222,7 +222,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * and how many in the opposite (or other) direction, depending on the value of the 
    * parameter "Compare Opposite Directions" set by the user on the Settings Window.
    * @param theTracks - The array with all trajectories
-   * @return An array with the two values ([0] - upgradient: [1] - other directions).
+   * @return An array containing the total count of angles ([0] - upgradient: [1] - other directions).
    */
   private int[] countAngles(SList theTracks) {
     int[] angles = { 0, 0 };
@@ -236,8 +236,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
   
   /**
-   * @param track
-   * @return
+   * This method counts, for the given trajectory, how many angles go in the gradient direction
+   * and how many in the opposite (or other) direction, depending on the value of the 
+   * parameter "Compare Opposite Directions" set by the user on the Settings Window.
+   * @param track - The single trajectory to analyse
+   * @return An array containing the total count of angles ([0] - upgradient: [1] - other directions).
    */
   private int[] countInstantDisplacements(List<Spermatozoon> track) {
     int nUpGradient = 0;
@@ -260,7 +263,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         } else {
           nOtherDir++;
         }
-        
       }
     }
     int[] results = new int[2];
@@ -268,7 +270,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     results[1] = nOtherDir;
     return results;
   }
-
+/**
+ * This method is inherit from SwingWorker class and is the starting point after the execute() method is called.
+ */
   @Override
   public Boolean doInBackground() {
 
@@ -289,9 +293,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     return null;
   }
 
+  /**
+   * This method is executed at the end of the worker thread in the Event Dispatch Thread.
+   */
   @Override
   protected void done() {
-    // This method is executed in the EDT
 //    switch (analysis) {
 //      case INDEXESFILE:
 //        break;
@@ -305,7 +311,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 //        break;
 //    }
   }
-
+/**
+ * This method draws a chemotactic cone and a rose diagram for a single trial analysis.
+ * @param trial
+ */
   private void drawResults(Trial trial) {
     if (trial == null)
       return;
@@ -343,8 +352,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * @param theTracks
-   * @return
+   * This method calculates all instantaneous displacements for a given set of trajectories.
+   * @param theTracks - Array with all trajectories.
+   * @return List of angles
    */
   private List<Double> getListOfAngles(SList theTracks) {
     List<Double> instAngles = new ArrayList<Double>();
@@ -362,7 +372,14 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return instAngles;
   }
-
+/**
+ * This method counts, for the given set of trajectories, how many angles go in the gradient direction
+ * and how many in the opposite (or other) direction, depending on the value of the 
+ * parameter "Compare Opposite Directions" set by the user on the Settings Window. The method stops when all
+ * the trajectories have been analysed or the maximum number of angles to analyse is reached.
+ * @param tracks - All the trajectories to analyse
+ * @return An array containing the total count of angles ([0] - upgradient: [1] - other directions).
+ */
   private double[] getOddsValues(SList tracks){
     
     double[] values = new double[] { 0.0, 0.0 };//[0]-upgradient displacements;[1]-displacements to other directionality
@@ -377,7 +394,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return values;
   }
-
+/**
+ * For a given folder, this method returns a list of all subfolders contained in it, that are not named as "control".
+ * @param folder 
+ * @return List of subfolders
+ */
   private List<String> getTestFolders(String folder) {
     FileManager fm = new FileManager();
     List<String> testFolders = fm.getSubfolders(folder);
@@ -390,17 +411,26 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return testFolders;
   }
-
-  private Trial getTestTrial(String id, Map<String, Trial> tests) {
-    for (String k : tests.keySet()) {
-      Trial trial = (Trial) tests.get(k);
+/**
+ * This method search in the given set of trials for the one with the given ID. 
+ * @param id - Identifier of the trial to find.
+ * @param trials - Set of trials
+ * @return the trial found or null otherwise
+ */
+  private Trial findTrial(String id, Map<String, Trial> trials) {
+    for (String k : trials.keySet()) {
+      Trial trial = (Trial) trials.get(k);
       if (trial.ID.equalsIgnoreCase(id))
         return trial;
     }
     return null;
   }
-
-  private Map<String, Trial> getTestTrials(List<String> tests) {
+/**
+ * This method returns all trials extracted from the given set of AVI files.
+ * @param tests List of avi filenames to be analysed.
+ * @return All extracted trials
+ */
+  private Map<String, Trial> getTrials(List<String> tests) {
     // Extract Trials
     TrialManager tm = new TrialManager();
     Map<String, Trial> tTrials = new HashMap<String, Trial>();
@@ -408,11 +438,16 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       String file = tests.get(i);
       Trial trial = tm.getTrialFromAVI(file);
       if(trial!=null)
-        tTrials.put(trial.type + "-_-" + trial.ID, trial);
+        tTrials.put(trial.type + "-_-" + trial.ID, trial); //Expression "-_-" is just a separator
     }
     return tTrials;
   }
-
+/**
+ * 
+ * @param controls
+ * @param tests
+ * @return
+ */
   private ResultsTable indexesAnalysis(Map<String, Trial> controls, Map<String, Trial> tests) {
 
     Set<String> ckeySet = controls.keySet();
@@ -434,8 +469,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * @param controlKeys
-   * @param trials
+   * @param controls
    * @return
    */
   private SList mergeControlTracks(Map<String, Trial> controls) {
@@ -449,6 +483,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
+   * 
    * @param trials
    */
   private int minSampleSize(Map<String, Trial> trials) {
@@ -467,8 +502,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   /**
    * @param control
-   * @param condition
-   * @param trials
+   * @param test
    * @return
    */
   private double or(Trial control, Trial test) {
@@ -485,7 +519,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
   
   /**
-   * @param controlTracks
+   * 
+   * @param controls
    * @return
    */
   private double orThreshold(Map<String, Trial> controls) {
@@ -508,7 +543,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     Collections.sort(oRs);
     return oRs.get((int) (Params.NUMSAMPLES * 0.95));
   }
-
+/**
+ * 
+ * @param oldSpermatozoon
+ * @param newSpermatozoon
+ * @return
+ */
   private double relativeAngle(Spermatozoon oldSpermatozoon, Spermatozoon newSpermatozoon){ //With gradient direction
     double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
     float diffX = newSpermatozoon.x - oldSpermatozoon.x;
@@ -520,7 +560,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return angle; //Between [-PI,PI]
   }
-
+/**
+ * 
+ */
   public void selectAnalysis() {
     // Ask if user wants to analyze a file or directory
     Object[] options = { "File", "Directory", " Multiple Simulations" };
@@ -563,13 +605,13 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
   }
 
-  /**
-   * @param rt
-   * @param or
-   * @param th
-   * @param ID
-   * @param source
-   */
+/**
+ * 
+ * @param rt
+ * @param or
+ * @param th
+ * @param trial
+ */
   private void setBootstrappingResults(ResultsTable rt, double or, double th, Trial trial) {
     rt.incrementCounter();
     rt.addValue("ID", trial.ID);
@@ -590,13 +632,13 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       rt.addValue("Generic Field", Params.genericField);    
   }
 
-  /**
-   * @param rt
-   * @param filename
-   * @param chIdx
-   * @param slIdx
-   * @param nTracks
-   */
+/**
+ * 
+ * @param rt
+ * @param trial
+ * @param chIdx
+ * @param slIdx
+ */
   private void setIndexesResults(ResultsTable rt, Trial trial, float chIdx, float slIdx) {
     int nTracks = trial.tracks.size();
     rt.incrementCounter();
