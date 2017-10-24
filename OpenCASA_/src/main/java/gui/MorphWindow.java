@@ -47,6 +47,10 @@ import ij.process.ImageProcessor;
  */
 public class MorphWindow extends JFrame implements ChangeListener, MouseListener {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   // Here we'll store the original images
   /**
    * 

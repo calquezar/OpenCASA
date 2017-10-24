@@ -32,6 +32,10 @@ import ij.gui.GenericDialog;
  */
 public class MainWindow extends JFrame {
 
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   /** @brief Self reference used in action listeners to show and hide main window. */
   private MainWindow mw;
 

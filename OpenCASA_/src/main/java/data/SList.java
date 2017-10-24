@@ -13,6 +13,11 @@ public class SList extends ArrayList implements Serializable {
   /**
    * 
    */
+  private static final long serialVersionUID = 1L;
+
+  /**
+   * 
+   */
   public SList() {
   }
 

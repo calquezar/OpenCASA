@@ -1,24 +1,11 @@
 package functions;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
-import java.util.Map;
 
-import javax.swing.JFileChooser;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JProgressBar;
 
 import data.Spermatozoon;
-import data.Trial;
 import ij.IJ;
 
 /**
