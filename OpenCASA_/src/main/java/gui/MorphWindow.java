@@ -47,6 +47,9 @@ import ij.process.ImageProcessor;
  */
 public class MorphWindow extends JFrame implements ChangeListener, MouseListener {
 
+  private enum TypeOfAnalysis{FILE, DIRECTORY,NONE}
+  private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
+  
   /** ImagePlus used to store the original images */
   private ImagePlus impOrig = null;
   /** ImagePlus used to draw over them */
@@ -355,6 +358,74 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
       spermatozoon.selected = false;
     }
   }
+  
+  private int analyseFile(){
+    FileManager fm = new FileManager();
+    List<ImagePlus> images = fm.loadImageFile();
+    if(images!=null){
+      setImages(images);
+      showWindow();
+      return 0;
+    }else{
+      return -1;
+    }
+    
+  }
+  
+  private int analyseDirectory(){
+    FileManager fm = new FileManager();
+    List<ImagePlus> images = fm.loadImageDirectory();
+    if(images!=null){
+      setImages(images);
+      showWindow();
+      return 0;
+    }else{
+      return -1;
+    }
+  }
+  
+  public int run(){
+    
+    int out = selectAnalysis();
+    if(out<0)
+      return out;
+    switch (analysis) {
+      case FILE:
+        out = analyseFile();
+        break;
+      case DIRECTORY:
+        out = analyseDirectory();
+        break;
+      default:
+        out = -2;
+        break;
+    }
+    return out;
+  }
+  
+  /**
+   * This method opens a set of dialogs to ask the user which analysis has to be carried on.
+   */
+    public int selectAnalysis() {
+      // Ask if user wants to analyze a file or directory
+      Object[] options = { "File", "Directory"};
+      String question = "What do you want to analyze?";
+      String title = "Choose one analysis...";
+      final int FILE = 0;
+      final int DIR = 1;
+      final int MULTIDIR = 2;
+      Utils utils = new Utils();      
+      int sourceSelection = utils.analysisSelectionDialog(options, question, title);
+      if (sourceSelection < 0) {
+        analysis = TypeOfAnalysis.NONE;
+        return -1;
+      } else if (sourceSelection == FILE) {
+        analysis = TypeOfAnalysis.FILE;
+      } else if (sourceSelection == DIR) {
+        analysis = TypeOfAnalysis.DIRECTORY;
+      }
+      return 0;
+    }    
 
   /******************************************************/
   /**

@@ -115,23 +115,18 @@ public class MainWindow extends JFrame {
 //          viabilityW.showWindow();
         } else if (label.equals("Morphometry")) {
           mw.setVisible(false);
-          FileManager fm = new FileManager();
-          List<ImagePlus> images = fm.loadImageDirectory();
-          if(images!=null){
-            MorphWindow morphW = new MorphWindow();
-            morphW.setImages(images);
-            morphW.showWindow();
-            morphW.addWindowListener(new java.awt.event.WindowAdapter() {
-              @Override
-              public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-                if (mw != null)
-                  mw.setVisible(true);
-              }
-            });
-          }else{
+          MorphWindow morphW = new MorphWindow();
+          morphW.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+              if (mw != null)
+                mw.setVisible(true);
+            }
+          });
+          int out = morphW.run();
+          if(out<0){
             mw.setVisible(true);
           }
-            
         } else if (label.equals("Simulation")) {
           simulate();
         } else if (label.equals("Settings")) {

@@ -124,6 +124,8 @@ public class FileManager {
     }
     List<ImagePlus> images = new ArrayList<ImagePlus>();
     for (int i = 0; i < listOfFiles.length; i++) {
+      IJ.showProgress((double) i / listOfFiles.length);
+      IJ.showStatus("Loading image "+ i +"...");
       String absoluteFilePath = listOfFiles[i];
       if(isAVI(absoluteFilePath))
         continue;
