@@ -624,6 +624,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     rt.addValue("Type", trial.type);
     rt.addValue("Source", trial.source);
+    if(Params.compareOppositeDirections)
+      rt.addValue("COD", "YES");
+    else
+      rt.addValue("COD", "NO");    
     if(!Params.male.isEmpty())
       rt.addValue("Male", Params.male);
     if(!Params.date.isEmpty())
@@ -650,6 +654,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     rt.addValue("ArcChemotaxis (Degrees)", Params.angleAmplitude);
     rt.addValue("ID", trial.ID);
     rt.addValue("Source", trial.source);
+    if(Params.compareOppositeDirections)
+      rt.addValue("COD", "YES");
+    else
+      rt.addValue("COD", "NO");
     if(!Params.male.isEmpty())
       rt.addValue("Male", Params.male);
     if(!Params.date.isEmpty())
