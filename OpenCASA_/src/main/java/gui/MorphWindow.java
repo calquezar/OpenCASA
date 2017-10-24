@@ -42,108 +42,46 @@ import ij.measure.ResultsTable;
 import ij.process.ImageProcessor;
 
 /**
+ * This class implements all the functions related to morphometry analysis.
  * @author Carlos Alquezar
- *
  */
 public class MorphWindow extends JFrame implements ChangeListener, MouseListener {
 
-  /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  // Here we'll store the original images
-  /**
-   * 
-   */
-  ImagePlus impOrig = null;
-  // These ImagePlus will be used to draw over them
-  /**
-   * 
-   */
-  ImagePlus impDraw = null;
-  // These ImagePlus will be used to calculate mean gray values
-  /**
-   * 
-   */
-  ImagePlus impGray = null;
-  // These ImagePlus will be used to identify spermatozoa
-  /**
-   * 
-   */
-  ImagePlus impTh = null;
-  // These ImagePlus will be used to store outlines
-  /**
-   * 
-   */
-  ImagePlus impOutline = null;
-
-  /**
-   * 
-   */
-  double threshold = -1.0;
-  /**
-   * 
-   */
-  String thresholdMethod = "Otsu";
-
-  /**
-   * 
-   */
-  JLabel imgLabel;
-  /**
-   * 
-   */
-  JLabel title;
-  /**
-   * 
-   */
-  boolean isThresholding = false;
-  /**
-   * 
-   */
-  JSlider sldThreshold;
-
-  /**
-   * 
-   */
-  List<ImagePlus> images;
-  /**
-   * 
-   */
-  int imgIndex;
-
+  /** ImagePlus used to store the original images */
+  private ImagePlus impOrig = null;
+  /** ImagePlus used to draw over them */
+  private ImagePlus impDraw = null;
+  /** ImagePlus used to calculate mean gray values */
+  private ImagePlus impGray = null;
+  /** ImagePlus used to identify spermatozoa */
+  private ImagePlus impTh   = null;
+  /** ImagePlus used to store outlines */
+  private ImagePlus       impOutline      = null;
+  private double          threshold       = -1.0;
+  private String          thresholdMethod = "Otsu";
+  private JLabel          imgLabel;
+  private JLabel          title;
+  private boolean         isThresholding  = false;
+  /** */
+  private JSlider         sldThreshold;
+  /** */
+  private List<ImagePlus> images;
+  /** */
+  private int             imgIndex;
   // Resize parameters
-  /**
-   * 
-   */
-  double resizeFactor;
-  /**
-   * 
-   */
-  double xFactor;
-  /**
-   * 
-   */
-  double yFactor;
-
-  // Variable used to store spermatozoa
-  /**
-   * 
-   */
-  List<Spermatozoon> spermatozoa = new ArrayList<Spermatozoon>();
-
-  // Results table
-  /**
-   * 
-   */
-  ResultsTable morphometrics = new ResultsTable();
+  /** */
+  private double             resizeFactor;
+  /** */
+  private double             xFactor;
+  /** */
+  private double             yFactor;
+  /** Variable used to store spermatozoa */
+  private List<Spermatozoon> spermatozoa   = new ArrayList<Spermatozoon>();
+  /** Resultstable used to show results */
+  private ResultsTable       morphometrics = new ResultsTable();
 
   /**
    * Constructor. The main graphical user interface is created.
-   */
-  /**
-   * @param mw
-   * @throws HeadlessException
    */
   public MorphWindow() throws HeadlessException {
     super();
@@ -151,11 +89,13 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
     imgLabel = new JLabel();
     imgLabel.addMouseListener(this);
     imgIndex = 0;
-    resizeFactor = 0.6;
+    resizeFactor = 0.6; // The size of the showed image will be set to 60% of the screen size
   }
 
   /******************************************************/
   /**
+   * This method checks if a click has been done over a cell. In that case, the method select/deselect 
+   * the cell and add the morphometrics to resultsTable if it has been selected.
    * @param x
    * @param y
    */
@@ -176,21 +116,21 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-   * 
+   * This method closes all ImagePlus.
    */
   public void close() {
-    impOrig.changes = false;
-    impDraw.changes = false;
+    impOrig.changes = false; //This is necessary to avoid Save changes? dialog when closing
+    impDraw.changes = false; //This is necessary to avoid Save changes? dialog when closing
     impOrig.close();
     impDraw.close();
   }
 
   /******************************************************/
   /**
-   *
+   * This method refreshes the showed image after a mouse click event
    */
   private void doMouseRefresh() {
-    
+
     if (!isThresholding) {
       isThresholding = true;
       Thread t1 = new Thread(new Runnable() {
@@ -208,7 +148,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-   * 
+   * This method refreshes the showed image after changing the threshold with the sliderbar 
    */
   private void doSliderRefresh() {
     if (!isThresholding) {
@@ -226,6 +166,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
+   * This method adds the morphometric values of the given spermatozoon to the results table
    * @param spermatozoon
    */
   public void generateResults(Spermatozoon spermatozoon) {
@@ -242,8 +183,6 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
     double total_regularity = (Math.PI * total_feret * total_minFeret) / (4 * total_area);
 
     morphometrics.incrementCounter();
-    // morphometrics.addValue("Male",male);
-    // morphometrics.addValue("Date",date);
     morphometrics.addValue("ID", spermatozoon.id);
     morphometrics.addValue("Threshold", threshold);
     morphometrics.addValue("total_meanGray", total_meanGray);
@@ -258,11 +197,17 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
     FileManager fm = new FileManager();
     morphometrics.addValue("Sample", fm.getParentDirectory(impOrig.getTitle()));
     morphometrics.addValue("Filename", fm.getFilename(impOrig.getTitle()));
+    if(!Params.male.isEmpty())
+      morphometrics.addValue("Male", Params.male);
+    if(!Params.date.isEmpty())
+      morphometrics.addValue("Date", Params.date);
+    if(!Params.genericField.isEmpty())
+      morphometrics.addValue("Generic Field", Params.genericField);    
     morphometrics.show("Morphometrics");
   }
 
   /**
-   * 
+   * This method set a unique identifier for each spermatozoon in the spermatozoa list
    */
   public void idenfitySperm() {
     int SpermNr = 0;
@@ -275,7 +220,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * 
+   * This method sets the initial image to be showed.
    */
   public void initImage() {
     setImage(0); // Initialization with the first image available
@@ -284,16 +229,17 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * @param part
-   * @param click
-   * @return
+   * This method returns true if the given point is inside the boundaries of the given spermatozoon
+   * @param sperm - Spermatozoon
+   * @param click -  Point
+   * @return True if the point is inside the boundaries of the spermatozoon. Otherwise, it returns false
    */
-  public boolean isClickInside(Spermatozoon part, Point click) {
+  public boolean isClickInside(Spermatozoon sperm, Point click) {
     // Get boundaries
-    double offsetX = (double) part.bx;
-    double offsetY = (double) part.by;
-    int w = (int) part.width;
-    int h = (int) part.height;
+    double offsetX = (double) sperm.bx;
+    double offsetY = (double) sperm.by;
+    int w = (int) sperm.width;
+    int h = (int) sperm.height;
     // correct offset
     int pX = (int) (click.getX() - offsetX);
     int pY = (int) (click.getY() - offsetY);
@@ -306,10 +252,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   /******************************************************
    * MOUSE LISTENER
    ******************************************************/
-  /*
-   * (non-Javadoc)
-   * 
-   * @see java.awt.event.MouseListener#mouseClicked(java.awt.event.MouseEvent)
+  /**
+   * This method manage a mouse click event.
    */
   public void mouseClicked(MouseEvent e) {
     int x = e.getX();
@@ -322,7 +266,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
     doMouseRefresh();
   }
 
-  /*
+  /**
    * (non-Javadoc)
    * 
    * @see java.awt.event.MouseListener#mouseEntered(java.awt.event.MouseEvent)
@@ -356,10 +300,11 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * @param isEvent
+   * This method updates the showed image depending of the type of event ocurred.
+   * @param eventType This parameter is used to differentiate between a slider event (true) or a click event (false)
    */
-  public void processImage(boolean isEvent) {
-    if (threshold == -1 || isEvent) {// First time or threshold's refreshing event
+  public void processImage(boolean eventType) {
+    if (eventType || threshold == -1 ) {//If true, the threshold has changed or it needs to be calculated
       ComputerVision cv = new ComputerVision();
       impTh = impOrig.duplicate();
       cv.convertToGrayscale(impTh);
@@ -387,6 +332,11 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
    * 
    */
   public void reset() {
+//    impOrig.changes=false;
+//    impDraw.changes=false;
+//    impGray.changes=false;
+//    impTh.changes=false;
+//    impOutline.changes=false;
     impOrig.close();
     impDraw.close();
     impGray.close();
@@ -397,7 +347,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
   }
 
   /**
-   * 
+   * This method deselect all spermatozoa.
    */
   public void resetSelections() {
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
@@ -408,7 +358,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * 
+   * This method sets the first image on the list and show it on screen.
    */
   public void setImage() {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
@@ -426,7 +376,8 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * @param index
+   * This method sets the image at corresponding index on the list and show it on screen.
+   * @param index - index of the image on the list of loaded images.
    */
   public void setImage(int index) {
     if (index < 0 || index >= images.size())
@@ -441,6 +392,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
+   * This method sets the images attribute with the given list of ImagePlus.
    * @param i
    */
   public void setImages(List<ImagePlus> i) {
@@ -449,7 +401,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * 
+   * This method calculates the resize factor due to the original image size and the showed image size.
    */
   public void setResizeFactor() {
     double origW = impOrig.getWidth();
@@ -462,7 +414,7 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * 
+   * This method creates and shows the MorphWindow.
    */
   public void showWindow() {
 
@@ -611,8 +563,9 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
 
   /******************************************************/
   /**
-   * @param imp
-   *          ImagePlus
+   * This method choose between autoThreshold or apply a particular threshold to the given ImagePlus
+   * depending if this value has been set before or not.
+   * @param imp ImagePlus to be thresholded.
    */
   public void thresholdImagePlus(ImagePlus imp) {
     ComputerVision cv = new ComputerVision();

@@ -17,12 +17,19 @@ var hierarchy =
     [ "ArrayList", null, [
       [ "data.SList", "classdata_1_1_s_list.html", null ]
     ] ],
+    [ "ChangeListener", null, [
+      [ "gui.MorphWindow", "classgui_1_1_morph_window.html", null ]
+    ] ],
     [ "JFrame", null, [
       [ "gui.MainWindow", "classgui_1_1_main_window.html", null ],
+      [ "gui.MorphWindow", "classgui_1_1_morph_window.html", null ],
       [ "gui.SettingsWindow", "classgui_1_1_settings_window.html", null ]
     ] ],
     [ "Measurements", null, [
       [ "functions.VideoRecognition", "classfunctions_1_1_video_recognition.html", null ]
+    ] ],
+    [ "MouseListener", null, [
+      [ "gui.MorphWindow", "classgui_1_1_morph_window.html", null ]
     ] ],
     [ "PlugIn", null, [
       [ "OpenCASA_", "class_open_c_a_s_a__.html", null ],

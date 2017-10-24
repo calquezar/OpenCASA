@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['generateresults',['generateResults',['../classgui_1_1_morph_window.html#a8035426d5063071ed4c5ef80cd693ddb',1,'gui::MorphWindow']]],
   ['genericfield',['genericField',['../classdata_1_1_params.html#a6275ffda5e8943f49543fe17134151c0',1,'data::Params']]],
   ['getavi',['getAVI',['../classfunctions_1_1_file_manager.html#a7e812f9d24b43b7c41d40416b30383af',1,'functions::FileManager']]],
   ['getbluechannel',['getBlueChannel',['../classfunctions_1_1_computer_vision.html#a68845595c1ffa570fa6d3aaead4ed847',1,'functions::ComputerVision']]],

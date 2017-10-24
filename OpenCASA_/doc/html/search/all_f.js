@@ -17,5 +17,6 @@ var searchData=
   ['prefs',['prefs',['../classdata_1_1_params.html#a359af19420efb43ee3d162c91ed4cff2',1,'data::Params']]],
   ['printxy',['printXY',['../classdata_1_1_params.html#a23a4b36f8e3f056ea982381cb046979c',1,'data::Params']]],
   ['printxycoords',['printXYCoords',['../classfunctions_1_1_utils.html#ad60333f3393e69c8074ef1fd79a34c09',1,'functions::Utils']]],
+  ['processimage',['processImage',['../classgui_1_1_morph_window.html#ac72e37acead568403673dbe56ad1fdc0',1,'gui::MorphWindow']]],
   ['progressmotility',['progressMotility',['../classdata_1_1_params.html#a01488591799a038ed334b52bdbb8e311',1,'data::Params']]]
 ];

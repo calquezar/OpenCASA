@@ -9,5 +9,6 @@ var searchData=
   ['indexposition',['indexPosition',['../classthird___party_1_1_a_v_i___reader.html#ae73329845c623f6ec46c0d2015232711',1,'third_Party::AVI_Reader']]],
   ['indexpositionend',['indexPositionEnd',['../classthird___party_1_1_a_v_i___reader.html#a0272cce922406183d9d5ac381e78908b',1,'third_Party::AVI_Reader']]],
   ['intrack',['inTrack',['../classdata_1_1_spermatozoon.html#a09117c330ee2fbeb289f7e7e934cead5',1,'data::Spermatozoon']]],
+  ['isthresholding',['isThresholding',['../classgui_1_1_morph_window.html#a2b047517c48bd688470117e803ad249c',1,'gui::MorphWindow']]],
   ['isvirtual',['isVirtual',['../classthird___party_1_1_a_v_i___reader.html#a7a2de66ab228979ef527d69ef6f715d8',1,'third_Party::AVI_Reader']]]
 ];
