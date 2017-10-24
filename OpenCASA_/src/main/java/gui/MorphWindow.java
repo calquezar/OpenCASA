@@ -575,5 +575,4 @@ public class MorphWindow extends JFrame implements ChangeListener, MouseListener
       cv.thresholdImagePlus(imp, threshold);
     }
   }
-
 }
