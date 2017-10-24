@@ -8,6 +8,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -20,7 +21,9 @@ import analysis.Motility;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
+import functions.FileManager;
 import ij.IJ;
+import ij.ImagePlus;
 import ij.gui.GenericDialog;
 
 /**
@@ -107,12 +110,24 @@ public class MainWindow extends JFrame {
 //          viabilityW.setImages(ld.run());
 //          viabilityW.showWindow();
         } else if (label.equals("Morphometry")) {
-//          LoadImages ld = new LoadImages(mw);
-//          if(ld!=null){
-//          morphW = new MorphWindow(mw);
-//          morphW.setImages(ld.run());
-//          morphW.showWindow();
-//          }
+          mw.setVisible(false);
+          FileManager fm = new FileManager();
+          List<ImagePlus> images = fm.loadImageDirectory();
+          if(images!=null){
+            MorphWindow morphW = new MorphWindow();
+            morphW.setImages(images);
+            morphW.showWindow();
+            morphW.addWindowListener(new java.awt.event.WindowAdapter() {
+              @Override
+              public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+                if (mw != null)
+                  mw.setVisible(true);
+              }
+            });
+          }else{
+            mw.setVisible(true);
+          }
+            
         } else if (label.equals("Simulation")) {
           simulate();
         } else if (label.equals("Settings")) {
