@@ -144,7 +144,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    * 
    * @param spermatozoon
    */
-  public void generateResults(Spermatozoon spermatozoon) {
+  private void generateResults(Spermatozoon spermatozoon) {
 
     ComputerVision cv = new ComputerVision();
     double total_meanGray = (double) cv.getMeanGrayValue(spermatozoon, impGray, impTh);

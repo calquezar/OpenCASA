@@ -9,12 +9,15 @@ import java.util.List;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
+import data.Params;
 import data.Spermatozoon;
 import functions.ComputerVision;
+import functions.FileManager;
 import functions.Paint;
 import functions.VideoRecognition;
 import ij.IJ;
 import ij.ImagePlus;
+import ij.measure.ResultsTable;
 
 public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListener, MouseListener{
 
@@ -24,6 +27,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   protected List<Spermatozoon> deadSpermatozoa      = new ArrayList<Spermatozoon>();
   private enum Channel{RED,GREEN,BLUE}
   private boolean         isThresholding  = false;
+  
+  private ResultsTable       results = new ResultsTable();
+  
   public ViabilityWindow() {
     super();
     setChangeListener(this);
@@ -98,6 +104,34 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     impDraw.setColor(Color.green);
     paint.drawBoundaries(impDraw, aliveSpermatozoa);
     setImage();
+  }
+  
+  private void generateResults() {
+    
+    int aliveCount = aliveSpermatozoa.size();
+    int deadCount = deadSpermatozoa.size();
+    results.incrementCounter();
+    results.addValue("Alives", aliveCount);
+    results.addValue("Deads", deadCount);
+    int total = aliveCount + deadCount;
+    results.addValue("Total", total);
+    float percAlives = ((float) aliveCount) / ((float) total) * 100;
+    results.addValue("% Alives", percAlives);
+    FileManager fm = new FileManager();
+    results.addValue("Sample", fm.getParentDirectory(impOrig.getTitle()));
+    results.addValue("Filename", fm.getFilename(impOrig.getTitle()));
+    if (!Params.male.isEmpty())
+      results.addValue("Male", Params.male);
+    if (!Params.date.isEmpty())
+      results.addValue("Date", Params.date);
+    if (!Params.genericField.isEmpty())
+      results.addValue("Generic Field", Params.genericField);
+    results.show("Resultados");
+    
+  }
+  
+  protected void nextAction(){
+    generateResults();
   }
   @Override
   public void stateChanged(ChangeEvent e) {

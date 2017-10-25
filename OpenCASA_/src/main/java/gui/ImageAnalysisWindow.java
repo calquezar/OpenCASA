@@ -361,6 +361,7 @@ public class ImageAnalysisWindow extends JFrame {
           reset();
           setImage(--imgIndex);
           processImage(false);
+          previousAction();
         }
       }
     });
@@ -378,6 +379,7 @@ public class ImageAnalysisWindow extends JFrame {
           reset();
           setImage(++imgIndex);
           processImage(false);
+          nextAction();
         }
       }
     });
@@ -389,6 +391,9 @@ public class ImageAnalysisWindow extends JFrame {
     this.pack();
     this.setVisible(true);
   }
+  
+  protected void previousAction(){}
+  protected void nextAction(){}
   
   public void setRawImage(){
     setImage(imgIndex);
@@ -408,6 +413,6 @@ public class ImageAnalysisWindow extends JFrame {
     } else {
       cv.thresholdImagePlus(imp, threshold);
     }
-  }  
+  }
 
 }
