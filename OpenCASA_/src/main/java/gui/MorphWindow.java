@@ -245,8 +245,6 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
       cv.convertToGrayscale(impTh);
       impGray = impTh.duplicate();
       thresholdImagePlus(impTh);
-      // Update sliderbar with the new threshold
-      sldThreshold.setValue((int) threshold);
       VideoRecognition vr = new VideoRecognition();
       List<Spermatozoon>[] sperm = vr.detectSpermatozoa(impTh);
       if (sperm != null)

@@ -184,7 +184,7 @@ public class Paint {
     int yWidth = imp.getWidth();
     IJ.showStatus("Drawing boundaries...");
     ImageProcessor ip = imp.getProcessor();
-    ip.setColor(Color.white);
+//    ip.setColor(Color.white);
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
       Spermatozoon sperm = (Spermatozoon) j.next();
       ip.setLineWidth(2);

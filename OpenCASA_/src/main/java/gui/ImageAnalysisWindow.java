@@ -132,7 +132,7 @@ public class ImageAnalysisWindow extends JFrame {
   public void initImage() {
     setImage(0); // Initialization with the first image available
   }  
-  protected void processImage(boolean eventType) {}  
+  protected void processImage(boolean eventType) {}
 
   public void reset() {
     if(impOrig!=null)
@@ -170,11 +170,14 @@ public class ImageAnalysisWindow extends JFrame {
   /**
    * This method deselect all spermatozoa.
    */
-  public void selectAll() {
-    for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
+  public void selectAll(List<Spermatozoon> sperm) {
+    for (ListIterator j = sperm.listIterator(); j.hasNext();) {
       Spermatozoon spermatozoon = (Spermatozoon) j.next();
       spermatozoon.selected = true;
     }
+  }
+  public void selectAll(){
+    selectAll(spermatozoa);
   }
 
   /**
@@ -387,6 +390,9 @@ public class ImageAnalysisWindow extends JFrame {
     this.setVisible(true);
   }
   
+  public void setRawImage(){
+    setImage(imgIndex);
+  }
   /******************************************************/
   /**
    * This method choose between autoThreshold or apply a particular threshold to
