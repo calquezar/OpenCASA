@@ -48,6 +48,7 @@ import ij.process.ImageProcessor;
  */
 public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, MouseListener {
 
+  
   private boolean         isThresholding  = false;
   /** Resultstable used to show results */
   private ResultsTable       morphometrics = new ResultsTable();
@@ -238,8 +239,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    *          (true) or a click event (false)
    */
   public void processImage(boolean eventType) {
-    if (eventType || threshold == -1) {// If true, the threshold has changed or
-                                       // it needs to be calculated
+    if (eventType || threshold == -1) {// If true, the threshold has changed or it needs to be calculated
       ComputerVision cv = new ComputerVision();
       impTh = impOrig.duplicate();
       cv.convertToGrayscale(impTh);

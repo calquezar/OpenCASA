@@ -20,15 +20,6 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     setChangeListener(this);
   }
 
-  @Override
-  public void stateChanged(ChangeEvent e) {
-    Object auxWho = e.getSource();
-    if ((auxWho == sldThreshold)) {
-      // Updating threshold value from slider
-      threshold = sldThreshold.getValue();
-      doSliderRefresh();
-    }
-  }
   /**
    * This method refreshes the showed image after changing the threshold with
    * the sliderbar
@@ -45,7 +36,6 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       t1.start();
     }
   }
-  
   protected void processImage(boolean eventType){
     if (eventType || threshold == -1) {// If true, the threshold has changed or
       // it needs to be calculated
@@ -70,6 +60,16 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       paint.drawOutline(impDraw, impOutline);
       paint.drawBoundaries(impDraw, spermatozoa);
       setImage();    
+  }
+  
+  @Override
+  public void stateChanged(ChangeEvent e) {
+    Object auxWho = e.getSource();
+    if ((auxWho == sldThreshold)) {
+      // Updating threshold value from slider
+      threshold = sldThreshold.getValue();
+      doSliderRefresh();
+    }
   }
   
 }
