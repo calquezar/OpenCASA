@@ -106,13 +106,19 @@ public class MainWindow extends JFrame {
             IJ.handleException(e1);
           }          
         } else if (label.equals("Viability")) {
-          // via = new Viability();
-          // try{via.run(mw);}
-          // catch(Exception e1){e1.printStackTrace();}
-//          LoadImages ld = new LoadImages(mw);
-//          viabilityW = new ViabilityWindow(mw);
-//          viabilityW.setImages(ld.run());
-//          viabilityW.showWindow();
+          mw.setVisible(false);
+          ViabilityWindow viabilityW = new ViabilityWindow();
+          viabilityW.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+              if (mw != null)
+                mw.setVisible(true);
+            }
+          });
+          int out = viabilityW.run();
+          if(out<0){
+            mw.setVisible(true);
+          }
         } else if (label.equals("Morphometry")) {
           mw.setVisible(false);
           MorphWindow morphW = new MorphWindow();
