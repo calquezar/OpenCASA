@@ -92,7 +92,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       results.addValue("Date", Params.date);
     if (!Params.genericField.isEmpty())
       results.addValue("Generic Field", Params.genericField);
-    results.show("Resultados");
+    results.show("Viability results");
 
   }
 
