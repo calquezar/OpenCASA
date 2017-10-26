@@ -18,31 +18,19 @@ import ij.process.ImageProcessor;
  */
 public class OscillatoryWalker extends Simulation {
 
-
   class Cell {
 
-    /**   */
-    int sizex;
-    /**   */
-    int sizey;
-    /**   */
-    float t;
-    /**   */
-    float y;
-    /**   */
-    float amplitude;
-    /**   */
-    double w;
-    /**   */
+    float  amplitude;
+    float  dist;
     double f;
-    /**   */
     double phi;
-    /**   */
+    int    sizex;
+    int    sizey;
+    float  t;
     double T;
-    /**   */
-    float dist;
+    double w;
+    float  y;
 
-    /**   */
     Cell() {
       sizex = 10;
       sizey = 8;
@@ -95,19 +83,19 @@ public class OscillatoryWalker extends Simulation {
   }
 
   /**   */
-  int width = 800;
+  int    cellCount = 1;
   /**   */
-  int height = 800;
+  int    height    = 800;
   /**   */
-  int cellCount = 1;
+  int    SIMLENGTH = 700;
   /**   */
-  Cell[] sperm = new Cell[cellCount];
-  /**   */
-  int SIMLENGTH = 700;
-
+  Cell[] sperm     = new Cell[cellCount];
   // Point[][] tracks = new Point[cellCount][SIMLENGTH];
   /**   */
   List<Spermatozoon> track = new ArrayList<Spermatozoon>();
+
+  /**   */
+  int width = 800;
 
   /**   */
   public OscillatoryWalker() {
@@ -147,7 +135,8 @@ public class OscillatoryWalker extends Simulation {
   }
 
   /**
-   * @param ImageProcessor ip
+   * @param ImageProcessor
+   *          ip
    */
   void draw(ImageProcessor ip) {
     ip.setColor(Color.black);

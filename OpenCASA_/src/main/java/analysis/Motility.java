@@ -19,46 +19,53 @@ import functions.Utils;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
+
 /**
  * This class implements all the functions related to motility analysis.
+ * 
  * @author Carlos Alquezar
  */
 public class Motility extends SwingWorker<Boolean, String> {
 
-  private enum TypeOfAnalysis {FILE,DIRECTORY,DIRECTORIES, NONE}
-  private TypeOfAnalysis     analysis = TypeOfAnalysis.NONE;
-  // Motility variables
-  private float total_sperm = 0;
-  private float total_vsl = 0;
-  private float total_vcl = 0;
-  private float total_vap = 0;
-  private float total_lin = 0;
-  private float total_wob = 0;
-  private float total_str = 0;
-  private float total_alhMean = 0;
-  private float total_alhMax = 0;
-  private float total_bcf = 0;
-  private float total_dance = 0;
-  private float total_mad = 0;
-  private float total_motile = 0;
-  private float total_nonMotile = 0;
-  private float countProgressiveSperm = 0;  
-  
-  public Motility() {}
+  private enum TypeOfAnalysis {
+    DIRECTORIES, DIRECTORY, FILE, NONE
+  }
+
+  private TypeOfAnalysis analysis              = TypeOfAnalysis.NONE;
+  private float          countProgressiveSperm = 0;
+  private float          total_alhMax          = 0;
+  private float          total_alhMean         = 0;
+  private float          total_bcf             = 0;
+  private float          total_dance           = 0;
+  private float          total_lin             = 0;
+  private float          total_mad             = 0;
+  private float          total_motile          = 0;
+  private float          total_nonMotile       = 0;
+  private float          total_sperm           = 0;
+  private float          total_str             = 0;
+  private float          total_vap             = 0;
+  private float          total_vcl             = 0;
+  private float          total_vsl             = 0;
+  private float          total_wob             = 0;
+
+  public Motility() {
+  }
+
   /**
-   * This method asks user for the directory that contains all subfolders that are going to be analysed.
-   * For each subfolder, the average motility parameters will be calculated. The method finish showing a 
-   * ResultsTable with the motility information.
-   */  
-  private void analyseDirectories(){
+   * This method asks user for the directory that contains all subfolders that
+   * are going to be analysed. For each subfolder, the average motility
+   * parameters will be calculated. The method finish showing a ResultsTable
+   * with the motility information.
+   */
+  private void analyseDirectories() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
     List<String> subfolders = fm.getSubfolders(folder);
     ResultsTable rtTotal = new ResultsTable();
-    int i=0;
+    int i = 0;
     for (String s : subfolders) {
       IJ.showProgress((double) i / subfolders.size());
-      IJ.showStatus("Analizing folder "+ i++ +"...");
+      IJ.showStatus("Analizing folder " + i++ + "...");
       List<String> files = fm.getFiles(s);
       Map<String, Trial> trials = getTrials(files);
       for (String key : trials.keySet()) {
@@ -72,12 +79,14 @@ public class Motility extends SwingWorker<Boolean, String> {
     }
     rtTotal.show("Total Motility");
   }
+
   /**
-   * This method asks user for the directory that contains all AVI files that are going to be analysed.
-   * For each file, the individual and average motility parameters will be calculated. The method finish showing
-   * the corresponding results tables with the motility information.
-   */    
-  private void analyseDirectory(){
+   * This method asks user for the directory that contains all AVI files that
+   * are going to be analysed. For each file, the individual and average
+   * motility parameters will be calculated. The method finish showing the
+   * corresponding results tables with the motility information.
+   */
+  private void analyseDirectory() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
     List<String> files = fm.getFiles(folder);
@@ -94,21 +103,22 @@ public class Motility extends SwingWorker<Boolean, String> {
     rtIndividual.show("Individual motility");
     rtAverage.show("Average motility");
   }
+
   /**
-   * This method asks user for the file that is going to be analysed, extract the corresponding trial
-   * and show results.
-   */  
-  private void analyseFile(){
+   * This method asks user for the file that is going to be analysed, extract
+   * the corresponding trial and show results.
+   */
+  private void analyseFile() {
     FileManager fm = new FileManager();
     String file = fm.selectFile();
     TrialManager tm = new TrialManager();
     Trial trial = tm.getTrialFromAVI(file);
-    //Calculate motility
+    // Calculate motility
     ResultsTable rtIndividual = new ResultsTable();
     ResultsTable rtAverage = new ResultsTable();
     calculateMotility(rtIndividual, trial);
     calculateAverageMotility(rtAverage, trial);
-    //Show results
+    // Show results
     rtIndividual.show("Individual Motility");
     rtAverage.show("Average Motility");
     // Draw trajectories
@@ -117,17 +127,21 @@ public class Motility extends SwingWorker<Boolean, String> {
     paint.draw(imp, trial.tracks);
     imp.show();
   }
-  
+
   /**
    * This method calculates the average motility values for the given trial.
-   * @param rt - ResultsTable where the motility information will be added.
-   * @param trial - Trial with all trajectories that will be analysed.
+   * 
+   * @param rt
+   *          - ResultsTable where the motility information will be added.
+   * @param trial
+   *          - Trial with all trajectories that will be analysed.
    */
   private void calculateAverageMotility(ResultsTable rt, Trial trial) {
 
     SignalProcessing sp = new SignalProcessing();
-    List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);  
-    float nTracks =  filteredTracks.size(); //Only take into account those who passed the motility test
+    List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
+    float nTracks = filteredTracks.size(); // Only take into account those who
+                                           // passed the motility test
     float vsl_mean = total_vsl / nTracks;
     float vcl_mean = total_vcl / nTracks;
     float vap_mean = total_vap / nTracks;
@@ -169,25 +183,28 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("Sample", trial.type);
     rt.addValue("ID", trial.ID);
     rt.addValue("Source", trial.source);
-    if(!Params.male.isEmpty())
+    if (!Params.male.isEmpty())
       rt.addValue("Male", Params.male);
-    if(!Params.date.isEmpty())
+    if (!Params.date.isEmpty())
       rt.addValue("Date", Params.date);
-    if(!Params.genericField.isEmpty())
-      rt.addValue("Generic Field", Params.genericField);    
+    if (!Params.genericField.isEmpty())
+      rt.addValue("Generic Field", Params.genericField);
   }
-  
+
   /**
    * This method calculates the individual motility values for the given trial.
-   * @param rt - ResultsTable where the motility information will be added.
-   * @param trial - Trial with all trajectories that will be analysed.
+   * 
+   * @param rt
+   *          - ResultsTable where the motility information will be added.
+   * @param trial
+   *          - Trial with all trajectories that will be analysed.
    */
   private void calculateMotility(ResultsTable rt, Trial trial) {
 
     SignalProcessing sp = new SignalProcessing();
     Kinematics K = new Kinematics();
     // Only pass from here tracks with a minimum level of motility
-    List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);   
+    List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
     // Calculate values for each track
     for (ListIterator iT = filteredTracks.listIterator(); iT.hasNext();) {
       List aTrack = (List) iT.next();
@@ -248,19 +265,23 @@ public class Motility extends SwingWorker<Boolean, String> {
       rt.addValue("Sample", trial.type);
       rt.addValue("ID", trial.ID);
       rt.addValue("Source", trial.source);
-      if(!Params.male.isEmpty())
+      if (!Params.male.isEmpty())
         rt.addValue("Male", Params.male);
-      if(!Params.date.isEmpty())
+      if (!Params.date.isEmpty())
         rt.addValue("Date", Params.date);
-      if(!Params.genericField.isEmpty())
-        rt.addValue("Generic Field", Params.genericField);       
+      if (!Params.genericField.isEmpty())
+        rt.addValue("Generic Field", Params.genericField);
     }
   }
 
   /**
    * This method calculates the total average motility values for a folder.
-   * @param rt - ResultsTable where the motility information will be added.
-   * @param filename - the folder name. This information will be added to the results table.
+   * 
+   * @param rt
+   *          - ResultsTable where the motility information will be added.
+   * @param filename
+   *          - the folder name. This information will be added to the results
+   *          table.
    */
   private void calculateTotalMotility(ResultsTable rt, String filename) {
 
@@ -296,16 +317,17 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
     rt.addValue("Filename", filename);
-    if(!Params.male.isEmpty())
+    if (!Params.male.isEmpty())
       rt.addValue("Male", Params.male);
-    if(!Params.date.isEmpty())
+    if (!Params.date.isEmpty())
       rt.addValue("Date", Params.date);
-    if(!Params.genericField.isEmpty())
-      rt.addValue("Generic Field", Params.genericField);     
+    if (!Params.genericField.isEmpty())
+      rt.addValue("Generic Field", Params.genericField);
   }
 
   /**
-   * This method is inherit from SwingWorker class and it is the starting point after the execute() method is called.
+   * This method is inherit from SwingWorker class and it is the starting point
+   * after the execute() method is called.
    */
   @Override
   protected Boolean doInBackground() throws Exception {
@@ -321,12 +343,15 @@ public class Motility extends SwingWorker<Boolean, String> {
         break;
     }
     return null;
-  }  
-/**
- * This method returns all trials extracted from the given set of AVI files.
- * @param filenames List of avi filenames to be analysed.
- * @return All extracted trials
- */
+  }
+
+  /**
+   * This method returns all trials extracted from the given set of AVI files.
+   * 
+   * @param filenames
+   *          List of avi filenames to be analysed.
+   * @return All extracted trials
+   */
   private Map<String, Trial> getTrials(List<String> filenames) {
     // Extract Trials
     TrialManager tm = new TrialManager();
@@ -334,11 +359,13 @@ public class Motility extends SwingWorker<Boolean, String> {
     for (int i = 0; i < filenames.size(); i++) {
       String file = filenames.get(i);
       Trial trial = tm.getTrialFromAVI(file);
-      if(trial!=null)
-        trials.put(trial.type + "-_-" + trial.ID, trial); //Expression "-_-" is just a separator
+      if (trial != null)
+        trials.put(trial.type + "-_-" + trial.ID, trial); // Expression "-_-" is
+                                                          // just a separator
     }
     return trials;
   }
+
   /**
    * This method resets all motility parameters of the motility analysis
    */
@@ -358,19 +385,21 @@ public class Motility extends SwingWorker<Boolean, String> {
     total_motile = 0;
     total_nonMotile = 0;
     countProgressiveSperm = 0;
-  }    
-/**
- * This method opens a set of dialogs to ask the user which analysis has to be carried on.
- */
+  }
+
+  /**
+   * This method opens a set of dialogs to ask the user which analysis has to be
+   * carried on.
+   */
   public void selectAnalysis() {
     // Ask if user wants to analyze a file or directory
-    Object[] options = { "File", "Directory", "Multiple directories"};
+    Object[] options = { "File", "Directory", "Multiple directories" };
     String question = "What do you want to analyze?";
     String title = "Choose one analysis...";
     final int FILE = 0;
     final int DIR = 1;
     final int MULTIDIR = 2;
-    Utils utils = new Utils();      
+    Utils utils = new Utils();
     int sourceSelection = utils.analysisSelectionDialog(options, question, title);
     if (sourceSelection < 0) {
       return;
@@ -378,8 +407,8 @@ public class Motility extends SwingWorker<Boolean, String> {
       analysis = TypeOfAnalysis.FILE;
     } else if (sourceSelection == DIR) {
       analysis = TypeOfAnalysis.DIRECTORY;
-    } else if(sourceSelection == MULTIDIR){
+    } else if (sourceSelection == MULTIDIR) {
       analysis = TypeOfAnalysis.DIRECTORIES;
     }
-  }  
+  }
 }
