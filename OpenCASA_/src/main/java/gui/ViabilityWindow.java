@@ -32,6 +32,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 
   private ResultsTable results = new ResultsTable();
 
+  /**
+   * Constructor
+   */
   public ViabilityWindow() {
     super();
     setChangeListener(this);
