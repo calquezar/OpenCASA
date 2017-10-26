@@ -15,21 +15,23 @@ import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
 import functions.VideoRecognition;
-import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
 
-public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListener, MouseListener{
+public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListener, MouseListener {
 
-  private ImagePlus aliveImpOutline;
-  private ImagePlus deadImpOutline;
-  protected List<Spermatozoon> aliveSpermatozoa     = new ArrayList<Spermatozoon>();
-  protected List<Spermatozoon> deadSpermatozoa      = new ArrayList<Spermatozoon>();
-  private enum Channel{RED,GREEN,BLUE}
-  private boolean         isThresholding  = false;
-  
-  private ResultsTable       results = new ResultsTable();
-  
+  private enum Channel {
+    BLUE, GREEN, RED
+  }
+
+  private ImagePlus            aliveImpOutline;
+  protected List<Spermatozoon> aliveSpermatozoa = new ArrayList<Spermatozoon>();
+  private ImagePlus            deadImpOutline;
+  protected List<Spermatozoon> deadSpermatozoa  = new ArrayList<Spermatozoon>();
+  private boolean              isThresholding   = false;
+
+  private ResultsTable results = new ResultsTable();
+
   public ViabilityWindow() {
     super();
     setChangeListener(this);
@@ -52,49 +54,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       t1.start();
     }
   }
-  
-  private List<Spermatozoon> getSpermatozoa (Channel rgbChannel){    
-    ComputerVision cv = new ComputerVision();
-    if(rgbChannel == Channel.RED)
-      impTh = cv.getRedChannel(impOrig.duplicate());
-    else if (rgbChannel == Channel.GREEN)
-      impTh = cv.getGreenChannel(impOrig.duplicate());
-    else if (rgbChannel == Channel.BLUE)
-      impTh = cv.getBlueChannel(impOrig.duplicate());
-    cv.convertToGrayscale(impTh);
-    thresholdImagePlus(impTh);
-    //this will be useful for painting outlines later
-    if(rgbChannel == Channel.RED)
-      deadImpOutline = impTh;
-    else if (rgbChannel == Channel.GREEN)
-      aliveImpOutline = impTh;
-    else if (rgbChannel == Channel.BLUE)
-      aliveImpOutline = impTh;
-    VideoRecognition vr = new VideoRecognition();
-    List<Spermatozoon>[] sperm = vr.detectSpermatozoa(impTh);
-    return sperm[0];
-  }
 
-  protected void processImage(boolean eventType){
-    //If eventType == true, the threshold has changed or it needs to be calculated
-    // In that class, eventType is always true
-    aliveSpermatozoa = getSpermatozoa(Channel.GREEN);
-    deadSpermatozoa = getSpermatozoa(Channel.RED);
-    if (aliveSpermatozoa != null && deadSpermatozoa!=null){
-      spermatozoa = new ArrayList<Spermatozoon>(aliveSpermatozoa);
-      spermatozoa.addAll(deadSpermatozoa);
-      selectAll();//set as selected all spermatozoa to allow boundary painting
-      idenfitySperm();
-    }
-    // Calculate outlines
-    ComputerVision cv = new ComputerVision();
-    cv.outlineThresholdImage(aliveImpOutline);
-    cv.outlineThresholdImage(deadImpOutline);
-    drawImage();
-  }
-  
-  private void drawImage(){
-    //Draw cells on image
+  private void drawImage() {
+    // Draw cells on image
     impDraw = impOrig.duplicate();
     Paint paint = new Paint();
     paint.drawOutline(impDraw, aliveImpOutline);
@@ -105,9 +67,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     paint.drawBoundaries(impDraw, aliveSpermatozoa);
     setImage();
   }
-  
+
   private void generateResults() {
-    
+
     int aliveCount = aliveSpermatozoa.size();
     int deadCount = deadSpermatozoa.size();
     results.incrementCounter();
@@ -127,12 +89,76 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     if (!Params.genericField.isEmpty())
       results.addValue("Generic Field", Params.genericField);
     results.show("Resultados");
-    
+
   }
-  
-  protected void nextAction(){
+
+  private List<Spermatozoon> getSpermatozoa(Channel rgbChannel) {
+    ComputerVision cv = new ComputerVision();
+    if (rgbChannel == Channel.RED)
+      impTh = cv.getRedChannel(impOrig.duplicate());
+    else if (rgbChannel == Channel.GREEN)
+      impTh = cv.getGreenChannel(impOrig.duplicate());
+    else if (rgbChannel == Channel.BLUE)
+      impTh = cv.getBlueChannel(impOrig.duplicate());
+    cv.convertToGrayscale(impTh);
+    thresholdImagePlus(impTh);
+    // this will be useful for painting outlines later
+    if (rgbChannel == Channel.RED)
+      deadImpOutline = impTh;
+    else if (rgbChannel == Channel.GREEN)
+      aliveImpOutline = impTh;
+    else if (rgbChannel == Channel.BLUE)
+      aliveImpOutline = impTh;
+    VideoRecognition vr = new VideoRecognition();
+    List<Spermatozoon>[] sperm = vr.detectSpermatozoa(impTh);
+    return sperm[0];
+  }
+
+  @Override
+  public void mouseClicked(MouseEvent e) {
+  }
+
+  @Override
+  public void mouseEntered(MouseEvent e) {
+  }
+
+  @Override
+  public void mouseExited(MouseEvent e) {
+  }
+
+  @Override
+  public void mousePressed(MouseEvent e) {
+    setRawImage();
+  }
+
+  @Override
+  public void mouseReleased(MouseEvent e) {
+    drawImage();
+  }
+
+  protected void nextAction() {
     generateResults();
   }
+
+  protected void processImage(boolean eventType) {
+    // If eventType == true, the threshold has changed or it needs to be
+    // calculated
+    // In that class, eventType is always true
+    aliveSpermatozoa = getSpermatozoa(Channel.GREEN);
+    deadSpermatozoa = getSpermatozoa(Channel.RED);
+    if (aliveSpermatozoa != null && deadSpermatozoa != null) {
+      spermatozoa = new ArrayList<Spermatozoon>(aliveSpermatozoa);
+      spermatozoa.addAll(deadSpermatozoa);
+      selectAll();// set as selected all spermatozoa to allow boundary painting
+      idenfitySperm();
+    }
+    // Calculate outlines
+    ComputerVision cv = new ComputerVision();
+    cv.outlineThresholdImage(aliveImpOutline);
+    cv.outlineThresholdImage(deadImpOutline);
+    drawImage();
+  }
+
   @Override
   public void stateChanged(ChangeEvent e) {
     Object auxWho = e.getSource();
@@ -143,19 +169,4 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     }
   }
 
-  @Override
-  public void mouseClicked(MouseEvent e) {}
-
-  @Override
-  public void mousePressed(MouseEvent e) {setRawImage();}
-
-  @Override
-  public void mouseReleased(MouseEvent e) {drawImage();}
-
-  @Override
-  public void mouseEntered(MouseEvent e) {}
-
-  @Override
-  public void mouseExited(MouseEvent e) {}
-  
 }

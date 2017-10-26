@@ -27,7 +27,6 @@ import data.Spermatozoon;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Utils;
-import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
@@ -45,9 +44,9 @@ public class ImageAnalysisWindow extends JFrame {
   private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
 
   /** */
-  private List<ImagePlus>    images;
-  private int                imgIndex;
-  private JLabel             imgLabel;
+  private List<ImagePlus>      images;
+  private int                  imgIndex;
+  private JLabel               imgLabel;
   /** ImagePlus used to draw over them */
   protected ImagePlus          impDraw         = null;
   /** ImagePlus used to calculate mean gray values */
@@ -59,12 +58,12 @@ public class ImageAnalysisWindow extends JFrame {
   /** ImagePlus used to identify spermatozoa */
   protected ImagePlus          impTh           = null;
   /** */
-  private double             resizeFactor;
+  private double               resizeFactor;
   protected JSlider            sldThreshold;
   protected List<Spermatozoon> spermatozoa     = new ArrayList<Spermatozoon>();
   protected double             threshold       = -1.0;
   protected String             thresholdMethod = "Otsu";
-  private JLabel             title;
+  private JLabel               title;
   /** */
   protected double             xFactor;
 
@@ -74,14 +73,14 @@ public class ImageAnalysisWindow extends JFrame {
   public ImageAnalysisWindow() {
     imgLabel = new JLabel();
     imgIndex = 0;
-    resizeFactor = 0.6; // The size of the showed image will be set to 60% of the screen size
-    sldThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60); //its necessary to initialize here the slider bar 
-                                                                // in order to enable the change listener selection
-                                                                // for an inherit class
-    imgLabel = new JLabel();//The same as slider bar
-    
+    //The size of the showed image will be set to 60% of the screen size
+    resizeFactor = 0.6; 
+    //its necessary to initialize here the slider bar in order to enable 
+    //the change listener selection for an inherit class
+    sldThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+    imgLabel = new JLabel();// The same as slider bar
   }
-  
+
   private int analyseDirectory() {
     FileManager fm = new FileManager();
     List<ImagePlus> images = fm.loadImageDirectory();
@@ -105,6 +104,7 @@ public class ImageAnalysisWindow extends JFrame {
       return -1;
     }
   }
+
   /**
    * This method deselect all spermatozoa.
    */
@@ -114,6 +114,7 @@ public class ImageAnalysisWindow extends JFrame {
       spermatozoon.selected = false;
     }
   }
+
   /**
    * This method set a unique identifier for each spermatozoon in the
    * spermatozoa list
@@ -125,25 +126,34 @@ public class ImageAnalysisWindow extends JFrame {
       SpermNr++;
       sperm.id = "" + SpermNr;
     }
-  }   
+  }
+
   /**
    * This method sets the initial image to be showed.
    */
   public void initImage() {
     setImage(0); // Initialization with the first image available
-  }  
-  protected void processImage(boolean eventType) {}
+  }
+
+  protected void nextAction() {
+  }
+
+  protected void previousAction() {
+  }
+
+  protected void processImage(boolean eventType) {
+  }
 
   public void reset() {
-    if(impOrig!=null)
+    if (impOrig != null)
       impOrig.close();
-    if(impDraw!=null)
+    if (impDraw != null)
       impDraw.close();
-    if(impGray!=null)
+    if (impGray != null)
       impGray.close();
-    if(impTh!=null)
+    if (impTh != null)
       impTh.close();
-    if(impOutline!=null)
+    if (impOutline != null)
       impOutline.close();
     threshold = -1.0;
     spermatozoa.clear();
@@ -158,13 +168,17 @@ public class ImageAnalysisWindow extends JFrame {
         out = analyseFile();
         break;
       case DIRECTORY:
-         out = analyseDirectory();
+        out = analyseDirectory();
         break;
       default:
         out = -2;
         break;
     }
     return out;
+  }
+
+  public void selectAll() {
+    selectAll(spermatozoa);
   }
 
   /**
@@ -175,9 +189,6 @@ public class ImageAnalysisWindow extends JFrame {
       Spermatozoon spermatozoon = (Spermatozoon) j.next();
       spermatozoon.selected = true;
     }
-  }
-  public void selectAll(){
-    selectAll(spermatozoa);
   }
 
   /**
@@ -205,10 +216,10 @@ public class ImageAnalysisWindow extends JFrame {
     return 0;
   }
 
-  public void setChangeListener(ChangeListener ch){
+  public void setChangeListener(ChangeListener ch) {
     sldThreshold.addChangeListener(ch);
   }
-  
+
   /******************************************************/
   /**
    * This method sets the first image on the list and show it on screen.
@@ -255,8 +266,12 @@ public class ImageAnalysisWindow extends JFrame {
     images = i;
   }
 
-  public void setMouseListener(MouseListener ml){
+  public void setMouseListener(MouseListener ml) {
     imgLabel.addMouseListener(ml);
+  }
+
+  public void setRawImage() {
+    setImage(imgIndex);
   }
 
   /**
@@ -358,9 +373,11 @@ public class ImageAnalysisWindow extends JFrame {
     btn1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (imgIndex > 0) {
+          previousAction();
           reset();
           setImage(--imgIndex);
           processImage(false);
+        }else if(imgIndex==0){
           previousAction();
         }
       }
@@ -376,9 +393,11 @@ public class ImageAnalysisWindow extends JFrame {
     btn2.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (imgIndex < (images.size() - 1)) {
+          nextAction();
           reset();
           setImage(++imgIndex);
           processImage(false);
+        }else if(imgIndex==(images.size()-1)){
           nextAction();
         }
       }
@@ -391,13 +410,7 @@ public class ImageAnalysisWindow extends JFrame {
     this.pack();
     this.setVisible(true);
   }
-  
-  protected void previousAction(){}
-  protected void nextAction(){}
-  
-  public void setRawImage(){
-    setImage(imgIndex);
-  }
+
   /******************************************************/
   /**
    * This method choose between autoThreshold or apply a particular threshold to
