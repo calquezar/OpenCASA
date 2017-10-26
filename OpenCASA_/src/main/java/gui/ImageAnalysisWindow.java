@@ -114,7 +114,7 @@ public class ImageAnalysisWindow extends JFrame {
       spermatozoon.selected = false;
     }
   }
-
+  protected void drawImage() {}
   /**
    * This method set a unique identifier for each spermatozoon in the
    * spermatozoa list
@@ -133,6 +133,8 @@ public class ImageAnalysisWindow extends JFrame {
    */
   public void initImage() {
     setImage(0); // Initialization with the first image available
+    processImage(false);
+    drawImage();
   }
 
   protected void nextAction() {
@@ -141,8 +143,7 @@ public class ImageAnalysisWindow extends JFrame {
   protected void previousAction() {
   }
 
-  protected void processImage(boolean eventType) {
-  }
+  protected void processImage(boolean eventType) {}
 
   public void reset() {
     if (impOrig != null)
@@ -368,17 +369,21 @@ public class ImageAnalysisWindow extends JFrame {
     c.gridheight = 1;
     panel.add(new JSeparator(SwingConstants.HORIZONTAL), c);
 
-    JButton btn1 = new JButton("Previous");
+    final JButton btn1 = new JButton("Previous");
+    final JButton btn2 = new JButton("Next");
+    
     // Add action listener
     btn1.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (imgIndex > 0) {
+          btn2.setEnabled(true);
           previousAction();
           reset();
           setImage(--imgIndex);
           processImage(false);
         }else if(imgIndex==0){
           previousAction();
+          btn1.setEnabled(false);
         }
       }
     });
@@ -388,17 +393,18 @@ public class ImageAnalysisWindow extends JFrame {
     c.gridheight = 1;
     panel.add(btn1, c);
 
-    JButton btn2 = new JButton("Next");
     // Add action listener
     btn2.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (imgIndex < (images.size() - 1)) {
+          btn1.setEnabled(true);
           nextAction();
           reset();
           setImage(++imgIndex);
           processImage(false);
         }else if(imgIndex==(images.size()-1)){
           nextAction();
+          btn2.setEnabled(false);
         }
       }
     });

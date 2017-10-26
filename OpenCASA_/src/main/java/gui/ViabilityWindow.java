@@ -58,7 +58,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     }
   }
 
-  private void drawImage() {
+  protected void drawImage() {
     // Draw cells on image
     impDraw = impOrig.duplicate();
     Paint paint = new Paint();
@@ -82,6 +82,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     results.addValue("Total", total);
     float percAlives = ((float) aliveCount) / ((float) total) * 100;
     results.addValue("% Alives", percAlives);
+    results.addValue("% Deads", 100-percAlives);
     FileManager fm = new FileManager();
     results.addValue("Sample", fm.getParentDirectory(impOrig.getTitle()));
     results.addValue("Filename", fm.getFilename(impOrig.getTitle()));
