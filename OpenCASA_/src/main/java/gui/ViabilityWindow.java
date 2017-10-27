@@ -22,9 +22,9 @@ import ij.measure.ResultsTable;
 public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListener, MouseListener {
 
   private enum Channel {
-    BLUE, GREEN, RED
+    BLUE, GREEN, RED, NONE
   }
-
+  private Channel channel = Channel.NONE;
   private ImagePlus            aliveImpOutline;
   protected List<Spermatozoon> aliveSpermatozoa = new ArrayList<Spermatozoon>();
   private ImagePlus            deadImpOutline;
@@ -40,6 +40,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     super();
     sldRedThreshold.setVisible(true);
     sldGreenThreshold.setVisible(true);
+    sldRedThreshold.addMouseListener(this);
+    sldGreenThreshold.addMouseListener(this);
+    sldBlueThreshold.addMouseListener(this);
     setChangeListener(this,sldRedThreshold);
     setChangeListener(this,sldGreenThreshold);
     setMouseListener(this);
@@ -66,12 +69,24 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     // Draw cells on image
     impDraw = impOrig.duplicate();
     Paint paint = new Paint();
-    paint.drawOutline(impDraw, aliveImpOutline);
-    paint.drawOutline(impDraw, deadImpOutline);
-    impDraw.setColor(Color.red);
-    paint.drawBoundaries(impDraw, deadSpermatozoa);
-    impDraw.setColor(Color.green);
-    paint.drawBoundaries(impDraw, aliveSpermatozoa);
+    if(channel==Channel.GREEN){
+      paint.drawOutline(impDraw, aliveImpOutline);
+      impDraw.setColor(Color.green);
+      paint.drawBoundaries(impDraw, aliveSpermatozoa);
+    }else if(channel==Channel.RED){
+      paint.drawOutline(impDraw, deadImpOutline);
+      impDraw.setColor(Color.red);
+      paint.drawBoundaries(impDraw, deadSpermatozoa);
+    }else if(channel==Channel.BLUE){
+      //Not used in this version of the module
+    }else if(channel==Channel.NONE){
+      paint.drawOutline(impDraw, aliveImpOutline);
+      impDraw.setColor(Color.green);
+      paint.drawBoundaries(impDraw, aliveSpermatozoa);
+      paint.drawOutline(impDraw, deadImpOutline);
+      impDraw.setColor(Color.red);
+      paint.drawBoundaries(impDraw, deadSpermatozoa);
+    }
     setImage();
   }
 
@@ -152,12 +167,14 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 
   @Override
   public void mouseReleased(MouseEvent e) {
+    channel = channel.NONE;
     drawImage();
   }
   
   protected void nextAction() {
     generateResults();
   }
+  
 
   protected void processImage(boolean eventType) {
     // If eventType == true, the threshold has changed or it needs to be
@@ -182,14 +199,17 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   public void stateChanged(ChangeEvent e) {
     Object auxWho = e.getSource();
     if ((auxWho == sldRedThreshold)) {
+      channel = Channel.RED;
       redThreshold = sldRedThreshold.getValue();
       doSliderRefresh();
     }
     else if ((auxWho == sldGreenThreshold)) {
+      channel = Channel.GREEN;
       // Updating threshold value from slider
       greenThreshold = sldGreenThreshold.getValue();
       doSliderRefresh();
     }else if(auxWho == sldBlueThreshold){
+      channel = Channel.BLUE;
       blueThreshold = sldBlueThreshold.getValue();
       doSliderRefresh();
     }
