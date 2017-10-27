@@ -15,6 +15,7 @@ import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
 import functions.VideoRecognition;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
 
@@ -37,7 +38,10 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
    */
   public ViabilityWindow() {
     super();
-    setChangeListener(this);
+    sldRedThreshold.setVisible(true);
+    sldGreenThreshold.setVisible(true);
+    setChangeListener(this,sldRedThreshold);
+    setChangeListener(this,sldGreenThreshold);
     setMouseListener(this);
   }
 
@@ -98,12 +102,23 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 
   private List<Spermatozoon> getSpermatozoa(Channel rgbChannel) {
     ComputerVision cv = new ComputerVision();
-    if (rgbChannel == Channel.RED)
+
+    if (rgbChannel == Channel.RED){
       impTh = cv.getRedChannel(impOrig.duplicate());
-    else if (rgbChannel == Channel.GREEN)
+      if(threshold!=-1)
+        threshold = redThreshold;
+    }
+    else if (rgbChannel == Channel.GREEN){
       impTh = cv.getGreenChannel(impOrig.duplicate());
-    else if (rgbChannel == Channel.BLUE)
+      if(threshold!=-1)
+        threshold = greenThreshold;
+    }
+    else if (rgbChannel == Channel.BLUE){
       impTh = cv.getBlueChannel(impOrig.duplicate());
+      if(threshold!=-1)
+        threshold = blueThreshold;
+    }
+   
     cv.convertToGrayscale(impTh);
     thresholdImagePlus(impTh);
     // this will be useful for painting outlines later
@@ -139,7 +154,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   public void mouseReleased(MouseEvent e) {
     drawImage();
   }
-
+  
   protected void nextAction() {
     generateResults();
   }
@@ -166,9 +181,16 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   @Override
   public void stateChanged(ChangeEvent e) {
     Object auxWho = e.getSource();
-    if ((auxWho == sldThreshold)) {
+    if ((auxWho == sldRedThreshold)) {
+      redThreshold = sldRedThreshold.getValue();
+      doSliderRefresh();
+    }
+    else if ((auxWho == sldGreenThreshold)) {
       // Updating threshold value from slider
-      threshold = sldThreshold.getValue();
+      greenThreshold = sldGreenThreshold.getValue();
+      doSliderRefresh();
+    }else if(auxWho == sldBlueThreshold){
+      blueThreshold = sldBlueThreshold.getValue();
       doSliderRefresh();
     }
   }

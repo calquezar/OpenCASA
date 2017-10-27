@@ -1,5 +1,6 @@
 package gui;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
@@ -27,6 +28,7 @@ import data.Spermatozoon;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Utils;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 
@@ -59,9 +61,21 @@ public class ImageAnalysisWindow extends JFrame {
   protected ImagePlus          impTh           = null;
   /** */
   private double               resizeFactor;
-  protected JSlider            sldThreshold;
+  protected JSlider            sldThreshold;  
+  protected JSlider            sldRedThreshold;  
+  protected JSlider            sldGreenThreshold;
+  protected JSlider            sldBlueThreshold;
+  protected JRadioButton btnOtsu;
+  protected JRadioButton btnMinimum;
+  protected ButtonGroup btnGroup;
+  protected JButton prevBtn;
+  protected JButton nextBtn;
+
   protected List<Spermatozoon> spermatozoa     = new ArrayList<Spermatozoon>();
   protected double             threshold       = -1.0;
+  protected double             redThreshold       = -1.0;
+  protected double             greenThreshold       = -1.0;
+  protected double             blueThreshold       = -1.0;
   protected String             thresholdMethod = "Otsu";
   private JLabel               title;
   /** */
@@ -78,7 +92,22 @@ public class ImageAnalysisWindow extends JFrame {
     //its necessary to initialize here the slider bar in order to enable 
     //the change listener selection for an inherit class
     sldThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+    sldRedThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+    sldRedThreshold.setForeground(Color.RED);
+    sldGreenThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+    sldGreenThreshold.setForeground(Color.GREEN);
+    sldBlueThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60);
+    sldBlueThreshold.setForeground(Color.BLUE);
+    sldThreshold.setVisible(false); //By default
+    sldRedThreshold.setVisible(false); //By default
+    sldGreenThreshold.setVisible(false);//By default
+    sldBlueThreshold.setVisible(false);//By default
     imgLabel = new JLabel();// The same as slider bar
+    btnOtsu = new JRadioButton("Otsu");
+    btnMinimum = new JRadioButton("Minimum");
+    btnGroup = new ButtonGroup();
+    prevBtn = new JButton("Previous");
+    nextBtn = new JButton("Next");
   }
 
   private int analyseDirectory() {
@@ -217,8 +246,8 @@ public class ImageAnalysisWindow extends JFrame {
     return 0;
   }
 
-  public void setChangeListener(ChangeListener ch) {
-    sldThreshold.addChangeListener(ch);
+  public void setChangeListener(ChangeListener ch,JSlider sld) {
+    sld.addChangeListener(ch);
   }
 
   /******************************************************/
@@ -288,6 +317,16 @@ public class ImageAnalysisWindow extends JFrame {
     yFactor = origH / resizeH;
   }
 
+  protected void genericRadioButtonsAction(){}
+  
+  private void configureSliderBar(JSlider sld){
+    sld.setMinorTickSpacing(2);
+    sld.setMajorTickSpacing(10);
+    sld.setPaintTicks(true);
+    sld.setPaintLabels(true);
+    // We'll just use the standard numeric labels for now...
+    sld.setLabelTable(sld.createStandardLabels(10));
+  }
   /******************************************************/
   /**
    * This method creates and shows the window.
@@ -299,25 +338,26 @@ public class ImageAnalysisWindow extends JFrame {
     c.fill = GridBagConstraints.HORIZONTAL;
 
     // RADIO BUTTONS
-    JRadioButton btnOtsu = new JRadioButton("Otsu");
     btnOtsu.setSelected(true);
     btnOtsu.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         threshold = -1.0;
         thresholdMethod = "Otsu";
         processImage(false);
+        genericRadioButtonsAction();
       }
     });
-    JRadioButton btnMinimum = new JRadioButton("Minimum");
+    
     btnMinimum.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         threshold = -1.0;
         thresholdMethod = "Minimum";
-        processImage(false);
+        processImage(false);   
+        genericRadioButtonsAction();
       }
     });
     // Group the radio buttons.
-    ButtonGroup btnGroup = new ButtonGroup();
+   
     btnGroup.add(btnOtsu);
     btnGroup.add(btnMinimum);
     c.gridx = 0;
@@ -326,37 +366,41 @@ public class ImageAnalysisWindow extends JFrame {
     panel.add(btnOtsu, c);
     c.gridy = 1;
     panel.add(btnMinimum, c);
-    // THRESHOLD SLIDERBAR
-    sldThreshold.setMinorTickSpacing(2);
-    sldThreshold.setMajorTickSpacing(10);
-    sldThreshold.setPaintTicks(true);
-    sldThreshold.setPaintLabels(true);
-    // We'll just use the standard numeric labels for now...
-    sldThreshold.setLabelTable(sldThreshold.createStandardLabels(10));
+    // THRESHOLD SLIDERBARS
+    configureSliderBar(sldThreshold);
+    configureSliderBar(sldRedThreshold);
+    configureSliderBar(sldGreenThreshold);
+    configureSliderBar(sldBlueThreshold);
+    
     c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 1;
     c.gridy = 0;
     c.gridwidth = 10;
     c.gridheight = 2;
     c.ipady = 10;
-    panel.add(sldThreshold, c);
-
-    c.gridx = 0;
+    panel.add(sldRedThreshold, c);
+    panel.add(sldThreshold, c); // this two sliders are mutually exclusives
     c.gridy = 2;
+    panel.add(sldGreenThreshold, c);
+    c.gridy = 4;
+    panel.add(sldBlueThreshold, c);
+    
+    c.gridx = 0;
+    c.gridy = 6;
     c.gridwidth = 10;
     c.gridheight = 1;
     panel.add(new JSeparator(SwingConstants.HORIZONTAL), c);
 
     title = new JLabel();
     c.gridx = 2;
-    c.gridy = 3;
+    c.gridy = 7;
     c.gridwidth = 6;
     c.gridheight = 1;
     c.ipady = 10;
     panel.add(title, c);
 
     c.gridx = 2;
-    c.gridy = 4;
+    c.gridy = 8;
     c.gridwidth = 6;
     c.gridheight = 1;
     c.ipady = 10;
@@ -364,59 +408,64 @@ public class ImageAnalysisWindow extends JFrame {
     initImage(); // Initialization with the first image available
 
     c.gridx = 0;
-    c.gridy = 5;
+    c.gridy = 9;
     c.gridwidth = 10;
     c.gridheight = 1;
     panel.add(new JSeparator(SwingConstants.HORIZONTAL), c);
 
-    final JButton btn1 = new JButton("Previous");
-    final JButton btn2 = new JButton("Next");
-    
     // Add action listener
-    btn1.addActionListener(new ActionListener() {
+    prevBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (imgIndex > 0) {
-          btn2.setEnabled(true);
+          nextBtn.setEnabled(true);
           previousAction();
           reset();
           setImage(--imgIndex);
           processImage(false);
         }else if(imgIndex==0){
           previousAction();
-          btn1.setEnabled(false);
+          prevBtn.setEnabled(false);
         }
       }
     });
     c.gridx = 0;
-    c.gridy = 6;
+    c.gridy = 10;
     c.gridwidth = 1;
     c.gridheight = 1;
-    panel.add(btn1, c);
+    panel.add(prevBtn, c);
 
     // Add action listener
-    btn2.addActionListener(new ActionListener() {
+    nextBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (imgIndex < (images.size() - 1)) {
-          btn1.setEnabled(true);
+          prevBtn.setEnabled(true);
           nextAction();
           reset();
           setImage(++imgIndex);
           processImage(false);
         }else if(imgIndex==(images.size()-1)){
           nextAction();
-          btn2.setEnabled(false);
+          nextBtn.setEnabled(false);
         }
       }
     });
     c.gridx = 9;
-    c.gridy = 6;
-    panel.add(btn2, c);
+    c.gridy = 10;
+    panel.add(nextBtn, c);
 
     this.setContentPane(panel);
     this.pack();
     this.setVisible(true);
   }
-
+  private void setSlidersAutoThreshold(){
+    redThreshold = threshold;
+    greenThreshold = threshold;
+    blueThreshold = threshold;
+    sldThreshold.setValue((int) threshold);
+    sldRedThreshold.setValue((int) threshold);
+    sldGreenThreshold.setValue((int) threshold);
+    sldBlueThreshold.setValue((int) threshold);
+  }
   /******************************************************/
   /**
    * This method choose between autoThreshold or apply a particular threshold to
@@ -429,6 +478,7 @@ public class ImageAnalysisWindow extends JFrame {
     ComputerVision cv = new ComputerVision();
     if (threshold == -1) {
       threshold = cv.autoThresholdImagePlus(imp, thresholdMethod);
+      setSlidersAutoThreshold();
     } else {
       cv.thresholdImagePlus(imp, threshold);
     }

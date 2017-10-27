@@ -58,7 +58,8 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    */
   public MorphWindow() throws HeadlessException {
     super();
-    setChangeListener(this);
+    sldThreshold.setVisible(true);
+    setChangeListener(this,sldThreshold);
     setMouseListener(this);
   }
 
