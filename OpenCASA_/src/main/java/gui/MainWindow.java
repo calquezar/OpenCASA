@@ -154,12 +154,12 @@ public class MainWindow extends JFrame {
    */
   private void createGUI() {
     JPanel panel = new JPanel(new GridBagLayout());
-    addButton("Motility", 0, 0, new Color(255, 255, 255), "/motility.png", panel);
-    addButton("Chemotaxis", 1, 0, new Color(255, 255, 255), "/chemotaxis.png", panel);
-    addButton("Viability", 0, 1, new Color(255, 255, 255), "/viability.png", panel);
-    addButton("Morphometry", 1, 1, new Color(255, 255, 255), "/morphometry.png", panel);
-    addButton("Simulation", 0, 2, new Color(255, 255, 255), "/Settings.png", panel);
-    addButton("Settings", 1, 2, new Color(255, 204, 153), "/Settings.png", panel);
+    addButton("Motility", 0, 0, new Color(255, 255, 255), "/resources/motility.png", panel);
+    addButton("Chemotaxis", 1, 0, new Color(255, 255, 255), "/resources/chemotaxis.png", panel);
+    addButton("Viability", 0, 1, new Color(255, 255, 255), "/resources/viability.png", panel);
+    addButton("Morphometry", 1, 1, new Color(255, 255, 255), "/resources/morphometry.png", panel);
+    addButton("Simulation", 0, 2, new Color(255, 255, 255), "/resources/settings.png", panel);
+    addButton("Settings", 1, 2, new Color(255, 204, 153), "/resources/settings.png", panel);
     this.setContentPane(panel);
   }
   

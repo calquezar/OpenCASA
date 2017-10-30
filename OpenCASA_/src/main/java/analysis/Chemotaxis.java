@@ -77,7 +77,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Map<String, Trial> tTrials = getTrials(tests);
       ResultsTable rt = analyseCondition(cTrials, tTrials);
       String condition = fm.getFilename(f);
-      rt.show(condition);
+      if(rt!=null)
+        rt.show(condition);
     }
   }
 
@@ -131,9 +132,14 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     final int cMin = minSampleSize(controls);
     final int tMin = minSampleSize(tests);
     Params.MAXINSTANGLES = Math.min(cMin, tMin);
+    ResultsTable rt = new ResultsTable();
+    if(!checkPairs(controls,tests)){
+       String condition = ((Trial) tests.values().toArray()[0]).type;
+       IJ.showMessage("No pairs (control-"+condition+") with the same ID have been found");
+       return null;
+    }
     // Calculating OR threshold via resampling
     double thControl = orThreshold(controls);
-    ResultsTable rt = new ResultsTable();
     for (String cKey : controls.keySet()) {
       Trial cTrial = (Trial) controls.get(cKey);
       Trial tTrial = findTrial(cTrial.ID, tests);
@@ -144,7 +150,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return rt;
   }
-
   /******************************************************/
   /**
    * This method calculates the CH-index for the given set of trajectories.
@@ -217,6 +222,25 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       ratioSL = -1;
     }
     return ratioSL;
+  }
+
+  /**
+   * This method checks if at least exists one trial in each Hashmap with the same ID
+   * @param controls - Set of control trials
+   * @param tests - Set of test trials
+   * @return true if the method finds at least one pair with the same ID. Otherwise it returns false. 
+   */
+  private boolean checkPairs(Map<String, Trial> controls, Map<String, Trial> tests){
+    boolean ok = false;
+    for (String cKey : controls.keySet()) {
+      Trial cTrial = (Trial) controls.get(cKey);
+      Trial tTrial = findTrial(cTrial.ID, tests);
+      if (tTrial != null) {
+        ok=true;
+        return ok;
+      }
+    }
+    return ok;
   }
 
   /**
