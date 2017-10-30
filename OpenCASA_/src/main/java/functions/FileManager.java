@@ -7,7 +7,6 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
-import gui.MainWindow;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.DirectoryChooser;

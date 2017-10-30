@@ -8,7 +8,6 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -21,9 +20,7 @@ import analysis.Motility;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
-import functions.FileManager;
 import ij.IJ;
-import ij.ImagePlus;
 import ij.gui.GenericDialog;
 
 /**

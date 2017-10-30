@@ -28,7 +28,6 @@ import data.Spermatozoon;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Utils;
-import ij.IJ;
 import ij.ImagePlus;
 import ij.process.ImageProcessor;
 

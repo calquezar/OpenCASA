@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
-import data.SList;
+import data.SerializableList;
 import data.Spermatozoon;
 import data.Trial;
 import ij.IJ;
@@ -102,7 +102,7 @@ public class Paint {
    * @param theTracks
    *          2D-ArrayList with all the tracks
    */
-  public void draw(ImagePlus imp, SList theTracks) {
+  public void draw(ImagePlus imp, SerializableList theTracks) {
 
     ComputerVision cv = new ComputerVision();
     cv.convertToRGB(imp);
@@ -118,7 +118,7 @@ public class Paint {
     int trackNr = 0;
     int displayTrackNr = 0;
     SignalProcessing sp = new SignalProcessing();
-    SList avgTracks = sp.averageTracks(theTracks);
+    SerializableList avgTracks = sp.averageTracks(theTracks);
     Kinematics kinematics = new Kinematics();
     // Draw on each frame
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
@@ -220,7 +220,7 @@ public class Paint {
   public void drawChemotaxis(Trial trial, float chIdx, float slIdx) {
 
     SignalProcessing sp = new SignalProcessing();
-    SList avgTracks = sp.averageTracks(trial.tracks);
+    SerializableList avgTracks = sp.averageTracks(trial.tracks);
     String strPart;
     // Variables used to draw chemotactic cone
     int displayTrackNr = 0;

@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
-import data.SList;
+import data.SerializableList;
 import data.Spermatozoon;
 
 /**
@@ -23,9 +23,9 @@ public class SignalProcessing {
    *          2D-ArrayList with all the tracks
    * @return 2D-ArrayList with the averaged tracks
    */
-  public SList averageTracks(SList theTracks) {
+  public SerializableList averageTracks(SerializableList theTracks) {
 
-    SList avgTracks = new SList();
+    SerializableList avgTracks = new SerializableList();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
       List avgTrack = movingAverage(aTrack);
@@ -79,8 +79,8 @@ public class SignalProcessing {
    * @param theTracks - 2D-ArrayList with all the tracks
    * @return 2D-ArrayList with all the tracks that have passed the filter
    */
-  public SList filterTracksByLength(SList theTracks) {
-    SList filteredTracks = new SList();
+  public SerializableList filterTracksByLength(SerializableList theTracks) {
+    SerializableList filteredTracks = new SerializableList();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
       if (aTrack.size() >= Params.minTrackLength)
@@ -94,8 +94,8 @@ public class SignalProcessing {
    * @param theTracks - 2D-ArrayList with all the tracks
    * @return 2D-ArrayList with all the tracks that have passed the filter
    */
-  public SList filterTracksByMotility(SList theTracks) {
-    SList filteredTracks = new SList();
+  public SerializableList filterTracksByMotility(SerializableList theTracks) {
+    SerializableList filteredTracks = new SerializableList();
     Kinematics K = new Kinematics();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();

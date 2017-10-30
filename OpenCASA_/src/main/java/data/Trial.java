@@ -2,8 +2,6 @@ package data;
 
 import java.io.Serializable;
 
-import ij.ImagePlus;
-
 /**
  * @author Carlos Alquezar
  *
@@ -20,7 +18,7 @@ public class Trial implements Serializable {
   /** source's filename  */
   public String source = "";
   /**   */
-  public SList tracks = null;
+  public SerializableList tracks = null;
   /**   */
   public int fieldWidth = 0;
   /**   */
@@ -34,7 +32,7 @@ public class Trial implements Serializable {
    * @param source
    * @param t
    */
-  public Trial(String ID, String type, String source, SList t) {
+  public Trial(String ID, String type, String source, SerializableList t) {
     this.ID = ID;
     this.type = type;
     this.source = source;
@@ -48,7 +46,7 @@ public class Trial implements Serializable {
    * @param imp
    * @param motileSperm
    */
-  public Trial(String ID, String type, String source, SList t,int width, int height) {
+  public Trial(String ID, String type, String source, SerializableList t,int width, int height) {
     this.ID = ID;
     this.type = type;
     this.source = source;

@@ -17,7 +17,6 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 import data.Params;
-import ij.IJ;
 
 /**
  * @author Carlos Alquezar

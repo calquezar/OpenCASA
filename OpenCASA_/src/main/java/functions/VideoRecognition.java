@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
-import data.SList;
+import data.SerializableList;
 import data.Spermatozoon;
 import ij.IJ;
 import ij.ImagePlus;
@@ -23,9 +23,9 @@ public class VideoRecognition implements Measurements {
    *          imp
    * @return
    */
-  public SList analyzeVideo(ImagePlus imp) {
+  public SerializableList analyzeVideo(ImagePlus imp) {
     if (imp == null)
-      return new SList();
+      return new SerializableList();
     System.out.println("converToGrayScale...");
     ComputerVision cv = new ComputerVision();
     cv.convertToGrayscale(imp);
@@ -44,7 +44,7 @@ public class VideoRecognition implements Measurements {
     // * Also record to which track a particle belongs in ArrayLists
     // ************************************************************
     System.out.println("identifyTracks...");
-    SList theTracks = idenfityTracks(theParticles, imp.getStackSize());
+    SerializableList theTracks = idenfityTracks(theParticles, imp.getStackSize());
     // Filtering tracks by length
     SignalProcessing sp = new SignalProcessing();
     theTracks = sp.filterTracksByLength(theTracks);
@@ -119,10 +119,10 @@ public class VideoRecognition implements Measurements {
    * @param nFrames
    * @return 2D-ArrayList with all tracks detected
    */
-  public SList idenfityTracks(List[] spermatozoa, int nFrames) {
+  public SerializableList idenfityTracks(List[] spermatozoa, int nFrames) {
 
     // int nFrames = imp.getStackSize();
-    SList theTracks = new SList();
+    SerializableList theTracks = new SerializableList();
     int trackCount = 0;
     if(spermatozoa == null)
       return theTracks;

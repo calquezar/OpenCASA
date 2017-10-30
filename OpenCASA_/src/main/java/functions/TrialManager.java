@@ -11,12 +11,11 @@ import java.util.Map;
 import javax.swing.JFileChooser;
 
 import data.PersistentRandomWalker;
-import data.SList;
+import data.SerializableList;
 import data.Simulation;
 import data.Trial;
 import ij.IJ;
 import ij.ImagePlus;
-import third_Party.AVI_Reader;
 
 /**
  * @author Carlos Alquezar
@@ -56,7 +55,7 @@ public class TrialManager {
     ImagePlus imp = impOrig.duplicate();
     //Extract trajectories
     VideoRecognition vr = new VideoRecognition();
-    SList tracks = vr.analyzeVideo(imp);
+    SerializableList tracks = vr.analyzeVideo(imp);
     //Set metadata
     FileManager fm = new FileManager();
     String filename = fm.getFilename(path);

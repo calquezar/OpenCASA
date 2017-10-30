@@ -11,7 +11,7 @@ import java.util.Set;
 import javax.swing.SwingWorker;
 
 import data.Params;
-import data.SList;
+import data.SerializableList;
 import data.Spermatozoon;
 import data.Trial;
 import functions.FileManager;
@@ -253,7 +253,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return An array containing the total count of angles ([0] - upgradient:
    *         [1] - other directions).
    */
-  private int[] countAngles(SList theTracks) {
+  private int[] countAngles(SerializableList theTracks) {
     int[] angles = { 0, 0 };
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List aTrack = (ArrayList) iT.next();
@@ -421,7 +421,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    *          - Array with all trajectories.
    * @return List of angles
    */
-  private List<Double> getListOfAngles(SList theTracks) {
+  private List<Double> getListOfAngles(SerializableList theTracks) {
     List<Double> instAngles = new ArrayList<Double>();
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       List track = (ArrayList) iT.next();
@@ -452,7 +452,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return An array containing the total count of angles ([0] - upgradient:
    *         [1] - other directions).
    */
-  private double[] getOddsValues(SList tracks) {
+  private double[] getOddsValues(SerializableList tracks) {
 
     double[] values = new double[] { 0.0, 0.0 };// [0]-upgradient
                                                 // displacements;[1]-displacements
@@ -549,9 +549,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    *          - set of trials
    * @return List with all tracks
    */
-  private SList mergeTracks(Map<String, Trial> trials) {
+  private SerializableList mergeTracks(Map<String, Trial> trials) {
 
-    SList tracks = new SList();
+    SerializableList tracks = new SerializableList();
     for (String k : trials.keySet()) {
       Trial trial = (Trial) trials.get(k);
       tracks.addAll(trial.tracks);
@@ -591,8 +591,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return Odds Ratio
    */
   private double or(Trial control, Trial test) {
-    SList controlTracks = control.tracks;
-    SList conditionTracks = test.tracks;
+    SerializableList controlTracks = control.tracks;
+    SerializableList conditionTracks = test.tracks;
     double[] numeratorValues = getOddsValues(conditionTracks);// Calculate
                                                               // numerator's
                                                               // odds value
@@ -615,7 +615,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    */
   private double orThreshold(Map<String, Trial> controls) {
 
-    SList controlTracks = mergeTracks(controls);
+    SerializableList controlTracks = mergeTracks(controls);
     List<Double> oRs = new ArrayList<Double>();
     for (int i = 0; i < Params.NUMSAMPLES; i++) {
       IJ.showProgress((double) i / Params.NUMSAMPLES);

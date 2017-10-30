@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.ListIterator;
 
 import data.Params;
-import data.SList;
+import data.SerializableList;
 import data.Spermatozoon;
 
 /**
@@ -187,7 +187,7 @@ public class Kinematics {
    * @param theTracks
    * @return
    */
-  public int[] motilityTest(SList theTracks) {
+  public int[] motilityTest(SerializableList theTracks) {
     int motile = 0;
     int nonMotile = 0;
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
