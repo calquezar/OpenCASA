@@ -72,6 +72,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     String folder = fm.selectFolder();
     Map<String, Trial> cTrials = getControlTrials(folder);
     List<String> testFolders = getTestFolders(folder);
+    if(testFolders.size()==0){
+      IJ.showMessage("No \"test\" folders have been found");
+      return;
+    }
     for (String f : testFolders) {
       List<String> tests = fm.getFiles(f);
       Map<String, Trial> tTrials = getTrials(tests);
@@ -416,7 +420,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private Map<String, Trial> getControlTrials(String folder) {
     FileManager fm = new FileManager();
     List<String> subFolders = fm.getSubfolders(folder);
-    String controlFolder = "";
+    String controlFolder = null;
     for (int i = 0; i < subFolders.size(); i++) {
       String tempName = subFolders.get(i).toLowerCase();
       tempName = fm.getFilename(tempName);
@@ -424,6 +428,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         controlFolder = subFolders.get(i);
         break;
       }
+    }
+    if(controlFolder==null){
+      IJ.showMessage("No \"control\" folder has been found");
+      return new HashMap<String, Trial>();
     }
     List<String> controlFiles = fm.getFiles(controlFolder);
     Map<String, Trial> cTrials = new HashMap<String, Trial>();
