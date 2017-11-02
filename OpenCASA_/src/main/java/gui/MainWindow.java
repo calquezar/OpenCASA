@@ -142,7 +142,7 @@ public class MainWindow extends JFrame {
             }
           });
           mw.setVisible(false);
-          sw.run(); 
+          //sw.run(); 
         }
       }
     });

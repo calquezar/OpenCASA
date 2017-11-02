@@ -1,8 +1,10 @@
 package gui;
 
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.HeadlessException;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -14,6 +16,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 import data.Params;
@@ -52,6 +55,8 @@ public class SettingsWindow extends JFrame {
   JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
   // Filtering
   JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
+  JButton saveBtn;
+  JButton cancelBtn;
   SettingsWindow sw; // Self reference used in action listeners
 
   /**
@@ -60,17 +65,73 @@ public class SettingsWindow extends JFrame {
   public SettingsWindow(String title) throws HeadlessException {
     super(title);
     sw = this;
+    createGUI();
     this.setVisible(true);
-//    setLocationRelativeTo(null);
-//    this.setPreferredSize(new Dimension(600, 300));
+    this.setLocationRelativeTo(null);
+    this.setMinimumSize(new Dimension(600, 300));
   }
-
+  
+  private void createGUI(){
+    this.setLayout(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+    c.fill = GridBagConstraints.HORIZONTAL;
+    //////////////////////
+    c.gridx = 1;
+    c.gridy = 0;
+    c.ipadx=2;
+    c.gridheight=8;
+    c.gridwidth=8;
+//    c.gridwidth = 6;
+    JTabbedPane tabbedPane = addTabPane();
+    this.add(tabbedPane, c);
+    //////////////////////
+    c.gridheight=1;
+    c.gridwidth=1;
+    createButtons();
+    c.gridx = 0;
+    c.gridy = 8;
+    this.add(cancelBtn,c);
+    c.gridx = 9;
+    c.gridy = 8;
+    this.add(saveBtn, c);
+    
+  }
+  private JTabbedPane addTabPane(){
+    JTabbedPane tabbedPane = new JTabbedPane();
+    tabbedPane.addTab("General", createGeneralBox());
+    tabbedPane.addTab("Recognition", createRecognitionBox());
+    tabbedPane.addTab("Filter",createFilterBox());
+    tabbedPane.addTab("Chemotaxis", createChemotaxisBox());
+    tabbedPane.addTab("Motility", createMotilityBox());
+    return tabbedPane;
+    
+  }
+  
+  private void createButtons(){
+    saveBtn = new JButton("Save");
+    // Add action listener
+    saveBtn.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        setParameters();
+        Params.saveParams();
+        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
+      }
+    });
+    cancelBtn = new JButton("Cancel");
+    // Add action listener
+    cancelBtn.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
+      }
+    });
+  }
   /**
    * @return JPanel with all elements
    */
   public JPanel createChemotaxisBox() {
     JPanel box = new JPanel();
-    box.setBackground(new Color(204, 229, 255));
+    box.setLayout(new GridBagLayout());
+//    box.setBackground(new Color(204, 229, 255));
     GridBagConstraints c = new GridBagConstraints();
     // c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
@@ -78,30 +139,32 @@ public class SettingsWindow extends JFrame {
     ///////////////
     JLabel label = new JLabel("Chemotactic direction (degrees): ");
     box.add(label, c);
-    c.gridx += 1;
+    c.gridx = 1;
     box.add(angleDirectionTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Chemotactic cone's amplitude (Degrees): ");
-    c.gridx += 1;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx += 1;
+    c.gridx = 1;
     box.add(angleAmplitudeTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Number of repetitions for bootstrapping: ");
-    c.gridx += 1;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx += 1;
+    c.gridx = 1;
     box.add(numSamplesBootsTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Compare opposite directions: ");
-    c.gridx += 1;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx += 1;
+    c.gridx = 1;
     compareOppositeDirCB.setSelected(Params.compareOppositeDirections);
     box.add(compareOppositeDirCB, c);
-    
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder("Chemotaxis"));
+//    box.setBorder(BorderFactory.createTitledBorder("Chemotaxis"));
 
     return box;
   }
@@ -111,6 +174,7 @@ public class SettingsWindow extends JFrame {
    */
   public JPanel createFilterBox() {
     JPanel box = new JPanel();
+    box.setLayout(new GridBagLayout());
     // box.setBackground(new Color(229,255,204));
     GridBagConstraints c = new GridBagConstraints();
     // c.fill = GridBagConstraints.HORIZONTAL;
@@ -122,19 +186,21 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(windowSizeTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Minimum vcl (um/s): ");
-    c.gridx = 2;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx = 3;
+    c.gridx = 1;
     box.add(vclMinTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Angle Delta (frames): ");
-    c.gridx = 4;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx = 5;
+    c.gridx = 1;
     box.add(angleDeltaTF, c);
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder("Filtering"));
+//    box.setBorder(BorderFactory.createTitledBorder("Filtering"));
 
     return box;
   }
@@ -144,6 +210,7 @@ public class SettingsWindow extends JFrame {
    */
   public JPanel createGeneralBox() {
     JPanel box = new JPanel();
+    box.setLayout(new GridBagLayout());
     // box.setBackground(new Color(229,255,204));
     GridBagConstraints c = new GridBagConstraints();
     // c.fill = GridBagConstraints.HORIZONTAL;
@@ -155,31 +222,35 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(frameRateTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Micron per Pixel: ");
-    c.gridx = 2;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx = 3;
+    c.gridx = 1;
     box.add(micronPerPixelTF, c);
     ///////////////
+    c.gridy += 1;
      label = new JLabel("Male: ");
-     c.gridx=4;
+     c.gridx=0;
      box.add(label,c);
-     c.gridx=5;
+     c.gridx=1;
      box.add(maleTF,c);
      ///////////////
+     c.gridy += 1;
      label = new JLabel("Date: ");
-     c.gridx=6;
+     c.gridx=0;
      box.add(label,c);
-     c.gridx=7;
+     c.gridx=1;
      box.add(dateTF,c);
      ///////////////
+     c.gridy += 1;
      label = new JLabel("Generic: ");
-     c.gridx=6;
+     c.gridx=0;
      box.add(label,c);
-     c.gridx=7;
+     c.gridx=1;
      box.add(genericTF,c);     
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder("General"));
+//    box.setBorder(BorderFactory.createTitledBorder("General"));
 
     return box;
   }
@@ -189,6 +260,7 @@ public class SettingsWindow extends JFrame {
    */
   public JPanel createMotilityBox() {
     JPanel box = new JPanel();
+    box.setLayout(new GridBagLayout());
     // box.setBackground(new Color(229,255,204));
     GridBagConstraints c = new GridBagConstraints();
     // c.fill = GridBagConstraints.HORIZONTAL;
@@ -200,13 +272,14 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(bcfShiftTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Progressive motility (STR>%): ");
-    c.gridx = 2;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx = 3;
+    c.gridx = 1;
     box.add(progressiveMotilityTF, c);
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder("Motility"));
+//    box.setBorder(BorderFactory.createTitledBorder("Motility"));
 
     return box;
   }
@@ -216,7 +289,8 @@ public class SettingsWindow extends JFrame {
    */
   public JPanel createRecognitionBox() {
     JPanel box = new JPanel();
-    box.setBackground(new Color(204, 229, 255));
+    box.setLayout(new GridBagLayout());
+//    box.setBackground(new Color(204, 229, 255));
     GridBagConstraints c = new GridBagConstraints();
     c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
@@ -227,76 +301,78 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(minSizeTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Maximum Size (um^2): ");
-    c.gridx = 2;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx = 3;
+    c.gridx = 1;
     box.add(maxSizeTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Minimum Track Length(frames): ");
-    c.gridy = 1;
     c.gridx = 0;
     box.add(label, c);
     c.gridx = 1;
     box.add(minTrackLengthTF, c);
     ///////////////
+    c.gridy += 1;
     label = new JLabel("Maximum displacement between frames (um): ");
-    c.gridx = 2;
+    c.gridx = 0;
     box.add(label, c);
-    c.gridx = 3;
+    c.gridx = 1;
     box.add(maxDisplacementTF, c);
     ///////////////
-    box.setBorder(BorderFactory.createTitledBorder("Recognition"));
+//    box.setBorder(BorderFactory.createTitledBorder("Recognition"));
 
     return box;
   }
   
-  /**
-   * @brief Build Settings window with all parameters.
-   */
-  public void run() {
-
-    GridBagConstraints c = new GridBagConstraints();
-    c.fill = GridBagConstraints.HORIZONTAL;
-    c.ipady = 0;
-    c.gridx = 0;
-    c.gridy = 0;
-    JPanel panel = new JPanel(new GridBagLayout());
-    panel.add(createGeneralBox(), c);
-    c.gridy += 1;
-    panel.add(createRecognitionBox(), c);
-    c.gridy += 1;
-    panel.add(createFilterBox(), c);
-    c.gridy += 1;
-    panel.add(createChemotaxisBox(), c);
-    c.gridy += 1;
-    panel.add(createMotilityBox(), c);
-    JButton saveBtn = new JButton("Save");
-    // Add action listener
-    saveBtn.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        setParameters();
-        Params.saveParams();
-        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
-      }
-    });
-    JButton cancelBtn = new JButton("Cancel");
-    // Add action listener
-    cancelBtn.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
-      }
-    });
-    c.gridx = 1;
-    c.gridy += 1;
-    panel.add(saveBtn, c);
-    c.gridx = 2;
-    panel.add(cancelBtn, c);
-    // panel.setBackground(new Color(255,204,153));
-    this.setContentPane(panel);
-    this.pack();
-
-  }
+//  /**
+//   * @brief Build Settings window with all parameters.
+//   */
+//  public void run() {
+//
+//    GridBagConstraints c = new GridBagConstraints();
+//    c.fill = GridBagConstraints.HORIZONTAL;
+//    c.ipady = 0;
+//    c.gridx = 0;
+//    c.gridy = 0;
+//    JPanel panel = new JPanel(new GridBagLayout());
+//    panel.add(createGeneralBox(), c);
+//    c.gridy += 1;
+//    panel.add(createRecognitionBox(), c);
+//    c.gridy += 1;
+//    panel.add(createFilterBox(), c);
+//    c.gridy += 1;
+//    panel.add(createChemotaxisBox(), c);
+//    c.gridy += 1;
+//    panel.add(createMotilityBox(), c);
+//    JButton saveBtn = new JButton("Save");
+//    // Add action listener
+//    saveBtn.addActionListener(new ActionListener() {
+//      public void actionPerformed(ActionEvent e) {
+//        setParameters();
+//        Params.saveParams();
+//        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
+//      }
+//    });
+//    JButton cancelBtn = new JButton("Cancel");
+//    // Add action listener
+//    cancelBtn.addActionListener(new ActionListener() {
+//      public void actionPerformed(ActionEvent e) {
+//        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
+//      }
+//    });
+//    c.gridx = 1;
+//    c.gridy += 1;
+//    panel.add(saveBtn, c);
+//    c.gridx = 2;
+//    panel.add(cancelBtn, c);
+//    // panel.setBackground(new Color(255,204,153));
+//    this.setContentPane(panel);
+//    this.pack();
+//
+//  }
   /**
    * @brief Set Params static fields with the values introduced by the user.
    */
