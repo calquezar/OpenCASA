@@ -1,16 +1,14 @@
 package gui;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
-import java.awt.GridLayout;
 import java.awt.HeadlessException;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
@@ -27,87 +25,56 @@ import data.Params;
  */
 public class SettingsWindow extends JFrame {
 
+  private static final long serialVersionUID      = 1L;
+  JTextField                angleAmplitudeTF      = new JTextField("" + Params.angleAmplitude, 4);
+  JTextField                angleDeltaTF          = new JTextField("" + Params.angleDelta, 4);
+  JTextField                angleDirectionTF      = new JTextField("" + Params.angleDirection, 4);
+  JTextField                bcfShiftTF            = new JTextField("" + Params.bcf_shift, 4);
+  JButton                   cancelBtn;
+  JCheckBox                 compareOppositeDirCB  = new JCheckBox();
+  JTextField                dateTF                = new JTextField(Params.date, 8);
+  JTextField                frameRateTF           = new JTextField("" + Params.frameRate, 4);
+  JTextField                genericTF             = new JTextField(Params.genericField, 8);
+  JTextField                maleTF                = new JTextField(Params.male, 8);
+  JTextField                maxDisplacementTF     = new JTextField("" + Params.maxDisplacement, 4);
+  JTextField                maxSizeTF             = new JTextField("" + Params.maxSize, 4);
+  JTextField                micronPerPixelTF      = new JTextField("" + Params.micronPerPixel, 4);
+  JTextField                minSizeTF             = new JTextField("" + Params.minSize, 4);
+  JTextField                minTrackLengthTF      = new JTextField("" + Params.minTrackLength, 4);
+  JTextField                numSamplesBootsTF     = new JTextField("" + Params.NUMSAMPLES, 4);
+  JTextField                progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
+  JButton                   saveBtn;
+  SettingsWindow            sw; // Self reference used in action listeners
+  JTextField                vclMinTF              = new JTextField("" + Params.vclMin, 4);
+  JTextField                windowSizeTF          = new JTextField("" + Params.wSize, 4);
 
   /**
-   * 
-   */
-  private static final long serialVersionUID = 1L;
-  JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
-  JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
-  // Chemotaxis
-  JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
-  JCheckBox compareOppositeDirCB = new JCheckBox();
-  // Motility
-  JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
-  // General
-  JTextField frameRateTF = new JTextField("" + Params.frameRate, 4);
-  JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
-  JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
-  JTextField micronPerPixelTF = new JTextField("" + Params.micronPerPixel, 4);
-  JTextField maleTF = new JTextField(Params.male,8);
-  JTextField dateTF = new JTextField(Params.date,8);
-  JTextField genericTF = new JTextField(Params.genericField,8);
-  // Recognition
-  JTextField minSizeTF = new JTextField("" + Params.minSize, 4);
-  JTextField minTrackLengthTF = new JTextField("" + Params.minTrackLength, 4);
-  JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
-  JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
-  JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
-  // Filtering
-  JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
-  JButton saveBtn;
-  JButton cancelBtn;
-  SettingsWindow sw; // Self reference used in action listeners
-
-  /**
-   * @param title - Window's title
+   * @param title
+   *          - Window's title
    */
   public SettingsWindow(String title) throws HeadlessException {
     super(title);
     sw = this;
     createGUI();
     this.setVisible(true);
-    this.setLocationRelativeTo(null);
-    this.setMinimumSize(new Dimension(600, 300));
+    // this.setLocationRelativeTo(null);
+    Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+    int w = (int) screenSize.getWidth();
+    int h = (int) screenSize.getHeight();
+    this.setMinimumSize(new Dimension(w/3, h/3));
   }
-  
-  private void createGUI(){
-    this.setLayout(new GridBagLayout());
-    GridBagConstraints c = new GridBagConstraints();
-    c.fill = GridBagConstraints.HORIZONTAL;
-    //////////////////////
-    c.gridx = 1;
-    c.gridy = 0;
-    c.ipadx=2;
-    c.gridheight=8;
-    c.gridwidth=8;
-//    c.gridwidth = 6;
-    JTabbedPane tabbedPane = addTabPane();
-    this.add(tabbedPane, c);
-    //////////////////////
-    c.gridheight=1;
-    c.gridwidth=1;
-    createButtons();
-    c.gridx = 0;
-    c.gridy = 8;
-    this.add(cancelBtn,c);
-    c.gridx = 9;
-    c.gridy = 8;
-    this.add(saveBtn, c);
-    
-  }
-  private JTabbedPane addTabPane(){
+
+  private JTabbedPane addTabPane() {
     JTabbedPane tabbedPane = new JTabbedPane();
     tabbedPane.addTab("General", createGeneralBox());
-    tabbedPane.addTab("Recognition", createRecognitionBox());
-    tabbedPane.addTab("Filter",createFilterBox());
+    tabbedPane.addTab("Video", createVideoBox());
     tabbedPane.addTab("Chemotaxis", createChemotaxisBox());
     tabbedPane.addTab("Motility", createMotilityBox());
     return tabbedPane;
-    
+
   }
-  
-  private void createButtons(){
+
+  private void createButtons() {
     saveBtn = new JButton("Save");
     // Add action listener
     saveBtn.addActionListener(new ActionListener() {
@@ -125,13 +92,14 @@ public class SettingsWindow extends JFrame {
       }
     });
   }
+
   /**
    * @return JPanel with all elements
    */
   public JPanel createChemotaxisBox() {
     JPanel box = new JPanel();
     box.setLayout(new GridBagLayout());
-//    box.setBackground(new Color(204, 229, 255));
+    // box.setBackground(new Color(204, 229, 255));
     GridBagConstraints c = new GridBagConstraints();
     // c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
@@ -150,12 +118,19 @@ public class SettingsWindow extends JFrame {
     box.add(angleAmplitudeTF, c);
     ///////////////
     c.gridy += 1;
-    label = new JLabel("Number of repetitions for bootstrapping: ");
+    label = new JLabel("Number of bootstrapping resamples: ");
     c.gridx = 0;
     box.add(label, c);
     c.gridx = 1;
     box.add(numSamplesBootsTF, c);
     ///////////////
+    c.gridy += 1;
+    label = new JLabel("Angle Delta (frames): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(angleDeltaTF, c);
+    ///////////////    
     c.gridy += 1;
     label = new JLabel("Compare opposite directions: ");
     c.gridx = 0;
@@ -164,43 +139,7 @@ public class SettingsWindow extends JFrame {
     compareOppositeDirCB.setSelected(Params.compareOppositeDirections);
     box.add(compareOppositeDirCB, c);
     ///////////////
-//    box.setBorder(BorderFactory.createTitledBorder("Chemotaxis"));
-
-    return box;
-  }
-
-  /**
-   * @return JPanel with all elements
-   */
-  public JPanel createFilterBox() {
-    JPanel box = new JPanel();
-    box.setLayout(new GridBagLayout());
-    // box.setBackground(new Color(229,255,204));
-    GridBagConstraints c = new GridBagConstraints();
-    // c.fill = GridBagConstraints.HORIZONTAL;
-    c.gridx = 0;
-    c.gridy = 0;
-    ///////////////
-    JLabel label = new JLabel("Window Size (frames): ");
-    box.add(label, c);
-    c.gridx = 1;
-    box.add(windowSizeTF, c);
-    ///////////////
-    c.gridy += 1;
-    label = new JLabel("Minimum vcl (um/s): ");
-    c.gridx = 0;
-    box.add(label, c);
-    c.gridx = 1;
-    box.add(vclMinTF, c);
-    ///////////////
-    c.gridy += 1;
-    label = new JLabel("Angle Delta (frames): ");
-    c.gridx = 0;
-    box.add(label, c);
-    c.gridx = 1;
-    box.add(angleDeltaTF, c);
-    ///////////////
-//    box.setBorder(BorderFactory.createTitledBorder("Filtering"));
+    // box.setBorder(BorderFactory.createTitledBorder("Chemotaxis"));
 
     return box;
   }
@@ -217,42 +156,76 @@ public class SettingsWindow extends JFrame {
     c.gridx = 0;
     c.gridy = 0;
     ///////////////
-    JLabel label = new JLabel("Frame Rate (frames/s): ");
-    box.add(label, c);
-    c.gridx = 1;
-    box.add(frameRateTF, c);
-    ///////////////
-    c.gridy += 1;
-    label = new JLabel("Micron per Pixel: ");
+    JLabel label = new JLabel("Microns per Pixel: ");
     c.gridx = 0;
     box.add(label, c);
     c.gridx = 1;
     box.add(micronPerPixelTF, c);
     ///////////////
     c.gridy += 1;
-     label = new JLabel("Male: ");
-     c.gridx=0;
-     box.add(label,c);
-     c.gridx=1;
-     box.add(maleTF,c);
-     ///////////////
-     c.gridy += 1;
-     label = new JLabel("Date: ");
-     c.gridx=0;
-     box.add(label,c);
-     c.gridx=1;
-     box.add(dateTF,c);
-     ///////////////
-     c.gridy += 1;
-     label = new JLabel("Generic: ");
-     c.gridx=0;
-     box.add(label,c);
-     c.gridx=1;
-     box.add(genericTF,c);     
+    label = new JLabel("Minimum cell size (um^2): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(minSizeTF, c);
     ///////////////
-//    box.setBorder(BorderFactory.createTitledBorder("General"));
+    c.gridy += 1;
+    label = new JLabel("Maximum cell size (um^2): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(maxSizeTF, c);
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Male: ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(maleTF, c);
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Date: ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(dateTF, c);
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Generic: ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(genericTF, c);
+    ///////////////
+    // box.setBorder(BorderFactory.createTitledBorder("General"));
 
     return box;
+  }
+
+  private void createGUI() {
+    this.setLayout(new GridBagLayout());
+    GridBagConstraints c = new GridBagConstraints();
+    c.fill = GridBagConstraints.HORIZONTAL;
+    //////////////////////
+    c.gridx = 1;
+    c.gridy = 0;
+    c.ipadx = 2;
+    c.gridheight = 8;
+    c.gridwidth = 8;
+    // c.gridwidth = 6;
+    JTabbedPane tabbedPane = addTabPane();
+    this.add(tabbedPane, c);
+    //////////////////////
+    c.gridheight = 1;
+    c.gridwidth = 1;
+    createButtons();
+    c.gridx = 0;
+    c.gridy = 8;
+    this.add(cancelBtn, c);
+    c.gridx = 9;
+    c.gridy = 8;
+    this.add(saveBtn, c);
+
   }
 
   /**
@@ -279,34 +252,34 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(progressiveMotilityTF, c);
     ///////////////
-//    box.setBorder(BorderFactory.createTitledBorder("Motility"));
+    c.gridy += 1;
+    label = new JLabel("Minimum vcl (um/s): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(vclMinTF, c);
+    ///////////////
+    // box.setBorder(BorderFactory.createTitledBorder("Motility"));
 
     return box;
   }
 
-  /** 
+  /**
    * @return JPanel with all elements
    */
-  public JPanel createRecognitionBox() {
+  public JPanel createVideoBox() {
     JPanel box = new JPanel();
     box.setLayout(new GridBagLayout());
-//    box.setBackground(new Color(204, 229, 255));
+    // box.setBackground(new Color(204, 229, 255));
     GridBagConstraints c = new GridBagConstraints();
     c.fill = GridBagConstraints.HORIZONTAL;
     c.gridx = 0;
     c.gridy = 0;
     ///////////////
-    JLabel label = new JLabel("Minimum Size (um^2): ");
+    JLabel label = new JLabel("Frame Rate (frames/s): ");
     box.add(label, c);
     c.gridx = 1;
-    box.add(minSizeTF, c);
-    ///////////////
-    c.gridy += 1;
-    label = new JLabel("Maximum Size (um^2): ");
-    c.gridx = 0;
-    box.add(label, c);
-    c.gridx = 1;
-    box.add(maxSizeTF, c);
+    box.add(frameRateTF, c);
     ///////////////
     c.gridy += 1;
     label = new JLabel("Minimum Track Length(frames): ");
@@ -322,57 +295,18 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(maxDisplacementTF, c);
     ///////////////
-//    box.setBorder(BorderFactory.createTitledBorder("Recognition"));
+    c.gridy += 1;
+    label = new JLabel("Window Size (frames): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(windowSizeTF, c);
+    ///////////////
+    // box.setBorder(BorderFactory.createTitledBorder("Recognition"));
 
     return box;
   }
-  
-//  /**
-//   * @brief Build Settings window with all parameters.
-//   */
-//  public void run() {
-//
-//    GridBagConstraints c = new GridBagConstraints();
-//    c.fill = GridBagConstraints.HORIZONTAL;
-//    c.ipady = 0;
-//    c.gridx = 0;
-//    c.gridy = 0;
-//    JPanel panel = new JPanel(new GridBagLayout());
-//    panel.add(createGeneralBox(), c);
-//    c.gridy += 1;
-//    panel.add(createRecognitionBox(), c);
-//    c.gridy += 1;
-//    panel.add(createFilterBox(), c);
-//    c.gridy += 1;
-//    panel.add(createChemotaxisBox(), c);
-//    c.gridy += 1;
-//    panel.add(createMotilityBox(), c);
-//    JButton saveBtn = new JButton("Save");
-//    // Add action listener
-//    saveBtn.addActionListener(new ActionListener() {
-//      public void actionPerformed(ActionEvent e) {
-//        setParameters();
-//        Params.saveParams();
-//        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
-//      }
-//    });
-//    JButton cancelBtn = new JButton("Cancel");
-//    // Add action listener
-//    cancelBtn.addActionListener(new ActionListener() {
-//      public void actionPerformed(ActionEvent e) {
-//        sw.dispatchEvent(new WindowEvent(sw, WindowEvent.WINDOW_CLOSING));
-//      }
-//    });
-//    c.gridx = 1;
-//    c.gridy += 1;
-//    panel.add(saveBtn, c);
-//    c.gridx = 2;
-//    panel.add(cancelBtn, c);
-//    // panel.setBackground(new Color(255,204,153));
-//    this.setContentPane(panel);
-//    this.pack();
-//
-//  }
+
   /**
    * @brief Set Params static fields with the values introduced by the user.
    */
@@ -383,21 +317,17 @@ public class SettingsWindow extends JFrame {
     Params.male = maleTF.getText();
     Params.date = dateTF.getText();
     Params.genericField = genericTF.getText();
-    // Recognition
     Params.minSize = Float.parseFloat(minSizeTF.getText());
     Params.maxSize = Float.parseFloat(maxSizeTF.getText());
     Params.minTrackLength = Integer.parseInt(minTrackLengthTF.getText());
     Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um => pixels
-    // Filtering
     Params.wSize = Integer.parseInt(windowSizeTF.getText());
     Params.vclMin = Float.parseFloat(vclMinTF.getText());
     Params.angleDelta = Integer.parseInt(angleDeltaTF.getText());
-    // Chemotaxis
     Params.angleDirection = Float.parseFloat(angleDirectionTF.getText());
     Params.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
     Params.NUMSAMPLES = Integer.parseInt(numSamplesBootsTF.getText());
     Params.compareOppositeDirections = compareOppositeDirCB.isSelected();
-    // Motility
     Params.bcf_shift = Integer.parseInt(bcfShiftTF.getText());
     Params.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());
 
