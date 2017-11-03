@@ -25,7 +25,6 @@ import data.Params;
  */
 public class SettingsWindow extends JFrame {
 
-  private static final long serialVersionUID      = 1L;
   JTextField                angleAmplitudeTF      = new JTextField("" + Params.angleAmplitude, 4);
   JTextField                angleDeltaTF          = new JTextField("" + Params.angleDelta, 4);
   JTextField                angleDirectionTF      = new JTextField("" + Params.angleDirection, 4);
