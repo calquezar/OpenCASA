@@ -144,8 +144,7 @@ public class Motility extends SwingWorker<Boolean, String> {
 
     SignalProcessing sp = new SignalProcessing();
     List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
-    float nTracks = filteredTracks.size(); // Only take into account those who
-                                           // passed the motility test
+    float nTracks = filteredTracks.size(); // Only take into account those who passed the motility test
     float vsl_mean = total_vsl / nTracks;
     float vcl_mean = total_vcl / nTracks;
     float vap_mean = total_vap / nTracks;
