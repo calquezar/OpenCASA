@@ -315,12 +315,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
       Spermatozoon oldSpermatozoon = (Spermatozoon) track.get(j);
       Spermatozoon newSpermatozoon = (Spermatozoon) track.get(j + Params.angleDelta);
-      double angle = relativeAngle(oldSpermatozoon, newSpermatozoon);// Between
-                                                                     // interval
-                                                                     // [-PI,PI]
-      if (Params.compareOppositeDirections) {// We only take into account angles
-                                             // in the gradient and opposite
-                                             // direction
+      double angle = relativeAngle(oldSpermatozoon, newSpermatozoon);// Between interval [-PI,PI]
+      if (Params.compareOppositeDirections) {// We only take into account angles in the gradient and opposite direction
         if (Math.abs(angle) < angleChemotaxis) {
           nUpGradient++;
         } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {

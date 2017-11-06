@@ -22,7 +22,7 @@ public class Params {
   /** Angles used to clasify chemotactic trajectories */
   public static float   angleDirection       = 0;
   /** parameters used to compute BCF (equivalent to angleDelta) */
-  public static int     bcf_shift            = 0;
+//  public static int     bcf_shift            = 0;
   /**   */
   public static float   borderSize           = 20;
   /** */
@@ -106,7 +106,7 @@ public class Params {
 //    male = prefs.get("male", male);
 //    date = prefs.get("date", date);
 //    genericField = prefs.get("genericField", genericField);
-    bcf_shift = prefs.getInt("bcf_shift", bcf_shift);
+//    bcf_shift = prefs.getInt("bcf_shift", bcf_shift);
     progressMotility = prefs.getFloat("progressMotility", progressMotility);
     micronPerPixel = prefs.getDouble("micronPerPixel", micronPerPixel);
     NUMSAMPLES = prefs.getInt("NUMSAMPLES", NUMSAMPLES);
@@ -133,7 +133,7 @@ public class Params {
 //    prefs.put("male", male);
 //    prefs.put("date", date);
 //    prefs.put("genericField", genericField);
-    prefs.putInt("bcf_shift", bcf_shift);
+//    prefs.putInt("bcf_shift", bcf_shift);
     prefs.putFloat("progressMotility", progressMotility);
     prefs.putDouble("micronPerPixel", micronPerPixel);
     prefs.putInt("NUMSAMPLES", NUMSAMPLES);

@@ -28,7 +28,7 @@ public class SettingsWindow extends JFrame {
   JTextField     angleAmplitudeTF      = new JTextField("" + Params.angleAmplitude, 4);
   JTextField     angleDeltaTF          = new JTextField("" + Params.angleDelta, 4);
   JTextField     angleDirectionTF      = new JTextField("" + Params.angleDirection, 4);
-  JTextField     bcfShiftTF            = new JTextField("" + Params.bcf_shift, 4);
+  //JTextField     bcfShiftTF            = new JTextField("" + Params.bcf_shift, 4);
   JButton        cancelBtn;
   JCheckBox      compareOppositeDirCB  = new JCheckBox();
   JTextField     dateTF                = new JTextField(Params.date, 8);
@@ -240,13 +240,13 @@ public class SettingsWindow extends JFrame {
     c.gridx = 0;
     c.gridy = 0;
     ///////////////
-    JLabel label = new JLabel("Minimum shift for BCF (frames): ");
-    box.add(label, c);
-    c.gridx = 1;
-    box.add(bcfShiftTF, c);
+//    JLabel label = new JLabel("Minimum shift for BCF (frames): ");
+//    box.add(label, c);
+//    c.gridx = 1;
+//    box.add(bcfShiftTF, c);
     ///////////////
     c.gridy += 1;
-    label = new JLabel("Progressive motility (STR>%): ");
+    JLabel label = new JLabel("Progressive motility (STR>%): ");
     c.gridx = 0;
     box.add(label, c);
     c.gridx = 1;
@@ -336,7 +336,7 @@ public class SettingsWindow extends JFrame {
     Params.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
     Params.NUMSAMPLES = Integer.parseInt(numSamplesBootsTF.getText());
     Params.compareOppositeDirections = compareOppositeDirCB.isSelected();
-    Params.bcf_shift = Integer.parseInt(bcfShiftTF.getText());
+//    Params.bcf_shift = Integer.parseInt(bcfShiftTF.getText());
     Params.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());
     Params.printXY = printXYCB.isSelected();
   }
