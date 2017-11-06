@@ -101,6 +101,7 @@ public class Params {
     angleDirection = prefs.getFloat("angleDirection", angleDirection);
     angleAmplitude = prefs.getFloat("angleAmplitude", angleAmplitude);
     compareOppositeDirections = prefs.getBoolean("compareOppositeDirections", compareOppositeDirections);
+    printXY = prefs.getBoolean("printXY", printXY);
     frameRate = prefs.getFloat("frameRate", frameRate);
 //    male = prefs.get("male", male);
 //    date = prefs.get("date", date);
@@ -127,6 +128,7 @@ public class Params {
     prefs.putFloat("angleDirection", angleDirection);
     prefs.putFloat("angleAmplitude", angleAmplitude);
     prefs.putBoolean("compareOppositeDirections", compareOppositeDirections);
+    prefs.putBoolean("printXY", printXY);
     prefs.putFloat("frameRate", frameRate);
 //    prefs.put("male", male);
 //    prefs.put("date", date);

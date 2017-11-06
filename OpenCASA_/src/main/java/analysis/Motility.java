@@ -126,6 +126,10 @@ public class Motility extends SwingWorker<Boolean, String> {
     Paint paint = new Paint();
     paint.draw(imp, trial.tracks);
     imp.show();
+    if(Params.printXY){
+      Utils utils = new Utils();
+      IJ.saveString(utils.printXYCoords(trial.tracks),"");
+    }
   }
 
   /**

@@ -96,6 +96,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     TrialManager tm = new TrialManager();
     Trial trial = tm.getTrialFromAVI(file);
     drawResults(trial);
+    if(Params.printXY){
+      Utils utils = new Utils();
+      IJ.saveString(utils.printXYCoords(trial.tracks),"");
+    }
   }
 
   /**
