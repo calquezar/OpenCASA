@@ -68,7 +68,6 @@ public class Utils {
     // strings to print out all of the data gathered, point by point
     String xyPts = " ";
     // initialize variables
-    double x1, y1, x2, y2;
     int trackNr = 0;
     int displayTrackNr = 0;
     int line = 1;
@@ -86,7 +85,6 @@ public class Utils {
       Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
       Spermatozoon firstSpermatozoon = new Spermatozoon();
       firstSpermatozoon.copy(oldSpermatozoon);
-
       // For each instant (Spermatozoon) in the track
       String outputline = "";
       for (; jT.hasNext();) {
