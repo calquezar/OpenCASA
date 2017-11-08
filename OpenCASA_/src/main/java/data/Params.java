@@ -97,6 +97,8 @@ public class Params {
     maxDisplacement = prefs.getFloat("maxDisplacement", maxDisplacement);
     wSize = prefs.getInt("wSize", wSize);
     vclMin = prefs.getFloat("vclMin", vclMin);
+    vclLowerTh = prefs.getFloat("vclLowerTh", vclLowerTh);
+    vclUpperTh = prefs.getFloat("vclUpperTh", vclUpperTh);
     angleDelta = prefs.getInt("angleDelta", angleDelta);
     angleDirection = prefs.getFloat("angleDirection", angleDirection);
     angleAmplitude = prefs.getFloat("angleAmplitude", angleAmplitude);
@@ -124,6 +126,8 @@ public class Params {
     prefs.putFloat("maxDisplacement", maxDisplacement);
     prefs.putInt("wSize", wSize);
     prefs.putFloat("vclMin", vclMin);
+    prefs.putFloat("vclLowerTh", vclLowerTh);
+    prefs.putFloat("vclUpperTh", vclUpperTh);
     prefs.putInt("angleDelta", angleDelta);
     prefs.putFloat("angleDirection", angleDirection);
     prefs.putFloat("angleAmplitude", angleAmplitude);

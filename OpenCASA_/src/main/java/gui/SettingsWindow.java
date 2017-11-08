@@ -45,7 +45,9 @@ public class SettingsWindow extends JFrame {
   JTextField     progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
   JButton        saveBtn;
   SettingsWindow sw; // Self reference used in action listeners
+  JTextField     vclLowerThTF          = new JTextField("" + Params.vclLowerTh, 4);
   JTextField     vclMinTF              = new JTextField("" + Params.vclMin, 4);
+  JTextField     vclUpperThTF          = new JTextField("" + Params.vclUpperTh, 4);
   JTextField     windowSizeTF          = new JTextField("" + Params.wSize, 4);
 
   /**
@@ -259,6 +261,20 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     box.add(vclMinTF, c);
     ///////////////
+    c.gridy += 1;
+    label = new JLabel("vcl lower threshold (um/s): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(vclLowerThTF, c);
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("vcl upper threshold (um/s): ");
+    c.gridx = 0;
+    box.add(label, c);
+    c.gridx = 1;
+    box.add(vclUpperThTF, c);
+    ///////////////    
     // box.setBorder(BorderFactory.createTitledBorder("Motility"));
 
     return box;
@@ -331,6 +347,8 @@ public class SettingsWindow extends JFrame {
     Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um => pixels
     Params.wSize = Integer.parseInt(windowSizeTF.getText());
     Params.vclMin = Float.parseFloat(vclMinTF.getText());
+    Params.vclLowerTh = Float.parseFloat(vclLowerThTF.getText());
+    Params.vclUpperTh = Float.parseFloat(vclUpperThTF.getText());
     Params.angleDelta = Integer.parseInt(angleDeltaTF.getText());
     Params.angleDirection = Float.parseFloat(angleDirectionTF.getText());
     Params.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
