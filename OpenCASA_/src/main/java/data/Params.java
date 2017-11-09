@@ -1,3 +1,21 @@
+/*
+ *   OpenCASA software v0.8 for video and image analysis
+ *   Copyright (C) 2017  Carlos Alquézar
+ *
+ *   This program is free software: you can redistribute it and/or modify
+ *   it under the terms of the GNU General Public License as published by
+ *   the Free Software Foundation, either version 3 of the License, or
+ *   (at your option) any later version.
+ *
+ *   This program is distributed in the hope that it will be useful,
+ *   but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *   GNU General Public License for more details.
+ *
+ *   You should have received a copy of the GNU General Public License
+ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/    
+
 package data;
 
 import java.io.FileInputStream;
@@ -5,6 +23,8 @@ import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.prefs.Preferences;
+
+import ij.IJ;
 
 /**
  * @author Carlos Alquezar
@@ -87,7 +107,8 @@ public class Params {
       ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
       prefs.importPreferences(objectinputstream);
     } catch (Exception e) {
-      System.out.println("Fallo de lectura");
+      IJ.handleException(e);
+//      System.out.println("Fallo de lectura");
     }
     if (prefs == null)
       prefs = Preferences.userNodeForPackage(Params.class);
@@ -149,7 +170,8 @@ public class Params {
       oos.close();
       fos.close();
     } catch (Exception e) {
-      e.printStackTrace();
+      IJ.handleException(e);
+//      e.printStackTrace();
     }
   }
 }
