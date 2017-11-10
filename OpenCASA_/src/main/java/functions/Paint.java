@@ -14,6 +14,34 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
+
+Part of this code is a modification of a previous code written by Jonas Wilson-Leedy and Rolf Ingermann
+Copyright © 2003 The Regents of the University of California and the Howard Hughes Medical Institute.
+
+All Rights Reserved.
+
+Permission to use, copy, modify, and distribute this software and its documentation for educational, research and 
+non-profit purposes, without fee, and without a written agreement is hereby granted, provided that the above copyright 
+notice, this paragraph and the following three paragraphs appear in all copies.
+
+Permission to incorporate this software into commercial products may be obtained by contacting the Office of 
+Technology Management at the University of California San Francisco [Sunita Rajdev, Ph.D., Licensing Officer, 
+UCSF Office of Technology Management. 185 Berry St, Suite 4603, San Francisco, CA 94107].
+
+This software program and documentation are copyrighted by The Regents of the University of California 
+acting on behalf of the University of California San Francisco via its Office of Technology Management and the 
+Howard Hughes Medical Institute (collectively, the Institution).  The software program and documentation are 
+supplied "as is", without any accompanying services from the Institution. The Institution does not warrant that the 
+operation of the program will be uninterrupted or error-free. The end-user understands that the program was developed 
+for research purposes and is advised not to rely exclusively on the program for any reason.
+
+IN NO EVENT SHALL THE INSTITUTION BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR CONSEQUENTIAL 
+DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE INSTITUTION 
+HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. THE  INSTITUTION SPECIFICALLY DISCLAIMS ANY WARRANTIES, INCLUDING, 
+BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE 
+PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE  INSTITUTION HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, 
+UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
+
 */    
 
 package functions;
@@ -132,8 +160,6 @@ public class Paint {
     }
     int upRes = 1;
     String strPart;
-    // Variables used to draw chemotactic cone
-    int trackNr = 0;
     int displayTrackNr = 0;
     SignalProcessing sp = new SignalProcessing();
     SerializableList avgTracks = sp.averageTracks(theTracks);
@@ -142,24 +168,15 @@ public class Paint {
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
       IJ.showProgress((double) iFrame / nFrames);
       IJ.showStatus("Drawing Tracks (frame "+iFrame+"/"+nFrames+")...");
-      int trackCount2 = 0;
-      int trackCount3 = 0;
-      int color;
-      int xHeight = stack.getHeight();
       int yWidth = stack.getWidth();
       ImageProcessor ip = stack.getProcessor(iFrame);
       ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
-      trackNr = 0;
       displayTrackNr = 0;
       for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
-        trackNr++;
-        trackCount2++;
         List zTrack = (ArrayList) iT.next();
         displayTrackNr++;
         ListIterator jT = zTrack.listIterator();
         Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
-        color = 150;
-        trackCount3++;
         for (; jT.hasNext();) {
           Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
           if (kinematics.getVelocityTrackType(zTrack) == "Slow")
@@ -198,7 +215,6 @@ public class Paint {
    * @param spermatozoa
    */
   public void drawBoundaries(ImagePlus imp, List spermatozoa) {
-    int xHeight = imp.getHeight();
     int yWidth = imp.getWidth();
     IJ.showStatus("Drawing boundaries...");
     ImageProcessor ip = imp.getProcessor();
@@ -240,9 +256,6 @@ public class Paint {
 
     SignalProcessing sp = new SignalProcessing();
     SerializableList avgTracks = sp.averageTracks(trial.tracks);
-    String strPart;
-    // Variables used to draw chemotactic cone
-    int displayTrackNr = 0;
     // We create another ImageProcesor to draw chemotactic cone and relative
     // trajectories
     ColorProcessor ipRelTraj = new ColorProcessor(trial.fieldWidth, trial.fieldHeight);
@@ -262,7 +275,6 @@ public class Paint {
     ipRelTraj.setLineWidth(1);
     // Draw average paths
     IJ.showStatus("Drawing Tracks...");
-    int color = 0;
     for (ListIterator iT = avgTracks.listIterator(); iT.hasNext();) {
       List zTrack = (ArrayList) iT.next();
       ListIterator jT = zTrack.listIterator();
