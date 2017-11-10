@@ -15,7 +15,8 @@
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-Part of this code is a modification of a previous code written by Jonas Wilson-Leedy and Rolf Ingermann
+Part of this code (draw and doOffset methods in particular) is a modification of a previous code written 
+by Jonas Wilson-Leedy and Rolf Ingermann and publish in CASA_ plugin for ImageJ.
 Copyright © 2003 The Regents of the University of California and the Howard Hughes Medical Institute.
 
 All Rights Reserved.
