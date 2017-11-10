@@ -1,12 +1,11 @@
 var searchData=
 [
-  ['paddinggranularity',['paddingGranularity',['../classthird___party_1_1_a_v_i___reader.html#ab5eedec5cfca724a1ae285acde216554',1,'third_Party::AVI_Reader']]],
-  ['pixelheight',['pixelHeight',['../classdata_1_1_params.html#aafc5c427ff22945bb54074cb739bb203',1,'data::Params']]],
-  ['pixelwidth',['pixelWidth',['../classdata_1_1_params.html#a09987def1fe202d308ca10bbf93cf428',1,'data::Params']]],
-  ['png_5fcompression',['PNG_COMPRESSION',['../classthird___party_1_1_a_v_i___reader.html#a35f0e3b79e23892ab4cf6b8e2628bef7',1,'third_Party::AVI_Reader']]],
-  ['png_5fcompression2',['PNG_COMPRESSION2',['../classthird___party_1_1_a_v_i___reader.html#a317f840efd0048699567082757a29245',1,'third_Party::AVI_Reader']]],
-  ['png_5fcompression3',['PNG_COMPRESSION3',['../classthird___party_1_1_a_v_i___reader.html#aac533bfe76b36f0fb97cf2b737483911',1,'third_Party::AVI_Reader']]],
-  ['prefs',['prefs',['../classdata_1_1_params.html#a359af19420efb43ee3d162c91ed4cff2',1,'data::Params']]],
-  ['printxy',['printXY',['../classdata_1_1_params.html#a23a4b36f8e3f056ea982381cb046979c',1,'data::Params']]],
-  ['progressmotility',['progressMotility',['../classdata_1_1_params.html#a01488591799a038ed334b52bdbb8e311',1,'data::Params']]]
+  ['selected',['selected',['../classdata_1_1_spermatozoon.html#a6c5a33868fa92607c84982d696b8e957',1,'data::Spermatozoon']]],
+  ['serialversionuid',['serialVersionUID',['../classdata_1_1_spermatozoon.html#a3238d314ecdee14d2966760945d00c3b',1,'data.Spermatozoon.serialVersionUID()'],['../classdata_1_1_trial.html#a3238d314ecdee14d2966760945d00c3b',1,'data.Trial.serialVersionUID()'],['../classgui_1_1_main_window.html#a3238d314ecdee14d2966760945d00c3b',1,'gui.MainWindow.serialVersionUID()']]],
+  ['sldbluethreshold',['sldBlueThreshold',['../classgui_1_1_image_analysis_window.html#a456745261d318a98ce73b904d412b99f',1,'gui::ImageAnalysisWindow']]],
+  ['sldgreenthreshold',['sldGreenThreshold',['../classgui_1_1_image_analysis_window.html#a0e48b8c00ce11da6e6289e2004ab84d5',1,'gui::ImageAnalysisWindow']]],
+  ['sldredthreshold',['sldRedThreshold',['../classgui_1_1_image_analysis_window.html#a1a8db00e5d10ad1bd10430a9753d764a',1,'gui::ImageAnalysisWindow']]],
+  ['sldthreshold',['sldThreshold',['../classgui_1_1_image_analysis_window.html#a7af6333e5eca6d48ffa96b4a3642836e',1,'gui::ImageAnalysisWindow']]],
+  ['source',['source',['../classdata_1_1_trial.html#a00baeba9d13a88ce01098a02d1e570d5',1,'data::Trial']]],
+  ['spermatozoa',['spermatozoa',['../classgui_1_1_image_analysis_window.html#a7c449117b5c92c9b56bf822526a37da3',1,'gui::ImageAnalysisWindow']]]
 ];

@@ -1,0 +1,179 @@
+\hypertarget{_computer_vision_8java_source}{}\section{Computer\+Vision.\+java}
+\label{_computer_vision_8java_source}\index{Computer\+Vision.\+java@{Computer\+Vision.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+\hypertarget{_computer_vision_8java_source_l00019}{}\hyperlink{namespacefunctions}{00019} \textcolor{keyword}{package }functions;
+00020 
+00021 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon};
+00022 \textcolor{keyword}{import} ij.IJ;
+00023 \textcolor{keyword}{import} ij.ImagePlus;
+00024 \textcolor{keyword}{import} ij.ImageStack;
+00025 \textcolor{keyword}{import} ij.plugin.ChannelSplitter;
+00026 \textcolor{keyword}{import} ij.process.AutoThresholder;
+00027 \textcolor{keyword}{import} ij.process.BinaryProcessor;
+00028 \textcolor{keyword}{import} ij.process.ByteProcessor;
+00029 \textcolor{keyword}{import} ij.process.ImageConverter;
+00030 \textcolor{keyword}{import} ij.process.ImageProcessor;
+00031 \textcolor{keyword}{import} ij.process.ImageStatistics;
+00032 
+\hypertarget{_computer_vision_8java_source_l00037}{}\hyperlink{classfunctions_1_1_computer_vision}{00037} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} \{
+00038 
+00039   \textcolor{comment}{/******************************************************/}
+00040   
+\hypertarget{_computer_vision_8java_source_l00045}{}\hyperlink{classfunctions_1_1_computer_vision_a93e3c71f7e9e359a377ebed559810c28}{00045}   \textcolor{keyword}{public} \textcolor{keywordtype}{double} \hyperlink{classfunctions_1_1_computer_vision_a93e3c71f7e9e359a377ebed559810c28}{autoThresholdImagePlus}(ImagePlus imp) \{
+00046     \textcolor{keywordflow}{return} \hyperlink{classfunctions_1_1_computer_vision_a93e3c71f7e9e359a377ebed559810c28}{autoThresholdImagePlus}(imp, \textcolor{stringliteral}{"Otsu"}); \textcolor{comment}{// Otsu as a default}
+00047                                                 \textcolor{comment}{// thresholding method}
+00048   \}
+00049 
+00050   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00056}{}\hyperlink{classfunctions_1_1_computer_vision_a682b3978d10477ebaf0c32969ff6650b}{00056}   \textcolor{keyword}{public} \textcolor{keywordtype}{double} \hyperlink{classfunctions_1_1_computer_vision_a682b3978d10477ebaf0c32969ff6650b}{autoThresholdImagePlus}(ImagePlus imp, String thresholdMethod) \{
+00057     ImageProcessor ip = imp.getProcessor();
+00058     \textcolor{keywordtype}{double} lowerThreshold = 0;
+00059     ImageStatistics st = ip.getStatistics();
+00060     \textcolor{keywordtype}{long}[] histlong = st.getHistogram();
+00061     \hyperlink{classfunctions_1_1_utils}{Utils} utils = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_utils}{Utils}();
+00062     \textcolor{keywordtype}{int} histogram[] = utils.\hyperlink{classfunctions_1_1_utils_af205010f6a95a6e41a837305446fd262}{convertLongArrayToInt}(histlong);
+00063     AutoThresholder at = \textcolor{keyword}{new} AutoThresholder();
+00064     lowerThreshold = (double) at.getThreshold(thresholdMethod, histogram);
+00065     \textcolor{comment}{// Upper threshold set to maximum}
+00066     \textcolor{keywordtype}{double} upperThreshold = 255;
+00067     \textcolor{comment}{// Threshold image processor}
+00068     \hyperlink{classfunctions_1_1_computer_vision_ae1ef4c4258127cb97bae706e7f65fc2e}{thresholdImageProcessor}(ip, lowerThreshold, upperThreshold);
+00069     \textcolor{keywordflow}{return} lowerThreshold;
+00070   \}
+00071 
+00072   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00079}{}\hyperlink{classfunctions_1_1_computer_vision_a4d0fe516e9ef71c60ba67150cf288030}{00079}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_computer_vision_a4d0fe516e9ef71c60ba67150cf288030}{convertToGrayscale}(ImagePlus imp) \{
+00080     ImageConverter ic = \textcolor{keyword}{new} ImageConverter(imp);
+00081     ic.convertToGray8();
+00082   \}
+00083 
+00084   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00091}{}\hyperlink{classfunctions_1_1_computer_vision_a98a9ec9a4b8c6a28678d649822a73bc8}{00091}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_computer_vision_a98a9ec9a4b8c6a28678d649822a73bc8}{convertToRGB}(ImagePlus imp) \{
+00092     ImageConverter ic = \textcolor{keyword}{new} ImageConverter(imp);
+00093     ic.convertToRGB();
+00094   \}
+00095 
+00096 
+00097 
+00098   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00103}{}\hyperlink{classfunctions_1_1_computer_vision_a8569abc8aa379c890c8332eda42095be}{00103}   \textcolor{keyword}{public} ImagePlus \hyperlink{classfunctions_1_1_computer_vision_a8569abc8aa379c890c8332eda42095be}{getBlueChannel}(ImagePlus impColor) \{
+00104     ImagePlus[] images = ChannelSplitter.split(impColor);
+00105     \textcolor{keywordflow}{return} images[2];
+00106   \}
+00107 
+00108   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00113}{}\hyperlink{classfunctions_1_1_computer_vision_a42b101d8bd6c2d64f663411074910dde}{00113}   \textcolor{keyword}{public}  ImagePlus \hyperlink{classfunctions_1_1_computer_vision_a42b101d8bd6c2d64f663411074910dde}{getGreenChannel}(ImagePlus impColor) \{
+00114     ImagePlus[] images = ChannelSplitter.split(impColor);
+00115     \textcolor{keywordflow}{return} images[1];
+00116   \}
+00117 
+00118   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00125}{}\hyperlink{classfunctions_1_1_computer_vision_af9a3285b7e044506df25989c9f718308}{00125}   \textcolor{keyword}{public}  \textcolor{keywordtype}{float} \hyperlink{classfunctions_1_1_computer_vision_af9a3285b7e044506df25989c9f718308}{getMeanGrayValue}(\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} part, ImagePlus impGray, 
+      ImagePlus impTh) \{
+00126 
+00127     ImageProcessor ipTh = impTh.getProcessor();
+00128     ImageProcessor ipGray = impGray.getProcessor();
+00129     \textcolor{keywordtype}{int} bx = (int) part.\hyperlink{classdata_1_1_spermatozoon_a5c25ae7634a79d11d6679b6b07c240a1}{bx};
+00130     \textcolor{keywordtype}{int} by = (\textcolor{keywordtype}{int}) part.\hyperlink{classdata_1_1_spermatozoon_affce45e955f0a114a5569e019b8d8634}{by};
+00131     \textcolor{keywordtype}{int} width = (int) part.\hyperlink{classdata_1_1_spermatozoon_ae426f00e82704fa09578f5446e22d915}{width};
+00132     \textcolor{keywordtype}{int} height = (\textcolor{keywordtype}{int}) part.\hyperlink{classdata_1_1_spermatozoon_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00133     \textcolor{keywordtype}{float} totalGray = 0;
+00134     \textcolor{keywordtype}{float} totalPixels = 0;
+00135     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = bx; x < (width + bx); x++) \{
+00136       IJ.showStatus(\textcolor{stringliteral}{"scanning pixels..."});
+00137       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = by; y < (height + by); y++) \{
+00138         \textcolor{keywordtype}{int} pixel = ipTh.get(x, y);
+00139         \textcolor{keywordflow}{if} (pixel == 0) \{
+00140           totalGray += (float) ipGray.get(x, y);
+00141           totalPixels++;
+00142         \}
+00143       \}
+00144     \}
+00145     \textcolor{keywordflow}{return} totalGray / totalPixels;
+00146   \}
+00147 
+00148   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00153}{}\hyperlink{classfunctions_1_1_computer_vision_a0a2c9c7e45231d1d09b3c8aca3df6511}{00153}   \textcolor{keyword}{public} ImagePlus \hyperlink{classfunctions_1_1_computer_vision_a0a2c9c7e45231d1d09b3c8aca3df6511}{getRedChannel}(ImagePlus impColor) \{
+00154     ImagePlus[] images = ChannelSplitter.split(impColor);
+00155     \textcolor{keywordflow}{return} images[0];
+00156   \}
+00157 
+00158   \textcolor{comment}{/******************************************************}
+00159 \textcolor{comment}{   * }
+\hypertarget{_computer_vision_8java_source_l00163}{}\hyperlink{classfunctions_1_1_computer_vision_a1272b47ed42c25a4d2d7f7d891d0e42f}{00163} \textcolor{comment}{  public void outlineThresholdImage(ImagePlus imp) \{}
+00164 \textcolor{comment}{    convertToGrayscale(imp);}
+00165 \textcolor{comment}{    ImageProcessor ip = imp.getProcessor();}
+00166 \textcolor{comment}{    BinaryProcessor bp = new BinaryProcessor((ByteProcessor) ip);}
+00167 \textcolor{comment}{    bp.outline();}
+00168 \textcolor{comment}{  \}}
+00169 \textcolor{comment}{}
+00170 \textcolor{comment}{  /******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00175}{}\hyperlink{classfunctions_1_1_computer_vision_a75c4bdce2977d9dcfe309e60b16cbf4f}{00175}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_computer_vision_a75c4bdce2977d9dcfe309e60b16cbf4f}{thresholdImagePlus}(ImagePlus imp, \textcolor{keywordtype}{double} lowerThreshold) \{
+00176     ImageProcessor ip = imp.getProcessor();
+00177     \textcolor{comment}{// Upper threshold set to maximum}
+00178     \textcolor{keywordtype}{double} upperThreshold = 255;
+00179     \textcolor{comment}{// Threshold image processor}
+00180     \hyperlink{classfunctions_1_1_computer_vision_ae1ef4c4258127cb97bae706e7f65fc2e}{thresholdImageProcessor}(ip, lowerThreshold, upperThreshold);
+00181   \}
+00182 
+00183   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00189}{}\hyperlink{classfunctions_1_1_computer_vision_ae1ef4c4258127cb97bae706e7f65fc2e}{00189}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_computer_vision_ae1ef4c4258127cb97bae706e7f65fc2e}{thresholdImageProcessor}(ImageProcessor ip, \textcolor{keywordtype}{double} lowerThreshold, \textcolor{keywordtype}{
+      double} upperThreshold) \{
+00190     \textcolor{comment}{// Make binary}
+00191     \textcolor{keywordtype}{int}[] lut = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[256];
+00192     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 256; j++) \{
+00193       \textcolor{keywordflow}{if} (j >= lowerThreshold && j <= upperThreshold)
+00194         lut[j] = (byte) 0;
+00195       \textcolor{keywordflow}{else}
+00196         lut[j] = (byte) 255;
+00197     \}
+00198     ip.applyTable(lut);
+00199   \}
+00200 
+00201   \textcolor{comment}{/******************************************************/}
+\hypertarget{_computer_vision_8java_source_l00206}{}\hyperlink{classfunctions_1_1_computer_vision_a253912ee71e289051b50b08dcce6376f}{00206}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_computer_vision_a253912ee71e289051b50b08dcce6376f}{thresholdStack}(ImagePlus imp) \{
+00207 
+00208     ImageStack stack = imp.getStack();
+00209     ImageProcessor ip = stack.getProcessor(1);
+00210     ImageStatistics st = ip.getStatistics();
+00211     \textcolor{keywordtype}{double} mean = st.mean;
+00212     \textcolor{keywordtype}{double} std = st.stdDev;
+00213     \textcolor{comment}{// Set threshold as mean + 2 x standard deviation}
+00214     \textcolor{keywordtype}{double} lowerThreshold = mean + 2 * std; \textcolor{comment}{// std factor: candidate to be a}
+00215                                             \textcolor{comment}{// parameter of the plugin}
+00216     \textcolor{keywordtype}{double} upperThreshold = 255;
+00217     \textcolor{comment}{// Make binary}
+00218     \textcolor{keywordtype}{int}[] lut = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[256];
+00219     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} j = 0; j < 256; j++) \{
+00220       \textcolor{keywordflow}{if} (j >= lowerThreshold && j <= upperThreshold)
+00221         lut[j] = 0;
+00222       \textcolor{keywordflow}{else}
+00223         lut[j] = (byte) 255;
+00224     \}
+00225     \textcolor{keywordtype}{int} nFrames = imp.getStackSize();
+00226     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iFrame = 1; iFrame <= nFrames; iFrame++) \{
+00227       ip = stack.getProcessor(iFrame);
+00228       ip.applyTable(lut);
+00229     \}
+00230   \}
+00231 \}
+\end{DoxyCode}

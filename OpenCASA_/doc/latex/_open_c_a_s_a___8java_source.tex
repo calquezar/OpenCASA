@@ -1,0 +1,47 @@
+\hypertarget{_open_c_a_s_a___8java_source}{}\section{Open\+C\+A\+S\+A\+\_\+.\+java}
+\label{_open_c_a_s_a___8java_source}\index{Open\+C\+A\+S\+A\+\_\+.\+java@{Open\+C\+A\+S\+A\+\_\+.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}        
+00018 
+00019 \textcolor{keyword}{import} javax.swing.UIManager;
+00020 \textcolor{keyword}{import} javax.swing.UnsupportedLookAndFeelException;
+00021 
+00022 \textcolor{keyword}{import} \hyperlink{namespacegui}{gui}.\hyperlink{classgui_1_1_main_window}{MainWindow};
+00023 \textcolor{keyword}{import} ij.IJ;
+00024 \textcolor{keyword}{import} ij.ImageJ;
+00025 \textcolor{keyword}{import} ij.plugin.PlugIn;
+00026 
+\hypertarget{_open_c_a_s_a___8java_source_l00032}{}\hyperlink{class_open_c_a_s_a__}{00032} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{class_open_c_a_s_a__}{OpenCASA\_} \textcolor{keyword}{implements} PlugIn \{
+00033 
+\hypertarget{_open_c_a_s_a___8java_source_l00037}{}\hyperlink{class_open_c_a_s_a___a8b260eecbaabcef8473fd87ada040682}{00037}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \hyperlink{class_open_c_a_s_a___a8b260eecbaabcef8473fd87ada040682}{main}(String[] args)
+00038       \textcolor{keywordflow}{throws} ClassNotFoundException, InstantiationException, IllegalAccessException, 
+      UnsupportedLookAndFeelException \{
+00039     UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+00040     \textcolor{keyword}{final} Class<?> clazz = \hyperlink{class_open_c_a_s_a__}{OpenCASA\_}.class;
+00041     \textcolor{keyword}{new} ImageJ();\textcolor{comment}{// start ImageJ}
+00042     IJ.runPlugIn(clazz.getName(), \textcolor{stringliteral}{""});\textcolor{comment}{// run the plugin}
+00043   \}
+00044 
+00049   @Override
+\hypertarget{_open_c_a_s_a___8java_source_l00050}{}\hyperlink{class_open_c_a_s_a___a4d9c6a01d97384c0df54710b80fc88fc}{00050}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{class_open_c_a_s_a___a4d9c6a01d97384c0df54710b80fc88fc}{run}(String arg) \{
+00051     (\textcolor{keyword}{new} \hyperlink{classgui_1_1_main_window}{MainWindow}(\textcolor{stringliteral}{"OpenCASA"})).setVisible(\textcolor{keyword}{true});
+00052   \}
+00053 \}
+\end{DoxyCode}

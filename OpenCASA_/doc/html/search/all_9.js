@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['jpeg_5fcompression',['JPEG_COMPRESSION',['../classthird___party_1_1_a_v_i___reader.html#a6e950b01e3308a25915da47063657900',1,'third_Party::AVI_Reader']]],
-  ['jpeg_5fcompression2',['JPEG_COMPRESSION2',['../classthird___party_1_1_a_v_i___reader.html#a38fa9e3cad9c0a5a7df0ddd3d11aad0e',1,'third_Party::AVI_Reader']]],
-  ['jpeg_5fcompression3',['JPEG_COMPRESSION3',['../classthird___party_1_1_a_v_i___reader.html#a2a2f40a58431f6f38931303068eb2816',1,'third_Party::AVI_Reader']]]
+  ['loadimagedirectory',['loadImageDirectory',['../classfunctions_1_1_file_manager.html#a0f8b52da290ba020437d01d4873b1d2c',1,'functions.FileManager.loadImageDirectory()'],['../classfunctions_1_1_file_manager.html#ae7538dc1fbe0b999be0a86e196de6851',1,'functions.FileManager.loadImageDirectory(String dir)']]],
+  ['loadimagefile',['loadImageFile',['../classfunctions_1_1_file_manager.html#a10f7f3b24be48586ca7455ebac6abcd7',1,'functions::FileManager']]]
 ];

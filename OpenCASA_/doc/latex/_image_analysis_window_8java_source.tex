@@ -1,0 +1,450 @@
+\hypertarget{_image_analysis_window_8java_source}{}\section{Image\+Analysis\+Window.\+java}
+\label{_image_analysis_window_8java_source}\index{Image\+Analysis\+Window.\+java@{Image\+Analysis\+Window.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+\hypertarget{_image_analysis_window_8java_source_l00019}{}\hyperlink{namespacegui}{00019} \textcolor{keyword}{package }gui;
+00020 
+00021 \textcolor{keyword}{import} java.awt.Color;
+00022 \textcolor{keyword}{import} java.awt.Dimension;
+00023 \textcolor{keyword}{import} java.awt.GridBagConstraints;
+00024 \textcolor{keyword}{import} java.awt.GridBagLayout;
+00025 \textcolor{keyword}{import} java.awt.Toolkit;
+00026 \textcolor{keyword}{import} java.awt.event.ActionEvent;
+00027 \textcolor{keyword}{import} java.awt.event.ActionListener;
+00028 \textcolor{keyword}{import} java.awt.event.MouseListener;
+00029 \textcolor{keyword}{import} java.util.ArrayList;
+00030 \textcolor{keyword}{import} java.util.List;
+00031 \textcolor{keyword}{import} java.util.ListIterator;
+00032 
+00033 \textcolor{keyword}{import} javax.swing.ButtonGroup;
+00034 \textcolor{keyword}{import} javax.swing.ImageIcon;
+00035 \textcolor{keyword}{import} javax.swing.JButton;
+00036 \textcolor{keyword}{import} javax.swing.JFrame;
+00037 \textcolor{keyword}{import} javax.swing.JLabel;
+00038 \textcolor{keyword}{import} javax.swing.JPanel;
+00039 \textcolor{keyword}{import} javax.swing.JRadioButton;
+00040 \textcolor{keyword}{import} javax.swing.JSeparator;
+00041 \textcolor{keyword}{import} javax.swing.JSlider;
+00042 \textcolor{keyword}{import} javax.swing.SwingConstants;
+00043 \textcolor{keyword}{import} javax.swing.event.ChangeListener;
+00044 
+00045 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon};
+00046 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_computer_vision}{ComputerVision};
+00047 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_file_manager}{FileManager};
+00048 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_utils}{Utils};
+00049 \textcolor{keyword}{import} ij.ImagePlus;
+00050 \textcolor{keyword}{import} ij.process.ImageProcessor;
+00051 
+\hypertarget{_image_analysis_window_8java_source_l00057}{}\hyperlink{classgui_1_1_image_analysis_window}{00057} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classgui_1_1_image_analysis_window}{ImageAnalysisWindow} \textcolor{keyword}{extends} JFrame \{
+00058 
+\hypertarget{_image_analysis_window_8java_source_l00059}{}\hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{00059}   \textcolor{keyword}{private} \textcolor{keyword}{enum} \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{TypeOfAnalysis} \{
+\hypertarget{_image_analysis_window_8java_source_l00060}{}\hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{00060}     DIRECTORY, FILE, NONE
+00061   \}
+00062 
+\hypertarget{_image_analysis_window_8java_source_l00063}{}\hyperlink{classgui_1_1_image_analysis_window_ae0c6f15cfb3c589fb7817738e51998bd}{00063}   \textcolor{keyword}{private} \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{TypeOfAnalysis} \hyperlink{namespaceanalysis}{analysis} = \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{TypeOfAnalysis}.
+      \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{NONE};
+00064 
+\hypertarget{_image_analysis_window_8java_source_l00066}{}\hyperlink{classgui_1_1_image_analysis_window_ab901d2d996b0bf250698c764d1c3949c}{00066}   \textcolor{keyword}{private} List<ImagePlus>      \hyperlink{classgui_1_1_image_analysis_window_ab901d2d996b0bf250698c764d1c3949c}{images};
+\hypertarget{_image_analysis_window_8java_source_l00067}{}\hyperlink{classgui_1_1_image_analysis_window_a43531d5121651cc0d006fedbedb03b00}{00067}   \textcolor{keyword}{private} \textcolor{keywordtype}{int}                  \hyperlink{classgui_1_1_image_analysis_window_a43531d5121651cc0d006fedbedb03b00}{imgIndex};
+\hypertarget{_image_analysis_window_8java_source_l00068}{}\hyperlink{classgui_1_1_image_analysis_window_a2a216fd8d92687a0d71b6064e26a3412}{00068}   \textcolor{keyword}{private} JLabel               \hyperlink{classgui_1_1_image_analysis_window_a2a216fd8d92687a0d71b6064e26a3412}{imgLabel};
+\hypertarget{_image_analysis_window_8java_source_l00070}{}\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{00070}   \textcolor{keyword}{protected} ImagePlus          \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}         = null;
+\hypertarget{_image_analysis_window_8java_source_l00072}{}\hyperlink{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416}{00072}   \textcolor{keyword}{protected} ImagePlus          \hyperlink{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416}{impGray}         = null;
+\hypertarget{_image_analysis_window_8java_source_l00074}{}\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{00074}   \textcolor{keyword}{protected} ImagePlus          \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}         = null;
+\hypertarget{_image_analysis_window_8java_source_l00076}{}\hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{00076}   \textcolor{keyword}{protected} ImagePlus          \hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{impOutline}      = null;
+\hypertarget{_image_analysis_window_8java_source_l00078}{}\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{00078}   \textcolor{keyword}{protected} ImagePlus          \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh}           = null;
+\hypertarget{_image_analysis_window_8java_source_l00080}{}\hyperlink{classgui_1_1_image_analysis_window_a1b91ec80db300f73bee276f3fe72e766}{00080}   \textcolor{keyword}{private} \textcolor{keywordtype}{double}               \hyperlink{classgui_1_1_image_analysis_window_a1b91ec80db300f73bee276f3fe72e766}{resizeFactor};
+\hypertarget{_image_analysis_window_8java_source_l00081}{}\hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{00081}   \textcolor{keyword}{protected} JSlider            \hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{sldThreshold};  
+\hypertarget{_image_analysis_window_8java_source_l00082}{}\hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{00082}   \textcolor{keyword}{protected} JSlider            \hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sldRedThreshold};  
+\hypertarget{_image_analysis_window_8java_source_l00083}{}\hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{00083}   \textcolor{keyword}{protected} JSlider            \hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sldGreenThreshold};
+\hypertarget{_image_analysis_window_8java_source_l00084}{}\hyperlink{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{00084}   \textcolor{keyword}{protected} JSlider            \hyperlink{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{sldBlueThreshold};
+\hypertarget{_image_analysis_window_8java_source_l00085}{}\hyperlink{classgui_1_1_image_analysis_window_a79b02cbaed083d22fac115fe05d1e8db}{00085}   \textcolor{keyword}{protected} JRadioButton \hyperlink{classgui_1_1_image_analysis_window_a79b02cbaed083d22fac115fe05d1e8db}{btnOtsu};
+\hypertarget{_image_analysis_window_8java_source_l00086}{}\hyperlink{classgui_1_1_image_analysis_window_a0e7f4b261625dbbe93d3ac1bf2c645ad}{00086}   \textcolor{keyword}{protected} JRadioButton \hyperlink{classgui_1_1_image_analysis_window_a0e7f4b261625dbbe93d3ac1bf2c645ad}{btnMinimum};
+\hypertarget{_image_analysis_window_8java_source_l00087}{}\hyperlink{classgui_1_1_image_analysis_window_a16d71c0ff3c7b5f2d7298752a949fc71}{00087}   \textcolor{keyword}{protected} ButtonGroup \hyperlink{classgui_1_1_image_analysis_window_a16d71c0ff3c7b5f2d7298752a949fc71}{btnGroup};
+\hypertarget{_image_analysis_window_8java_source_l00088}{}\hyperlink{classgui_1_1_image_analysis_window_ad7635bb9d707a780b5a81278b9bf8ff8}{00088}   \textcolor{keyword}{protected} JButton \hyperlink{classgui_1_1_image_analysis_window_ad7635bb9d707a780b5a81278b9bf8ff8}{prevBtn};
+\hypertarget{_image_analysis_window_8java_source_l00089}{}\hyperlink{classgui_1_1_image_analysis_window_ad88013bcb23eecbb32f5e97911652f73}{00089}   \textcolor{keyword}{protected} JButton \hyperlink{classgui_1_1_image_analysis_window_ad88013bcb23eecbb32f5e97911652f73}{nextBtn};
+00090 
+\hypertarget{_image_analysis_window_8java_source_l00091}{}\hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{00091}   \textcolor{keyword}{protected} List<Spermatozoon> \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa}     = \textcolor{keyword}{new} ArrayList<Spermatozoon>();
+\hypertarget{_image_analysis_window_8java_source_l00092}{}\hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{00092}   \textcolor{keyword}{protected} \textcolor{keywordtype}{double}             \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold}       = -1.0;
+\hypertarget{_image_analysis_window_8java_source_l00093}{}\hyperlink{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd}{00093}   \textcolor{keyword}{protected} \textcolor{keywordtype}{double}             \hyperlink{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd}{redThreshold}       = -1.0;
+\hypertarget{_image_analysis_window_8java_source_l00094}{}\hyperlink{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341}{00094}   \textcolor{keyword}{protected} \textcolor{keywordtype}{double}             \hyperlink{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341}{greenThreshold}       = -1.0;
+\hypertarget{_image_analysis_window_8java_source_l00095}{}\hyperlink{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad}{00095}   \textcolor{keyword}{protected} \textcolor{keywordtype}{double}             \hyperlink{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad}{blueThreshold}       = -1.0;
+\hypertarget{_image_analysis_window_8java_source_l00096}{}\hyperlink{classgui_1_1_image_analysis_window_a00af632f76a9750b3b0dcf702d1d30a8}{00096}   \textcolor{keyword}{protected} String             \hyperlink{classgui_1_1_image_analysis_window_a00af632f76a9750b3b0dcf702d1d30a8}{thresholdMethod} = \textcolor{stringliteral}{"Otsu"};
+\hypertarget{_image_analysis_window_8java_source_l00097}{}\hyperlink{classgui_1_1_image_analysis_window_aceabe99400c9a27b60ab97a773981bbe}{00097}   \textcolor{keyword}{private} JLabel               \hyperlink{classgui_1_1_image_analysis_window_aceabe99400c9a27b60ab97a773981bbe}{title};
+\hypertarget{_image_analysis_window_8java_source_l00099}{}\hyperlink{classgui_1_1_image_analysis_window_adb607f30ce4997349a99dca08d813585}{00099}   \textcolor{keyword}{protected} \textcolor{keywordtype}{double}             \hyperlink{classgui_1_1_image_analysis_window_adb607f30ce4997349a99dca08d813585}{xFactor};
+00100 
+\hypertarget{_image_analysis_window_8java_source_l00102}{}\hyperlink{classgui_1_1_image_analysis_window_ab483275b2379ef6043da68efe593b5d9}{00102}   \textcolor{keyword}{protected} \textcolor{keywordtype}{double} \hyperlink{classgui_1_1_image_analysis_window_ab483275b2379ef6043da68efe593b5d9}{yFactor};
+00103 
+\hypertarget{_image_analysis_window_8java_source_l00104}{}\hyperlink{classgui_1_1_image_analysis_window_a92a9acda5cd7fb137046e8ad2ba902a8}{00104}   \textcolor{keyword}{public} \hyperlink{classgui_1_1_image_analysis_window_a92a9acda5cd7fb137046e8ad2ba902a8}{ImageAnalysisWindow}() \{
+00105     imgLabel = \textcolor{keyword}{new} JLabel();
+00106     imgIndex = 0;
+00107     \textcolor{comment}{//The size of the showed image will be set to 60% of the screen size}
+00108     resizeFactor = 0.6; 
+00109     \textcolor{comment}{//its necessary to initialize here the slider bar in order to enable }
+00110     \textcolor{comment}{//the change listener selection for an inherit class}
+00111     sldThreshold = \textcolor{keyword}{new} JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+00112     sldRedThreshold = \textcolor{keyword}{new} JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+00113     sldRedThreshold.setForeground(Color.RED);
+00114     sldGreenThreshold = \textcolor{keyword}{new} JSlider(JSlider.HORIZONTAL, 0, 255, 60); 
+00115     sldGreenThreshold.setForeground(Color.GREEN);
+00116     sldBlueThreshold = \textcolor{keyword}{new} JSlider(JSlider.HORIZONTAL, 0, 255, 60);
+00117     sldBlueThreshold.setForeground(Color.BLUE);
+00118     sldThreshold.setVisible(\textcolor{keyword}{false}); \textcolor{comment}{//By default}
+00119     sldRedThreshold.setVisible(\textcolor{keyword}{false}); \textcolor{comment}{//By default}
+00120     sldGreenThreshold.setVisible(\textcolor{keyword}{false});\textcolor{comment}{//By default}
+00121     sldBlueThreshold.setVisible(\textcolor{keyword}{false});\textcolor{comment}{//By default}
+00122     imgLabel = \textcolor{keyword}{new} JLabel();\textcolor{comment}{// The same as slider bar}
+00123     btnOtsu = \textcolor{keyword}{new} JRadioButton(\textcolor{stringliteral}{"Otsu"});
+00124     btnMinimum = \textcolor{keyword}{new} JRadioButton(\textcolor{stringliteral}{"Minimum"});
+00125     btnGroup = \textcolor{keyword}{new} ButtonGroup();
+00126     prevBtn = \textcolor{keyword}{new} JButton(\textcolor{stringliteral}{"Previous"});
+00127     nextBtn = \textcolor{keyword}{new} JButton(\textcolor{stringliteral}{"Next"});
+00128   \}
+00129 
+\hypertarget{_image_analysis_window_8java_source_l00130}{}\hyperlink{classgui_1_1_image_analysis_window_ac7ee842ae75372575a568d7026989b23}{00130}   \textcolor{keyword}{private} \textcolor{keywordtype}{int} \hyperlink{classgui_1_1_image_analysis_window_ac7ee842ae75372575a568d7026989b23}{analyseDirectory}() \{
+00131     \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00132     List<ImagePlus> images = fm.\hyperlink{classfunctions_1_1_file_manager_a0f8b52da290ba020437d01d4873b1d2c}{loadImageDirectory}();
+00133     \textcolor{keywordflow}{if} (images != null) \{
+00134       \hyperlink{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef}{setImages}(images);
+00135       \hyperlink{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058}{showWindow}();
+00136       \textcolor{keywordflow}{return} 0;
+00137     \} \textcolor{keywordflow}{else} \{
+00138       \textcolor{keywordflow}{return} -1;
+00139     \}
+00140   \}
+00141 
+\hypertarget{_image_analysis_window_8java_source_l00142}{}\hyperlink{classgui_1_1_image_analysis_window_a893a3a5beda8381306607568f3cff5f6}{00142}   \textcolor{keyword}{private} \textcolor{keywordtype}{int} \hyperlink{classgui_1_1_image_analysis_window_a893a3a5beda8381306607568f3cff5f6}{analyseFile}() \{
+00143     \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00144     List<ImagePlus> images = fm.\hyperlink{classfunctions_1_1_file_manager_a10f7f3b24be48586ca7455ebac6abcd7}{loadImageFile}();
+00145     \textcolor{keywordflow}{if} (images != null) \{
+00146       \hyperlink{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef}{setImages}(images);
+00147       \hyperlink{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058}{showWindow}();
+00148       \textcolor{keywordflow}{return} 0;
+00149     \} \textcolor{keywordflow}{else} \{
+00150       \textcolor{keywordflow}{return} -1;
+00151     \}
+00152   \}
+00153 
+\hypertarget{_image_analysis_window_8java_source_l00157}{}\hyperlink{classgui_1_1_image_analysis_window_a2d0abb2ca6c5355bd49023f16f185293}{00157}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a2d0abb2ca6c5355bd49023f16f185293}{deselectAll}() \{
+00158     \textcolor{keywordflow}{for} (ListIterator j = spermatozoa.listIterator(); j.hasNext();) \{
+00159       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} spermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) j.next();
+00160       spermatozoon.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected} = \textcolor{keyword}{false};
+00161     \}
+00162   \}
+\hypertarget{_image_analysis_window_8java_source_l00163}{}\hyperlink{classgui_1_1_image_analysis_window_af3a8c3ee2b9b6c5c415df634105b5945}{00163}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_af3a8c3ee2b9b6c5c415df634105b5945}{drawImage}() \{\}
+\hypertarget{_image_analysis_window_8java_source_l00168}{}\hyperlink{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7}{00168}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7}{idenfitySperm}() \{
+00169     \textcolor{keywordtype}{int} SpermNr = 0;
+00170     \textcolor{keywordflow}{for} (ListIterator<Spermatozoon> j = spermatozoa.listIterator(); j.hasNext();) \{
+00171       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} sperm = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) j.next();
+00172       SpermNr++;
+00173       sperm.\hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{id} = \textcolor{stringliteral}{""} + SpermNr;
+00174     \}
+00175   \}
+00176 
+\hypertarget{_image_analysis_window_8java_source_l00180}{}\hyperlink{classgui_1_1_image_analysis_window_a2ef8b75d07db675fb28ce54cc00713f0}{00180}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a2ef8b75d07db675fb28ce54cc00713f0}{initImage}() \{
+00181     \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}(0); \textcolor{comment}{// Initialization with the first image available}
+00182     \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{false});
+00183     \hyperlink{classgui_1_1_image_analysis_window_af3a8c3ee2b9b6c5c415df634105b5945}{drawImage}();
+00184   \}
+00185 
+\hypertarget{_image_analysis_window_8java_source_l00186}{}\hyperlink{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{00186}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{nextAction}() \{
+00187   \}
+00188 
+\hypertarget{_image_analysis_window_8java_source_l00189}{}\hyperlink{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1}{00189}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1}{previousAction}() \{
+00190   \}
+00191 
+\hypertarget{_image_analysis_window_8java_source_l00192}{}\hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{00192}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keywordtype}{boolean} eventType) \{\}
+00193 
+\hypertarget{_image_analysis_window_8java_source_l00194}{}\hyperlink{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55}{00194}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55}{reset}() \{
+00195     \textcolor{keywordflow}{if} (impOrig != null)
+00196       impOrig.close();
+00197     \textcolor{keywordflow}{if} (impDraw != null)
+00198       impDraw.close();
+00199     \textcolor{keywordflow}{if} (impGray != null)
+00200       impGray.close();
+00201     \textcolor{keywordflow}{if} (impTh != null)
+00202       impTh.close();
+00203     \textcolor{keywordflow}{if} (impOutline != null)
+00204       impOutline.close();
+00205     threshold = -1.0;
+00206     spermatozoa.clear();
+00207   \}
+00208 
+\hypertarget{_image_analysis_window_8java_source_l00209}{}\hyperlink{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{00209}   \textcolor{keyword}{public} \textcolor{keywordtype}{int} \hyperlink{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{run}() \{
+00210     \textcolor{keywordtype}{int} out = \hyperlink{classgui_1_1_image_analysis_window_a0f3cd690d3cb4c7088975fa0ae8f747a}{selectAnalysis}();
+00211     \textcolor{keywordflow}{if} (out < 0)
+00212       \textcolor{keywordflow}{return} out;
+00213     \textcolor{keywordflow}{switch} (analysis) \{
+00214       \textcolor{keywordflow}{case} FILE:
+00215         out = \hyperlink{classgui_1_1_image_analysis_window_a893a3a5beda8381306607568f3cff5f6}{analyseFile}();
+00216         \textcolor{keywordflow}{break};
+00217       \textcolor{keywordflow}{case} DIRECTORY:
+00218         out = \hyperlink{classgui_1_1_image_analysis_window_ac7ee842ae75372575a568d7026989b23}{analyseDirectory}();
+00219         \textcolor{keywordflow}{break};
+00220       \textcolor{keywordflow}{default}:
+00221         out = -2;
+00222         \textcolor{keywordflow}{break};
+00223     \}
+00224     \textcolor{keywordflow}{return} out;
+00225   \}
+00226 
+\hypertarget{_image_analysis_window_8java_source_l00227}{}\hyperlink{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645}{00227}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645}{selectAll}() \{
+00228     \hyperlink{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645}{selectAll}(spermatozoa);
+00229   \}
+00230 
+\hypertarget{_image_analysis_window_8java_source_l00234}{}\hyperlink{classgui_1_1_image_analysis_window_aae663b9e2c200d48d0c146871ef96f6c}{00234}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_aae663b9e2c200d48d0c146871ef96f6c}{selectAll}(List<Spermatozoon> sperm) \{
+00235     \textcolor{keywordflow}{for} (ListIterator j = sperm.listIterator(); j.hasNext();) \{
+00236       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} spermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) j.next();
+00237       spermatozoon.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected} = \textcolor{keyword}{true};
+00238     \}
+00239   \}
+00240 
+\hypertarget{_image_analysis_window_8java_source_l00245}{}\hyperlink{classgui_1_1_image_analysis_window_a0f3cd690d3cb4c7088975fa0ae8f747a}{00245}   \textcolor{keyword}{public} \textcolor{keywordtype}{int} \hyperlink{classgui_1_1_image_analysis_window_a0f3cd690d3cb4c7088975fa0ae8f747a}{selectAnalysis}() \{
+00246     \textcolor{comment}{// Ask if user wants to analyze a file or directory}
+00247     Object[] options = \{ \textcolor{stringliteral}{"File"}, \textcolor{stringliteral}{"Directory"} \};
+00248     String question = \textcolor{stringliteral}{"What do you want to analyze?"};
+00249     String title = \textcolor{stringliteral}{"Choose one analysis..."};
+00250     \textcolor{keyword}{final} \textcolor{keywordtype}{int} FILE = 0;
+00251     \textcolor{keyword}{final} \textcolor{keywordtype}{int} DIR = 1;
+00252     \textcolor{keyword}{final} \textcolor{keywordtype}{int} MULTIDIR = 2;
+00253     \hyperlink{classfunctions_1_1_utils}{Utils} utils = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_utils}{Utils}();
+00254     \textcolor{keywordtype}{int} sourceSelection = utils.\hyperlink{classfunctions_1_1_utils_a0e53c856e8bb35342f949c2f320d0e74}{analysisSelectionDialog}(options, question, title);
+00255     \textcolor{keywordflow}{if} (sourceSelection < 0) \{
+00256       analysis = \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{TypeOfAnalysis}.\hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{NONE};
+00257       \textcolor{keywordflow}{return} -1;
+00258     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (sourceSelection == FILE) \{
+00259       analysis = \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{TypeOfAnalysis}.\hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_a49ca3d2aae1b4847965178deb5633261}{FILE};
+00260     \} \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (sourceSelection == DIR) \{
+00261       analysis = \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{TypeOfAnalysis}.\hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_ace72c1d90b5a48ebbddd2be5b5f9368f}{DIRECTORY};
+00262     \}
+00263     \textcolor{keywordflow}{return} 0;
+00264   \}
+00265 
+\hypertarget{_image_analysis_window_8java_source_l00266}{}\hyperlink{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{00266}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{setChangeListener}(ChangeListener ch,JSlider sld) \{
+00267     sld.addChangeListener(ch);
+00268   \}
+00269 
+00270   \textcolor{comment}{/******************************************************/}
+\hypertarget{_image_analysis_window_8java_source_l00274}{}\hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{00274}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}() \{
+00275     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
+00276     \textcolor{keywordtype}{double} w = screenSize.getWidth();
+00277     \textcolor{keywordtype}{double} h = screenSize.getHeight();
+00278     \textcolor{keywordtype}{int} targetWidth = (int) (w * resizeFactor);
+00279     \textcolor{keywordtype}{int} targetHeight = (int) (h * resizeFactor);
+00280     ImageProcessor ip = impDraw.getProcessor();
+00281     ip.setInterpolationMethod(ImageProcessor.BILINEAR);
+00282     ip = ip.resize(targetWidth, targetHeight);
+00283     impDraw.setProcessor(ip);
+00284     imgLabel.setIcon(\textcolor{keyword}{new} ImageIcon(impDraw.getImage()));
+00285     imgLabel.repaint();
+00286   \}
+00287 
+00288   \textcolor{comment}{/******************************************************/}
+\hypertarget{_image_analysis_window_8java_source_l00296}{}\hyperlink{classgui_1_1_image_analysis_window_a04b5ca8d2004b3a622268e038a238455}{00296}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a04b5ca8d2004b3a622268e038a238455}{setImage}(\textcolor{keywordtype}{int} index) \{
+00297     \textcolor{keywordflow}{if} (index < 0 || index >= images.size())
+00298       \textcolor{keywordflow}{return};
+00299     impOrig = images.get(index).duplicate();
+00300     impOrig.setTitle(images.get(index).getTitle());
+00301     impDraw = impOrig.duplicate();
+00302     title.setText(impOrig.getTitle());
+00303     \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}();
+00304     \hyperlink{classgui_1_1_image_analysis_window_aa8880ccb12f2638822de16dd50e9c6d1}{setResizeFactor}();
+00305   \}
+00306 
+\hypertarget{_image_analysis_window_8java_source_l00312}{}\hyperlink{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef}{00312}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef}{setImages}(List<ImagePlus> i) \{
+00313     images = i;
+00314   \}
+00315 
+\hypertarget{_image_analysis_window_8java_source_l00316}{}\hyperlink{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca}{00316}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca}{setMouseListener}(MouseListener ml) \{
+00317     imgLabel.addMouseListener(ml);
+00318   \}
+00319 
+\hypertarget{_image_analysis_window_8java_source_l00320}{}\hyperlink{classgui_1_1_image_analysis_window_a612d8bbeb78a27050cf59d9db734fc11}{00320}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a612d8bbeb78a27050cf59d9db734fc11}{setRawImage}() \{
+00321     \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}(imgIndex);
+00322   \}
+00323 
+\hypertarget{_image_analysis_window_8java_source_l00328}{}\hyperlink{classgui_1_1_image_analysis_window_aa8880ccb12f2638822de16dd50e9c6d1}{00328}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_aa8880ccb12f2638822de16dd50e9c6d1}{setResizeFactor}() \{
+00329     \textcolor{keywordtype}{double} origW = impOrig.getWidth();
+00330     \textcolor{keywordtype}{double} origH = impOrig.getHeight();
+00331     \textcolor{keywordtype}{double} resizeW = impDraw.getWidth();
+00332     \textcolor{keywordtype}{double} resizeH = impDraw.getHeight();
+00333     xFactor = origW / resizeW;
+00334     yFactor = origH / resizeH;
+00335   \}
+00336 
+\hypertarget{_image_analysis_window_8java_source_l00337}{}\hyperlink{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6}{00337}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6}{genericRadioButtonsAction}()\{\}
+00338   
+\hypertarget{_image_analysis_window_8java_source_l00339}{}\hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{00339}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{configureSliderBar}(JSlider sld)\{
+00340     sld.setMinorTickSpacing(2);
+00341     sld.setMajorTickSpacing(10);
+00342     sld.setPaintTicks(\textcolor{keyword}{true});
+00343     sld.setPaintLabels(\textcolor{keyword}{true});
+00344     \textcolor{comment}{// We'll just use the standard numeric labels for now...}
+00345     sld.setLabelTable(sld.createStandardLabels(10));
+00346   \}
+00347   \textcolor{comment}{/******************************************************/}
+\hypertarget{_image_analysis_window_8java_source_l00351}{}\hyperlink{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058}{00351}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058}{showWindow}() \{
+00352 
+00353     JPanel panel = \textcolor{keyword}{new} JPanel(\textcolor{keyword}{new} GridBagLayout());
+00354     GridBagConstraints c = \textcolor{keyword}{new} GridBagConstraints();
+00355     c.fill = GridBagConstraints.HORIZONTAL;
+00356 
+00357     \textcolor{comment}{// RADIO BUTTONS}
+00358     btnOtsu.setSelected(\textcolor{keyword}{true});
+00359     btnOtsu.addActionListener(\textcolor{keyword}{new} ActionListener() \{
+00360       \textcolor{keyword}{public} \textcolor{keywordtype}{void} actionPerformed(ActionEvent e) \{
+00361         threshold = -1.0;
+00362         thresholdMethod = \textcolor{stringliteral}{"Otsu"};
+00363         \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{false});
+00364         \hyperlink{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6}{genericRadioButtonsAction}();
+00365       \}
+00366     \});
+00367     
+00368     btnMinimum.addActionListener(\textcolor{keyword}{new} ActionListener() \{
+00369       \textcolor{keyword}{public} \textcolor{keywordtype}{void} actionPerformed(ActionEvent e) \{
+00370         threshold = -1.0;
+00371         thresholdMethod = \textcolor{stringliteral}{"Minimum"};
+00372         \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{false});   
+00373         \hyperlink{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6}{genericRadioButtonsAction}();
+00374       \}
+00375     \});
+00376     \textcolor{comment}{// Group the radio buttons.}
+00377    
+00378     btnGroup.add(btnOtsu);
+00379     btnGroup.add(btnMinimum);
+00380     c.gridx = 0;
+00381     c.gridy = 0;
+00382     c.gridwidth = 1;
+00383     panel.add(btnOtsu, c);
+00384     c.gridy = 1;
+00385     panel.add(btnMinimum, c);
+00386     \textcolor{comment}{// THRESHOLD SLIDERBARS}
+00387     \hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{configureSliderBar}(sldThreshold);
+00388     \hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{configureSliderBar}(sldRedThreshold);
+00389     \hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{configureSliderBar}(sldGreenThreshold);
+00390     \hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{configureSliderBar}(sldBlueThreshold);
+00391     
+00392     c.fill = GridBagConstraints.HORIZONTAL;
+00393     c.gridx = 1;
+00394     c.gridy = 0;
+00395     c.gridwidth = 10;
+00396     c.gridheight = 2;
+00397     c.ipady = 10;
+00398     panel.add(sldRedThreshold, c);
+00399     panel.add(sldThreshold, c); \textcolor{comment}{// this two sliders are mutually exclusives}
+00400     c.gridy = 2;
+00401     panel.add(sldGreenThreshold, c);
+00402     c.gridy = 4;
+00403     panel.add(sldBlueThreshold, c);
+00404     
+00405     c.gridx = 0;
+00406     c.gridy = 6;
+00407     c.gridwidth = 10;
+00408     c.gridheight = 1;
+00409     panel.add(\textcolor{keyword}{new} JSeparator(SwingConstants.HORIZONTAL), c);
+00410 
+00411     title = \textcolor{keyword}{new} JLabel();
+00412     c.gridx = 2;
+00413     c.gridy = 7;
+00414     c.gridwidth = 6;
+00415     c.gridheight = 1;
+00416     c.ipady = 10;
+00417     panel.add(title, c);
+00418 
+00419     c.gridx = 2;
+00420     c.gridy = 8;
+00421     c.gridwidth = 6;
+00422     c.gridheight = 1;
+00423     c.ipady = 10;
+00424     panel.add(imgLabel, c);
+00425     \hyperlink{classgui_1_1_image_analysis_window_a2ef8b75d07db675fb28ce54cc00713f0}{initImage}(); \textcolor{comment}{// Initialization with the first image available}
+00426 
+00427     c.gridx = 0;
+00428     c.gridy = 9;
+00429     c.gridwidth = 10;
+00430     c.gridheight = 1;
+00431     panel.add(\textcolor{keyword}{new} JSeparator(SwingConstants.HORIZONTAL), c);
+00432 
+00433     \textcolor{comment}{// Add action listener}
+00434     prevBtn.addActionListener(\textcolor{keyword}{new} ActionListener() \{
+00435       \textcolor{keyword}{public} \textcolor{keywordtype}{void} actionPerformed(ActionEvent e) \{
+00436         \textcolor{keywordflow}{if} (imgIndex > 0) \{
+00437           nextBtn.setEnabled(\textcolor{keyword}{true});
+00438           \hyperlink{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1}{previousAction}();
+00439           \hyperlink{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55}{reset}();
+00440           \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}(--imgIndex);
+00441           \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{false});
+00442         \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(imgIndex==0)\{
+00443           \hyperlink{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1}{previousAction}();
+00444           prevBtn.setEnabled(\textcolor{keyword}{false});
+00445         \}
+00446       \}
+00447     \});
+00448     c.gridx = 0;
+00449     c.gridy = 10;
+00450     c.gridwidth = 1;
+00451     c.gridheight = 1;
+00452     panel.add(prevBtn, c);
+00453 
+00454     \textcolor{comment}{// Add action listener}
+00455     nextBtn.addActionListener(\textcolor{keyword}{new} ActionListener() \{
+00456       \textcolor{keyword}{public} \textcolor{keywordtype}{void} actionPerformed(ActionEvent e) \{
+00457         \textcolor{keywordflow}{if} (imgIndex < (images.size() - 1)) \{
+00458           prevBtn.setEnabled(\textcolor{keyword}{true});
+00459           \hyperlink{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{nextAction}();
+00460           \hyperlink{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55}{reset}();
+00461           \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}(++imgIndex);
+00462           \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{false});
+00463         \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(imgIndex==(images.size()-1))\{
+00464           \hyperlink{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{nextAction}();
+00465           nextBtn.setEnabled(\textcolor{keyword}{false});
+00466         \}
+00467       \}
+00468     \});
+00469     c.gridx = 9;
+00470     c.gridy = 10;
+00471     panel.add(nextBtn, c);
+00472 
+00473     this.setContentPane(panel);
+00474     this.pack();
+00475     this.setVisible(\textcolor{keyword}{true});
+00476   \}
+\hypertarget{_image_analysis_window_8java_source_l00477}{}\hyperlink{classgui_1_1_image_analysis_window_ae40d46c96e8374f03e40ce6ef6287d5d}{00477}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_ae40d46c96e8374f03e40ce6ef6287d5d}{setSlidersAutoThreshold}()\{
+00478     redThreshold = \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold};
+00479     greenThreshold = \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold};
+00480     blueThreshold = \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold};
+00481     sldThreshold.setValue((\textcolor{keywordtype}{int}) threshold);
+00482     sldRedThreshold.setValue((\textcolor{keywordtype}{int}) threshold);
+00483     sldGreenThreshold.setValue((\textcolor{keywordtype}{int}) threshold);
+00484     sldBlueThreshold.setValue((\textcolor{keywordtype}{int}) threshold);
+00485   \}
+00486   \textcolor{comment}{/******************************************************/}
+\hypertarget{_image_analysis_window_8java_source_l00494}{}\hyperlink{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863}{00494}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863}{thresholdImagePlus}(ImagePlus imp) \{
+00495     \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} cv = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision}();
+00496     \textcolor{keywordflow}{if} (threshold == -1) \{
+00497       threshold = cv.\hyperlink{classfunctions_1_1_computer_vision_a93e3c71f7e9e359a377ebed559810c28}{autoThresholdImagePlus}(imp, thresholdMethod);
+00498       \hyperlink{classgui_1_1_image_analysis_window_ae40d46c96e8374f03e40ce6ef6287d5d}{setSlidersAutoThreshold}();
+00499     \} \textcolor{keywordflow}{else} \{
+00500       cv.\hyperlink{classfunctions_1_1_computer_vision_a75c4bdce2977d9dcfe309e60b16cbf4f}{thresholdImagePlus}(imp, threshold);
+00501     \}
+00502   \}
+00503 
+00504 \}
+\end{DoxyCode}

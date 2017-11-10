@@ -1,0 +1,104 @@
+\hypertarget{_utils_8java_source}{}\section{Utils.\+java}
+\label{_utils_8java_source}\index{Utils.\+java@{Utils.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }functions;
+00020 
+00021 \textcolor{keyword}{import} java.util.List;
+00022 \textcolor{keyword}{import} java.util.ListIterator;
+00023 
+00024 \textcolor{keyword}{import} javax.swing.JOptionPane;
+00025 
+00026 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon};
+00027 \textcolor{keyword}{import} ij.IJ;
+00028 
+\hypertarget{_utils_8java_source_l00033}{}\hyperlink{classfunctions_1_1_utils}{00033} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classfunctions_1_1_utils}{Utils} \{
+00034 
+\hypertarget{_utils_8java_source_l00042}{}\hyperlink{classfunctions_1_1_utils_a0e53c856e8bb35342f949c2f320d0e74}{00042}   \textcolor{keyword}{public} \textcolor{keywordtype}{int} \hyperlink{classfunctions_1_1_utils_a0e53c856e8bb35342f949c2f320d0e74}{analysisSelectionDialog}(Object[] options, String question, String title
+      ) \{
+00043     \textcolor{keywordtype}{int} n = JOptionPane.showOptionDialog(null, question, title, JOptionPane.YES\_NO\_OPTION, JOptionPane.
+      QUESTION\_MESSAGE,
+00044         null, \textcolor{comment}{// do not use a custom Icon}
+00045         options, \textcolor{comment}{// the titles of buttons}
+00046         options[0]); \textcolor{comment}{// default button title}
+00047     \textcolor{keywordflow}{return} n;
+00048   \}
+\hypertarget{_utils_8java_source_l00053}{}\hyperlink{classfunctions_1_1_utils_af205010f6a95a6e41a837305446fd262}{00053}   \textcolor{keyword}{public} \textcolor{keywordtype}{int}[] \hyperlink{classfunctions_1_1_utils_af205010f6a95a6e41a837305446fd262}{convertLongArrayToInt}(\textcolor{keywordtype}{long}[] orig) \{
+00054     \textcolor{keywordtype}{int}[] arrayInt = \textcolor{keyword}{new} \textcolor{keywordtype}{int}[orig.length];
+00055     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < orig.length; i++)
+00056       arrayInt[i] = (\textcolor{keywordtype}{int}) orig[i];
+00057     \textcolor{keywordflow}{return} arrayInt;
+00058   \}
+00059 
+00060   \textcolor{comment}{/******************************************************/}
+\hypertarget{_utils_8java_source_l00066}{}\hyperlink{classfunctions_1_1_utils_a3af2ec0eae0c2c19f7332e34197999bf}{00066}   \textcolor{keyword}{public} \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} \hyperlink{classfunctions_1_1_utils_a3af2ec0eae0c2c19f7332e34197999bf}{getSpermatozoon}(String \textcolor{keywordtype}{id}, List spermatozoa) \{
+00067     \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} spermatozoon = null;
+00068     \textcolor{keywordflow}{for} (ListIterator j = spermatozoa.listIterator(); j.hasNext();) \{
+00069       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} candidate = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) j.next();
+00070       \textcolor{keywordflow}{if} (candidate.\hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{id}.equals(\textcolor{keywordtype}{id}) && \textcolor{keywordtype}{id} != \textcolor{stringliteral}{"***"}) \{
+00071         spermatozoon = candidate;
+00072         \textcolor{keywordflow}{break};
+00073       \}
+00074     \}
+00075     \textcolor{keywordflow}{return} spermatozoon;
+00076   \}
+00077 
+00078   \textcolor{comment}{/******************************************************/}
+\hypertarget{_utils_8java_source_l00084}{}\hyperlink{classfunctions_1_1_utils_ab85218da3569b5a7c0b9749e7b2b747a}{00084}   \textcolor{keyword}{public} String \hyperlink{classfunctions_1_1_utils_ab85218da3569b5a7c0b9749e7b2b747a}{printXYCoords}(List theTracks) \{
+00085     \textcolor{keywordtype}{int} nTracks = theTracks.size();
+00086     \textcolor{comment}{// strings to print out all of the data gathered, point by point}
+00087     String xyPts = \textcolor{stringliteral}{" "};
+00088     \textcolor{comment}{// initialize variables}
+00089     \textcolor{keywordtype}{int} trackNr = 0;
+00090     \textcolor{keywordtype}{int} displayTrackNr = 0;
+00091     \textcolor{keywordtype}{int} line = 1;
+00092     String output = \textcolor{stringliteral}{"Line"} + \textcolor{stringliteral}{"\(\backslash\)tTrack"} + \textcolor{stringliteral}{"\(\backslash\)tRelative\_Frame"} + \textcolor{stringliteral}{"\(\backslash\)tX"} + \textcolor{stringliteral}{"\(\backslash\)tY"};
+00093     \textcolor{comment}{// loop through all sperm tracks}
+00094     \textcolor{keywordflow}{for} (ListIterator iT = theTracks.listIterator(); iT.hasNext();) \{
+00095       \textcolor{keywordtype}{int} frame = 0;
+00096       trackNr++;
+00097       IJ.showProgress((\textcolor{keywordtype}{double}) trackNr / nTracks);
+00098       IJ.showStatus(\textcolor{stringliteral}{"Analyzing Tracks..."});
+00099       List bTrack = (List) iT.next();
+00100       \textcolor{comment}{// keeps track of the current track}
+00101       displayTrackNr++;
+00102       ListIterator jT = bTrack.listIterator();
+00103       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} oldSpermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) jT.next();
+00104       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} firstSpermatozoon = \textcolor{keyword}{new} \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}();
+00105       firstSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ac4622d389badba1a387ec1e139d35c8e}{copy}(oldSpermatozoon);
+00106       \textcolor{comment}{// For each instant (Spermatozoon) in the track}
+00107       String outputline = \textcolor{stringliteral}{""};
+00108       \textcolor{keywordflow}{for} (; jT.hasNext();) \{
+00109         \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} newSpermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) jT.next();
+00110         xyPts = \textcolor{stringliteral}{"\(\backslash\)t"} + displayTrackNr + \textcolor{stringliteral}{"\(\backslash\)t"} + frame + \textcolor{stringliteral}{"\(\backslash\)t"} + (int) newSpermatozoon.
+      \hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x} + \textcolor{stringliteral}{"\(\backslash\)t"} + (\textcolor{keywordtype}{int}) newSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y};
+00111         frame++;
+00112         oldSpermatozoon = newSpermatozoon;
+00113         outputline += \textcolor{stringliteral}{"\(\backslash\)n"} + line + xyPts;
+00114         line++;
+00115       \}
+00116       output += outputline;
+00117     \}
+00118     \textcolor{keywordflow}{return} output;
+00119   \}
+00120   
+00121 \}
+\end{DoxyCode}

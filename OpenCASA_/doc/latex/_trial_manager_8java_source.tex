@@ -1,0 +1,142 @@
+\hypertarget{_trial_manager_8java_source}{}\section{Trial\+Manager.\+java}
+\label{_trial_manager_8java_source}\index{Trial\+Manager.\+java@{Trial\+Manager.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }functions;
+00020 
+00021 \textcolor{keyword}{import} java.io.FileInputStream;
+00022 \textcolor{keyword}{import} java.io.FileOutputStream;
+00023 \textcolor{keyword}{import} java.io.IOException;
+00024 \textcolor{keyword}{import} java.io.ObjectInputStream;
+00025 \textcolor{keyword}{import} java.io.ObjectOutputStream;
+00026 \textcolor{keyword}{import} java.util.HashMap;
+00027 \textcolor{keyword}{import} java.util.Map;
+00028 
+00029 \textcolor{keyword}{import} javax.swing.JFileChooser;
+00030 
+00031 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_persistent_random_walker}{PersistentRandomWalker};
+00032 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_serializable_list}{SerializableList};
+00033 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_simulation}{Simulation};
+00034 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_trial}{Trial};
+00035 \textcolor{keyword}{import} ij.IJ;
+00036 \textcolor{keyword}{import} ij.ImagePlus;
+00037 
+\hypertarget{_trial_manager_8java_source_l00042}{}\hyperlink{classfunctions_1_1_trial_manager}{00042} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classfunctions_1_1_trial_manager}{TrialManager} \{
+00043   
+00044 
+\hypertarget{_trial_manager_8java_source_l00050}{}\hyperlink{classfunctions_1_1_trial_manager_a5d815ce30de28983d08c22c909562e11}{00050}   \textcolor{keyword}{public} \hyperlink{classdata_1_1_trial}{Trial} \hyperlink{classfunctions_1_1_trial_manager_a5d815ce30de28983d08c22c909562e11}{getTrialFromAVI}(String path) \{
+00051     \textcolor{keywordflow}{if} (path == null)
+00052       \textcolor{keywordflow}{return} null;
+00053     \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00054     \textcolor{keywordflow}{if} (!fm.\hyperlink{classfunctions_1_1_file_manager_aef15c5bfadc70a7333a3103e85e7bf65}{isAVI}(path))
+00055       \textcolor{keywordflow}{return} \textcolor{keyword}{new} \hyperlink{classdata_1_1_trial}{Trial}();
+00056     \textcolor{comment}{// Load video}
+00057     ImagePlus imp = fm.\hyperlink{classfunctions_1_1_file_manager_a140fc635f053a614aecddfb79baf5905}{getAVI}(path);
+00058     \textcolor{keywordflow}{return} \hyperlink{classfunctions_1_1_trial_manager_a2cc435133a7ef2cd5995f4fdde622611}{getTrialFromImp}(imp, path);
+00059   \}
+00060 
+\hypertarget{_trial_manager_8java_source_l00069}{}\hyperlink{classfunctions_1_1_trial_manager_a2cc435133a7ef2cd5995f4fdde622611}{00069}   \textcolor{keyword}{public} \hyperlink{classdata_1_1_trial}{Trial} \hyperlink{classfunctions_1_1_trial_manager_a2cc435133a7ef2cd5995f4fdde622611}{getTrialFromImp}(ImagePlus impOrig, String path) \{
+00070     \textcolor{comment}{// Analyze the video}
+00071     \textcolor{comment}{// It's necessary to duplicate the ImagePlus if}
+00072     \textcolor{comment}{// we want to draw later sperm trajectories in the original video}
+00073     ImagePlus imp = impOrig.duplicate();
+00074     \textcolor{comment}{//Extract trajectories}
+00075     \hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition} vr = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition}();
+00076     \hyperlink{classdata_1_1_serializable_list}{SerializableList} tracks = vr.\hyperlink{classfunctions_1_1_video_recognition_a5472ba1ca2aba8ebc35bcb63634421e1}{analyzeVideo}(imp);
+00077     \textcolor{comment}{//Set metadata}
+00078     \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00079     String filename = fm.\hyperlink{classfunctions_1_1_file_manager_ad027758f34214960a7aa800e0f7c19db}{getFilename}(path);
+00080     String ID = filename.toLowerCase();
+00081     String type = fm.\hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{getParentDirectory}(path).toLowerCase();\textcolor{comment}{// the call toLowerCase() is
+       to avoid user mistakes}
+00082                                                                     \textcolor{comment}{// while naming folders. This variable
+       is useful }
+00083                                                                     \textcolor{comment}{// in directory analysis}
+00084     \textcolor{comment}{//Create and return trial}
+00085     \hyperlink{classdata_1_1_trial}{Trial} trial =  \textcolor{keyword}{new} \hyperlink{classdata_1_1_trial}{Trial}(ID, type, path, tracks, impOrig.getWidth(), impOrig.getHeight());
+00086     \textcolor{keywordflow}{return} trial;
+00087   \}
+00088   
+\hypertarget{_trial_manager_8java_source_l00092}{}\hyperlink{classfunctions_1_1_trial_manager_a53eafc0dad05f232ab8f7fc85fb214be}{00092}   \textcolor{keyword}{public} Map<String, Trial> \hyperlink{classfunctions_1_1_trial_manager_a53eafc0dad05f232ab8f7fc85fb214be}{readTrials}() \{
+00093     Map<String, Trial> trials = null;
+00094     \textcolor{keywordflow}{try} \{
+00095       \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00096       String file = fm.\hyperlink{classfunctions_1_1_file_manager_aa741a9e7ac4127ae1a463fb626474edf}{selectFile}();
+00097       \textcolor{keywordflow}{if} (file == null)
+00098         \textcolor{keywordflow}{return} null;
+00099       FileInputStream streamIn = \textcolor{keyword}{new} FileInputStream(file);
+00100       ObjectInputStream objectinputstream = \textcolor{keyword}{new} ObjectInputStream(streamIn);
+00101       trials = (HashMap<String, Trial>) objectinputstream.readObject();
+00102     \} \textcolor{keywordflow}{catch} (Exception e) \{
+00103 \textcolor{comment}{//      e.printStackTrace();}
+00104       IJ.handleException(e);
+00105     \}
+00106     \textcolor{keywordflow}{return} trials;
+00107   \} 
+00108 
+\hypertarget{_trial_manager_8java_source_l00112}{}\hyperlink{classfunctions_1_1_trial_manager_a8642d53e2fcedb9821fa9a91eb84e31f}{00112}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_trial_manager_a8642d53e2fcedb9821fa9a91eb84e31f}{saveTrials}(Map<String, Trial> trials) \{
+00113 
+00114     String filename = \textcolor{stringliteral}{""};
+00115     String dir = \textcolor{stringliteral}{""};
+00116     JFileChooser c = \textcolor{keyword}{new} JFileChooser();
+00117     \textcolor{keywordtype}{int} rVal = c.showSaveDialog(null);
+00118     \textcolor{keywordflow}{if} (rVal == JFileChooser.APPROVE\_OPTION) \{
+00119       filename = c.getSelectedFile().getName();
+00120       dir = c.getCurrentDirectory().toString();
+00121     \}
+00122     System.out.println(dir);
+00123     \textcolor{keywordflow}{try} \{
+00124       \textcolor{comment}{// String folder = Utils.selectFolder();}
+00125       \textcolor{keywordflow}{if} (dir == null || dir.equals(\textcolor{stringliteral}{""}))
+00126         \textcolor{keywordflow}{return};
+00127       FileOutputStream fos = \textcolor{keyword}{new} FileOutputStream(dir + \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)"} + filename);
+00128       ObjectOutputStream oos = \textcolor{keyword}{new} ObjectOutputStream(fos);
+00129       oos.writeObject(trials);
+00130       oos.close();
+00131       fos.close();
+00132     \} \textcolor{keywordflow}{catch} (IOException ioe) \{
+00133       ioe.printStackTrace();
+00134     \}
+00135   \}
+00136   
+\hypertarget{_trial_manager_8java_source_l00143}{}\hyperlink{classfunctions_1_1_trial_manager_a394d1db5cf1132ef09b270f9b691ec17}{00143}   \textcolor{keyword}{public} \hyperlink{classdata_1_1_trial}{Trial} \hyperlink{classfunctions_1_1_trial_manager_a394d1db5cf1132ef09b270f9b691ec17}{simulateTrial}(String trialID, \textcolor{keywordtype}{double} beta, \textcolor{keywordtype}{double} responsiveCells) \{
+00144     \hyperlink{classdata_1_1_simulation}{Simulation} sim = \textcolor{keyword}{new} \hyperlink{classdata_1_1_persistent_random_walker}{PersistentRandomWalker}(beta, responsiveCells);
+00145     ImagePlus imp = sim.\hyperlink{classdata_1_1_simulation_a7fdb72bfe49073e67efb68abd6f58ac4}{createSimulation}();
+00146     String trialType = \textcolor{stringliteral}{"Beta: "}+Double.toString(beta)+\textcolor{stringliteral}{";Resp: "}+Double.toString(responsiveCells);
+00147     String simName = trialType+\textcolor{stringliteral}{"\(\backslash\)\(\backslash\)"}+trialID;
+00148     \hyperlink{classdata_1_1_trial}{Trial} tr = \hyperlink{classfunctions_1_1_trial_manager_a2cc435133a7ef2cd5995f4fdde622611}{getTrialFromImp}(imp,simName);
+00149     \textcolor{keywordflow}{return} tr;
+00150   \}
+00151 
+\hypertarget{_trial_manager_8java_source_l00158}{}\hyperlink{classfunctions_1_1_trial_manager_a83f9d10eaa1ef4efb6de1f0e8b690978}{00158}   \textcolor{keyword}{public} Map<String, Trial> \hyperlink{classfunctions_1_1_trial_manager_a83f9d10eaa1ef4efb6de1f0e8b690978}{simulateTrials}(\textcolor{keywordtype}{double} beta, \textcolor{keywordtype}{double} responsiveCells,\textcolor{keywordtype}{int} 
+      MAXSIMULATIONS) \{
+00159     Map<String, Trial> trials = \textcolor{keyword}{new} HashMap<String, Trial>();
+00160     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < MAXSIMULATIONS; i++) \{
+00161       IJ.showProgress((\textcolor{keywordtype}{double}) i / (\textcolor{keywordtype}{double})MAXSIMULATIONS);
+00162       IJ.showStatus(\textcolor{stringliteral}{"Simulating trial "}+i+\textcolor{stringliteral}{"..."});
+00163       \hyperlink{classdata_1_1_trial}{Trial} tr = \hyperlink{classfunctions_1_1_trial_manager_a394d1db5cf1132ef09b270f9b691ec17}{simulateTrial}(Integer.toString(i),beta,responsiveCells);
+00164       trials.put(tr.\hyperlink{classdata_1_1_trial_a317298c3409575f71e43acd3f73ce295}{ID}, tr);
+00165     \}
+00166     \textcolor{keywordflow}{return} trials;
+00167   \}
+00168 
+00169 \}
+\end{DoxyCode}

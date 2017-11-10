@@ -1,0 +1,229 @@
+\hypertarget{_morph_window_8java_source}{}\section{Morph\+Window.\+java}
+\label{_morph_window_8java_source}\index{Morph\+Window.\+java@{Morph\+Window.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }gui;
+00020 
+00021 \textcolor{keyword}{import} java.awt.HeadlessException;
+00022 \textcolor{keyword}{import} java.awt.Point;
+00023 \textcolor{keyword}{import} java.awt.Rectangle;
+00024 \textcolor{keyword}{import} java.awt.event.MouseEvent;
+00025 \textcolor{keyword}{import} java.awt.event.MouseListener;
+00026 \textcolor{keyword}{import} java.util.List;
+00027 \textcolor{keyword}{import} java.util.ListIterator;
+00028 
+00029 \textcolor{keyword}{import} javax.swing.event.ChangeEvent;
+00030 \textcolor{keyword}{import} javax.swing.event.ChangeListener;
+00031 
+00032 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_params}{Params};
+00033 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon};
+00034 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_computer_vision}{ComputerVision};
+00035 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_file_manager}{FileManager};
+00036 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_paint}{Paint};
+00037 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_utils}{Utils};
+00038 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition};
+00039 \textcolor{keyword}{import} ij.measure.ResultsTable;
+00040 
+\hypertarget{_morph_window_8java_source_l00046}{}\hyperlink{classgui_1_1_morph_window}{00046} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classgui_1_1_morph_window}{MorphWindow} \textcolor{keyword}{extends} \hyperlink{classgui_1_1_image_analysis_window}{ImageAnalysisWindow} implements 
+      ChangeListener, MouseListener \{
+00047 
+00048   
+\hypertarget{_morph_window_8java_source_l00049}{}\hyperlink{classgui_1_1_morph_window_a3c3ae31647b93ff77785eb37236fbcb7}{00049}   \textcolor{keyword}{private} \textcolor{keywordtype}{boolean}         \hyperlink{classgui_1_1_morph_window_a3c3ae31647b93ff77785eb37236fbcb7}{isThresholding}  = \textcolor{keyword}{false};
+\hypertarget{_morph_window_8java_source_l00051}{}\hyperlink{classgui_1_1_morph_window_a05b8759be1c0c0351258f5519d12914f}{00051}   \textcolor{keyword}{private} ResultsTable       \hyperlink{classgui_1_1_morph_window_a05b8759be1c0c0351258f5519d12914f}{morphometrics} = \textcolor{keyword}{new} ResultsTable();
+00052 
+\hypertarget{_morph_window_8java_source_l00056}{}\hyperlink{classgui_1_1_morph_window_a4100873aa2e4bc183cd06aefb7719448}{00056}   \textcolor{keyword}{public} \hyperlink{classgui_1_1_morph_window_a4100873aa2e4bc183cd06aefb7719448}{MorphWindow}() throws HeadlessException \{
+00057     super();
+00058     \hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{sldThreshold}.setVisible(\textcolor{keyword}{true});
+00059     \hyperlink{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{setChangeListener}(\textcolor{keyword}{this},\hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{sldThreshold});
+00060     \hyperlink{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca}{setMouseListener}(\textcolor{keyword}{this});
+00061   \}
+00062 
+00063   \textcolor{comment}{/******************************************************/}
+\hypertarget{_morph_window_8java_source_l00072}{}\hyperlink{classgui_1_1_morph_window_a7ea2b90728ffa99304e7d2585376a374}{00072}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a7ea2b90728ffa99304e7d2585376a374}{checkSelection}(\textcolor{keywordtype}{int} x, \textcolor{keywordtype}{int} y) \{
+00073     Point click = \textcolor{keyword}{new} Point(x, y);
+00074     \hyperlink{classfunctions_1_1_utils}{Utils} utils = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_utils}{Utils}();
+00075     \textcolor{keywordflow}{for} (ListIterator j = \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa}.listIterator(); j.hasNext();) \{
+00076       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} sperm = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) j.next();
+00077       \textcolor{keywordflow}{if} (\hyperlink{classgui_1_1_morph_window_aab859aa1fe697dc9361ea47ccc6a80a5}{isClickInside}(sperm, click)) \{
+00078         sperm.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected} = !sperm.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected};
+00079         \textcolor{keywordflow}{if} (sperm.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected}) \{
+00080           \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} spermatozoon = utils.\hyperlink{classfunctions_1_1_utils_a3af2ec0eae0c2c19f7332e34197999bf}{getSpermatozoon}(sperm.
+      \hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{id}, \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa});
+00081           \hyperlink{classgui_1_1_morph_window_ad0a9220fe384d0c206692bc041ef4bb6}{generateResults}(spermatozoon);
+00082         \}
+00083         \textcolor{keywordflow}{break};
+00084       \}
+00085     \}
+00086   \}
+00087 
+\hypertarget{_morph_window_8java_source_l00091}{}\hyperlink{classgui_1_1_morph_window_a5ae591df94fc66ccb85cbb6565368bca}{00091}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a5ae591df94fc66ccb85cbb6565368bca}{close}() \{
+00092     \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.changes = \textcolor{keyword}{false}; \textcolor{comment}{// This is necessary to avoid Save changes? dialog when closing}
+00093     \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}.changes = \textcolor{keyword}{false}; \textcolor{comment}{// This is necessary to avoid Save changes? dialog when closing}
+00094     \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.close();
+00095     \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}.close();
+00096   \}
+00097 
+00098   \textcolor{comment}{/******************************************************/}
+\hypertarget{_morph_window_8java_source_l00102}{}\hyperlink{classgui_1_1_morph_window_a5f99d67f201dbf538b692337cd3af654}{00102}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a5f99d67f201dbf538b692337cd3af654}{doMouseRefresh}() \{
+00103 
+00104     \textcolor{keywordflow}{if} (!isThresholding) \{
+00105       isThresholding = \textcolor{keyword}{true};
+00106       Thread t1 = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} Runnable() \{
+00107         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{run}() \{
+00108           \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw} = \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate();
+00109           \hyperlink{classfunctions_1_1_paint}{Paint} paint = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_paint}{Paint}();
+00110           paint.\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, \hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{impOutline});
+00111           paint.\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa});
+00112           \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}();
+00113           isThresholding = \textcolor{keyword}{false};
+00114         \}
+00115       \});
+00116       t1.start();
+00117     \}
+00118   \}
+00119 
+\hypertarget{_morph_window_8java_source_l00124}{}\hyperlink{classgui_1_1_morph_window_a7db6c32207f03c20a1b7932a5f804435}{00124}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a7db6c32207f03c20a1b7932a5f804435}{doSliderRefresh}() \{
+00125     \textcolor{keywordflow}{if} (!isThresholding) \{
+00126       isThresholding = \textcolor{keyword}{true};
+00127       Thread t1 = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} Runnable() \{
+00128         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{run}() \{
+00129           \hyperlink{classgui_1_1_image_analysis_window_a2d0abb2ca6c5355bd49023f16f185293}{deselectAll}();
+00130           \hyperlink{classgui_1_1_morph_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{true});
+00131           isThresholding = \textcolor{keyword}{false};
+00132         \}
+00133       \});
+00134       t1.start();
+00135     \}
+00136   \}
+00137 
+00138   \textcolor{comment}{/******************************************************/}
+\hypertarget{_morph_window_8java_source_l00145}{}\hyperlink{classgui_1_1_morph_window_ad0a9220fe384d0c206692bc041ef4bb6}{00145}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_ad0a9220fe384d0c206692bc041ef4bb6}{generateResults}(\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} spermatozoon) \{
+00146 
+00147     \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} cv = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision}();
+00148     \textcolor{keywordtype}{double} total\_meanGray = (double) cv.\hyperlink{classfunctions_1_1_computer_vision_af9a3285b7e044506df25989c9f718308}{getMeanGrayValue}(spermatozoon, 
+      \hyperlink{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416}{impGray}, \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00149     \textcolor{keywordtype}{double} total\_area = spermatozoon.\hyperlink{classdata_1_1_spermatozoon_ac84d85b9355bdffd37cf8632c9f72efe}{total\_area} * Math.pow(\hyperlink{classdata_1_1_params}{Params}.
+      \hyperlink{classdata_1_1_params_a19331ee97ef3c422984fc7dff976549e}{micronPerPixel}, 2);
+00150     \textcolor{keywordtype}{double} total\_perimeter = spermatozoon.\hyperlink{classdata_1_1_spermatozoon_a893cd9ee5a9bdc16eecb9891fadd602c}{total\_perimeter} * 
+      \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a19331ee97ef3c422984fc7dff976549e}{micronPerPixel};
+00151     \textcolor{keywordtype}{double} total\_feret = spermatozoon.\hyperlink{classdata_1_1_spermatozoon_ab5ab64dc3696466f1e700d20d538e436}{total\_feret} * \hyperlink{classdata_1_1_params}{Params}.
+      \hyperlink{classdata_1_1_params_a19331ee97ef3c422984fc7dff976549e}{micronPerPixel};
+00152     \textcolor{keywordtype}{double} total\_minFeret = spermatozoon.\hyperlink{classdata_1_1_spermatozoon_aea69b99de4cd3bda1fc7c464bb5d842e}{total\_minFeret} * \hyperlink{classdata_1_1_params}{Params}.
+      \hyperlink{classdata_1_1_params_a19331ee97ef3c422984fc7dff976549e}{micronPerPixel};
+00153     \textcolor{keywordtype}{double} total\_ellipticity = total\_feret / total\_minFeret;
+00154     \textcolor{keywordtype}{double} total\_roughness = 4 * Math.PI * total\_area / (Math.pow(total\_perimeter, 2));
+00155     \textcolor{keywordtype}{double} total\_elongation = (total\_feret - total\_minFeret) / (total\_feret + total\_minFeret);
+00156     \textcolor{keywordtype}{double} total\_regularity = (Math.PI * total\_feret * total\_minFeret) / (4 * total\_area);
+00157 
+00158     morphometrics.incrementCounter();
+00159     morphometrics.addValue(\textcolor{stringliteral}{"ID"}, spermatozoon.\hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{id});
+00160     morphometrics.addValue(\textcolor{stringliteral}{"Threshold"}, \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold});
+00161     morphometrics.addValue(\textcolor{stringliteral}{"MeanGray"}, total\_meanGray);
+00162     morphometrics.addValue(\textcolor{stringliteral}{"Area(um^2)"}, total\_area);
+00163     morphometrics.addValue(\textcolor{stringliteral}{"Perimeter(um)"}, total\_perimeter);
+00164     morphometrics.addValue(\textcolor{stringliteral}{"Length(um)"}, total\_feret);
+00165     morphometrics.addValue(\textcolor{stringliteral}{"Width(um)"}, total\_minFeret);
+00166     morphometrics.addValue(\textcolor{stringliteral}{"Ellipticity"}, total\_ellipticity);
+00167     morphometrics.addValue(\textcolor{stringliteral}{"Roughness"}, total\_roughness);
+00168     morphometrics.addValue(\textcolor{stringliteral}{"Elongation"}, total\_elongation);
+00169     morphometrics.addValue(\textcolor{stringliteral}{"Regularity"}, total\_regularity);
+00170     \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00171     morphometrics.addValue(\textcolor{stringliteral}{"Sample"}, fm.\hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{getParentDirectory}(
+      \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.getTitle()));
+00172     morphometrics.addValue(\textcolor{stringliteral}{"Filename"}, fm.\hyperlink{classfunctions_1_1_file_manager_ad027758f34214960a7aa800e0f7c19db}{getFilename}(\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.getTitle()));
+00173     \textcolor{keywordflow}{if} (!\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a3e07114fb70a676dfe24fad6be8c3c75}{male}.isEmpty())
+00174       morphometrics.addValue(\textcolor{stringliteral}{"Male"}, \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a3e07114fb70a676dfe24fad6be8c3c75}{male});
+00175     \textcolor{keywordflow}{if} (!\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_aecbab8174a6d72649883508cf9940d58}{date}.isEmpty())
+00176       morphometrics.addValue(\textcolor{stringliteral}{"Date"}, \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_aecbab8174a6d72649883508cf9940d58}{date});
+00177     \textcolor{keywordflow}{if} (!\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a253e4e926c0399ed1ae42b5a5989824d}{genericField}.isEmpty())
+00178       morphometrics.addValue(\textcolor{stringliteral}{"Generic Field"}, \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a253e4e926c0399ed1ae42b5a5989824d}{genericField});
+00179     morphometrics.show(\textcolor{stringliteral}{"Morphometrics"});
+00180   \}
+00181 
+00182   \textcolor{comment}{/******************************************************/}
+\hypertarget{_morph_window_8java_source_l00194}{}\hyperlink{classgui_1_1_morph_window_aab859aa1fe697dc9361ea47ccc6a80a5}{00194}   \textcolor{keyword}{public} \textcolor{keywordtype}{boolean} \hyperlink{classgui_1_1_morph_window_aab859aa1fe697dc9361ea47ccc6a80a5}{isClickInside}(\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} sperm, Point click) \{
+00195     \textcolor{comment}{// Get boundaries}
+00196     \textcolor{keywordtype}{double} offsetX = (double) sperm.\hyperlink{classdata_1_1_spermatozoon_a5c25ae7634a79d11d6679b6b07c240a1}{bx};
+00197     \textcolor{keywordtype}{double} offsetY = (\textcolor{keywordtype}{double}) sperm.\hyperlink{classdata_1_1_spermatozoon_affce45e955f0a114a5569e019b8d8634}{by};
+00198     \textcolor{keywordtype}{int} w = (int) sperm.\hyperlink{classdata_1_1_spermatozoon_ae426f00e82704fa09578f5446e22d915}{width};
+00199     \textcolor{keywordtype}{int} h = (\textcolor{keywordtype}{int}) sperm.\hyperlink{classdata_1_1_spermatozoon_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00200     \textcolor{comment}{// correct offset}
+00201     \textcolor{keywordtype}{int} pX = (int) (click.getX() - offsetX);
+00202     \textcolor{keywordtype}{int} pY = (int) (click.getY() - offsetY);
+00203     \textcolor{comment}{// IJ.log("offsetX: "+offsetX+" ; offsetY: "+offsetY+" ;w: "+w+"; h:}
+00204     \textcolor{comment}{// "+h+"px: "+pX+"; py: "+pY);}
+00205     Rectangle r = \textcolor{keyword}{new} Rectangle(w, h);
+00206     \textcolor{keywordflow}{return} r.contains(\textcolor{keyword}{new} Point(pX, pY));
+00207   \}
+00208 
+00209   \textcolor{comment}{/******************************************************}
+00210 \textcolor{comment}{   * MOUSE LISTENER}
+00211 \textcolor{comment}{   ******************************************************/}
+\hypertarget{_morph_window_8java_source_l00215}{}\hyperlink{classgui_1_1_morph_window_a45d56bd84238e8b56589dfc732e2b2cf}{00215}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a45d56bd84238e8b56589dfc732e2b2cf}{mouseClicked}(MouseEvent e) \{
+00216     \textcolor{keywordtype}{int} x = e.getX();
+00217     \textcolor{keywordtype}{int} y = e.getY();
+00218     \textcolor{comment}{// System.out.println("X: "+ x+"; Y: "+ y);}
+00219     \textcolor{keywordtype}{int} realX = (int) (x * \hyperlink{classgui_1_1_image_analysis_window_adb607f30ce4997349a99dca08d813585}{xFactor});
+00220     \textcolor{keywordtype}{int} realY = (int) (y * \hyperlink{classgui_1_1_image_analysis_window_ab483275b2379ef6043da68efe593b5d9}{yFactor});
+00221     \textcolor{comment}{// System.out.println("realX: "+ realX+"; realY: "+ realY);}
+00222     \hyperlink{classgui_1_1_morph_window_a7ea2b90728ffa99304e7d2585376a374}{checkSelection}(realX, realY);
+00223     \hyperlink{classgui_1_1_morph_window_a5f99d67f201dbf538b692337cd3af654}{doMouseRefresh}();
+00224   \}
+\hypertarget{_morph_window_8java_source_l00225}{}\hyperlink{classgui_1_1_morph_window_a74e5095765312765f33ed268095a2cb2}{00225}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a74e5095765312765f33ed268095a2cb2}{mouseEntered}(MouseEvent e) \{\}
+\hypertarget{_morph_window_8java_source_l00226}{}\hyperlink{classgui_1_1_morph_window_aa14a60f36cdd6abc1d90ce56d39218eb}{00226}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_aa14a60f36cdd6abc1d90ce56d39218eb}{mouseExited}(MouseEvent e) \{\}
+\hypertarget{_morph_window_8java_source_l00227}{}\hyperlink{classgui_1_1_morph_window_aed82e1ce3dd3cf283d508c3ba3be70ef}{00227}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_aed82e1ce3dd3cf283d508c3ba3be70ef}{mousePressed}(MouseEvent e) \{\}
+\hypertarget{_morph_window_8java_source_l00228}{}\hyperlink{classgui_1_1_morph_window_a87a07291794e15052db67f945d90853e}{00228}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a87a07291794e15052db67f945d90853e}{mouseReleased}(MouseEvent e) \{\}
+00229 
+00230   \textcolor{comment}{/******************************************************/}
+\hypertarget{_morph_window_8java_source_l00239}{}\hyperlink{classgui_1_1_morph_window_a92de44ef00adbefce701ecb95b7d926b}{00239}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keywordtype}{boolean} eventType) \{
+00240     \textcolor{keywordflow}{if} (eventType || \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold} == -1) \{\textcolor{comment}{// If true, the threshold has changed or it needs to be
+       calculated}
+00241       \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} cv = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision}();
+00242       \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh} = \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate();
+00243       cv.\hyperlink{classfunctions_1_1_computer_vision_a4d0fe516e9ef71c60ba67150cf288030}{convertToGrayscale}(\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00244       \hyperlink{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416}{impGray} = \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh}.duplicate();
+00245       \hyperlink{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863}{thresholdImagePlus}(\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00246       \hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition} vr = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition}();
+00247       List<Spermatozoon>[] sperm = vr.\hyperlink{classfunctions_1_1_video_recognition_a08fc1c8ff56553233cab77b1dea7b978}{detectSpermatozoa}(\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00248       \textcolor{keywordflow}{if} (sperm != null)
+00249         \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa} = sperm[0];
+00250       \textcolor{comment}{// Calculate outlines}
+00251       \hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{impOutline} = \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh}.duplicate();
+00252       cv.\hyperlink{classfunctions_1_1_computer_vision_a1272b47ed42c25a4d2d7f7d891d0e42f}{outlineThresholdImage}(\hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{impOutline});
+00253       \hyperlink{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7}{idenfitySperm}();
+00254     \}
+00255     \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw} = \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate();
+00256     \hyperlink{classfunctions_1_1_paint}{Paint} paint = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_paint}{Paint}();
+00257     paint.\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, \hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{impOutline});
+00258     paint.\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa});
+00259     \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}();
+00260   \}
+00261 
+\hypertarget{_morph_window_8java_source_l00263}{}\hyperlink{classgui_1_1_morph_window_ad9b473bf04acd35b39c38bc7774ed52a}{00263}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_morph_window_ad9b473bf04acd35b39c38bc7774ed52a}{stateChanged}(ChangeEvent inEvent) \{
+00264     Object auxWho = inEvent.getSource();
+00265     \textcolor{keywordflow}{if} ((auxWho == \hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{sldThreshold})) \{
+00266       \textcolor{comment}{// Updating threshold value from slider}
+00267       \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold} = \hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{sldThreshold}.getValue();
+00268       \hyperlink{classgui_1_1_morph_window_a7db6c32207f03c20a1b7932a5f804435}{doSliderRefresh}();
+00269     \}
+00270   \}
+00271 \}
+\end{DoxyCode}

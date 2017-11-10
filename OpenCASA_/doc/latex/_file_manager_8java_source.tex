@@ -1,0 +1,191 @@
+\hypertarget{_file_manager_8java_source}{}\section{File\+Manager.\+java}
+\label{_file_manager_8java_source}\index{File\+Manager.\+java@{File\+Manager.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }functions;
+00020 
+00021 \textcolor{keyword}{import} java.io.File;
+00022 \textcolor{keyword}{import} java.util.ArrayList;
+00023 \textcolor{keyword}{import} java.util.List;
+00024 
+00025 \textcolor{keyword}{import} javax.swing.JFileChooser;
+00026 \textcolor{keyword}{import} javax.swing.JOptionPane;
+00027 
+00028 \textcolor{keyword}{import} ij.IJ;
+00029 \textcolor{keyword}{import} ij.ImagePlus;
+00030 \textcolor{keyword}{import} ij.io.DirectoryChooser;
+00031 \textcolor{keyword}{import} third\_Party.AVI\_Reader;
+00032 
+\hypertarget{_file_manager_8java_source_l00037}{}\hyperlink{classfunctions_1_1_file_manager}{00037} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classfunctions_1_1_file_manager}{FileManager} \{
+00038 
+\hypertarget{_file_manager_8java_source_l00040}{}\hyperlink{classfunctions_1_1_file_manager_a0ad324c611d51ae061bcf3105c84aef0}{00040}   \textcolor{keyword}{public} \hyperlink{classfunctions_1_1_file_manager_a0ad324c611d51ae061bcf3105c84aef0}{FileManager}() \{
+00041   \}
+\hypertarget{_file_manager_8java_source_l00047}{}\hyperlink{classfunctions_1_1_file_manager_a140fc635f053a614aecddfb79baf5905}{00047}   \textcolor{keyword}{public} ImagePlus \hyperlink{classfunctions_1_1_file_manager_a140fc635f053a614aecddfb79baf5905}{getAVI}(String path)\{
+00048     AVI\_Reader ar = \textcolor{keyword}{new} AVI\_Reader();
+00049     ar.run(path);
+00050     ImagePlus imp = ar.getImagePlus();
+00051     \textcolor{keywordflow}{return} imp;
+00052   \}
+\hypertarget{_file_manager_8java_source_l00057}{}\hyperlink{classfunctions_1_1_file_manager_ad027758f34214960a7aa800e0f7c19db}{00057}   \textcolor{keyword}{public} String \hyperlink{classfunctions_1_1_file_manager_ad027758f34214960a7aa800e0f7c19db}{getFilename}(String path) \{
+00058     String[] parts = path.split(\textcolor{stringliteral}{"\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"});
+00059     \textcolor{keywordflow}{return} \hyperlink{classfunctions_1_1_file_manager_a4053142396d8fa1e3d2a2c1974952124}{removeExtension}(parts[parts.length - 1]);
+00060   \}
+00061   
+\hypertarget{_file_manager_8java_source_l00066}{}\hyperlink{classfunctions_1_1_file_manager_a8d912a4b181b284e6c05e0f44f541e48}{00066}   \textcolor{keyword}{public} String[] \hyperlink{classfunctions_1_1_file_manager_a8d912a4b181b284e6c05e0f44f541e48}{getContent}(String path) \{
+00067     \textcolor{keywordflow}{if}(path==null)
+00068       \textcolor{keywordflow}{return} null;
+00069     File folder = \textcolor{keyword}{new} File(path);
+00070     File[] listOfFiles = folder.listFiles();
+00071     \textcolor{keywordflow}{if}(listOfFiles.length<=0)
+00072       \textcolor{keywordflow}{return} null;
+00073     String[] listOfNames = \textcolor{keyword}{new} String[listOfFiles.length];
+00074     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < listOfFiles.length; i++)
+00075       listOfNames[i] = folder.getAbsolutePath() + \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)"} + listOfFiles[i].getName();
+00076     \textcolor{keywordflow}{return} listOfNames;
+00077   \}
+00078   
+\hypertarget{_file_manager_8java_source_l00079}{}\hyperlink{classfunctions_1_1_file_manager_a3a54a5574abfddd928b2b8675e8affa6}{00079}   \textcolor{keyword}{public} List<String> \hyperlink{classfunctions_1_1_file_manager_a3a54a5574abfddd928b2b8675e8affa6}{getFiles}(String path)\{
+00080     String[] content = \hyperlink{classfunctions_1_1_file_manager_a8d912a4b181b284e6c05e0f44f541e48}{getContent}(path);
+00081     List<String> files = \textcolor{keyword}{new} ArrayList<String>();
+00082     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<content.length;i++)\{
+00083       \textcolor{keywordflow}{if}(\textcolor{keyword}{new} File(content[i]).isFile())\{
+00084         files.add(content[i]);
+00085       \}
+00086     \}
+00087     \textcolor{keywordflow}{return} files;    
+00088   \}
+00089   
+\hypertarget{_file_manager_8java_source_l00090}{}\hyperlink{classfunctions_1_1_file_manager_a73efd872c86ccdce535ddb2798aaaea4}{00090}   \textcolor{keyword}{public} List<String> \hyperlink{classfunctions_1_1_file_manager_a73efd872c86ccdce535ddb2798aaaea4}{getSubfolders}(String path)\{
+00091     
+00092     String[] content = \hyperlink{classfunctions_1_1_file_manager_a8d912a4b181b284e6c05e0f44f541e48}{getContent}(path);
+00093     List<String> subfolders = \textcolor{keyword}{new} ArrayList<String>();
+00094     \textcolor{keywordflow}{for}(\textcolor{keywordtype}{int} i=0;i<content.length;i++)\{
+00095       \textcolor{keywordflow}{if}(\textcolor{keyword}{new} File(content[i]).isDirectory())\{
+00096         subfolders.add(content[i]);
+00097       \}
+00098     \}
+00099     \textcolor{keywordflow}{return} subfolders;
+00100   \}
+\hypertarget{_file_manager_8java_source_l00105}{}\hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{00105}   \textcolor{keyword}{public} String \hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{getParentDirectory}(String path) \{
+00106     String[] parts = path.split(\textcolor{stringliteral}{"\(\backslash\)\(\backslash\)\(\backslash\)\(\backslash\)"});
+00107     \textcolor{keywordflow}{return} parts[parts.length - 2];
+00108   \}
+00109   
+\hypertarget{_file_manager_8java_source_l00114}{}\hyperlink{classfunctions_1_1_file_manager_aef15c5bfadc70a7333a3103e85e7bf65}{00114}   \textcolor{keyword}{public} \textcolor{keywordtype}{boolean} \hyperlink{classfunctions_1_1_file_manager_aef15c5bfadc70a7333a3103e85e7bf65}{isAVI}(String filename) \{
+00115     String[] parts = filename.split(\textcolor{stringliteral}{"\(\backslash\)\(\backslash\)."});
+00116     \textcolor{keywordflow}{if} (parts[1].equals(\textcolor{stringliteral}{"avi"}))
+00117       \textcolor{keywordflow}{return} \textcolor{keyword}{true};
+00118     \textcolor{keywordflow}{else}
+00119       \textcolor{keywordflow}{return} \textcolor{keyword}{false};
+00120   \}
+\hypertarget{_file_manager_8java_source_l00125}{}\hyperlink{classfunctions_1_1_file_manager_a0f8b52da290ba020437d01d4873b1d2c}{00125}   \textcolor{keyword}{public} List<ImagePlus> \hyperlink{classfunctions_1_1_file_manager_a0f8b52da290ba020437d01d4873b1d2c}{loadImageDirectory}() \{
+00126     String dir = \hyperlink{classfunctions_1_1_file_manager_af19fd6734ccb746c4f276c83b6a47689}{selectFolder}();
+00127     \textcolor{keywordflow}{return} \hyperlink{classfunctions_1_1_file_manager_a0f8b52da290ba020437d01d4873b1d2c}{loadImageDirectory}(dir);
+00128   \}
+00129   
+\hypertarget{_file_manager_8java_source_l00134}{}\hyperlink{classfunctions_1_1_file_manager_ae7538dc1fbe0b999be0a86e196de6851}{00134}   \textcolor{keyword}{public} List<ImagePlus> \hyperlink{classfunctions_1_1_file_manager_ae7538dc1fbe0b999be0a86e196de6851}{loadImageDirectory}(String dir) \{
+00135 
+00136     String[] listOfFiles = \hyperlink{classfunctions_1_1_file_manager_a8d912a4b181b284e6c05e0f44f541e48}{getContent}(dir);
+00137     \textcolor{keywordflow}{if} (listOfFiles == null || listOfFiles.length == 0) \{
+00138       \textcolor{keywordflow}{if} (listOfFiles != null)
+00139         JOptionPane.showMessageDialog(null, \textcolor{stringliteral}{"Please, select a non-empty folder."});
+00140       \textcolor{keywordflow}{return} null;
+00141     \}
+00142     List<ImagePlus> images = \textcolor{keyword}{new} ArrayList<ImagePlus>();
+00143     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < listOfFiles.length; i++) \{
+00144       IJ.showProgress((\textcolor{keywordtype}{double}) i / listOfFiles.length);
+00145       IJ.showStatus(\textcolor{stringliteral}{"Loading image "}+ i +\textcolor{stringliteral}{"..."});
+00146       String absoluteFilePath = listOfFiles[i];
+00147       \textcolor{keywordflow}{if}(\hyperlink{classfunctions_1_1_file_manager_aef15c5bfadc70a7333a3103e85e7bf65}{isAVI}(absoluteFilePath))
+00148         \textcolor{keywordflow}{continue};
+00149       String parentsDirectory = \hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{getParentDirectory}(absoluteFilePath);
+00150       ImagePlus imp = IJ.openImage(absoluteFilePath);
+00151       \textcolor{keywordflow}{if} (imp != null) \{
+00152         imp.setTitle(parentsDirectory + \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)"} + imp.getTitle());
+00153         images.add(imp);
+00154       \}
+00155       \textcolor{comment}{// else - possibly the file is not an image nor AVI}
+00156     \}
+00157     \textcolor{keywordflow}{if} (images.size() < 1) \{
+00158       JOptionPane.showMessageDialog(null, \textcolor{stringliteral}{"Please, select a valid folder."});
+00159       \textcolor{keywordflow}{return} null;
+00160     \}
+00161     \textcolor{keywordflow}{return} images;
+00162   \}
+\hypertarget{_file_manager_8java_source_l00168}{}\hyperlink{classfunctions_1_1_file_manager_a10f7f3b24be48586ca7455ebac6abcd7}{00168}   \textcolor{keyword}{public} List<ImagePlus> \hyperlink{classfunctions_1_1_file_manager_a10f7f3b24be48586ca7455ebac6abcd7}{loadImageFile}() \{
+00169     String absoluteFilePath = \hyperlink{classfunctions_1_1_file_manager_aa741a9e7ac4127ae1a463fb626474edf}{selectFile}();
+00170     \textcolor{keywordflow}{if} (absoluteFilePath == null) \{
+00171       \textcolor{keywordflow}{return} null;
+00172     \}
+00173     \textcolor{keywordflow}{if}(\hyperlink{classfunctions_1_1_file_manager_aef15c5bfadc70a7333a3103e85e7bf65}{isAVI}(absoluteFilePath))\{
+00174       JOptionPane.showMessageDialog(null, \textcolor{stringliteral}{"Please, select a valid file."});
+00175       \textcolor{keywordflow}{return} null;
+00176     \}
+00177     String parentsDirectory = \hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{getParentDirectory}(absoluteFilePath);
+00178     ImagePlus imp = IJ.openImage(absoluteFilePath);
+00179     \textcolor{keywordflow}{if} (imp == null) \{
+00180       JOptionPane.showMessageDialog(null, \textcolor{stringliteral}{"Please, select a valid file."});
+00181       \textcolor{keywordflow}{return} null;
+00182     \}
+00183     imp.setTitle(parentsDirectory + \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)"} + imp.getTitle());
+00184     List<ImagePlus> images = \textcolor{keyword}{new} ArrayList<ImagePlus>();
+00185     images.add(imp);
+00186     \textcolor{keywordflow}{return} images;
+00187   \}
+00188   
+\hypertarget{_file_manager_8java_source_l00189}{}\hyperlink{classfunctions_1_1_file_manager_a4053142396d8fa1e3d2a2c1974952124}{00189}   \textcolor{keyword}{public} String \hyperlink{classfunctions_1_1_file_manager_a4053142396d8fa1e3d2a2c1974952124}{removeExtension}(String filename)\{
+00190     String[] parts = filename.split(\textcolor{stringliteral}{"\(\backslash\)\(\backslash\)."});
+00191     \textcolor{keywordflow}{return} parts[0];
+00192   \}
+00193 \textcolor{comment}{//  /**}
+00194 \textcolor{comment}{//   * }
+00195 \textcolor{comment}{//   * @return}
+00196 \textcolor{comment}{//   */}
+00197 \textcolor{comment}{//  public List<ImagePlus> loadImages() \{}
+00198 \textcolor{comment}{//    // Ask user which analysis wants to apply}
+00199 \textcolor{comment}{//    int userSelection = dialog();}
+00200 \textcolor{comment}{//    if (userSelection < 0)}
+00201 \textcolor{comment}{//      return null;}
+00202 \textcolor{comment}{//    if (userSelection == 0)}
+00203 \textcolor{comment}{//      return loadImageFile();}
+00204 \textcolor{comment}{//    else if (userSelection == 1)}
+00205 \textcolor{comment}{//      return loadImageDirectory();}
+00206 \textcolor{comment}{//    else}
+00207 \textcolor{comment}{//      return null;}
+00208 \textcolor{comment}{//  \}}
+\hypertarget{_file_manager_8java_source_l00212}{}\hyperlink{classfunctions_1_1_file_manager_aa741a9e7ac4127ae1a463fb626474edf}{00212} \textcolor{comment}{}  \textcolor{keyword}{public} String \hyperlink{classfunctions_1_1_file_manager_aa741a9e7ac4127ae1a463fb626474edf}{selectFile}() \{
+00213     JFileChooser chooser = \textcolor{keyword}{new} JFileChooser();
+00214     chooser.setDialogTitle(\textcolor{stringliteral}{"Select a file..."});
+00215     chooser.setFileSelectionMode(JFileChooser.FILES\_ONLY);
+00216     chooser.setAcceptAllFileFilterUsed(\textcolor{keyword}{false});
+00217     \textcolor{keywordflow}{if} (chooser.showOpenDialog(null) == JFileChooser.APPROVE\_OPTION) \{
+00218       File file = chooser.getSelectedFile();
+00219       \textcolor{keywordflow}{return} file.getAbsolutePath();
+00220     \}
+00221     \textcolor{keywordflow}{return} null;
+00222   \} 
+00223 
+\hypertarget{_file_manager_8java_source_l00227}{}\hyperlink{classfunctions_1_1_file_manager_af19fd6734ccb746c4f276c83b6a47689}{00227}   \textcolor{keyword}{public} String \hyperlink{classfunctions_1_1_file_manager_af19fd6734ccb746c4f276c83b6a47689}{selectFolder}() \{
+00228     DirectoryChooser dc = \textcolor{keyword}{new} DirectoryChooser(\textcolor{stringliteral}{"Select folder..."});
+00229     \textcolor{keywordflow}{return} dc.getDirectory();
+00230   \}  
+00231 \}
+\end{DoxyCode}

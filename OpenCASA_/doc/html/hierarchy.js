@@ -1,50 +1,53 @@
 var hierarchy =
 [
-    [ "functions.ComputerVision", "classfunctions_1_1_computer_vision.html", null ],
-    [ "functions.FileManager", "classfunctions_1_1_file_manager.html", null ],
-    [ "functions.Kinematics", "classfunctions_1_1_kinematics.html", null ],
-    [ "functions.Paint", "classfunctions_1_1_paint.html", null ],
-    [ "data.Params", "classdata_1_1_params.html", null ],
-    [ "functions.SignalProcessing", "classfunctions_1_1_signal_processing.html", null ],
-    [ "data.Simulation", "classdata_1_1_simulation.html", [
-      [ "data.OscillatoryWalker", "classdata_1_1_oscillatory_walker.html", null ],
-      [ "data.PersistentRandomWalker", "classdata_1_1_persistent_random_walker.html", null ]
+    [ "ViabilityWindow.Channel", "enumgui_1_1_viability_window_1_1_channel.html", null ],
+    [ "ComputerVision", "classfunctions_1_1_computer_vision.html", null ],
+    [ "FileManager", "classfunctions_1_1_file_manager.html", null ],
+    [ "Kinematics", "classfunctions_1_1_kinematics.html", null ],
+    [ "Paint", "classfunctions_1_1_paint.html", null ],
+    [ "Params", "classdata_1_1_params.html", null ],
+    [ "SignalProcessing", "classfunctions_1_1_signal_processing.html", null ],
+    [ "Simulation", "classdata_1_1_simulation.html", [
+      [ "OscillatoryWalker", "classdata_1_1_oscillatory_walker.html", null ],
+      [ "PersistentRandomWalker", "classdata_1_1_persistent_random_walker.html", null ]
     ] ],
-    [ "functions.TrialManager", "classfunctions_1_1_trial_manager.html", null ],
-    [ "analysis.Chemotaxis.TypeOfAnalysis", "enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html", null ],
-    [ "analysis.Motility.TypeOfAnalysis", "enumanalysis_1_1_motility_1_1_type_of_analysis.html", null ],
-    [ "functions.Utils", "classfunctions_1_1_utils.html", null ],
+    [ "TrialManager", "classfunctions_1_1_trial_manager.html", null ],
+    [ "ImageAnalysisWindow.TypeOfAnalysis", "enumgui_1_1_image_analysis_window_1_1_type_of_analysis.html", null ],
+    [ "Motility.TypeOfAnalysis", "enumanalysis_1_1_motility_1_1_type_of_analysis.html", null ],
+    [ "Chemotaxis.TypeOfAnalysis", "enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html", null ],
+    [ "Utils", "classfunctions_1_1_utils.html", null ],
     [ "ArrayList", null, [
-      [ "data.SList", "classdata_1_1_s_list.html", null ]
+      [ "SerializableList", "classdata_1_1_serializable_list.html", null ]
     ] ],
     [ "ChangeListener", null, [
-      [ "gui.MorphWindow", "classgui_1_1_morph_window.html", null ]
+      [ "MorphWindow", "classgui_1_1_morph_window.html", null ],
+      [ "ViabilityWindow", "classgui_1_1_viability_window.html", null ]
     ] ],
     [ "JFrame", null, [
-      [ "gui.MainWindow", "classgui_1_1_main_window.html", null ],
-      [ "gui.MorphWindow", "classgui_1_1_morph_window.html", null ],
-      [ "gui.SettingsWindow", "classgui_1_1_settings_window.html", null ]
+      [ "ImageAnalysisWindow", "classgui_1_1_image_analysis_window.html", [
+        [ "MorphWindow", "classgui_1_1_morph_window.html", null ],
+        [ "ViabilityWindow", "classgui_1_1_viability_window.html", null ]
+      ] ],
+      [ "MainWindow", "classgui_1_1_main_window.html", null ],
+      [ "SettingsWindow", "classgui_1_1_settings_window.html", null ]
     ] ],
     [ "Measurements", null, [
-      [ "functions.VideoRecognition", "classfunctions_1_1_video_recognition.html", null ]
+      [ "VideoRecognition", "classfunctions_1_1_video_recognition.html", null ]
     ] ],
     [ "MouseListener", null, [
-      [ "gui.MorphWindow", "classgui_1_1_morph_window.html", null ]
+      [ "MorphWindow", "classgui_1_1_morph_window.html", null ],
+      [ "ViabilityWindow", "classgui_1_1_viability_window.html", null ]
     ] ],
     [ "PlugIn", null, [
-      [ "OpenCASA_", "class_open_c_a_s_a__.html", null ],
-      [ "third_Party.AVI_Reader", "classthird___party_1_1_a_v_i___reader.html", null ]
+      [ "OpenCASA_", "class_open_c_a_s_a__.html", null ]
     ] ],
     [ "Serializable", null, [
-      [ "data.SList", "classdata_1_1_s_list.html", null ],
-      [ "data.Spermatozoon", "classdata_1_1_spermatozoon.html", null ],
-      [ "data.Trial", "classdata_1_1_trial.html", null ]
+      [ "SerializableList", "classdata_1_1_serializable_list.html", null ],
+      [ "Spermatozoon", "classdata_1_1_spermatozoon.html", null ],
+      [ "Trial", "classdata_1_1_trial.html", null ]
     ] ],
     [ "SwingWorker", null, [
-      [ "analysis.Chemotaxis", "classanalysis_1_1_chemotaxis.html", null ],
-      [ "analysis.Motility", "classanalysis_1_1_motility.html", null ]
-    ] ],
-    [ "VirtualStack", null, [
-      [ "third_Party.AVI_Reader", "classthird___party_1_1_a_v_i___reader.html", null ]
+      [ "Chemotaxis", "classanalysis_1_1_chemotaxis.html", null ],
+      [ "Motility", "classanalysis_1_1_motility.html", null ]
     ] ]
 ];

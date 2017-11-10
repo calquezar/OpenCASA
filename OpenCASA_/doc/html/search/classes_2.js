@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['filemanager',['FileManager',['../classfunctions_1_1_file_manager.html',1,'functions']]]
+  ['imageanalysiswindow',['ImageAnalysisWindow',['../classgui_1_1_image_analysis_window.html',1,'gui']]]
 ];

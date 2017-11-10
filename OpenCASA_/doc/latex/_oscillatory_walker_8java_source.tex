@@ -1,0 +1,149 @@
+\hypertarget{_oscillatory_walker_8java_source}{}\section{Oscillatory\+Walker.\+java}
+\label{_oscillatory_walker_8java_source}\index{Oscillatory\+Walker.\+java@{Oscillatory\+Walker.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+\hypertarget{_oscillatory_walker_8java_source_l00019}{}\hyperlink{namespacedata}{00019} \textcolor{keyword}{package }data;
+00020 
+00021 \textcolor{keyword}{import} java.awt.Color;
+00022 \textcolor{keyword}{import} java.util.ArrayList;
+00023 \textcolor{keyword}{import} java.util.List;
+00024 \textcolor{keyword}{import} java.util.Random;
+00025 
+00026 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_kinematics}{Kinematics};
+00027 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing};
+00028 \textcolor{keyword}{import} ij.ImagePlus;
+00029 \textcolor{keyword}{import} ij.ImageStack;
+00030 \textcolor{keyword}{import} ij.process.ByteProcessor;
+00031 \textcolor{keyword}{import} ij.process.ImageProcessor;
+00032 
+\hypertarget{_oscillatory_walker_8java_source_l00037}{}\hyperlink{classdata_1_1_oscillatory_walker}{00037} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classdata_1_1_oscillatory_walker}{OscillatoryWalker} \textcolor{keyword}{extends} \hyperlink{classdata_1_1_simulation}{Simulation} \{
+00038 
+00039   \textcolor{keyword}{class }Cell \{
+00040 
+00041     \textcolor{keywordtype}{float}  amplitude;
+00042     \textcolor{keywordtype}{float}  dist;
+00043     \textcolor{keywordtype}{double} f;
+00044     \textcolor{keywordtype}{double} phi;
+00045     \textcolor{keywordtype}{int}    sizex;
+00046     \textcolor{keywordtype}{int}    sizey;
+00047     \textcolor{keywordtype}{float}  t;
+00048     \textcolor{keywordtype}{double} T;
+00049     \textcolor{keywordtype}{double} w;
+00050     \textcolor{keywordtype}{float}  y;
+00051 
+00052     Cell() \{
+00053       sizex = 10;
+00054       sizey = 8;
+00055       t = 0;
+00056       y = height / 2;
+00057       amplitude = 100;
+00058       T = 350;
+00059       f = 1 / T;\textcolor{comment}{// 0.01;}
+00060       w = 2 * Math.PI * f;
+00061       phi = 0;
+00062     \}
+00063 
+00071     \textcolor{keywordtype}{double} distance(\textcolor{keywordtype}{float} x1, \textcolor{keywordtype}{float} y1, \textcolor{keywordtype}{float} x2, \textcolor{keywordtype}{float} y2) \{
+00072       \textcolor{keywordflow}{return} Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
+00073     \}
+00074 
+00078     \textcolor{keywordtype}{void} update(ImageProcessor ip) \{
+00079 
+00080       \textcolor{keywordtype}{float} prevT = t;
+00081       \textcolor{keywordtype}{float} prevY = y;
+00082       Random rand = \textcolor{keyword}{new} Random();
+00083       \textcolor{comment}{// double epsilon = 2*rand.nextGaussian();}
+00084       \textcolor{comment}{// Update variables}
+00085       t += 1;\textcolor{comment}{// T/width;}
+00086       \textcolor{comment}{// Sinusoidal function}
+00087       y = (float) (amplitude * Math.sin(w * t + phi)) + height / 2;
+00088       \textcolor{comment}{// float x = (float) (amplitude*Math.cos(w*t+phi)+epsilon)+height/2;}
+00089       \textcolor{comment}{// Triangular function}
+00090       \textcolor{comment}{// y=(float)}
+00091       \textcolor{comment}{// ((2*amplitude/Math.PI)*Math.asin(Math.sin(2*Math.PI*t/T)))+height/2;}
+00092       dist += distance(prevT, prevY, t, y);
+00093       \textcolor{comment}{// Draw Cell}
+00094       ip.fillOval((\textcolor{keywordtype}{int}) t, (\textcolor{keywordtype}{int}) y, sizex, sizey);
+00095       \textcolor{comment}{// Save position}
+00096       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} p = \textcolor{keyword}{new} \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}();
+00097       p.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x} = t;
+00098       p.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y} = y;
+00099       track.add(p);
+00100     \}
+00101   \}
+00102 
+00104   \textcolor{keywordtype}{int}    cellCount = 1;
+00106   \textcolor{keywordtype}{int}    height    = 800;
+00108   \textcolor{keywordtype}{int}    SIMLENGTH = 700;
+00110   Cell[] sperm     = \textcolor{keyword}{new} Cell[cellCount];
+00111   \textcolor{comment}{// Point[][] tracks = new Point[cellCount][SIMLENGTH];}
+00113 \textcolor{comment}{}  List<Spermatozoon> track = \textcolor{keyword}{new} ArrayList<Spermatozoon>();
+00114 
+00116   \textcolor{keywordtype}{int} width = 800;
+00117 
+\hypertarget{_oscillatory_walker_8java_source_l00119}{}\hyperlink{classdata_1_1_oscillatory_walker_ad2f07a526bf7192224e41a93355496ee}{00119}   \textcolor{keyword}{public} \hyperlink{classdata_1_1_oscillatory_walker_ad2f07a526bf7192224e41a93355496ee}{OscillatoryWalker}() \{
+00120     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = cellCount - 1; x >= 0; x--) \{
+00121       sperm[x] = \textcolor{keyword}{new} Cell();
+00122     \}
+00123   \}
+00124 
+\hypertarget{_oscillatory_walker_8java_source_l00128}{}\hyperlink{classdata_1_1_oscillatory_walker_ad015489397f3b1157e02d08913211ee4}{00128}   \textcolor{keyword}{public} ImagePlus \hyperlink{classdata_1_1_oscillatory_walker_ad015489397f3b1157e02d08913211ee4}{createSimulation}() \{
+00129     ImageStack imStack = \textcolor{keyword}{new} ImageStack(width, height);
+00130     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < SIMLENGTH; i++) \{
+00131       ImageProcessor ip = \textcolor{keyword}{new} ByteProcessor(width, height);
+00132       draw(ip);
+00133       imStack.addSlice(ip);
+00134     \}
+00135     \hyperlink{classfunctions_1_1_kinematics}{Kinematics} kinematics = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_kinematics}{Kinematics}();
+00136     \hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing} sp = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing}();
+00137     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = cellCount - 1; x >= 0; x--) \{
+00138       \textcolor{comment}{// System.out.println("Distance: "+sperm[x].dist);}
+00139       \textcolor{comment}{// System.out.println("Time: "+sperm[x].t);}
+00140       \textcolor{keywordtype}{double} vsl = track.get(0).distance(track.get(track.size() - 1)) / track.size();
+00141       \textcolor{keywordtype}{double} vcl = sperm[x].dist / sperm[x].t;
+00142       List<Spermatozoon> avgTrack = sp.\hyperlink{classfunctions_1_1_signal_processing_a4f10245c50d850b87d1ef4d81c28300d}{movingAverage}(track);
+00143       \textcolor{keywordtype}{double} vap = kinematics.\hyperlink{classfunctions_1_1_kinematics_af6e1e75567a927a9c627616cb68b0d7f}{vcl}(avgTrack);
+00144       \textcolor{keywordtype}{double} lin = vsl / vcl;
+00145       \textcolor{keywordtype}{double} wob = vap / vcl;
+00146       System.out.println(\textcolor{stringliteral}{"VSL: "} + vsl);
+00147       System.out.println(\textcolor{stringliteral}{"VCL: "} + vcl);
+00148       System.out.println(\textcolor{stringliteral}{"VAP: "} + vap);
+00149       System.out.println(\textcolor{stringliteral}{"LIN: "} + lin);
+00150       System.out.println(\textcolor{stringliteral}{"WOB: "} + wob);
+00151     \}
+00152     \textcolor{keywordflow}{return} \textcolor{keyword}{new} ImagePlus(\textcolor{stringliteral}{"Simulation"}, imStack);
+00153   \}
+00154 
+00159   \textcolor{keywordtype}{void} draw(ImageProcessor ip) \{
+00160     ip.setColor(Color.black);
+00161     ip.fill();
+00162     ip.setColor(Color.white);
+00163     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = cellCount - 1; x >= 0; x--) \{
+00164       sperm[x].update(ip);
+00165     \}
+00166   \}
+00167 
+\hypertarget{_oscillatory_walker_8java_source_l00171}{}\hyperlink{classdata_1_1_oscillatory_walker_a13a43e6d814de94978c515cb084873b1}{00171}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classdata_1_1_oscillatory_walker_a13a43e6d814de94978c515cb084873b1}{run}() \{
+00172     \hyperlink{classdata_1_1_oscillatory_walker_ad015489397f3b1157e02d08913211ee4}{createSimulation}().show();
+00173   \}
+00174 
+00175 \}
+\end{DoxyCode}

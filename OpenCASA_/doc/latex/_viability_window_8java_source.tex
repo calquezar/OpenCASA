@@ -1,0 +1,234 @@
+\hypertarget{_viability_window_8java_source}{}\section{Viability\+Window.\+java}
+\label{_viability_window_8java_source}\index{Viability\+Window.\+java@{Viability\+Window.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }gui;
+00020 
+00021 \textcolor{keyword}{import} java.awt.Color;
+00022 \textcolor{keyword}{import} java.awt.event.MouseEvent;
+00023 \textcolor{keyword}{import} java.awt.event.MouseListener;
+00024 \textcolor{keyword}{import} java.util.ArrayList;
+00025 \textcolor{keyword}{import} java.util.List;
+00026 
+00027 \textcolor{keyword}{import} javax.swing.event.ChangeEvent;
+00028 \textcolor{keyword}{import} javax.swing.event.ChangeListener;
+00029 
+00030 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_params}{Params};
+00031 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon};
+00032 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_computer_vision}{ComputerVision};
+00033 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_file_manager}{FileManager};
+00034 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_paint}{Paint};
+00035 \textcolor{keyword}{import} \hyperlink{namespacefunctions}{functions}.\hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition};
+00036 \textcolor{keyword}{import} ij.ImagePlus;
+00037 \textcolor{keyword}{import} ij.measure.ResultsTable;
+00038 
+\hypertarget{_viability_window_8java_source_l00039}{}\hyperlink{classgui_1_1_viability_window}{00039} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classgui_1_1_viability_window}{ViabilityWindow} \textcolor{keyword}{extends} \hyperlink{classgui_1_1_image_analysis_window}{ImageAnalysisWindow} implements 
+      ChangeListener, MouseListener \{
+00040 
+\hypertarget{_viability_window_8java_source_l00041}{}\hyperlink{enumgui_1_1_viability_window_1_1_channel}{00041}   \textcolor{keyword}{private} \textcolor{keyword}{enum} \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel} \{
+\hypertarget{_viability_window_8java_source_l00042}{}\hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{00042}     BLUE, GREEN, \hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{RED}, NONE
+00043   \}
+\hypertarget{_viability_window_8java_source_l00044}{}\hyperlink{classgui_1_1_viability_window_aeb170129564baee9da9b1f064753420c}{00044}   \textcolor{keyword}{private} \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel} \hyperlink{classgui_1_1_viability_window_aeb170129564baee9da9b1f064753420c}{channel} = \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a899caa602e4fff675b17cdbab33607ec}{NONE};
+\hypertarget{_viability_window_8java_source_l00045}{}\hyperlink{classgui_1_1_viability_window_ada3e873f306d92d8af66896d5395e2c4}{00045}   \textcolor{keyword}{private} ImagePlus            \hyperlink{classgui_1_1_viability_window_ada3e873f306d92d8af66896d5395e2c4}{aliveImpOutline};
+\hypertarget{_viability_window_8java_source_l00046}{}\hyperlink{classgui_1_1_viability_window_a3990fd3a99cde29eac35061c41b3434b}{00046}   \textcolor{keyword}{protected} List<Spermatozoon> \hyperlink{classgui_1_1_viability_window_a3990fd3a99cde29eac35061c41b3434b}{aliveSpermatozoa} = \textcolor{keyword}{new} ArrayList<Spermatozoon>();
+\hypertarget{_viability_window_8java_source_l00047}{}\hyperlink{classgui_1_1_viability_window_ae10626a8a263ac741e63d226c8375114}{00047}   \textcolor{keyword}{private} ImagePlus            \hyperlink{classgui_1_1_viability_window_ae10626a8a263ac741e63d226c8375114}{deadImpOutline};
+\hypertarget{_viability_window_8java_source_l00048}{}\hyperlink{classgui_1_1_viability_window_a4f0cf0c5a0eb117170a840a24ebe2a3c}{00048}   \textcolor{keyword}{protected} List<Spermatozoon> \hyperlink{classgui_1_1_viability_window_a4f0cf0c5a0eb117170a840a24ebe2a3c}{deadSpermatozoa}  = \textcolor{keyword}{new} ArrayList<Spermatozoon>();
+\hypertarget{_viability_window_8java_source_l00049}{}\hyperlink{classgui_1_1_viability_window_a3c3ae31647b93ff77785eb37236fbcb7}{00049}   \textcolor{keyword}{private} \textcolor{keywordtype}{boolean}              \hyperlink{classgui_1_1_viability_window_a3c3ae31647b93ff77785eb37236fbcb7}{isThresholding}   = \textcolor{keyword}{false};
+00050 
+\hypertarget{_viability_window_8java_source_l00051}{}\hyperlink{classgui_1_1_viability_window_a15c93e0c8f542fcf3b3505943a26489d}{00051}   \textcolor{keyword}{private} ResultsTable \hyperlink{classgui_1_1_viability_window_a15c93e0c8f542fcf3b3505943a26489d}{results} = \textcolor{keyword}{new} ResultsTable();
+00052 
+\hypertarget{_viability_window_8java_source_l00056}{}\hyperlink{classgui_1_1_viability_window_a9352db24ec12b97781c0ca61f2938a00}{00056}   \textcolor{keyword}{public} \hyperlink{classgui_1_1_viability_window_a9352db24ec12b97781c0ca61f2938a00}{ViabilityWindow}() \{
+00057     super();
+00058     \hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sldRedThreshold}.setVisible(\textcolor{keyword}{true});
+00059     \hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sldGreenThreshold}.setVisible(\textcolor{keyword}{true});
+00060     \hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sldRedThreshold}.addMouseListener(\textcolor{keyword}{this});
+00061     \hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sldGreenThreshold}.addMouseListener(\textcolor{keyword}{this});
+00062     \hyperlink{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{sldBlueThreshold}.addMouseListener(\textcolor{keyword}{this});
+00063     \hyperlink{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{setChangeListener}(\textcolor{keyword}{this},\hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sldRedThreshold});
+00064     \hyperlink{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{setChangeListener}(\textcolor{keyword}{this},\hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sldGreenThreshold});
+00065     \hyperlink{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca}{setMouseListener}(\textcolor{keyword}{this});
+00066   \}
+00067 
+\hypertarget{_viability_window_8java_source_l00072}{}\hyperlink{classgui_1_1_viability_window_a7db6c32207f03c20a1b7932a5f804435}{00072}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a7db6c32207f03c20a1b7932a5f804435}{doSliderRefresh}() \{
+00073     \textcolor{keywordflow}{if} (!isThresholding) \{
+00074       isThresholding = \textcolor{keyword}{true};
+00075       Thread t1 = \textcolor{keyword}{new} Thread(\textcolor{keyword}{new} Runnable() \{
+00076         \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{run}() \{
+00077           \hyperlink{classgui_1_1_viability_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keyword}{true});
+00078           isThresholding = \textcolor{keyword}{false};
+00079         \}
+00080       \});
+00081       t1.start();
+00082     \}
+00083   \}
+00084 
+\hypertarget{_viability_window_8java_source_l00085}{}\hyperlink{classgui_1_1_viability_window_af3a8c3ee2b9b6c5c415df634105b5945}{00085}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_af3a8c3ee2b9b6c5c415df634105b5945}{drawImage}() \{
+00086     \textcolor{comment}{// Draw cells on image}
+00087     \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw} = \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate();
+00088     \hyperlink{classfunctions_1_1_paint}{Paint} paint = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_paint}{Paint}();
+00089     \textcolor{keywordflow}{if}(channel==\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_ae64c262ce1094f21457d2f78dd45a8fc}{GREEN})\{
+00090       paint.\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, aliveImpOutline);
+00091       \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}.setColor(Color.green);
+00092       paint.\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, aliveSpermatozoa);
+00093     \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(channel==\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{RED})\{
+00094       paint.\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, deadImpOutline);
+00095       \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}.setColor(Color.red);
+00096       paint.\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, deadSpermatozoa);
+00097     \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(channel==\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a6b317f511e4605122591a00ca0fb1659}{BLUE})\{
+00098       \textcolor{comment}{//Not used in this version of the module}
+00099     \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(channel==\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a899caa602e4fff675b17cdbab33607ec}{NONE})\{
+00100       paint.\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, aliveImpOutline);
+00101       \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}.setColor(Color.green);
+00102       paint.\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, aliveSpermatozoa);
+00103       paint.\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, deadImpOutline);
+00104       \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}.setColor(Color.red);
+00105       paint.\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(\hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{impDraw}, deadSpermatozoa);
+00106     \}
+00107     \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{setImage}();
+00108   \}
+00109 
+\hypertarget{_viability_window_8java_source_l00110}{}\hyperlink{classgui_1_1_viability_window_a754be7a1ad7ccf944469a5960baf52b3}{00110}   \textcolor{keyword}{private} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a754be7a1ad7ccf944469a5960baf52b3}{generateResults}() \{
+00111 
+00112     \textcolor{keywordtype}{int} aliveCount = aliveSpermatozoa.size();
+00113     \textcolor{keywordtype}{int} deadCount = deadSpermatozoa.size();
+00114     results.incrementCounter();
+00115     results.addValue(\textcolor{stringliteral}{"Alives"}, aliveCount);
+00116     results.addValue(\textcolor{stringliteral}{"Deads"}, deadCount);
+00117     \textcolor{keywordtype}{int} total = aliveCount + deadCount;
+00118     results.addValue(\textcolor{stringliteral}{"Total"}, total);
+00119     \textcolor{keywordtype}{float} percAlives = ((float) aliveCount) / ((float) total) * 100;
+00120     results.addValue(\textcolor{stringliteral}{"% Alives"}, percAlives);
+00121     results.addValue(\textcolor{stringliteral}{"% Deads"}, 100-percAlives);
+00122     \hyperlink{classfunctions_1_1_file_manager}{FileManager} fm = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_file_manager}{FileManager}();
+00123     results.addValue(\textcolor{stringliteral}{"Sample"}, fm.\hyperlink{classfunctions_1_1_file_manager_aa9e15d838c5a7a0e3906d9ceec253398}{getParentDirectory}(\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.getTitle()));
+00124     results.addValue(\textcolor{stringliteral}{"Filename"}, fm.\hyperlink{classfunctions_1_1_file_manager_ad027758f34214960a7aa800e0f7c19db}{getFilename}(\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.getTitle()));
+00125     \textcolor{keywordflow}{if} (!\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a3e07114fb70a676dfe24fad6be8c3c75}{male}.isEmpty())
+00126       results.addValue(\textcolor{stringliteral}{"Male"}, \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a3e07114fb70a676dfe24fad6be8c3c75}{male});
+00127     \textcolor{keywordflow}{if} (!\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_aecbab8174a6d72649883508cf9940d58}{date}.isEmpty())
+00128       results.addValue(\textcolor{stringliteral}{"Date"}, \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_aecbab8174a6d72649883508cf9940d58}{date});
+00129     \textcolor{keywordflow}{if} (!\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a253e4e926c0399ed1ae42b5a5989824d}{genericField}.isEmpty())
+00130       results.addValue(\textcolor{stringliteral}{"Generic Field"}, \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a253e4e926c0399ed1ae42b5a5989824d}{genericField});
+00131     results.show(\textcolor{stringliteral}{"Viability results"});
+00132 
+00133   \}
+00134 
+\hypertarget{_viability_window_8java_source_l00135}{}\hyperlink{classgui_1_1_viability_window_a21bfc28b8acdf4451eec7e3bc2060c61}{00135}   \textcolor{keyword}{private} List<Spermatozoon> \hyperlink{classgui_1_1_viability_window_a21bfc28b8acdf4451eec7e3bc2060c61}{getSpermatozoa}(\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel} rgbChannel) \{
+00136     \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} cv = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision}();
+00137 
+00138     \textcolor{keywordflow}{if} (rgbChannel == \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{RED})\{
+00139       \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh} = cv.\hyperlink{classfunctions_1_1_computer_vision_a0a2c9c7e45231d1d09b3c8aca3df6511}{getRedChannel}(\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate());
+00140       \textcolor{keywordflow}{if}(\hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold}!=-1)
+00141         \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold} = \hyperlink{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd}{redThreshold};
+00142     \}
+00143     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rgbChannel == \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_ae64c262ce1094f21457d2f78dd45a8fc}{GREEN})\{
+00144       \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh} = cv.\hyperlink{classfunctions_1_1_computer_vision_a42b101d8bd6c2d64f663411074910dde}{getGreenChannel}(\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate());
+00145       \textcolor{keywordflow}{if}(\hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold}!=-1)
+00146         \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold} = \hyperlink{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341}{greenThreshold};
+00147     \}
+00148     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rgbChannel == \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a6b317f511e4605122591a00ca0fb1659}{BLUE})\{
+00149       \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh} = cv.\hyperlink{classfunctions_1_1_computer_vision_a8569abc8aa379c890c8332eda42095be}{getBlueChannel}(\hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{impOrig}.duplicate());
+00150       \textcolor{keywordflow}{if}(\hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold}!=-1)
+00151         \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold} = \hyperlink{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad}{blueThreshold};
+00152     \}
+00153    
+00154     cv.\hyperlink{classfunctions_1_1_computer_vision_a4d0fe516e9ef71c60ba67150cf288030}{convertToGrayscale}(\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00155     \hyperlink{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863}{thresholdImagePlus}(\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00156     \textcolor{comment}{// this will be useful for painting outlines later}
+00157     \textcolor{keywordflow}{if} (rgbChannel == \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{RED})
+00158       deadImpOutline = \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh};
+00159     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rgbChannel == \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_ae64c262ce1094f21457d2f78dd45a8fc}{GREEN})
+00160       aliveImpOutline = \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh};
+00161     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (rgbChannel == \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a6b317f511e4605122591a00ca0fb1659}{BLUE})
+00162       aliveImpOutline = \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh};
+00163     \hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition} vr = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_video_recognition}{VideoRecognition}();
+00164     List<Spermatozoon>[] sperm = vr.\hyperlink{classfunctions_1_1_video_recognition_a08fc1c8ff56553233cab77b1dea7b978}{detectSpermatozoa}(\hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{impTh});
+00165     \textcolor{keywordflow}{return} sperm[0];
+00166   \}
+00167 
+00168   @Override
+\hypertarget{_viability_window_8java_source_l00169}{}\hyperlink{classgui_1_1_viability_window_a45d56bd84238e8b56589dfc732e2b2cf}{00169}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a45d56bd84238e8b56589dfc732e2b2cf}{mouseClicked}(MouseEvent e) \{
+00170   \}
+00171 
+00172   @Override
+\hypertarget{_viability_window_8java_source_l00173}{}\hyperlink{classgui_1_1_viability_window_a74e5095765312765f33ed268095a2cb2}{00173}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a74e5095765312765f33ed268095a2cb2}{mouseEntered}(MouseEvent e) \{
+00174   \}
+00175 
+00176   @Override
+\hypertarget{_viability_window_8java_source_l00177}{}\hyperlink{classgui_1_1_viability_window_aa14a60f36cdd6abc1d90ce56d39218eb}{00177}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_aa14a60f36cdd6abc1d90ce56d39218eb}{mouseExited}(MouseEvent e) \{
+00178   \}
+00179 
+00180   @Override
+\hypertarget{_viability_window_8java_source_l00181}{}\hyperlink{classgui_1_1_viability_window_aed82e1ce3dd3cf283d508c3ba3be70ef}{00181}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_aed82e1ce3dd3cf283d508c3ba3be70ef}{mousePressed}(MouseEvent e) \{
+00182     \hyperlink{classgui_1_1_image_analysis_window_a612d8bbeb78a27050cf59d9db734fc11}{setRawImage}();
+00183   \}
+00184 
+00185   @Override
+\hypertarget{_viability_window_8java_source_l00186}{}\hyperlink{classgui_1_1_viability_window_a87a07291794e15052db67f945d90853e}{00186}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a87a07291794e15052db67f945d90853e}{mouseReleased}(MouseEvent e) \{
+00187     channel = channel.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a899caa602e4fff675b17cdbab33607ec}{NONE};
+00188     \hyperlink{classgui_1_1_viability_window_af3a8c3ee2b9b6c5c415df634105b5945}{drawImage}();
+00189   \}
+00190   
+\hypertarget{_viability_window_8java_source_l00191}{}\hyperlink{classgui_1_1_viability_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{00191}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{nextAction}() \{
+00192     \hyperlink{classgui_1_1_viability_window_a754be7a1ad7ccf944469a5960baf52b3}{generateResults}();
+00193   \}
+00194   
+00195 
+\hypertarget{_viability_window_8java_source_l00196}{}\hyperlink{classgui_1_1_viability_window_a92de44ef00adbefce701ecb95b7d926b}{00196}   \textcolor{keyword}{protected} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a92de44ef00adbefce701ecb95b7d926b}{processImage}(\textcolor{keywordtype}{boolean} eventType) \{
+00197     \textcolor{comment}{// If eventType == true, the threshold has changed or it needs to be}
+00198     \textcolor{comment}{// calculated}
+00199     \textcolor{comment}{// In that class, eventType is always true}
+00200     aliveSpermatozoa = \hyperlink{classgui_1_1_viability_window_a21bfc28b8acdf4451eec7e3bc2060c61}{getSpermatozoa}(\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_ae64c262ce1094f21457d2f78dd45a8fc}{GREEN});
+00201     deadSpermatozoa = \hyperlink{classgui_1_1_viability_window_a21bfc28b8acdf4451eec7e3bc2060c61}{getSpermatozoa}(\hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{RED});
+00202     \textcolor{keywordflow}{if} (aliveSpermatozoa != null && deadSpermatozoa != null) \{
+00203       \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa} = \textcolor{keyword}{new} ArrayList<Spermatozoon>(\hyperlink{classgui_1_1_viability_window_a3990fd3a99cde29eac35061c41b3434b}{aliveSpermatozoa});
+00204       \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa}.addAll(deadSpermatozoa);
+00205       \hyperlink{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645}{selectAll}();\textcolor{comment}{// set as selected all spermatozoa to allow boundary painting}
+00206       \hyperlink{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7}{idenfitySperm}();
+00207     \}
+00208     \textcolor{comment}{// Calculate outlines}
+00209     \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} cv = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision}();
+00210     cv.\hyperlink{classfunctions_1_1_computer_vision_a1272b47ed42c25a4d2d7f7d891d0e42f}{outlineThresholdImage}(aliveImpOutline);
+00211     cv.\hyperlink{classfunctions_1_1_computer_vision_a1272b47ed42c25a4d2d7f7d891d0e42f}{outlineThresholdImage}(deadImpOutline);
+00212     \hyperlink{classgui_1_1_viability_window_af3a8c3ee2b9b6c5c415df634105b5945}{drawImage}();
+00213   \}
+00214 
+00215   @Override
+\hypertarget{_viability_window_8java_source_l00216}{}\hyperlink{classgui_1_1_viability_window_a3b3c478bccdb239125dd466aa738834e}{00216}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classgui_1_1_viability_window_a3b3c478bccdb239125dd466aa738834e}{stateChanged}(ChangeEvent e) \{
+00217     Object auxWho = e.getSource();
+00218     \textcolor{keywordflow}{if} ((auxWho == \hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sldRedThreshold})) \{
+00219       channel = \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a2fa22bc5317cd6f6690f2528eaf84400}{RED};
+00220       \hyperlink{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd}{redThreshold} = \hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sldRedThreshold}.getValue();
+00221       \hyperlink{classgui_1_1_viability_window_a7db6c32207f03c20a1b7932a5f804435}{doSliderRefresh}();
+00222     \}
+00223     \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ((auxWho == \hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sldGreenThreshold})) \{
+00224       channel = \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_ae64c262ce1094f21457d2f78dd45a8fc}{GREEN};
+00225       \textcolor{comment}{// Updating threshold value from slider}
+00226       \hyperlink{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341}{greenThreshold} = \hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sldGreenThreshold}.getValue();
+00227       \hyperlink{classgui_1_1_viability_window_a7db6c32207f03c20a1b7932a5f804435}{doSliderRefresh}();
+00228     \}\textcolor{keywordflow}{else} \textcolor{keywordflow}{if}(auxWho == \hyperlink{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{sldBlueThreshold})\{
+00229       channel = \hyperlink{enumgui_1_1_viability_window_1_1_channel}{Channel}.\hyperlink{enumgui_1_1_viability_window_1_1_channel_a6b317f511e4605122591a00ca0fb1659}{BLUE};
+00230       \hyperlink{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad}{blueThreshold} = \hyperlink{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{sldBlueThreshold}.getValue();
+00231       \hyperlink{classgui_1_1_viability_window_a7db6c32207f03c20a1b7932a5f804435}{doSliderRefresh}();
+00232     \}
+00233   \}
+00234 
+00235 \}
+\end{DoxyCode}

@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['lastframe',['lastFrame',['../classthird___party_1_1_a_v_i___reader.html#ad6d68bb12b1df808a76e92a5b1e3f5fd',1,'third_Party::AVI_Reader']]],
-  ['lastframetoread',['lastFrameToRead',['../classthird___party_1_1_a_v_i___reader.html#a7c06c634e54b80462f7a61b91ba2bfc0',1,'third_Party::AVI_Reader']]]
+  ['nextbtn',['nextBtn',['../classgui_1_1_image_analysis_window.html#ad88013bcb23eecbb32f5e97911652f73',1,'gui::ImageAnalysisWindow']]],
+  ['none',['NONE',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#a899caa602e4fff675b17cdbab33607ec',1,'analysis.Chemotaxis.TypeOfAnalysis.NONE()'],['../enumanalysis_1_1_motility_1_1_type_of_analysis.html#a899caa602e4fff675b17cdbab33607ec',1,'analysis.Motility.TypeOfAnalysis.NONE()'],['../enumgui_1_1_image_analysis_window_1_1_type_of_analysis.html#a899caa602e4fff675b17cdbab33607ec',1,'gui.ImageAnalysisWindow.TypeOfAnalysis.NONE()'],['../enumgui_1_1_viability_window_1_1_channel.html#a899caa602e4fff675b17cdbab33607ec',1,'gui.ViabilityWindow.Channel.NONE()']]],
+  ['numsamples',['NUMSAMPLES',['../classdata_1_1_params.html#ae808f1c980157cfd070c6e09e587e2aa',1,'data::Params']]]
 ];

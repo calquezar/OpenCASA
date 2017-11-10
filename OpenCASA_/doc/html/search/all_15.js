@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['width',['width',['../classdata_1_1_spermatozoon.html#aefe5d44d1f3571b69df4bab0588c317a',1,'data::Spermatozoon']]],
-  ['wsize',['wSize',['../classdata_1_1_params.html#adf39b4a2cd358df78172672dbe38260b',1,'data::Params']]]
+  ['y',['y',['../classdata_1_1_spermatozoon.html#aa4f0d3eebc3c443f9be81bf48561a217',1,'data::Spermatozoon']]],
+  ['yfactor',['yFactor',['../classgui_1_1_image_analysis_window.html#ab483275b2379ef6043da68efe593b5d9',1,'gui::ImageAnalysisWindow']]]
 ];

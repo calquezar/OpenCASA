@@ -1,0 +1,138 @@
+\hypertarget{_params_8java_source}{}\section{Params.\+java}
+\label{_params_8java_source}\index{Params.\+java@{Params.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }data;
+00020 
+00021 \textcolor{keyword}{import} java.io.FileInputStream;
+00022 \textcolor{keyword}{import} java.io.FileOutputStream;
+00023 \textcolor{keyword}{import} java.io.ObjectInputStream;
+00024 \textcolor{keyword}{import} java.io.ObjectOutputStream;
+00025 \textcolor{keyword}{import} java.util.prefs.Preferences;
+00026 
+00027 \textcolor{keyword}{import} ij.IJ;
+00028 
+\hypertarget{_params_8java_source_l00033}{}\hyperlink{classdata_1_1_params}{00033} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classdata_1_1_params}{Params} \{
+00034 
+\hypertarget{_params_8java_source_l00036}{}\hyperlink{classdata_1_1_params_a42568ad774d8f4ccb9535aeda39fc883}{00036}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}   \hyperlink{classdata_1_1_params_a42568ad774d8f4ccb9535aeda39fc883}{angleAmplitude}       = 90;
+\hypertarget{_params_8java_source_l00041}{}\hyperlink{classdata_1_1_params_a93caa48162e34b2227a839ed71b4ed44}{00041}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int}     \hyperlink{classdata_1_1_params_a93caa48162e34b2227a839ed71b4ed44}{angleDelta}           = 4;
+\hypertarget{_params_8java_source_l00043}{}\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{00043}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}   \hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection}       = 0;
+00045 \textcolor{comment}{//  public static int     bcf\_shift            = 0;}
+\hypertarget{_params_8java_source_l00047}{}\hyperlink{classdata_1_1_params_a20fc9eabd567449950e284f07669ec93}{00047} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}   \hyperlink{classdata_1_1_params_a20fc9eabd567449950e284f07669ec93}{borderSize}           = 20;
+\hypertarget{_params_8java_source_l00049}{}\hyperlink{classdata_1_1_params_a8c0dba3f8308ea1257549b3cef11ea23}{00049}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{boolean} \hyperlink{classdata_1_1_params_a8c0dba3f8308ea1257549b3cef11ea23}{compareOppositeDirections} = \textcolor{keyword}{false};
+\hypertarget{_params_8java_source_l00051}{}\hyperlink{classdata_1_1_params_aecbab8174a6d72649883508cf9940d58}{00051}   \textcolor{keyword}{public} \textcolor{keyword}{static} String  \hyperlink{classdata_1_1_params_aecbab8174a6d72649883508cf9940d58}{date}                 = \textcolor{stringliteral}{""};
+\hypertarget{_params_8java_source_l00053}{}\hyperlink{classdata_1_1_params_a3e846fb606e7abcd1e78bebb5292e4c2}{00053}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{boolean} \hyperlink{classdata_1_1_params_a3e846fb606e7abcd1e78bebb5292e4c2}{drawAvgTrajectories}  = \textcolor{keyword}{true};
+\hypertarget{_params_8java_source_l00055}{}\hyperlink{classdata_1_1_params_a207f2cfc882f842eafc04f6531308e98}{00055}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{boolean} \hyperlink{classdata_1_1_params_a207f2cfc882f842eafc04f6531308e98}{drawOrigTrajectories} = \textcolor{keyword}{true};
+\hypertarget{_params_8java_source_l00057}{}\hyperlink{classdata_1_1_params_a398ccb086e2e7150576bec8a5853b8e3}{00057}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}   \hyperlink{classdata_1_1_params_a398ccb086e2e7150576bec8a5853b8e3}{frameRate}            = 100;
+\hypertarget{_params_8java_source_l00059}{}\hyperlink{classdata_1_1_params_a253e4e926c0399ed1ae42b5a5989824d}{00059}   \textcolor{keyword}{public} \textcolor{keyword}{static} String  \hyperlink{classdata_1_1_params_a253e4e926c0399ed1ae42b5a5989824d}{genericField}         = \textcolor{stringliteral}{""};  
+\hypertarget{_params_8java_source_l00061}{}\hyperlink{classdata_1_1_params_a3e07114fb70a676dfe24fad6be8c3c75}{00061}   \textcolor{keyword}{public} \textcolor{keyword}{static} String  \hyperlink{classdata_1_1_params_a3e07114fb70a676dfe24fad6be8c3c75}{male}                 = \textcolor{stringliteral}{""};
+\hypertarget{_params_8java_source_l00065}{}\hyperlink{classdata_1_1_params_ab28f784a26ca9d2ce7d7a785b158aa61}{00065}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}   \hyperlink{classdata_1_1_params_ab28f784a26ca9d2ce7d7a785b158aa61}{maxDisplacement}      = 10;   \textcolor{comment}{// um}
+\hypertarget{_params_8java_source_l00067}{}\hyperlink{classdata_1_1_params_a11078ae453283411c72774c45caa7519}{00067} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int}     \hyperlink{classdata_1_1_params_a11078ae453283411c72774c45caa7519}{MAXINSTANGLES}        = 20000;
+\hypertarget{_params_8java_source_l00069}{}\hyperlink{classdata_1_1_params_a7274c4f365a3b3d5e70f4c0e797684ac}{00069}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}   \hyperlink{classdata_1_1_params_a7274c4f365a3b3d5e70f4c0e797684ac}{maxSize}              = 400;
+00070   \textcolor{comment}{// 10x ==> 0.58}
+00071   \textcolor{comment}{// 40x ==> 0.1455}
+\hypertarget{_params_8java_source_l00073}{}\hyperlink{classdata_1_1_params_a19331ee97ef3c422984fc7dff976549e}{00073} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double}       \hyperlink{classdata_1_1_params_a19331ee97ef3c422984fc7dff976549e}{micronPerPixel}   = 1;    \textcolor{comment}{// 0.58; 10x ISAS}
+\hypertarget{_params_8java_source_l00075}{}\hyperlink{classdata_1_1_params_a0aac8d82501e8bd6df290478d853662b}{00075} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}        \hyperlink{classdata_1_1_params_a0aac8d82501e8bd6df290478d853662b}{minSize}          = 40;
+\hypertarget{_params_8java_source_l00077}{}\hyperlink{classdata_1_1_params_aa730fe10ba7a04b3871e8ff2ea8cc834}{00077}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int}          \hyperlink{classdata_1_1_params_aa730fe10ba7a04b3871e8ff2ea8cc834}{minTrackLength}   = 15;
+\hypertarget{_params_8java_source_l00079}{}\hyperlink{classdata_1_1_params_ae808f1c980157cfd070c6e09e587e2aa}{00079}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int}          \hyperlink{classdata_1_1_params_ae808f1c980157cfd070c6e09e587e2aa}{NUMSAMPLES}       = 100;
+\hypertarget{_params_8java_source_l00081}{}\hyperlink{classdata_1_1_params_a193425ff40a106f84f7980effb603136}{00081}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double}       \hyperlink{classdata_1_1_params_a193425ff40a106f84f7980effb603136}{pixelHeight}      = 1.0;
+\hypertarget{_params_8java_source_l00083}{}\hyperlink{classdata_1_1_params_a6bc7d1b46eaf3b2ebdc0bab5d9634c79}{00083}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{double}       \hyperlink{classdata_1_1_params_a6bc7d1b46eaf3b2ebdc0bab5d9634c79}{pixelWidth}       = 1.0;
+\hypertarget{_params_8java_source_l00085}{}\hyperlink{classdata_1_1_params_a77f70a9d88156f5f7dbdd99bfaaee64e}{00085}   \textcolor{keyword}{private} \textcolor{keyword}{static} Preferences \hyperlink{classdata_1_1_params_a77f70a9d88156f5f7dbdd99bfaaee64e}{prefs};
+\hypertarget{_params_8java_source_l00090}{}\hyperlink{classdata_1_1_params_ae8b85275ab9c5375a3d35dcb7cd8332f}{00090}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{boolean}      \hyperlink{classdata_1_1_params_ae8b85275ab9c5375a3d35dcb7cd8332f}{printXY}          = \textcolor{keyword}{false};
+\hypertarget{_params_8java_source_l00092}{}\hyperlink{classdata_1_1_params_ae9dd6b8ec81f8ae0b40a4e8e2d9cdc06}{00092}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}        \hyperlink{classdata_1_1_params_ae9dd6b8ec81f8ae0b40a4e8e2d9cdc06}{progressMotility} = 80;
+\hypertarget{_params_8java_source_l00094}{}\hyperlink{classdata_1_1_params_af9a2118a2e00978d900279677c64bbeb}{00094}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}        \hyperlink{classdata_1_1_params_af9a2118a2e00978d900279677c64bbeb}{vclLowerTh}       = 45;
+\hypertarget{_params_8java_source_l00096}{}\hyperlink{classdata_1_1_params_af4cb43f0bfe24c14e75780187235376c}{00096}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}        \hyperlink{classdata_1_1_params_af4cb43f0bfe24c14e75780187235376c}{vclMin}           = 70;
+\hypertarget{_params_8java_source_l00098}{}\hyperlink{classdata_1_1_params_ae0c29f446e3d569d730c8251a31e7ac2}{00098}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{float}        \hyperlink{classdata_1_1_params_ae0c29f446e3d569d730c8251a31e7ac2}{vclUpperTh}       = 75;
+\hypertarget{_params_8java_source_l00100}{}\hyperlink{classdata_1_1_params_ad1b7844e5f66ee81c3de06d1a8ca645e}{00100}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{int}          \hyperlink{classdata_1_1_params_ad1b7844e5f66ee81c3de06d1a8ca645e}{wSize}            = 9;
+00101 
+\hypertarget{_params_8java_source_l00103}{}\hyperlink{classdata_1_1_params_a0a4fc9bb0ad6624d84e20d1cd9644187}{00103}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \hyperlink{classdata_1_1_params_a0a4fc9bb0ad6624d84e20d1cd9644187}{resetParams}() \{
+00104 
+00105     \textcolor{keywordflow}{try} \{
+00106       FileInputStream streamIn = \textcolor{keyword}{new} FileInputStream(System.getProperty(\textcolor{stringliteral}{"user.dir"}) + \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)prefs.config"});
+00107       ObjectInputStream objectinputstream = \textcolor{keyword}{new} ObjectInputStream(streamIn);
+00108       prefs.importPreferences(objectinputstream);
+00109     \} \textcolor{keywordflow}{catch} (Exception e) \{
+00110       IJ.handleException(e);
+00111 \textcolor{comment}{//      System.out.println("Fallo de lectura");}
+00112     \}
+00113     \textcolor{keywordflow}{if} (prefs == null)
+00114       prefs = Preferences.userNodeForPackage(\hyperlink{classdata_1_1_params}{Params}.class);
+00115     minSize = prefs.getFloat(\textcolor{stringliteral}{"minSize"}, minSize);
+00116     maxSize = prefs.getFloat(\textcolor{stringliteral}{"maxSize"}, maxSize);
+00117     minTrackLength = prefs.getInt(\textcolor{stringliteral}{"minTrackLength"}, minTrackLength);
+00118     maxDisplacement = prefs.getFloat(\textcolor{stringliteral}{"maxDisplacement"}, maxDisplacement);
+00119     wSize = prefs.getInt(\textcolor{stringliteral}{"wSize"}, wSize);
+00120     vclMin = prefs.getFloat(\textcolor{stringliteral}{"vclMin"}, vclMin);
+00121     vclLowerTh = prefs.getFloat(\textcolor{stringliteral}{"vclLowerTh"}, vclLowerTh);
+00122     vclUpperTh = prefs.getFloat(\textcolor{stringliteral}{"vclUpperTh"}, vclUpperTh);
+00123     angleDelta = prefs.getInt(\textcolor{stringliteral}{"angleDelta"}, angleDelta);
+00124     angleDirection = prefs.getFloat(\textcolor{stringliteral}{"angleDirection"}, angleDirection);
+00125     angleAmplitude = prefs.getFloat(\textcolor{stringliteral}{"angleAmplitude"}, angleAmplitude);
+00126     compareOppositeDirections = prefs.getBoolean(\textcolor{stringliteral}{"compareOppositeDirections"}, compareOppositeDirections);
+00127     printXY = prefs.getBoolean(\textcolor{stringliteral}{"printXY"}, printXY);
+00128     frameRate = prefs.getFloat(\textcolor{stringliteral}{"frameRate"}, frameRate);
+00129 \textcolor{comment}{//    male = prefs.get("male", male);}
+00130 \textcolor{comment}{//    date = prefs.get("date", date);}
+00131 \textcolor{comment}{//    genericField = prefs.get("genericField", genericField);}
+00132 \textcolor{comment}{//    bcf\_shift = prefs.getInt("bcf\_shift", bcf\_shift);}
+00133     progressMotility = prefs.getFloat(\textcolor{stringliteral}{"progressMotility"}, progressMotility);
+00134     micronPerPixel = prefs.getDouble(\textcolor{stringliteral}{"micronPerPixel"}, micronPerPixel);
+00135     NUMSAMPLES = prefs.getInt(\textcolor{stringliteral}{"NUMSAMPLES"}, NUMSAMPLES);
+00136   \}
+00137 
+\hypertarget{_params_8java_source_l00141}{}\hyperlink{classdata_1_1_params_a523f79a85b888809ee8b6220ef0e20d1}{00141}   \textcolor{keyword}{public} \textcolor{keyword}{static} \textcolor{keywordtype}{void} \hyperlink{classdata_1_1_params_a523f79a85b888809ee8b6220ef0e20d1}{saveParams}() \{
+00142 
+00143     prefs = Preferences.userNodeForPackage(\hyperlink{classdata_1_1_params}{Params}.class);
+00144     prefs.putFloat(\textcolor{stringliteral}{"minSize"}, minSize);
+00145     prefs.putFloat(\textcolor{stringliteral}{"maxSize"}, maxSize);
+00146     prefs.putInt(\textcolor{stringliteral}{"minTrackLength"}, minTrackLength);
+00147     prefs.putFloat(\textcolor{stringliteral}{"maxDisplacement"}, maxDisplacement);
+00148     prefs.putInt(\textcolor{stringliteral}{"wSize"}, wSize);
+00149     prefs.putFloat(\textcolor{stringliteral}{"vclMin"}, vclMin);
+00150     prefs.putFloat(\textcolor{stringliteral}{"vclLowerTh"}, vclLowerTh);
+00151     prefs.putFloat(\textcolor{stringliteral}{"vclUpperTh"}, vclUpperTh);
+00152     prefs.putInt(\textcolor{stringliteral}{"angleDelta"}, angleDelta);
+00153     prefs.putFloat(\textcolor{stringliteral}{"angleDirection"}, angleDirection);
+00154     prefs.putFloat(\textcolor{stringliteral}{"angleAmplitude"}, angleAmplitude);
+00155     prefs.putBoolean(\textcolor{stringliteral}{"compareOppositeDirections"}, compareOppositeDirections);
+00156     prefs.putBoolean(\textcolor{stringliteral}{"printXY"}, printXY);
+00157     prefs.putFloat(\textcolor{stringliteral}{"frameRate"}, frameRate);
+00158 \textcolor{comment}{//    prefs.put("male", male);}
+00159 \textcolor{comment}{//    prefs.put("date", date);}
+00160 \textcolor{comment}{//    prefs.put("genericField", genericField);}
+00161 \textcolor{comment}{//    prefs.putInt("bcf\_shift", bcf\_shift);}
+00162     prefs.putFloat(\textcolor{stringliteral}{"progressMotility"}, progressMotility);
+00163     prefs.putDouble(\textcolor{stringliteral}{"micronPerPixel"}, micronPerPixel);
+00164     prefs.putInt(\textcolor{stringliteral}{"NUMSAMPLES"}, NUMSAMPLES);
+00165 
+00166     \textcolor{keywordflow}{try} \{
+00167       FileOutputStream fos = \textcolor{keyword}{new} FileOutputStream(System.getProperty(\textcolor{stringliteral}{"user.dir"}) + \textcolor{stringliteral}{"\(\backslash\)\(\backslash\)prefs.config"});
+00168       ObjectOutputStream oos = \textcolor{keyword}{new} ObjectOutputStream(fos);
+00169       prefs.exportSubtree(oos);
+00170       oos.close();
+00171       fos.close();
+00172     \} \textcolor{keywordflow}{catch} (Exception e) \{
+00173       IJ.handleException(e);
+00174 \textcolor{comment}{//      e.printStackTrace();}
+00175     \}
+00176   \}
+00177 \}
+\end{DoxyCode}

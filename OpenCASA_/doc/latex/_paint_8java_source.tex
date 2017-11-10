@@ -1,0 +1,423 @@
+\hypertarget{_paint_8java_source}{}\section{Paint.\+java}
+\label{_paint_8java_source}\index{Paint.\+java@{Paint.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{}
+00018 \textcolor{comment}{Part of this code (draw and doOffset methods in particular) is a modification of a previous code written }
+00019 \textcolor{comment}{by Jonas Wilson-Leedy and Rolf Ingermann and publish in CASA\_ plugin for ImageJ.}
+00020 \textcolor{comment}{Copyright © 2003 The Regents of the University of California and the Howard Hughes Medical Institute.}
+00021 \textcolor{comment}{}
+00022 \textcolor{comment}{All Rights Reserved.}
+00023 \textcolor{comment}{}
+00024 \textcolor{comment}{Permission to use, copy, modify, and distribute this software and its documentation for educational,
+       research and }
+00025 \textcolor{comment}{non-profit purposes, without fee, and without a written agreement is hereby granted, provided that the
+       above copyright }
+00026 \textcolor{comment}{notice, this paragraph and the following three paragraphs appear in all copies.}
+00027 \textcolor{comment}{}
+00028 \textcolor{comment}{Permission to incorporate this software into commercial products may be obtained by contacting the Office
+       of }
+00029 \textcolor{comment}{Technology Management at the University of California San Francisco [Sunita Rajdev, Ph.D., Licensing
+       Officer, }
+00030 \textcolor{comment}{UCSF Office of Technology Management. 185 Berry St, Suite 4603, San Francisco, CA 94107].}
+00031 \textcolor{comment}{}
+00032 \textcolor{comment}{This software program and documentation are copyrighted by The Regents of the University of California }
+00033 \textcolor{comment}{acting on behalf of the University of California San Francisco via its Office of Technology Management and
+       the }
+00034 \textcolor{comment}{Howard Hughes Medical Institute (collectively, the Institution).  The software program and documentation
+       are }
+00035 \textcolor{comment}{supplied "as is", without any accompanying services from the Institution. The Institution does not warrant
+       that the }
+00036 \textcolor{comment}{operation of the program will be uninterrupted or error-free. The end-user understands that the program was
+       developed }
+00037 \textcolor{comment}{for research purposes and is advised not to rely exclusively on the program for any reason.}
+00038 \textcolor{comment}{}
+00039 \textcolor{comment}{IN NO EVENT SHALL THE INSTITUTION BE LIABLE TO ANY PARTY FOR DIRECT, INDIRECT, SPECIAL, INCIDENTAL, OR
+       CONSEQUENTIAL }
+00040 \textcolor{comment}{DAMAGES, INCLUDING LOST PROFITS, ARISING OUT OF THE USE OF THIS SOFTWARE AND ITS DOCUMENTATION, EVEN IF THE
+       INSTITUTION }
+00041 \textcolor{comment}{HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. THE  INSTITUTION SPECIFICALLY DISCLAIMS ANY WARRANTIES,
+       INCLUDING, }
+00042 \textcolor{comment}{BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE
+       SOFTWARE }
+00043 \textcolor{comment}{PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE  INSTITUTION HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE,
+       SUPPORT, }
+00044 \textcolor{comment}{UPDATES, ENHANCEMENTS, OR MODIFICATIONS.}
+00045 \textcolor{comment}{}
+00046 \textcolor{comment}{*/}    
+00047 
+00048 \textcolor{keyword}{package }functions;
+00049 
+00050 \textcolor{keyword}{import} java.awt.Color;
+00051 \textcolor{keyword}{import} java.awt.Font;
+00052 \textcolor{keyword}{import} java.awt.Polygon;
+00053 \textcolor{keyword}{import} java.util.ArrayList;
+00054 \textcolor{keyword}{import} java.util.List;
+00055 \textcolor{keyword}{import} java.util.ListIterator;
+00056 
+00057 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_params}{Params};
+00058 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_serializable_list}{SerializableList};
+00059 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon};
+00060 \textcolor{keyword}{import} \hyperlink{namespacedata}{data}.\hyperlink{classdata_1_1_trial}{Trial};
+00061 \textcolor{keyword}{import} ij.IJ;
+00062 \textcolor{keyword}{import} ij.ImagePlus;
+00063 \textcolor{keyword}{import} ij.ImageStack;
+00064 \textcolor{keyword}{import} ij.process.ColorProcessor;
+00065 \textcolor{keyword}{import} ij.process.ImageProcessor;
+00066 
+\hypertarget{_paint_8java_source_l00071}{}\hyperlink{classfunctions_1_1_paint}{00071} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classfunctions_1_1_paint}{Paint} \{
+00072 
+00073   \textcolor{comment}{/******************************************************/}
+\hypertarget{_paint_8java_source_l00081}{}\hyperlink{classfunctions_1_1_paint_aaec84e76dfa781152d5fb9ba9c2a46a4}{00081}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_paint_aaec84e76dfa781152d5fb9ba9c2a46a4}{chemotaxisTemplate}(ColorProcessor ip, \textcolor{keywordtype}{int} numTracks, \textcolor{keywordtype}{float} chIdx, \textcolor{keywordtype}{float} 
+      slIdx, String sampleID) \{
+00082     \textcolor{comment}{// Alpha version of this method}
+00083     ip.setLineWidth(4);
+00084     \textcolor{comment}{// center coords. of the cone used to clasify chemotactic trajectories}
+00085     \textcolor{keywordtype}{int} xCenter = ip.getWidth() / 2;
+00086     \textcolor{keywordtype}{int} yCenter = ip.getHeight() / 2;
+00087     \textcolor{keywordtype}{float} upperAngle = (float) (\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} + 
+      \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a42568ad774d8f4ccb9535aeda39fc883}{angleAmplitude} / 2 + 360) % 360;
+00088     upperAngle = upperAngle * (float) Math.PI / 180; \textcolor{comment}{// calculate and convert}
+00089                                                      \textcolor{comment}{// to radians}
+00090     \textcolor{keywordtype}{float} lowerAngle = (\textcolor{keywordtype}{float}) (\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} - 
+      \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a42568ad774d8f4ccb9535aeda39fc883}{angleAmplitude} / 2 + 360) % 360;
+00091     lowerAngle = lowerAngle * (float) Math.PI / 180; \textcolor{comment}{// convert to radians}
+00092     \textcolor{comment}{// Upper Line}
+00093     \textcolor{keywordtype}{int} upperLineX = xCenter + (\textcolor{keywordtype}{int}) (1000 * Math.cos(upperAngle));
+00094     \textcolor{keywordtype}{int} upperLineY = yCenter - (int) (1000 * Math.sin(upperAngle));
+00095     \textcolor{comment}{// Lower Line}
+00096     \textcolor{keywordtype}{int} lowerLineX = xCenter + (int) (1000 * Math.cos(lowerAngle));
+00097     \textcolor{keywordtype}{int} lowerLineY = yCenter - (int) (1000 * Math.sin(lowerAngle));
+00098     \textcolor{comment}{// Draw Chemotaxis Cone}
+00099     ip.moveTo((\textcolor{keywordtype}{int}) xCenter, (\textcolor{keywordtype}{int}) yCenter);
+00100     ip.lineTo((\textcolor{keywordtype}{int}) upperLineX, (\textcolor{keywordtype}{int}) upperLineY);
+00101     ip.moveTo((\textcolor{keywordtype}{int}) xCenter, (\textcolor{keywordtype}{int}) yCenter);
+00102     ip.lineTo((\textcolor{keywordtype}{int}) lowerLineX, (\textcolor{keywordtype}{int}) lowerLineY);
+00103     \textcolor{comment}{// Reses line width}
+00104     ip.setLineWidth(1);
+00105     ip.setFont(\textcolor{keyword}{new} Font(\textcolor{stringliteral}{"SansSerif"}, Font.PLAIN, 16));
+00106     ip.moveTo(10, 30);
+00107     ip.setColor(Color.blue);
+00108     ip.drawString(\textcolor{stringliteral}{"Sample: "});
+00109     ip.moveTo(70, 30);
+00110     ip.setColor(Color.black);
+00111     ip.drawString(sampleID);
+00112     ip.moveTo(10, 50);
+00113     ip.setColor(Color.blue);
+00114     ip.drawString(\textcolor{stringliteral}{"Number of tracks: "});
+00115     ip.moveTo(135, 50);
+00116     ip.setColor(Color.black);
+00117     ip.drawString(\textcolor{stringliteral}{""} + numTracks);
+00118 \textcolor{comment}{//    ip.moveTo(10, 70);}
+00119 \textcolor{comment}{//    ip.setColor(Color.red);}
+00120 \textcolor{comment}{//    ip.drawString("Ch-Index: ");}
+00121 \textcolor{comment}{//    ip.moveTo(70, 70);}
+00122 \textcolor{comment}{//    ip.setColor(Color.black);}
+00123 \textcolor{comment}{//    ip.drawString("" + chIdx);}
+00124     ip.moveTo(10, 70);
+00125     ip.setColor(\textcolor{keyword}{new} Color(34, 146, 234));
+00126     ip.drawString(\textcolor{stringliteral}{"SL-Index: "});
+00127     ip.moveTo(80, 70);
+00128     ip.setColor(Color.black);
+00129     ip.drawString(\textcolor{stringliteral}{""} + slIdx);
+00130   \}
+00131 
+00138   \textcolor{keywordtype}{int} doOffset(\textcolor{keywordtype}{int} center, \textcolor{keywordtype}{int} maxSize, \textcolor{keywordtype}{int} displacement) \{
+00139     \textcolor{keywordflow}{if} ((center - displacement) < 2 * displacement) \{
+00140       \textcolor{keywordflow}{return} (center + 4 * displacement);
+00141     \} \textcolor{keywordflow}{else} \{
+00142       \textcolor{keywordflow}{return} (center - displacement);
+00143     \}
+00144   \}
+00145 
+00146   \textcolor{comment}{/******************************************************/}
+\hypertarget{_paint_8java_source_l00152}{}\hyperlink{classfunctions_1_1_paint_a86f95f4ee27f7ce9ab517f4e322c9612}{00152}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_paint_a86f95f4ee27f7ce9ab517f4e322c9612}{draw}(ImagePlus imp, \hyperlink{classdata_1_1_serializable_list}{SerializableList} theTracks) \{
+00153 
+00154     \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision} cv = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_computer_vision}{ComputerVision}();
+00155     cv.\hyperlink{classfunctions_1_1_computer_vision_a98a9ec9a4b8c6a28678d649822a73bc8}{convertToRGB}(imp);
+00156     \textcolor{keywordtype}{int} nFrames = imp.getStackSize();
+00157     ImageStack stack = imp.getStack();
+00158     \textcolor{keywordflow}{if} (imp.getCalibration().scaled()) \{
+00159       IJ.showMessage(\textcolor{stringliteral}{"MultiTracker"}, \textcolor{stringliteral}{"Cannot display paths if image is spatially calibrated"});
+00160       \textcolor{keywordflow}{return};
+00161     \}
+00162     \textcolor{keywordtype}{int} upRes = 1;
+00163     String strPart;
+00164     \textcolor{keywordtype}{int} displayTrackNr = 0;
+00165     \hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing} sp = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing}();
+00166     \hyperlink{classdata_1_1_serializable_list}{SerializableList} avgTracks = sp.\hyperlink{classfunctions_1_1_signal_processing_abf1074d52caa632088bc9c8f12f8ee53}{averageTracks}(theTracks);
+00167     \hyperlink{classfunctions_1_1_kinematics}{Kinematics} kinematics = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_kinematics}{Kinematics}();
+00168     \textcolor{comment}{// Draw on each frame}
+00169     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} iFrame = 1; iFrame <= nFrames; iFrame++) \{
+00170       IJ.showProgress((\textcolor{keywordtype}{double}) iFrame / nFrames);
+00171       IJ.showStatus(\textcolor{stringliteral}{"Drawing Tracks (frame "}+iFrame+\textcolor{stringliteral}{"/"}+nFrames+\textcolor{stringliteral}{")..."});
+00172       \textcolor{keywordtype}{int} yWidth = stack.getWidth();
+00173       ImageProcessor ip = stack.getProcessor(iFrame);
+00174       ip.setFont(\textcolor{keyword}{new} Font(\textcolor{stringliteral}{"SansSerif"}, Font.PLAIN, 16));
+00175       displayTrackNr = 0;
+00176       \textcolor{keywordflow}{for} (ListIterator iT = theTracks.listIterator(); iT.hasNext();) \{
+00177         List zTrack = (ArrayList) iT.next();
+00178         displayTrackNr++;
+00179         ListIterator jT = zTrack.listIterator();
+00180         \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} oldSpermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) jT.next();
+00181         \textcolor{keywordflow}{for} (; jT.hasNext();) \{
+00182           \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} newSpermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) jT.next();
+00183           \textcolor{keywordflow}{if} (kinematics.\hyperlink{classfunctions_1_1_kinematics_a55fee1cc65c19a5862bd9fdce3aa9cd5}{getVelocityTrackType}(zTrack) == \textcolor{stringliteral}{"Slow"})
+00184             ip.setColor(Color.white);
+00185           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (kinematics.\hyperlink{classfunctions_1_1_kinematics_a55fee1cc65c19a5862bd9fdce3aa9cd5}{getVelocityTrackType}(zTrack) == \textcolor{stringliteral}{"Normal"})
+00186             ip.setColor(Color.yellow);
+00187           \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (kinematics.\hyperlink{classfunctions_1_1_kinematics_a55fee1cc65c19a5862bd9fdce3aa9cd5}{getVelocityTrackType}(zTrack) == \textcolor{stringliteral}{"Fast"})
+00188             ip.setColor(Color.red);
+00189           \textcolor{comment}{// ip.setValue(color);}
+00190           \textcolor{keywordflow}{if} (\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a207f2cfc882f842eafc04f6531308e98}{drawOrigTrajectories}) \{
+00191             ip.moveTo((\textcolor{keywordtype}{int}) oldSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x} * upRes, (\textcolor{keywordtype}{int}) oldSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y} * upRes);
+00192             ip.lineTo((\textcolor{keywordtype}{int}) newSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x} * upRes, (\textcolor{keywordtype}{int}) newSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y} * upRes);
+00193           \}
+00194           oldSpermatozoon = newSpermatozoon;
+00195           \textcolor{comment}{// Draw track numbers}
+00196           \textcolor{keywordflow}{if} (newSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_a14f94e529dff0b8bfba8e16fbe9755d6}{z} == iFrame) \{
+00197             strPart = \textcolor{stringliteral}{""} + displayTrackNr;
+00198             ip.setColor(Color.black);
+00199             \textcolor{comment}{// we could do someboundary testing here to place the labels}
+00200             \textcolor{comment}{// better when we are close to the edge}
+00201             ip.moveTo((\textcolor{keywordtype}{int}) (oldSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x} / \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a6bc7d1b46eaf3b2ebdc0bab5d9634c79}{pixelWidth} + 0),
+00202                 doOffset((\textcolor{keywordtype}{int}) (oldSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y} / \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a193425ff40a106f84f7980effb603136}{pixelHeight}), yWidth, 5));
+00203             ip.setColor(Color.white);
+00204             ip.drawString(strPart);
+00205           \}
+00206         \}
+00207       \}
+00208 \textcolor{comment}{//      System.out.println("Drawind frame: " + iFrame);}
+00209     \}
+00210     imp.updateAndRepaintWindow();
+00211   \}
+00212 
+00213   \textcolor{comment}{/******************************************************/}
+\hypertarget{_paint_8java_source_l00218}{}\hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{00218}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_paint_af5c5db6d9fe79eafc658aeb3e0d17b1f}{drawBoundaries}(ImagePlus imp, List spermatozoa) \{
+00219     \textcolor{keywordtype}{int} yWidth = imp.getWidth();
+00220     IJ.showStatus(\textcolor{stringliteral}{"Drawing boundaries..."});
+00221     ImageProcessor ip = imp.getProcessor();
+00222 \textcolor{comment}{//    ip.setColor(Color.white);}
+00223     \textcolor{keywordflow}{for} (ListIterator j = spermatozoa.listIterator(); j.hasNext();) \{
+00224       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} sperm = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) j.next();
+00225       ip.setLineWidth(2);
+00226       \textcolor{keywordflow}{if} (sperm.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected})
+00227         ip.drawRect((\textcolor{keywordtype}{int}) sperm.\hyperlink{classdata_1_1_spermatozoon_a5c25ae7634a79d11d6679b6b07c240a1}{bx}, (\textcolor{keywordtype}{int}) sperm.\hyperlink{classdata_1_1_spermatozoon_affce45e955f0a114a5569e019b8d8634}{by}, (\textcolor{keywordtype}{int}) sperm.\hyperlink{classdata_1_1_spermatozoon_ae426f00e82704fa09578f5446e22d915}{width}, (\textcolor{keywordtype}{int}) sperm.
+      \hyperlink{classdata_1_1_spermatozoon_a48083b65ac9a863566dc3e3fff09a5b4}{height});
+00228       ip.setLineWidth(1);
+00229       \textcolor{comment}{// Draw numbers}
+00230       ip.setFont(\textcolor{keyword}{new} Font(\textcolor{stringliteral}{"SansSerif"}, Font.PLAIN, 32));
+00231       \textcolor{comment}{// we could do someboundary testing here to place the labels better}
+00232       \textcolor{comment}{// when we are close to the edge}
+00233       ip.moveTo((\textcolor{keywordtype}{int}) (sperm.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x}), doOffset((\textcolor{keywordtype}{int}) (sperm.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y}), yWidth, 5));
+00234       \textcolor{keywordflow}{try} \{
+00235         ip.drawString(\textcolor{stringliteral}{""} + sperm.\hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{id});
+00236       \} \textcolor{keywordflow}{catch} (Exception e) \{
+00237 \textcolor{comment}{//        IJ.handleException(e);}
+00238         e.printStackTrace();
+00239         \textcolor{comment}{// ip.drawString throws eventually an exception.}
+00240         \textcolor{comment}{// Possibly it is a bug in the ImageProcessor implementation of this}
+00241         \textcolor{comment}{// ImageJ version}
+00242       \}
+00243     \}
+00244   \}
+00245 
+00246   \textcolor{comment}{/******************************************************/}
+\hypertarget{_paint_8java_source_l00256}{}\hyperlink{classfunctions_1_1_paint_a21dbba9326aa66f10d1dfccb836c14d9}{00256}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_paint_a21dbba9326aa66f10d1dfccb836c14d9}{drawChemotaxis}(\hyperlink{classdata_1_1_trial}{Trial} trial, \textcolor{keywordtype}{float} chIdx, \textcolor{keywordtype}{float} slIdx) \{
+00257 
+00258     \hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing} sp = \textcolor{keyword}{new} \hyperlink{classfunctions_1_1_signal_processing}{SignalProcessing}();
+00259     \hyperlink{classdata_1_1_serializable_list}{SerializableList} avgTracks = sp.\hyperlink{classfunctions_1_1_signal_processing_abf1074d52caa632088bc9c8f12f8ee53}{averageTracks}(trial.
+      \hyperlink{classdata_1_1_trial_ab0c3156759c41236f7f0bc83e1e5ef8f}{tracks});
+00260     \textcolor{comment}{// We create another ImageProcesor to draw chemotactic cone and relative}
+00261     \textcolor{comment}{// trajectories}
+00262     ColorProcessor ipRelTraj = \textcolor{keyword}{new} ColorProcessor(trial.\hyperlink{classdata_1_1_trial_abce721f4aa25ad8ba8181de990a78b73}{fieldWidth}, trial.
+      \hyperlink{classdata_1_1_trial_ab4aa79eade248fcf045b32ff9f11ca8b}{fieldHeight});
+00263     ipRelTraj.setColor(Color.white);
+00264     ipRelTraj.fill();
+00265     \textcolor{keywordtype}{int} xCenter = trial.\hyperlink{classdata_1_1_trial_abce721f4aa25ad8ba8181de990a78b73}{fieldWidth} / 2;
+00266     \textcolor{keywordtype}{int} yCenter = trial.\hyperlink{classdata_1_1_trial_ab4aa79eade248fcf045b32ff9f11ca8b}{fieldHeight} / 2;
+00267     \textcolor{comment}{// Draw cone used to clasify chemotactic trajectories}
+00268     ipRelTraj.setColor(Color.green);
+00269     \hyperlink{classfunctions_1_1_paint_aaec84e76dfa781152d5fb9ba9c2a46a4}{chemotaxisTemplate}(ipRelTraj, avgTracks.size(), chIdx, slIdx, trial.
+      \hyperlink{classdata_1_1_trial_a317298c3409575f71e43acd3f73ce295}{ID});
+00270     ipRelTraj.setColor(Color.red);
+00271     ipRelTraj.setLineWidth(4);
+00272     ipRelTraj.moveTo(xCenter, yCenter);
+00273     \textcolor{keywordtype}{int} rx = (int) (1000 * Math.cos(\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} * Math.PI / 180));
+00274     \textcolor{keywordtype}{int} ry = (int) (1000 * Math.sin(\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} * Math.PI / 180));
+00275     ipRelTraj.lineTo(xCenter + rx, yCenter - ry);
+00276     ipRelTraj.setLineWidth(1);
+00277     \textcolor{comment}{// Draw average paths}
+00278     IJ.showStatus(\textcolor{stringliteral}{"Drawing Tracks..."});
+00279     \textcolor{keywordflow}{for} (ListIterator iT = avgTracks.listIterator(); iT.hasNext();) \{
+00280       List zTrack = (ArrayList) iT.next();
+00281       ListIterator jT = zTrack.listIterator();
+00282       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} oldSpermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) jT.next();
+00283       \textcolor{comment}{// Variables used to}
+00284       \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} firstSpermatozoon = \textcolor{keyword}{new} \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}();
+00285       firstSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ac4622d389badba1a387ec1e139d35c8e}{copy}(oldSpermatozoon);
+00286       \textcolor{keywordtype}{int} xLast = xCenter;
+00287       \textcolor{keywordtype}{int} yLast = yCenter;
+00288       \textcolor{keywordflow}{for} (; jT.hasNext();) \{
+00289         \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} newSpermatozoon = (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}) jT.next();
+00290         ipRelTraj.setColor(Color.black);
+00291         ipRelTraj.moveTo(xLast, yLast);
+00292         xLast = (int) (xCenter + (newSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x} - firstSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x}));
+00293         yLast = (int) (yCenter - (newSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y} - firstSpermatozoon.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y}));
+00294         ipRelTraj.lineTo(xLast, yLast);
+00295         oldSpermatozoon = newSpermatozoon;
+00296       \}
+00297       ipRelTraj.drawOval(xLast - 3, yLast, 6, 6);
+00298     \}
+00299     \textcolor{keyword}{new} ImagePlus(\textcolor{stringliteral}{"Chemotactic Ratios"}, ipRelTraj).show();
+00300   \}
+00301 
+00302   \textcolor{comment}{/******************************************************/}
+\hypertarget{_paint_8java_source_l00307}{}\hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{00307}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_paint_a79f677db3c0f2261152a784802dab3c2}{drawOutline}(ImagePlus impOrig, ImagePlus impTh) \{
+00308 
+00309     IJ.showStatus(\textcolor{stringliteral}{"Changing background..."});
+00310     ColorProcessor ipOrig = (ColorProcessor) impOrig.getProcessor();
+00311     ipOrig.setColor(Color.yellow);
+00312     ImageProcessor ipTh = impTh.getProcessor();
+00313     \textcolor{keywordtype}{int} ipWidth = ipOrig.getWidth();
+00314     \textcolor{keywordtype}{int} ipHeight = ipOrig.getHeight();
+00315     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} x = 0; x < ipWidth; x++) \{
+00316       IJ.showStatus(\textcolor{stringliteral}{"scanning pixels..."});
+00317       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} y = 0; y < ipHeight; y++) \{
+00318         \textcolor{keywordtype}{int} pixel = ipTh.get(x, y);
+00319         \textcolor{keywordflow}{if} (pixel == 0)\textcolor{comment}{// It's background}
+00320           ipOrig.drawPixel(x, y);
+00321       \}
+00322     \}
+00323   \}
+00324 
+00325   \textcolor{comment}{/******************************************************/}
+\hypertarget{_paint_8java_source_l00332}{}\hyperlink{classfunctions_1_1_paint_ae6e7f899e277190943b0c57232976e97}{00332}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classfunctions_1_1_paint_ae6e7f899e277190943b0c57232976e97}{drawRoseDiagram}(\textcolor{keywordtype}{int}[] histogram, \textcolor{keywordtype}{int} radius, \textcolor{keywordtype}{float} chIdx, String sampleID) \{
+00333 
+00334     \textcolor{comment}{// Calculate maximum value of the histogram}
+00335     \textcolor{comment}{// to use it later for normalization}
+00336     \textcolor{keywordtype}{double} max = 0;
+00337     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{int} i = 0; i < histogram.length; i++)
+00338       \textcolor{keywordflow}{if} (histogram[i] > max)
+00339         max = histogram[i];
+00340     \textcolor{keywordtype}{double} normFactor = radius / max;
+00341     \textcolor{keywordtype}{int} xCenter = radius;
+00342     \textcolor{keywordtype}{int} yCenter = radius;
+00343     ColorProcessor roseDiagram = \textcolor{keyword}{new} ColorProcessor(2 * radius, 2 * radius);
+00344     roseDiagram.setColor(Color.white);
+00345     roseDiagram.fill();
+00346     roseDiagram.setColor(\textcolor{keyword}{new} Color((\textcolor{keywordtype}{int}) 0, 0, 255, 10));
+00347     roseDiagram.setLineWidth(1);
+00348     \textcolor{keywordtype}{int} NBINS = histogram.length;
+00349     \textcolor{keywordtype}{double} angleBin = 2 * Math.PI / (double) NBINS;
+00350     \textcolor{comment}{// Draw on triangle for each bin}
+00351     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{double} i = 0; i < NBINS; i++) \{
+00352       \textcolor{keywordtype}{int} value = histogram[(int) i];
+00353       \textcolor{keywordtype}{int} r = (int) (value * normFactor);
+00354       Polygon p = \textcolor{keyword}{new} Polygon();
+00355       p.addPoint(xCenter, yCenter); \textcolor{comment}{// First vertex}
+00356       \textcolor{keywordtype}{int} x = (int) (r * Math.cos(i * angleBin));
+00357       \textcolor{keywordtype}{int} y = (int) (r * Math.sin(i * angleBin));
+00358       p.addPoint(xCenter + x, yCenter - y); \textcolor{comment}{// Second vertex}
+00359       x = (int) (r * Math.cos((i + 1) * angleBin));
+00360       y = (int) (r * Math.sin((i + 1) * angleBin));
+00361       p.addPoint(xCenter + x, yCenter - y); \textcolor{comment}{// Third vertex}
+00362       roseDiagram.fillPolygon(p);
+00363     \}
+00364     roseDiagram.setColor(Color.gray);
+00365     roseDiagram.setFont(\textcolor{keyword}{new} Font(\textcolor{stringliteral}{"SansSerif"}, Font.PLAIN, 22));
+00366     \textcolor{comment}{// Draw line at each 30º}
+00367     \textcolor{keywordflow}{for} (\textcolor{keywordtype}{double} i = 0; i < 12; i++) \{
+00368       \textcolor{keywordtype}{int} x = (int) (radius * Math.cos(i * (2 * Math.PI / 12)));
+00369       \textcolor{keywordtype}{int} y = (int) (radius * Math.sin(i * (2 * Math.PI / 12)));
+00370       roseDiagram.moveTo(xCenter, yCenter);
+00371       roseDiagram.lineTo(xCenter + x, yCenter - y);
+00372       roseDiagram.moveTo(xCenter + x, yCenter - y);
+00373       roseDiagram.drawString(\textcolor{stringliteral}{""} + i * 30);
+00374     \}
+00375     roseDiagram.setColor(Color.gray);
+00376     \textcolor{comment}{// Draw three concentric circles as reference values}
+00377     roseDiagram.drawOval(0, 0, 2 * radius, 2 * radius); \textcolor{comment}{// First circle}
+00378     roseDiagram.setColor(Color.black);
+00379     \textcolor{keywordtype}{int} rx = (int) (radius * Math.cos(Math.PI / 3));
+00380     \textcolor{keywordtype}{int} ry = (int) (radius * Math.sin(Math.PI / 3));
+00381     roseDiagram.moveTo(xCenter + rx, yCenter - ry);
+00382     roseDiagram.setFont(\textcolor{keyword}{new} Font(\textcolor{stringliteral}{"SansSerif"}, Font.PLAIN, 30));
+00383     roseDiagram.drawString(\textcolor{stringliteral}{""} + (\textcolor{keywordtype}{int}) max);\textcolor{comment}{// Draw reference value}
+00384     roseDiagram.setColor(Color.gray);
+00385     roseDiagram.drawOval(radius - 2 * radius / 3, radius - 2 * radius / 3, 4 * radius / 3, 4 * radius / 3);
+       \textcolor{comment}{// Second}
+00386                                                                                                            
+       \textcolor{comment}{// circle}
+00387     roseDiagram.setColor(Color.black);
+00388     \textcolor{keywordtype}{int} r = radius - radius / 3;
+00389     rx = (int) (r * Math.cos(Math.PI / 3));
+00390     ry = (int) (r * Math.sin(Math.PI / 3));
+00391     roseDiagram.moveTo(xCenter + rx, yCenter - ry);
+00392     roseDiagram.drawString(\textcolor{stringliteral}{""} + (\textcolor{keywordtype}{int}) (2 * max / 3));\textcolor{comment}{// Draw reference value}
+00393     roseDiagram.setColor(Color.gray);
+00394     roseDiagram.drawOval(radius - radius / 3, radius - radius / 3, 2 * radius / 3, 2 * radius / 3); \textcolor{comment}{//
+       Third}
+00395                                                                                                     \textcolor{comment}{//
+       circle}
+00396     roseDiagram.setColor(Color.black);
+00397     r = radius - 2 * radius / 3;
+00398     rx = (int) (r * Math.cos(Math.PI / 3));
+00399     ry = (int) (r * Math.sin(Math.PI / 3));
+00400     roseDiagram.moveTo(xCenter + rx, yCenter - ry);
+00401     roseDiagram.drawString(\textcolor{stringliteral}{""} + (\textcolor{keywordtype}{int}) (max / 3));\textcolor{comment}{// Draw reference value}
+00402     \textcolor{comment}{// Draw gradiend direction}
+00403     roseDiagram.setColor(Color.red);
+00404     roseDiagram.setLineWidth(4);
+00405     roseDiagram.moveTo(xCenter, yCenter);
+00406     rx = (int) (radius * Math.cos(\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} * Math.PI / 180));
+00407     ry = (int) (radius * Math.sin(\hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} * Math.PI / 180));
+00408     roseDiagram.lineTo(xCenter + rx, yCenter - ry);
+00409     roseDiagram.setColor(\textcolor{keyword}{new} Color(0, 0, 255, 0));
+00410     \textcolor{comment}{// Draw chemotaxis cone}
+00411     roseDiagram.setColor(Color.green);
+00412     roseDiagram.setLineWidth(8);
+00413     \textcolor{keywordtype}{double} upperAngle = (360 + \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} + 
+      \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a42568ad774d8f4ccb9535aeda39fc883}{angleAmplitude} / 2) % 360;
+00414     upperAngle *= Math.PI / 180;
+00415     \textcolor{keywordtype}{int} x = (int) (radius * Math.cos(upperAngle));
+00416     \textcolor{keywordtype}{int} y = (int) (radius * Math.sin(upperAngle));
+00417     roseDiagram.moveTo(xCenter, yCenter);
+00418     roseDiagram.lineTo(xCenter + x, yCenter - y);
+00419     \textcolor{keywordtype}{double} lowerAngle = (360 + \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a11ad187f45e1f7add56bde4071bfdf74}{angleDirection} - 
+      \hyperlink{classdata_1_1_params}{Params}.\hyperlink{classdata_1_1_params_a42568ad774d8f4ccb9535aeda39fc883}{angleAmplitude} / 2) % 360;
+00420     lowerAngle *= Math.PI / 180;
+00421     x = (int) (radius * Math.cos(lowerAngle));
+00422     y = (int) (radius * Math.sin(lowerAngle));
+00423     roseDiagram.moveTo(xCenter, yCenter);
+00424     roseDiagram.lineTo(xCenter + x, yCenter - y);
+00425     \textcolor{comment}{// Draw sample info}
+00426     roseDiagram.setLineWidth(1);
+00427     roseDiagram.setFont(\textcolor{keyword}{new} Font(\textcolor{stringliteral}{"SansSerif"}, Font.PLAIN, 30));
+00428     roseDiagram.moveTo(10, 30);
+00429     roseDiagram.setColor(Color.blue);
+00430     roseDiagram.drawString(\textcolor{stringliteral}{"Sample: "} + sampleID);
+00431     roseDiagram.moveTo(10, 70);
+00432     roseDiagram.drawString(\textcolor{stringliteral}{"Ch-Index: "} + chIdx);
+00433 
+00434     \textcolor{keyword}{new} ImagePlus(\textcolor{stringliteral}{"Chemotactic Ratios"}, roseDiagram).show();
+00435   \}
+00436 
+00437 \}
+\end{DoxyCode}

@@ -11,7 +11,7 @@ var NAVTREE =
       [ "Class Members", "functions.html", [
         [ "All", "functions.html", "functions_dup" ],
         [ "Functions", "functions_func.html", null ],
-        [ "Variables", "functions_vars.html", "functions_vars" ]
+        [ "Variables", "functions_vars.html", null ]
       ] ]
     ] ],
     [ "Files", null, [
@@ -22,8 +22,8 @@ var NAVTREE =
 
 var NAVTREEINDEX =
 [
-"_a_v_i___reader_8java.html",
-"classgui_1_1_morph_window.html#ac4f1e35c9f593ab1e8d58a2404e99452"
+"_chemotaxis_8java.html",
+"classgui_1_1_image_analysis_window.html#a69562d3583c362d2b643c170f0eae39f"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

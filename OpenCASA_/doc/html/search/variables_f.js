@@ -1,26 +1,5 @@
 var searchData=
 [
-  ['total_5falhmax',['total_alhMax',['../classanalysis_1_1_motility.html#aa2fd0b47e9fcc1cfae26443cc30c4e53',1,'analysis::Motility']]],
-  ['total_5falhmean',['total_alhMean',['../classanalysis_1_1_motility.html#af02bf50d954ff36cf0c95627e512a03e',1,'analysis::Motility']]],
-  ['total_5farea',['total_area',['../classdata_1_1_spermatozoon.html#aa648cb4c26ff2fe261728f35e1951272',1,'data::Spermatozoon']]],
-  ['total_5fbcf',['total_bcf',['../classanalysis_1_1_motility.html#a288d1a3edbf97c8f789be0163391eefb',1,'analysis::Motility']]],
-  ['total_5fdance',['total_dance',['../classanalysis_1_1_motility.html#afff6a4f5f8c25f0861f4fb52f3c83c6f',1,'analysis::Motility']]],
-  ['total_5fferet',['total_feret',['../classdata_1_1_spermatozoon.html#ab7117d1c66b31094ed0bf6142e0b4e5e',1,'data::Spermatozoon']]],
-  ['total_5flin',['total_lin',['../classanalysis_1_1_motility.html#a0eb05672e491025e5bd51197fc80e5b6',1,'analysis::Motility']]],
-  ['total_5fmad',['total_mad',['../classanalysis_1_1_motility.html#a4f10a42df1c8b78e86a3d983cea0e9ec',1,'analysis::Motility']]],
-  ['total_5fminferet',['total_minFeret',['../classdata_1_1_spermatozoon.html#a8fb0f02813e37a6dcc8349322d8d9638',1,'data::Spermatozoon']]],
-  ['total_5fmotile',['total_motile',['../classanalysis_1_1_motility.html#afe40b61f1b87202d17b5ba417c5ff952',1,'analysis::Motility']]],
-  ['total_5fnonmotile',['total_nonMotile',['../classanalysis_1_1_motility.html#aaaf16be1df45bff8d509c365c0d427e0',1,'analysis::Motility']]],
-  ['total_5fperimeter',['total_perimeter',['../classdata_1_1_spermatozoon.html#ae17fa0b57c63aa9c630815f7efd3761a',1,'data::Spermatozoon']]],
-  ['total_5fsperm',['total_sperm',['../classanalysis_1_1_motility.html#afa5c23f5b3f5b840f9a6c8a0f7582466',1,'analysis::Motility']]],
-  ['total_5fstr',['total_str',['../classanalysis_1_1_motility.html#a3162549eb71b0eb479f2c51de5a6c1a7',1,'analysis::Motility']]],
-  ['total_5fvap',['total_vap',['../classanalysis_1_1_motility.html#aa4c75feeb2d40c18ddf8d8231285cb51',1,'analysis::Motility']]],
-  ['total_5fvcl',['total_vcl',['../classanalysis_1_1_motility.html#ae88ff52aa6fa9de3ffe52ac3cfb0c8a9',1,'analysis::Motility']]],
-  ['total_5fvsl',['total_vsl',['../classanalysis_1_1_motility.html#a6e8176c5101f86942d6bfd55410031bf',1,'analysis::Motility']]],
-  ['total_5fwob',['total_wob',['../classanalysis_1_1_motility.html#adfaadfed58273c1c5c94047df25e7486',1,'analysis::Motility']]],
-  ['totalframesfromindex',['totalFramesFromIndex',['../classthird___party_1_1_a_v_i___reader.html#aa71c4bd35a9fe20e158956bd2cb25b28',1,'third_Party::AVI_Reader']]],
-  ['tracknr',['trackNr',['../classdata_1_1_spermatozoon.html#afcaaa2cdbb93291bacad63cb623cb9b9',1,'data::Spermatozoon']]],
-  ['tracks',['tracks',['../classdata_1_1_trial.html#a076434be940c0d3db36c6be5c0c5325b',1,'data::Trial']]],
-  ['type',['type',['../classdata_1_1_trial.html#a7e89b0f9bd136158424475ef348c40e6',1,'data::Trial']]],
-  ['type0xdb',['type0xdb',['../classthird___party_1_1_a_v_i___reader.html#ad6257fda79573f030a67ca47eecc1fba',1,'third_Party::AVI_Reader']]]
+  ['width',['width',['../classdata_1_1_spermatozoon.html#ae426f00e82704fa09578f5446e22d915',1,'data::Spermatozoon']]],
+  ['wsize',['wSize',['../classdata_1_1_params.html#ad1b7844e5f66ee81c3de06d1a8ca645e',1,'data::Params']]]
 ];

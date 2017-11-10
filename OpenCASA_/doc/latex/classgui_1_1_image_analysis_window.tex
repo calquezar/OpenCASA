@@ -1,0 +1,738 @@
+\hypertarget{classgui_1_1_image_analysis_window}{}\section{Image\+Analysis\+Window Class Reference}
+\label{classgui_1_1_image_analysis_window}\index{Image\+Analysis\+Window@{Image\+Analysis\+Window}}
+Inheritance diagram for Image\+Analysis\+Window\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classgui_1_1_image_analysis_window}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{Type\+Of\+Analysis}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classgui_1_1_image_analysis_window_a92a9acda5cd7fb137046e8ad2ba902a8}{Image\+Analysis\+Window} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a2d0abb2ca6c5355bd49023f16f185293}{deselect\+All} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7}{idenfity\+Sperm} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a2ef8b75d07db675fb28ce54cc00713f0}{init\+Image} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55}{reset} ()
+\item 
+int \hyperlink{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{run} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645}{select\+All} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_aae663b9e2c200d48d0c146871ef96f6c}{select\+All} (List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$ sperm)
+\item 
+int \hyperlink{classgui_1_1_image_analysis_window_a0f3cd690d3cb4c7088975fa0ae8f747a}{select\+Analysis} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{set\+Change\+Listener} (Change\+Listener ch, J\+Slider sld)
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{set\+Image} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a04b5ca8d2004b3a622268e038a238455}{set\+Image} (int index)
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef}{set\+Images} (List$<$ Image\+Plus $>$ i)
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca}{set\+Mouse\+Listener} (Mouse\+Listener ml)
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a612d8bbeb78a27050cf59d9db734fc11}{set\+Raw\+Image} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_aa8880ccb12f2638822de16dd50e9c6d1}{set\+Resize\+Factor} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058}{show\+Window} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863}{threshold\+Image\+Plus} (Image\+Plus imp)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_af3a8c3ee2b9b6c5c415df634105b5945}{draw\+Image} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{next\+Action} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1}{previous\+Action} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{process\+Image} (boolean event\+Type)
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6}{generic\+Radio\+Buttons\+Action} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+Image\+Plus \hyperlink{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{imp\+Draw} = null
+\item 
+Image\+Plus \hyperlink{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416}{imp\+Gray} = null
+\item 
+Image\+Plus \hyperlink{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{imp\+Orig} = null
+\item 
+Image\+Plus \hyperlink{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{imp\+Outline} = null
+\item 
+Image\+Plus \hyperlink{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{imp\+Th} = null
+\item 
+J\+Slider \hyperlink{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{sld\+Threshold}
+\item 
+J\+Slider \hyperlink{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{sld\+Red\+Threshold}
+\item 
+J\+Slider \hyperlink{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{sld\+Green\+Threshold}
+\item 
+J\+Slider \hyperlink{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{sld\+Blue\+Threshold}
+\item 
+J\+Radio\+Button \hyperlink{classgui_1_1_image_analysis_window_a79b02cbaed083d22fac115fe05d1e8db}{btn\+Otsu}
+\item 
+J\+Radio\+Button \hyperlink{classgui_1_1_image_analysis_window_a0e7f4b261625dbbe93d3ac1bf2c645ad}{btn\+Minimum}
+\item 
+Button\+Group \hyperlink{classgui_1_1_image_analysis_window_a16d71c0ff3c7b5f2d7298752a949fc71}{btn\+Group}
+\item 
+J\+Button \hyperlink{classgui_1_1_image_analysis_window_ad7635bb9d707a780b5a81278b9bf8ff8}{prev\+Btn}
+\item 
+J\+Button \hyperlink{classgui_1_1_image_analysis_window_ad88013bcb23eecbb32f5e97911652f73}{next\+Btn}
+\item 
+List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$ \hyperlink{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{spermatozoa} = new Array\+List$<$\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}$>$()
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{threshold} = -\/1.\+0
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd}{red\+Threshold} = -\/1.\+0
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341}{green\+Threshold} = -\/1.\+0
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad}{blue\+Threshold} = -\/1.\+0
+\item 
+String \hyperlink{classgui_1_1_image_analysis_window_a00af632f76a9750b3b0dcf702d1d30a8}{threshold\+Method} = \char`\"{}Otsu\char`\"{}
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_adb607f30ce4997349a99dca08d813585}{x\+Factor}
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_ab483275b2379ef6043da68efe593b5d9}{y\+Factor}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classgui_1_1_image_analysis_window_ac7ee842ae75372575a568d7026989b23}{analyse\+Directory} ()
+\item 
+int \hyperlink{classgui_1_1_image_analysis_window_a893a3a5beda8381306607568f3cff5f6}{analyse\+File} ()
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{configure\+Slider\+Bar} (J\+Slider sld)
+\item 
+void \hyperlink{classgui_1_1_image_analysis_window_ae40d46c96e8374f03e40ce6ef6287d5d}{set\+Sliders\+Auto\+Threshold} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{Type\+Of\+Analysis} \hyperlink{classgui_1_1_image_analysis_window_ae0c6f15cfb3c589fb7817738e51998bd}{analysis} = \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{Type\+Of\+Analysis.\+N\+O\+NE}
+\item 
+List$<$ Image\+Plus $>$ \hyperlink{classgui_1_1_image_analysis_window_ab901d2d996b0bf250698c764d1c3949c}{images}
+\item 
+int \hyperlink{classgui_1_1_image_analysis_window_a43531d5121651cc0d006fedbedb03b00}{img\+Index}
+\item 
+J\+Label \hyperlink{classgui_1_1_image_analysis_window_a2a216fd8d92687a0d71b6064e26a3412}{img\+Label}
+\item 
+double \hyperlink{classgui_1_1_image_analysis_window_a1b91ec80db300f73bee276f3fe72e766}{resize\+Factor}
+\item 
+J\+Label \hyperlink{classgui_1_1_image_analysis_window_aceabe99400c9a27b60ab97a773981bbe}{title}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class implements all the functions related to viability analysis.
+
+\begin{DoxyAuthor}{Author}
+Carlos Alquezar 
+\end{DoxyAuthor}
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00057}{57} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classgui_1_1_image_analysis_window_a92a9acda5cd7fb137046e8ad2ba902a8}{}\label{classgui_1_1_image_analysis_window_a92a9acda5cd7fb137046e8ad2ba902a8} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!Image\+Analysis\+Window@{Image\+Analysis\+Window}}
+\index{Image\+Analysis\+Window@{Image\+Analysis\+Window}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{Image\+Analysis\+Window()}{ImageAnalysisWindow()}}
+{\footnotesize\ttfamily \hyperlink{classgui_1_1_image_analysis_window}{Image\+Analysis\+Window} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00104}{104} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classgui_1_1_image_analysis_window_ac7ee842ae75372575a568d7026989b23}{}\label{classgui_1_1_image_analysis_window_ac7ee842ae75372575a568d7026989b23} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!analyse\+Directory@{analyse\+Directory}}
+\index{analyse\+Directory@{analyse\+Directory}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{analyse\+Directory()}{analyseDirectory()}}
+{\footnotesize\ttfamily int analyse\+Directory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00130}{130} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a893a3a5beda8381306607568f3cff5f6}{}\label{classgui_1_1_image_analysis_window_a893a3a5beda8381306607568f3cff5f6} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!analyse\+File@{analyse\+File}}
+\index{analyse\+File@{analyse\+File}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{analyse\+File()}{analyseFile()}}
+{\footnotesize\ttfamily int analyse\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00142}{142} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d}{}\label{classgui_1_1_image_analysis_window_a59aed828ede257a7487f529a114dbf3d} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!configure\+Slider\+Bar@{configure\+Slider\+Bar}}
+\index{configure\+Slider\+Bar@{configure\+Slider\+Bar}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{configure\+Slider\+Bar()}{configureSliderBar()}}
+{\footnotesize\ttfamily void configure\+Slider\+Bar (\begin{DoxyParamCaption}\item[{J\+Slider}]{sld }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00339}{339} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a2d0abb2ca6c5355bd49023f16f185293}{}\label{classgui_1_1_image_analysis_window_a2d0abb2ca6c5355bd49023f16f185293} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!deselect\+All@{deselect\+All}}
+\index{deselect\+All@{deselect\+All}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{deselect\+All()}{deselectAll()}}
+{\footnotesize\ttfamily void deselect\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method deselect all spermatozoa. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00157}{157} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_af3a8c3ee2b9b6c5c415df634105b5945}{}\label{classgui_1_1_image_analysis_window_af3a8c3ee2b9b6c5c415df634105b5945} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!draw\+Image@{draw\+Image}}
+\index{draw\+Image@{draw\+Image}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{draw\+Image()}{drawImage()}}
+{\footnotesize\ttfamily void draw\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00163}{163} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6}{}\label{classgui_1_1_image_analysis_window_ac6d8295d31ef4fe8406770e84eb35bf6} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!generic\+Radio\+Buttons\+Action@{generic\+Radio\+Buttons\+Action}}
+\index{generic\+Radio\+Buttons\+Action@{generic\+Radio\+Buttons\+Action}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{generic\+Radio\+Buttons\+Action()}{genericRadioButtonsAction()}}
+{\footnotesize\ttfamily void generic\+Radio\+Buttons\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00337}{337} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7}{}\label{classgui_1_1_image_analysis_window_ad0b8b85815ec344419394b160098d9a7} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!idenfity\+Sperm@{idenfity\+Sperm}}
+\index{idenfity\+Sperm@{idenfity\+Sperm}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{idenfity\+Sperm()}{idenfitySperm()}}
+{\footnotesize\ttfamily void idenfity\+Sperm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method set a unique identifier for each spermatozoon in the spermatozoa list 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00168}{168} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a2ef8b75d07db675fb28ce54cc00713f0}{}\label{classgui_1_1_image_analysis_window_a2ef8b75d07db675fb28ce54cc00713f0} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!init\+Image@{init\+Image}}
+\index{init\+Image@{init\+Image}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{init\+Image()}{initImage()}}
+{\footnotesize\ttfamily void init\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method sets the initial image to be showed. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00180}{180} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7}{}\label{classgui_1_1_image_analysis_window_a2fcbb99ba607aa4f115acdfa4b2bc7f7} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!next\+Action@{next\+Action}}
+\index{next\+Action@{next\+Action}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{next\+Action()}{nextAction()}}
+{\footnotesize\ttfamily void next\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00186}{186} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1}{}\label{classgui_1_1_image_analysis_window_ae063bb485c7ec0a4a2eaf55d38397be1} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!previous\+Action@{previous\+Action}}
+\index{previous\+Action@{previous\+Action}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{previous\+Action()}{previousAction()}}
+{\footnotesize\ttfamily void previous\+Action (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00189}{189} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b}{}\label{classgui_1_1_image_analysis_window_a92de44ef00adbefce701ecb95b7d926b} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!process\+Image@{process\+Image}}
+\index{process\+Image@{process\+Image}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{process\+Image()}{processImage()}}
+{\footnotesize\ttfamily void process\+Image (\begin{DoxyParamCaption}\item[{boolean}]{event\+Type }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00192}{192} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55}{}\label{classgui_1_1_image_analysis_window_ad20897c5c8bd47f5d4005989bead0e55} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!reset@{reset}}
+\index{reset@{reset}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{reset()}{reset()}}
+{\footnotesize\ttfamily void reset (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00194}{194} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5}{}\label{classgui_1_1_image_analysis_window_a58e8be2db2660128e4e6456a9c981fb5} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!run@{run}}
+\index{run@{run}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{run()}{run()}}
+{\footnotesize\ttfamily int run (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00209}{209} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645}{}\label{classgui_1_1_image_analysis_window_ab6658ed404200bd7aaca5629db064645} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!select\+All@{select\+All}}
+\index{select\+All@{select\+All}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{select\+All()}{selectAll()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void select\+All (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00227}{227} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_aae663b9e2c200d48d0c146871ef96f6c}{}\label{classgui_1_1_image_analysis_window_aae663b9e2c200d48d0c146871ef96f6c} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!select\+All@{select\+All}}
+\index{select\+All@{select\+All}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{select\+All()}{selectAll()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void select\+All (\begin{DoxyParamCaption}\item[{List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$}]{sperm }\end{DoxyParamCaption})}
+
+This method deselect all spermatozoa. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00234}{234} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a0f3cd690d3cb4c7088975fa0ae8f747a}{}\label{classgui_1_1_image_analysis_window_a0f3cd690d3cb4c7088975fa0ae8f747a} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!select\+Analysis@{select\+Analysis}}
+\index{select\+Analysis@{select\+Analysis}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{select\+Analysis()}{selectAnalysis()}}
+{\footnotesize\ttfamily int select\+Analysis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method opens a set of dialogs to ask the user which analysis has to be carried on. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00245}{245} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b}{}\label{classgui_1_1_image_analysis_window_a8743638e7e3c13bddb254fe35d03cf2b} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Change\+Listener@{set\+Change\+Listener}}
+\index{set\+Change\+Listener@{set\+Change\+Listener}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Change\+Listener()}{setChangeListener()}}
+{\footnotesize\ttfamily void set\+Change\+Listener (\begin{DoxyParamCaption}\item[{Change\+Listener}]{ch,  }\item[{J\+Slider}]{sld }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00266}{266} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec}{}\label{classgui_1_1_image_analysis_window_a3e14b1197961eed6fd530110e15380ec} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Image@{set\+Image}}
+\index{set\+Image@{set\+Image}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Image()}{setImage()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily void set\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method sets the first image on the list and show it on screen. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00274}{274} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a04b5ca8d2004b3a622268e038a238455}{}\label{classgui_1_1_image_analysis_window_a04b5ca8d2004b3a622268e038a238455} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Image@{set\+Image}}
+\index{set\+Image@{set\+Image}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Image()}{setImage()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily void set\+Image (\begin{DoxyParamCaption}\item[{int}]{index }\end{DoxyParamCaption})}
+
+This method sets the image at corresponding index on the list and show it on screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & 
+\begin{DoxyItemize}
+\item index of the image on the list of loaded images. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00296}{296} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef}{}\label{classgui_1_1_image_analysis_window_a68997c66ca7a19a6676411bba4640aef} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Images@{set\+Images}}
+\index{set\+Images@{set\+Images}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Images()}{setImages()}}
+{\footnotesize\ttfamily void set\+Images (\begin{DoxyParamCaption}\item[{List$<$ Image\+Plus $>$}]{i }\end{DoxyParamCaption})}
+
+This method sets the images attribute with the given list of Image\+Plus.
+
+
+\begin{DoxyParams}{Parameters}
+{\em i} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00312}{312} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca}{}\label{classgui_1_1_image_analysis_window_a966ff4422076de6f1bb590cdcbbb03ca} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Mouse\+Listener@{set\+Mouse\+Listener}}
+\index{set\+Mouse\+Listener@{set\+Mouse\+Listener}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Mouse\+Listener()}{setMouseListener()}}
+{\footnotesize\ttfamily void set\+Mouse\+Listener (\begin{DoxyParamCaption}\item[{Mouse\+Listener}]{ml }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00316}{316} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a612d8bbeb78a27050cf59d9db734fc11}{}\label{classgui_1_1_image_analysis_window_a612d8bbeb78a27050cf59d9db734fc11} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Raw\+Image@{set\+Raw\+Image}}
+\index{set\+Raw\+Image@{set\+Raw\+Image}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Raw\+Image()}{setRawImage()}}
+{\footnotesize\ttfamily void set\+Raw\+Image (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00320}{320} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_aa8880ccb12f2638822de16dd50e9c6d1}{}\label{classgui_1_1_image_analysis_window_aa8880ccb12f2638822de16dd50e9c6d1} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Resize\+Factor@{set\+Resize\+Factor}}
+\index{set\+Resize\+Factor@{set\+Resize\+Factor}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Resize\+Factor()}{setResizeFactor()}}
+{\footnotesize\ttfamily void set\+Resize\+Factor (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method calculates the resize factor due to the original image size and the showed image size. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00328}{328} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ae40d46c96e8374f03e40ce6ef6287d5d}{}\label{classgui_1_1_image_analysis_window_ae40d46c96e8374f03e40ce6ef6287d5d} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!set\+Sliders\+Auto\+Threshold@{set\+Sliders\+Auto\+Threshold}}
+\index{set\+Sliders\+Auto\+Threshold@{set\+Sliders\+Auto\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{set\+Sliders\+Auto\+Threshold()}{setSlidersAutoThreshold()}}
+{\footnotesize\ttfamily void set\+Sliders\+Auto\+Threshold (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00477}{477} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058}{}\label{classgui_1_1_image_analysis_window_aae02cc4cef6bcbb0d78251146784b058} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!show\+Window@{show\+Window}}
+\index{show\+Window@{show\+Window}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{show\+Window()}{showWindow()}}
+{\footnotesize\ttfamily void show\+Window (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method creates and shows the window. 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00351}{351} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863}{}\label{classgui_1_1_image_analysis_window_a4d06082b25cf59e18ad8de7e5969b863} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!threshold\+Image\+Plus@{threshold\+Image\+Plus}}
+\index{threshold\+Image\+Plus@{threshold\+Image\+Plus}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{threshold\+Image\+Plus()}{thresholdImagePlus()}}
+{\footnotesize\ttfamily void threshold\+Image\+Plus (\begin{DoxyParamCaption}\item[{Image\+Plus}]{imp }\end{DoxyParamCaption})}
+
+This method choose between auto\+Threshold or apply a particular threshold to the given Image\+Plus depending if this value has been set before or not.
+
+
+\begin{DoxyParams}{Parameters}
+{\em imp} & Image\+Plus to be thresholded. \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00494}{494} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classgui_1_1_image_analysis_window_ae0c6f15cfb3c589fb7817738e51998bd}{}\label{classgui_1_1_image_analysis_window_ae0c6f15cfb3c589fb7817738e51998bd} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!analysis@{analysis}}
+\index{analysis@{analysis}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{analysis}{analysis}}
+{\footnotesize\ttfamily \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis}{Type\+Of\+Analysis} analysis = \hyperlink{enumgui_1_1_image_analysis_window_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{Type\+Of\+Analysis.\+N\+O\+NE}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00063}{63} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad}{}\label{classgui_1_1_image_analysis_window_ae4ebd2945cd8f03b803803928d99dcad} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!blue\+Threshold@{blue\+Threshold}}
+\index{blue\+Threshold@{blue\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{blue\+Threshold}{blueThreshold}}
+{\footnotesize\ttfamily double blue\+Threshold = -\/1.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00095}{95} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a16d71c0ff3c7b5f2d7298752a949fc71}{}\label{classgui_1_1_image_analysis_window_a16d71c0ff3c7b5f2d7298752a949fc71} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!btn\+Group@{btn\+Group}}
+\index{btn\+Group@{btn\+Group}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{btn\+Group}{btnGroup}}
+{\footnotesize\ttfamily Button\+Group btn\+Group\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00087}{87} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a0e7f4b261625dbbe93d3ac1bf2c645ad}{}\label{classgui_1_1_image_analysis_window_a0e7f4b261625dbbe93d3ac1bf2c645ad} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!btn\+Minimum@{btn\+Minimum}}
+\index{btn\+Minimum@{btn\+Minimum}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{btn\+Minimum}{btnMinimum}}
+{\footnotesize\ttfamily J\+Radio\+Button btn\+Minimum\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00086}{86} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a79b02cbaed083d22fac115fe05d1e8db}{}\label{classgui_1_1_image_analysis_window_a79b02cbaed083d22fac115fe05d1e8db} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!btn\+Otsu@{btn\+Otsu}}
+\index{btn\+Otsu@{btn\+Otsu}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{btn\+Otsu}{btnOtsu}}
+{\footnotesize\ttfamily J\+Radio\+Button btn\+Otsu\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00085}{85} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341}{}\label{classgui_1_1_image_analysis_window_ad518707968b491c91ef6bb93bcb9c341} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!green\+Threshold@{green\+Threshold}}
+\index{green\+Threshold@{green\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{green\+Threshold}{greenThreshold}}
+{\footnotesize\ttfamily double green\+Threshold = -\/1.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00094}{94} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ab901d2d996b0bf250698c764d1c3949c}{}\label{classgui_1_1_image_analysis_window_ab901d2d996b0bf250698c764d1c3949c} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!images@{images}}
+\index{images@{images}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{images}{images}}
+{\footnotesize\ttfamily List$<$Image\+Plus$>$ images\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00066}{66} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a43531d5121651cc0d006fedbedb03b00}{}\label{classgui_1_1_image_analysis_window_a43531d5121651cc0d006fedbedb03b00} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!img\+Index@{img\+Index}}
+\index{img\+Index@{img\+Index}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{img\+Index}{imgIndex}}
+{\footnotesize\ttfamily int img\+Index\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00067}{67} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a2a216fd8d92687a0d71b6064e26a3412}{}\label{classgui_1_1_image_analysis_window_a2a216fd8d92687a0d71b6064e26a3412} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!img\+Label@{img\+Label}}
+\index{img\+Label@{img\+Label}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{img\+Label}{imgLabel}}
+{\footnotesize\ttfamily J\+Label img\+Label\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00068}{68} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0}{}\label{classgui_1_1_image_analysis_window_a4f0c94772d72a249a499259f6e49c7f0} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!imp\+Draw@{imp\+Draw}}
+\index{imp\+Draw@{imp\+Draw}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{imp\+Draw}{impDraw}}
+{\footnotesize\ttfamily Image\+Plus imp\+Draw = null\hspace{0.3cm}{\ttfamily [protected]}}
+
+Image\+Plus used to draw over them 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00070}{70} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416}{}\label{classgui_1_1_image_analysis_window_a2f930a4d42790d6f5eec90929df33416} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!imp\+Gray@{imp\+Gray}}
+\index{imp\+Gray@{imp\+Gray}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{imp\+Gray}{impGray}}
+{\footnotesize\ttfamily Image\+Plus imp\+Gray = null\hspace{0.3cm}{\ttfamily [protected]}}
+
+Image\+Plus used to calculate mean gray values 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00072}{72} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f}{}\label{classgui_1_1_image_analysis_window_a69562d3583c362d2b643c170f0eae39f} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!imp\+Orig@{imp\+Orig}}
+\index{imp\+Orig@{imp\+Orig}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{imp\+Orig}{impOrig}}
+{\footnotesize\ttfamily Image\+Plus imp\+Orig = null\hspace{0.3cm}{\ttfamily [protected]}}
+
+Image\+Plus used to store the original images 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00074}{74} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e}{}\label{classgui_1_1_image_analysis_window_af6d74fd318c36f34d66ca8a63271995e} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!imp\+Outline@{imp\+Outline}}
+\index{imp\+Outline@{imp\+Outline}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{imp\+Outline}{impOutline}}
+{\footnotesize\ttfamily Image\+Plus imp\+Outline = null\hspace{0.3cm}{\ttfamily [protected]}}
+
+Image\+Plus used to store outlines 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00076}{76} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645}{}\label{classgui_1_1_image_analysis_window_a98940a0ff5c7eef6f6347a8c9c98c645} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!imp\+Th@{imp\+Th}}
+\index{imp\+Th@{imp\+Th}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{imp\+Th}{impTh}}
+{\footnotesize\ttfamily Image\+Plus imp\+Th = null\hspace{0.3cm}{\ttfamily [protected]}}
+
+Image\+Plus used to identify spermatozoa 
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00078}{78} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ad88013bcb23eecbb32f5e97911652f73}{}\label{classgui_1_1_image_analysis_window_ad88013bcb23eecbb32f5e97911652f73} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!next\+Btn@{next\+Btn}}
+\index{next\+Btn@{next\+Btn}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{next\+Btn}{nextBtn}}
+{\footnotesize\ttfamily J\+Button next\+Btn\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00089}{89} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ad7635bb9d707a780b5a81278b9bf8ff8}{}\label{classgui_1_1_image_analysis_window_ad7635bb9d707a780b5a81278b9bf8ff8} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!prev\+Btn@{prev\+Btn}}
+\index{prev\+Btn@{prev\+Btn}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{prev\+Btn}{prevBtn}}
+{\footnotesize\ttfamily J\+Button prev\+Btn\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00088}{88} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd}{}\label{classgui_1_1_image_analysis_window_a62227209d40b51bbc076527490ebb0fd} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!red\+Threshold@{red\+Threshold}}
+\index{red\+Threshold@{red\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{red\+Threshold}{redThreshold}}
+{\footnotesize\ttfamily double red\+Threshold = -\/1.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00093}{93} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a1b91ec80db300f73bee276f3fe72e766}{}\label{classgui_1_1_image_analysis_window_a1b91ec80db300f73bee276f3fe72e766} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!resize\+Factor@{resize\+Factor}}
+\index{resize\+Factor@{resize\+Factor}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{resize\+Factor}{resizeFactor}}
+{\footnotesize\ttfamily double resize\+Factor\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00080}{80} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f}{}\label{classgui_1_1_image_analysis_window_a456745261d318a98ce73b904d412b99f} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!sld\+Blue\+Threshold@{sld\+Blue\+Threshold}}
+\index{sld\+Blue\+Threshold@{sld\+Blue\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{sld\+Blue\+Threshold}{sldBlueThreshold}}
+{\footnotesize\ttfamily J\+Slider sld\+Blue\+Threshold\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00084}{84} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5}{}\label{classgui_1_1_image_analysis_window_a0e48b8c00ce11da6e6289e2004ab84d5} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!sld\+Green\+Threshold@{sld\+Green\+Threshold}}
+\index{sld\+Green\+Threshold@{sld\+Green\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{sld\+Green\+Threshold}{sldGreenThreshold}}
+{\footnotesize\ttfamily J\+Slider sld\+Green\+Threshold\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00083}{83} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a}{}\label{classgui_1_1_image_analysis_window_a1a8db00e5d10ad1bd10430a9753d764a} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!sld\+Red\+Threshold@{sld\+Red\+Threshold}}
+\index{sld\+Red\+Threshold@{sld\+Red\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{sld\+Red\+Threshold}{sldRedThreshold}}
+{\footnotesize\ttfamily J\+Slider sld\+Red\+Threshold\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00082}{82} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e}{}\label{classgui_1_1_image_analysis_window_a7af6333e5eca6d48ffa96b4a3642836e} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!sld\+Threshold@{sld\+Threshold}}
+\index{sld\+Threshold@{sld\+Threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{sld\+Threshold}{sldThreshold}}
+{\footnotesize\ttfamily J\+Slider sld\+Threshold\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00081}{81} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3}{}\label{classgui_1_1_image_analysis_window_a7c449117b5c92c9b56bf822526a37da3} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!spermatozoa@{spermatozoa}}
+\index{spermatozoa@{spermatozoa}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{spermatozoa}{spermatozoa}}
+{\footnotesize\ttfamily List$<$\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}$>$ spermatozoa = new Array\+List$<$\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}$>$()\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00091}{91} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1}{}\label{classgui_1_1_image_analysis_window_afcfbedec6ebde62c6a091ce335836ef1} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!threshold@{threshold}}
+\index{threshold@{threshold}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{threshold}{threshold}}
+{\footnotesize\ttfamily double threshold = -\/1.\+0\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00092}{92} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_a00af632f76a9750b3b0dcf702d1d30a8}{}\label{classgui_1_1_image_analysis_window_a00af632f76a9750b3b0dcf702d1d30a8} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!threshold\+Method@{threshold\+Method}}
+\index{threshold\+Method@{threshold\+Method}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{threshold\+Method}{thresholdMethod}}
+{\footnotesize\ttfamily String threshold\+Method = \char`\"{}Otsu\char`\"{}\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00096}{96} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_aceabe99400c9a27b60ab97a773981bbe}{}\label{classgui_1_1_image_analysis_window_aceabe99400c9a27b60ab97a773981bbe} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!title@{title}}
+\index{title@{title}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{title}{title}}
+{\footnotesize\ttfamily J\+Label title\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00097}{97} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_adb607f30ce4997349a99dca08d813585}{}\label{classgui_1_1_image_analysis_window_adb607f30ce4997349a99dca08d813585} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!x\+Factor@{x\+Factor}}
+\index{x\+Factor@{x\+Factor}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{x\+Factor}{xFactor}}
+{\footnotesize\ttfamily double x\+Factor\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00099}{99} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+\hypertarget{classgui_1_1_image_analysis_window_ab483275b2379ef6043da68efe593b5d9}{}\label{classgui_1_1_image_analysis_window_ab483275b2379ef6043da68efe593b5d9} 
+\index{gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}!y\+Factor@{y\+Factor}}
+\index{y\+Factor@{y\+Factor}!gui\+::\+Image\+Analysis\+Window@{gui\+::\+Image\+Analysis\+Window}}
+\subsubsection{\texorpdfstring{y\+Factor}{yFactor}}
+{\footnotesize\ttfamily double y\+Factor\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+Definition at line \hyperlink{_image_analysis_window_8java_source_l00102}{102} of file \hyperlink{_image_analysis_window_8java_source}{Image\+Analysis\+Window.\+java}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_image_analysis_window_8java}{Image\+Analysis\+Window.\+java}\end{DoxyCompactItemize}

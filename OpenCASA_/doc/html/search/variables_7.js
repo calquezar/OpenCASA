@@ -1,14 +1,17 @@
 var searchData=
 [
-  ['id',['id',['../classdata_1_1_spermatozoon.html#a7be855b36b7f94581583d825ac780671',1,'data.Spermatozoon.id()'],['../classdata_1_1_trial.html#a8ab8b95fce8c92ce1f5bab824d052cbc',1,'data.Trial.ID()']]],
-  ['imp',['imp',['../classthird___party_1_1_a_v_i___reader.html#ad2278f058a9bb4421b37747cf5c5bd32',1,'third_Party::AVI_Reader']]],
-  ['indexesdirectory',['INDEXESDIRECTORY',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#a4b3a1988f73e236c0d7e944a6b9c06b4',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
-  ['indexesfile',['INDEXESFILE',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#ae8ec53be8c7c7a2e52bb805c7c32b255',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
-  ['indexessimulations',['INDEXESSIMULATIONS',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#a6506dda02f142a15bbea1841409d63b6',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
-  ['indexforcountingonly',['indexForCountingOnly',['../classthird___party_1_1_a_v_i___reader.html#ab646837fe76c95f4e50b41ce2a32cf54',1,'third_Party::AVI_Reader']]],
-  ['indexposition',['indexPosition',['../classthird___party_1_1_a_v_i___reader.html#ae73329845c623f6ec46c0d2015232711',1,'third_Party::AVI_Reader']]],
-  ['indexpositionend',['indexPositionEnd',['../classthird___party_1_1_a_v_i___reader.html#a0272cce922406183d9d5ac381e78908b',1,'third_Party::AVI_Reader']]],
-  ['intrack',['inTrack',['../classdata_1_1_spermatozoon.html#a09117c330ee2fbeb289f7e7e934cead5',1,'data::Spermatozoon']]],
-  ['isthresholding',['isThresholding',['../classgui_1_1_morph_window.html#a2b047517c48bd688470117e803ad249c',1,'gui::MorphWindow']]],
-  ['isvirtual',['isVirtual',['../classthird___party_1_1_a_v_i___reader.html#a7a2de66ab228979ef527d69ef6f715d8',1,'third_Party::AVI_Reader']]]
+  ['id',['id',['../classdata_1_1_spermatozoon.html#a76010eef1edc0406cc2375c25d2a433d',1,'data.Spermatozoon.id()'],['../classdata_1_1_trial.html#a317298c3409575f71e43acd3f73ce295',1,'data.Trial.ID()']]],
+  ['images',['images',['../classgui_1_1_image_analysis_window.html#ab901d2d996b0bf250698c764d1c3949c',1,'gui::ImageAnalysisWindow']]],
+  ['imgindex',['imgIndex',['../classgui_1_1_image_analysis_window.html#a43531d5121651cc0d006fedbedb03b00',1,'gui::ImageAnalysisWindow']]],
+  ['imglabel',['imgLabel',['../classgui_1_1_image_analysis_window.html#a2a216fd8d92687a0d71b6064e26a3412',1,'gui::ImageAnalysisWindow']]],
+  ['impdraw',['impDraw',['../classgui_1_1_image_analysis_window.html#a4f0c94772d72a249a499259f6e49c7f0',1,'gui::ImageAnalysisWindow']]],
+  ['impgray',['impGray',['../classgui_1_1_image_analysis_window.html#a2f930a4d42790d6f5eec90929df33416',1,'gui::ImageAnalysisWindow']]],
+  ['imporig',['impOrig',['../classgui_1_1_image_analysis_window.html#a69562d3583c362d2b643c170f0eae39f',1,'gui::ImageAnalysisWindow']]],
+  ['impoutline',['impOutline',['../classgui_1_1_image_analysis_window.html#af6d74fd318c36f34d66ca8a63271995e',1,'gui::ImageAnalysisWindow']]],
+  ['impth',['impTh',['../classgui_1_1_image_analysis_window.html#a98940a0ff5c7eef6f6347a8c9c98c645',1,'gui::ImageAnalysisWindow']]],
+  ['indexesdirectory',['INDEXESDIRECTORY',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#aea93300e25d2c79a263d702652974555',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
+  ['indexesfile',['INDEXESFILE',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#a2d2e1e42ff8abcd21e8ddb4d502d9ec3',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
+  ['indexessimulations',['INDEXESSIMULATIONS',['../enumanalysis_1_1_chemotaxis_1_1_type_of_analysis.html#a8c82f8309b37b928874804133c555393',1,'analysis::Chemotaxis::TypeOfAnalysis']]],
+  ['intrack',['inTrack',['../classdata_1_1_spermatozoon.html#a204be1963f7e7f07114c1d42360376be',1,'data::Spermatozoon']]],
+  ['isthresholding',['isThresholding',['../classgui_1_1_morph_window.html#a3c3ae31647b93ff77785eb37236fbcb7',1,'gui.MorphWindow.isThresholding()'],['../classgui_1_1_viability_window.html#a3c3ae31647b93ff77785eb37236fbcb7',1,'gui.ViabilityWindow.isThresholding()']]]
 ];

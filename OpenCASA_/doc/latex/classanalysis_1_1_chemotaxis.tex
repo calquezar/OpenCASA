@@ -1,0 +1,740 @@
+\hypertarget{classanalysis_1_1_chemotaxis}{}\section{Chemotaxis Class Reference}
+\label{classanalysis_1_1_chemotaxis}\index{Chemotaxis@{Chemotaxis}}
+Inheritance diagram for Chemotaxis\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classanalysis_1_1_chemotaxis}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumanalysis_1_1_chemotaxis_1_1_type_of_analysis}{Type\+Of\+Analysis}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Boolean \hyperlink{classanalysis_1_1_chemotaxis_ab048bf7b5ce8c46bb48b99b8d0999110}{do\+In\+Background} ()
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_aef66a58ab7f95817a68a3429550562fc}{select\+Analysis} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_ab650651e4cda2869f73100c6fd2c821a}{done} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Results\+Table \hyperlink{classanalysis_1_1_chemotaxis_aaa89eb018d311df9e98b904088d282a5}{analyse\+Condition} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ controls, Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ tests)
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_ad8447fb7554f7f126822c7a3f3f680ce}{analyse\+Directory} ()
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_a0b1464e818c4300782cb7e3322448f95}{analyse\+File} ()
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_ad992aa584aa410ee10b0b5df660c43ec}{analyse\+Simulations} ()
+\item 
+Results\+Table \hyperlink{classanalysis_1_1_chemotaxis_a381aa5dd2dd75a72b6b21f7b2475d888}{bootstrapping\+Analysis} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ controls, Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ tests)
+\item 
+float \hyperlink{classanalysis_1_1_chemotaxis_a4ab493d2d901c65e8387095a69cbf83d}{calculate\+Ch\+Index} (List$<$ List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$$>$ the\+Tracks)
+\item 
+float \hyperlink{classanalysis_1_1_chemotaxis_ae3ff70acea28007b345ce335321b82fe}{calculate\+S\+L\+Index} (List$<$ List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$$>$ the\+Tracks)
+\item 
+boolean \hyperlink{classanalysis_1_1_chemotaxis_a1ebc6d4aaad3ec1c0eca87acb729ffb5}{check\+Pairs} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ controls, Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ tests)
+\item 
+int \mbox{[}$\,$\mbox{]} \hyperlink{classanalysis_1_1_chemotaxis_a50fdf81a3460741674381622f16581cb}{circular\+Histogram} (List$<$ Double $>$ angles, int n)
+\item 
+int \mbox{[}$\,$\mbox{]} \hyperlink{classanalysis_1_1_chemotaxis_a55deae924cf7ec2004a8fdcd8e185f94}{count\+Angles} (\hyperlink{classdata_1_1_serializable_list}{Serializable\+List} the\+Tracks)
+\item 
+int \mbox{[}$\,$\mbox{]} \hyperlink{classanalysis_1_1_chemotaxis_a668ad1c1240012d6fb70c1fac4a219be}{count\+Instant\+Displacements} (List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$ track)
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_ab864eab3ca8e5147e34d6a4747d24e72}{draw\+Results} (\hyperlink{classdata_1_1_trial}{Trial} trial)
+\item 
+\hyperlink{classdata_1_1_trial}{Trial} \hyperlink{classanalysis_1_1_chemotaxis_a40fa55bdb0e1b4e7e0f9de92076ab2f9}{find\+Trial} (String id, Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ trials)
+\item 
+Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ \hyperlink{classanalysis_1_1_chemotaxis_a00ea60f92f2e11a363c01d04b6df7f10}{get\+Control\+Trials} (String folder)
+\item 
+List$<$ Double $>$ \hyperlink{classanalysis_1_1_chemotaxis_a0a5886ad5b1d3a1dee18ed4fe5da7ed8}{get\+List\+Of\+Angles} (\hyperlink{classdata_1_1_serializable_list}{Serializable\+List} the\+Tracks)
+\item 
+double \mbox{[}$\,$\mbox{]} \hyperlink{classanalysis_1_1_chemotaxis_a02c2fbfd2097bca3933e285e6712a58d}{get\+Odds\+Values} (\hyperlink{classdata_1_1_serializable_list}{Serializable\+List} tracks)
+\item 
+List$<$ String $>$ \hyperlink{classanalysis_1_1_chemotaxis_a973011dfbed998ea23443c2b79ac9ee3}{get\+Test\+Folders} (String folder)
+\item 
+Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ \hyperlink{classanalysis_1_1_chemotaxis_a5580224f7f7e9df7d925ad14f9364d98}{get\+Trials} (List$<$ String $>$ filenames)
+\item 
+Results\+Table \hyperlink{classanalysis_1_1_chemotaxis_ae0431b7311aa1bb593e062536734de2c}{indexes\+Analysis} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ controls, Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ tests)
+\item 
+\hyperlink{classdata_1_1_serializable_list}{Serializable\+List} \hyperlink{classanalysis_1_1_chemotaxis_a226e01e0b4acab847ec3b2c1bb233740}{merge\+Tracks} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ trials)
+\item 
+int \hyperlink{classanalysis_1_1_chemotaxis_a3ae63569c841ffc6aa09be276f526c03}{min\+Sample\+Size} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ trials)
+\item 
+double \hyperlink{classanalysis_1_1_chemotaxis_a4cf45f4c73ebe44a71a622c690f0b331}{or} (\hyperlink{classdata_1_1_trial}{Trial} control, \hyperlink{classdata_1_1_trial}{Trial} test)
+\item 
+double \hyperlink{classanalysis_1_1_chemotaxis_a8ee54f019a9258760e20482e3cd6b851}{or\+Threshold} (Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ controls)
+\item 
+double \hyperlink{classanalysis_1_1_chemotaxis_ab23f946e0f1055d348e975e3058f323d}{relative\+Angle} (\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} previous, \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} next)
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_ac5db76309b6da4b0f351cdbb5876fec4}{set\+Bootstrapping\+Results} (Results\+Table rt, double \hyperlink{classanalysis_1_1_chemotaxis_a4cf45f4c73ebe44a71a622c690f0b331}{or}, double th, \hyperlink{classdata_1_1_trial}{Trial} trial)
+\item 
+void \hyperlink{classanalysis_1_1_chemotaxis_a9c90c33405ef04f0e75e5f8dcb56520e}{set\+Indexes\+Results} (Results\+Table rt, \hyperlink{classdata_1_1_trial}{Trial} trial, float ch\+Idx, float sl\+Idx)
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumanalysis_1_1_chemotaxis_1_1_type_of_analysis}{Type\+Of\+Analysis} \hyperlink{classanalysis_1_1_chemotaxis_ae0c6f15cfb3c589fb7817738e51998bd}{analysis} = \hyperlink{enumanalysis_1_1_chemotaxis_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{Type\+Of\+Analysis.\+N\+O\+NE}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class implements all the functions related to chemotaxis analysis.
+
+\begin{DoxyAuthor}{Author}
+Carlos Alquezar 
+\end{DoxyAuthor}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00048}{48} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classanalysis_1_1_chemotaxis_aaa89eb018d311df9e98b904088d282a5}{}\label{classanalysis_1_1_chemotaxis_aaa89eb018d311df9e98b904088d282a5} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!analyse\+Condition@{analyse\+Condition}}
+\index{analyse\+Condition@{analyse\+Condition}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{analyse\+Condition()}{analyseCondition()}}
+{\footnotesize\ttfamily Results\+Table analyse\+Condition (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{controls,  }\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{tests }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method runs the correct analysis looking at the analysis variable set by the user.
+
+
+\begin{DoxyParams}{Parameters}
+{\em controls} & 
+\begin{DoxyItemize}
+\item control trials 
+\end{DoxyItemize}\\
+\hline
+{\em tests} & 
+\begin{DoxyItemize}
+\item test trials that are going to be compare with control trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+-\/ Results\+Table with the results of the analysis 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00066}{66} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ad8447fb7554f7f126822c7a3f3f680ce}{}\label{classanalysis_1_1_chemotaxis_ad8447fb7554f7f126822c7a3f3f680ce} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!analyse\+Directory@{analyse\+Directory}}
+\index{analyse\+Directory@{analyse\+Directory}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{analyse\+Directory()}{analyseDirectory()}}
+{\footnotesize\ttfamily void analyse\+Directory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method asks user for the main folder that contains the data that is going to be analysed. The content of this folder has to be one folder named \char`\"{}control\char`\"{} with the control videos, and one or more folders corresponding with each condition that user wants to compare with reference controls. 
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00088}{88} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a0b1464e818c4300782cb7e3322448f95}{}\label{classanalysis_1_1_chemotaxis_a0b1464e818c4300782cb7e3322448f95} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!analyse\+File@{analyse\+File}}
+\index{analyse\+File@{analyse\+File}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{analyse\+File()}{analyseFile()}}
+{\footnotesize\ttfamily void analyse\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method asks user for the file that is going to be analysed, extract the corresponding trial and show results. 
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00111}{111} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ad992aa584aa410ee10b0b5df660c43ec}{}\label{classanalysis_1_1_chemotaxis_ad992aa584aa410ee10b0b5df660c43ec} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!analyse\+Simulations@{analyse\+Simulations}}
+\index{analyse\+Simulations@{analyse\+Simulations}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{analyse\+Simulations()}{analyseSimulations()}}
+{\footnotesize\ttfamily void analyse\+Simulations (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method asks user which simulation parameters have to be used in the simulations, generate the corresponding trials, analyse them and show results 
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00128}{128} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a381aa5dd2dd75a72b6b21f7b2475d888}{}\label{classanalysis_1_1_chemotaxis_a381aa5dd2dd75a72b6b21f7b2475d888} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!bootstrapping\+Analysis@{bootstrapping\+Analysis}}
+\index{bootstrapping\+Analysis@{bootstrapping\+Analysis}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{bootstrapping\+Analysis()}{bootstrappingAnalysis()}}
+{\footnotesize\ttfamily Results\+Table bootstrapping\+Analysis (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{controls,  }\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{tests }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method applies the bootstrapping analysis for the given set of trials.
+
+
+\begin{DoxyParams}{Parameters}
+{\em controls} & 
+\begin{DoxyItemize}
+\item control trials 
+\end{DoxyItemize}\\
+\hline
+{\em tests} & 
+\begin{DoxyItemize}
+\item test trials that are going to be compare with control trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Results\+Table with the bootstrapping analysis 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00156}{156} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a4ab493d2d901c65e8387095a69cbf83d}{}\label{classanalysis_1_1_chemotaxis_a4ab493d2d901c65e8387095a69cbf83d} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!calculate\+Ch\+Index@{calculate\+Ch\+Index}}
+\index{calculate\+Ch\+Index@{calculate\+Ch\+Index}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{calculate\+Ch\+Index()}{calculateChIndex()}}
+{\footnotesize\ttfamily float calculate\+Ch\+Index (\begin{DoxyParamCaption}\item[{List$<$ List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$$>$}]{the\+Tracks }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the C\+H-\/index for the given set of trajectories.
+
+
+\begin{DoxyParams}{Parameters}
+{\em the\+Tracks} & 
+\begin{DoxyItemize}
+\item 2\+D-\/\+Array\+List with all the tracks 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Ch-\/\+Index 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00187}{187} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ae3ff70acea28007b345ce335321b82fe}{}\label{classanalysis_1_1_chemotaxis_ae3ff70acea28007b345ce335321b82fe} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!calculate\+S\+L\+Index@{calculate\+S\+L\+Index}}
+\index{calculate\+S\+L\+Index@{calculate\+S\+L\+Index}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{calculate\+S\+L\+Index()}{calculateSLIndex()}}
+{\footnotesize\ttfamily float calculate\+S\+L\+Index (\begin{DoxyParamCaption}\item[{List$<$ List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$$>$}]{the\+Tracks }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the S\+L-\/index for the given set of trajectories.
+
+
+\begin{DoxyParams}{Parameters}
+{\em the\+Tracks} & 
+\begin{DoxyItemize}
+\item 2\+D-\/\+Array\+List that stores all the tracks 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+S\+L-\/\+Index 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00223}{223} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a1ebc6d4aaad3ec1c0eca87acb729ffb5}{}\label{classanalysis_1_1_chemotaxis_a1ebc6d4aaad3ec1c0eca87acb729ffb5} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!check\+Pairs@{check\+Pairs}}
+\index{check\+Pairs@{check\+Pairs}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{check\+Pairs()}{checkPairs()}}
+{\footnotesize\ttfamily boolean check\+Pairs (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{controls,  }\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{tests }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method checks if at least exists one trial in each Hashmap with the same ID 
+\begin{DoxyParams}{Parameters}
+{\em controls} & -\/ Set of control trials \\
+\hline
+{\em tests} & -\/ Set of test trials \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the method finds at least one pair with the same ID. Otherwise it returns false. 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00259}{259} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a50fdf81a3460741674381622f16581cb}{}\label{classanalysis_1_1_chemotaxis_a50fdf81a3460741674381622f16581cb} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!circular\+Histogram@{circular\+Histogram}}
+\index{circular\+Histogram@{circular\+Histogram}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{circular\+Histogram()}{circularHistogram()}}
+{\footnotesize\ttfamily int \mbox{[}$\,$\mbox{]} circular\+Histogram (\begin{DoxyParamCaption}\item[{List$<$ Double $>$}]{angles,  }\item[{int}]{n }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the histogram for the given set of angles.
+
+
+\begin{DoxyParams}{Parameters}
+{\em angles} & 
+\begin{DoxyItemize}
+\item The angles (in degrees). 
+\end{DoxyItemize}\\
+\hline
+{\em n} & 
+\begin{DoxyItemize}
+\item Total number of bins for the histogram. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Array of the number of elements for each bin. 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00281}{281} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a55deae924cf7ec2004a8fdcd8e185f94}{}\label{classanalysis_1_1_chemotaxis_a55deae924cf7ec2004a8fdcd8e185f94} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!count\+Angles@{count\+Angles}}
+\index{count\+Angles@{count\+Angles}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{count\+Angles()}{countAngles()}}
+{\footnotesize\ttfamily int \mbox{[}$\,$\mbox{]} count\+Angles (\begin{DoxyParamCaption}\item[{\hyperlink{classdata_1_1_serializable_list}{Serializable\+List}}]{the\+Tracks }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method counts, for the given set of trajectories, how many angles go in the gradient direction and how many in the opposite (or other) direction, depending on the value of the parameter \char`\"{}\+Compare Opposite
+\+Directions\char`\"{} set by the user on the Settings Window.
+
+
+\begin{DoxyParams}{Parameters}
+{\em the\+Tracks} & 
+\begin{DoxyItemize}
+\item The array with all trajectories 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An array containing the total count of angles (\mbox{[}0\mbox{]} -\/ upgradient\+: \mbox{[}1\mbox{]} -\/ other directions). 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00306}{306} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a668ad1c1240012d6fb70c1fac4a219be}{}\label{classanalysis_1_1_chemotaxis_a668ad1c1240012d6fb70c1fac4a219be} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!count\+Instant\+Displacements@{count\+Instant\+Displacements}}
+\index{count\+Instant\+Displacements@{count\+Instant\+Displacements}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{count\+Instant\+Displacements()}{countInstantDisplacements()}}
+{\footnotesize\ttfamily int \mbox{[}$\,$\mbox{]} count\+Instant\+Displacements (\begin{DoxyParamCaption}\item[{List$<$ \hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} $>$}]{track }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method counts, for the given trajectory, how many angles go in the gradient direction and how many in the opposite (or other) direction, depending on the value of the parameter \char`\"{}\+Compare Opposite Directions\char`\"{} set by the user on the Settings Window.
+
+
+\begin{DoxyParams}{Parameters}
+{\em track} & 
+\begin{DoxyItemize}
+\item The single trajectory to analyse 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An array containing the total count of angles (\mbox{[}0\mbox{]} -\/ upgradient\+: \mbox{[}1\mbox{]} -\/ other directions). 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00328}{328} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ab048bf7b5ce8c46bb48b99b8d0999110}{}\label{classanalysis_1_1_chemotaxis_ab048bf7b5ce8c46bb48b99b8d0999110} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!do\+In\+Background@{do\+In\+Background}}
+\index{do\+In\+Background@{do\+In\+Background}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{do\+In\+Background()}{doInBackground()}}
+{\footnotesize\ttfamily Boolean do\+In\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method is inherit from Swing\+Worker class and it is the starting point after the execute() method is called. 
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00362}{362} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ab650651e4cda2869f73100c6fd2c821a}{}\label{classanalysis_1_1_chemotaxis_ab650651e4cda2869f73100c6fd2c821a} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!done@{done}}
+\index{done@{done}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{done()}{done()}}
+{\footnotesize\ttfamily void done (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+This method is executed at the end of the worker thread in the Event Dispatch Thread. 
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00386}{386} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ab864eab3ca8e5147e34d6a4747d24e72}{}\label{classanalysis_1_1_chemotaxis_ab864eab3ca8e5147e34d6a4747d24e72} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!draw\+Results@{draw\+Results}}
+\index{draw\+Results@{draw\+Results}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{draw\+Results()}{drawResults()}}
+{\footnotesize\ttfamily void draw\+Results (\begin{DoxyParamCaption}\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{trial }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method draws a chemotactic cone and a rose diagram for a single trial analysis.
+
+
+\begin{DoxyParams}{Parameters}
+{\em trial} & \\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00407}{407} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a40fa55bdb0e1b4e7e0f9de92076ab2f9}{}\label{classanalysis_1_1_chemotaxis_a40fa55bdb0e1b4e7e0f9de92076ab2f9} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!find\+Trial@{find\+Trial}}
+\index{find\+Trial@{find\+Trial}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{find\+Trial()}{findTrial()}}
+{\footnotesize\ttfamily \hyperlink{classdata_1_1_trial}{Trial} find\+Trial (\begin{DoxyParamCaption}\item[{String}]{id,  }\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{trials }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method search in the given set of trials for the one with the given ID.
+
+
+\begin{DoxyParams}{Parameters}
+{\em id} & 
+\begin{DoxyItemize}
+\item Identifier of the trial to find. 
+\end{DoxyItemize}\\
+\hline
+{\em trials} & 
+\begin{DoxyItemize}
+\item Set of trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the trial found or null otherwise 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00429}{429} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a00ea60f92f2e11a363c01d04b6df7f10}{}\label{classanalysis_1_1_chemotaxis_a00ea60f92f2e11a363c01d04b6df7f10} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!get\+Control\+Trials@{get\+Control\+Trials}}
+\index{get\+Control\+Trials@{get\+Control\+Trials}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{get\+Control\+Trials()}{getControlTrials()}}
+{\footnotesize\ttfamily Map$<$String, \hyperlink{classdata_1_1_trial}{Trial}$>$ get\+Control\+Trials (\begin{DoxyParamCaption}\item[{String}]{folder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00438}{438} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a0a5886ad5b1d3a1dee18ed4fe5da7ed8}{}\label{classanalysis_1_1_chemotaxis_a0a5886ad5b1d3a1dee18ed4fe5da7ed8} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!get\+List\+Of\+Angles@{get\+List\+Of\+Angles}}
+\index{get\+List\+Of\+Angles@{get\+List\+Of\+Angles}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{get\+List\+Of\+Angles()}{getListOfAngles()}}
+{\footnotesize\ttfamily List$<$Double$>$ get\+List\+Of\+Angles (\begin{DoxyParamCaption}\item[{\hyperlink{classdata_1_1_serializable_list}{Serializable\+List}}]{the\+Tracks }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates all instantaneous displacements for a given set of trajectories.
+
+
+\begin{DoxyParams}{Parameters}
+{\em the\+Tracks} & 
+\begin{DoxyItemize}
+\item Array with all trajectories. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of angles 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00474}{474} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a02c2fbfd2097bca3933e285e6712a58d}{}\label{classanalysis_1_1_chemotaxis_a02c2fbfd2097bca3933e285e6712a58d} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!get\+Odds\+Values@{get\+Odds\+Values}}
+\index{get\+Odds\+Values@{get\+Odds\+Values}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{get\+Odds\+Values()}{getOddsValues()}}
+{\footnotesize\ttfamily double \mbox{[}$\,$\mbox{]} get\+Odds\+Values (\begin{DoxyParamCaption}\item[{\hyperlink{classdata_1_1_serializable_list}{Serializable\+List}}]{tracks }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method counts, for the given set of trajectories, how many angles go in the gradient direction and how many in the opposite (or other) direction, depending on the value of the parameter \char`\"{}\+Compare Opposite
+\+Directions\char`\"{} set by the user on the Settings Window. The method stops when all the trajectories have been analysed or the maximum number of angles to analyse is reached.
+
+
+\begin{DoxyParams}{Parameters}
+{\em tracks} & 
+\begin{DoxyItemize}
+\item All the trajectories to analyse 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+An array containing the total count of angles (\mbox{[}0\mbox{]} -\/ upgradient\+: \mbox{[}1\mbox{]} -\/ other directions). 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00505}{505} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a973011dfbed998ea23443c2b79ac9ee3}{}\label{classanalysis_1_1_chemotaxis_a973011dfbed998ea23443c2b79ac9ee3} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!get\+Test\+Folders@{get\+Test\+Folders}}
+\index{get\+Test\+Folders@{get\+Test\+Folders}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{get\+Test\+Folders()}{getTestFolders()}}
+{\footnotesize\ttfamily List$<$String$>$ get\+Test\+Folders (\begin{DoxyParamCaption}\item[{String}]{folder }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+For a given folder, this method returns a list of all subfolders contained in it, that are not named as \char`\"{}control\char`\"{}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em folder} & \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List of subfolders 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00531}{531} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a5580224f7f7e9df7d925ad14f9364d98}{}\label{classanalysis_1_1_chemotaxis_a5580224f7f7e9df7d925ad14f9364d98} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!get\+Trials@{get\+Trials}}
+\index{get\+Trials@{get\+Trials}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{get\+Trials()}{getTrials()}}
+{\footnotesize\ttfamily Map$<$String, \hyperlink{classdata_1_1_trial}{Trial}$>$ get\+Trials (\begin{DoxyParamCaption}\item[{List$<$ String $>$}]{filenames }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method returns all trials extracted from the given set of A\+VI files.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filenames} & List of avi filenames to be analysed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+All extracted trials 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00551}{551} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ae0431b7311aa1bb593e062536734de2c}{}\label{classanalysis_1_1_chemotaxis_ae0431b7311aa1bb593e062536734de2c} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!indexes\+Analysis@{indexes\+Analysis}}
+\index{indexes\+Analysis@{indexes\+Analysis}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{indexes\+Analysis()}{indexesAnalysis()}}
+{\footnotesize\ttfamily Results\+Table indexes\+Analysis (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{controls,  }\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{tests }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates Ch-\/\+Index and S\+L-\/index for the given set of trials
+
+
+\begin{DoxyParams}{Parameters}
+{\em controls} & 
+\begin{DoxyItemize}
+\item control trials 
+\end{DoxyItemize}\\
+\hline
+{\em tests} & 
+\begin{DoxyItemize}
+\item tests trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Results\+Table with all indexes 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00574}{574} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a226e01e0b4acab847ec3b2c1bb233740}{}\label{classanalysis_1_1_chemotaxis_a226e01e0b4acab847ec3b2c1bb233740} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!merge\+Tracks@{merge\+Tracks}}
+\index{merge\+Tracks@{merge\+Tracks}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{merge\+Tracks()}{mergeTracks()}}
+{\footnotesize\ttfamily \hyperlink{classdata_1_1_serializable_list}{Serializable\+List} merge\+Tracks (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{trials }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method join all tracks of the given set of trials, into one single array.
+
+
+\begin{DoxyParams}{Parameters}
+{\em trials} & 
+\begin{DoxyItemize}
+\item set of trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+List with all tracks 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00602}{602} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a3ae63569c841ffc6aa09be276f526c03}{}\label{classanalysis_1_1_chemotaxis_a3ae63569c841ffc6aa09be276f526c03} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!min\+Sample\+Size@{min\+Sample\+Size}}
+\index{min\+Sample\+Size@{min\+Sample\+Size}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{min\+Sample\+Size()}{minSampleSize()}}
+{\footnotesize\ttfamily int min\+Sample\+Size (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{trials }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method looks for which trial has the minimum number of instantaneous displacements and return this number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em trials} & 
+\begin{DoxyItemize}
+\item set of trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+the value of the minimum number of instantaneous displacements for one trial in the given set of trials. 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00621}{621} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a4cf45f4c73ebe44a71a622c690f0b331}{}\label{classanalysis_1_1_chemotaxis_a4cf45f4c73ebe44a71a622c690f0b331} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!or@{or}}
+\index{or@{or}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{or()}{or()}}
+{\footnotesize\ttfamily double or (\begin{DoxyParamCaption}\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{control,  }\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{test }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates odds ratio for a given pair control-\/test
+
+
+\begin{DoxyParams}{Parameters}
+{\em control} & 
+\begin{DoxyItemize}
+\item control trial 
+\end{DoxyItemize}\\
+\hline
+{\em test} & 
+\begin{DoxyItemize}
+\item test trial to be analysed 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Odds Ratio 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00643}{643} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a8ee54f019a9258760e20482e3cd6b851}{}\label{classanalysis_1_1_chemotaxis_a8ee54f019a9258760e20482e3cd6b851} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!or\+Threshold@{or\+Threshold}}
+\index{or\+Threshold@{or\+Threshold}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{or\+Threshold()}{orThreshold()}}
+{\footnotesize\ttfamily double or\+Threshold (\begin{DoxyParamCaption}\item[{Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$}]{controls }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the control threshold used for bootstrapping analysis.
+
+
+\begin{DoxyParams}{Parameters}
+{\em controls} & 
+\begin{DoxyItemize}
+\item Set of control trials 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+Threshold for bootstrapping analysis 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00666}{666} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ab23f946e0f1055d348e975e3058f323d}{}\label{classanalysis_1_1_chemotaxis_ab23f946e0f1055d348e975e3058f323d} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!relative\+Angle@{relative\+Angle}}
+\index{relative\+Angle@{relative\+Angle}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{relative\+Angle()}{relativeAngle()}}
+{\footnotesize\ttfamily double relative\+Angle (\begin{DoxyParamCaption}\item[{\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}}]{previous,  }\item[{\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon}}]{next }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the relative angle between the given displacement made by a cell, and the gradient direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em previous} & 
+\begin{DoxyItemize}
+\item previous coordinates of the cell before displacement 
+\end{DoxyItemize}\\
+\hline
+{\em next} & 
+\begin{DoxyItemize}
+\item next coordinates of the cell after displacement 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+relative angle in the interval \mbox{[}-\/\+PI,PI\mbox{]} 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00701}{701} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_aef66a58ab7f95817a68a3429550562fc}{}\label{classanalysis_1_1_chemotaxis_aef66a58ab7f95817a68a3429550562fc} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!select\+Analysis@{select\+Analysis}}
+\index{select\+Analysis@{select\+Analysis}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{select\+Analysis()}{selectAnalysis()}}
+{\footnotesize\ttfamily void select\+Analysis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method opens a set of dialogs to ask the user which analysis has to be carried on. 
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00724}{724} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_ac5db76309b6da4b0f351cdbb5876fec4}{}\label{classanalysis_1_1_chemotaxis_ac5db76309b6da4b0f351cdbb5876fec4} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!set\+Bootstrapping\+Results@{set\+Bootstrapping\+Results}}
+\index{set\+Bootstrapping\+Results@{set\+Bootstrapping\+Results}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{set\+Bootstrapping\+Results()}{setBootstrappingResults()}}
+{\footnotesize\ttfamily void set\+Bootstrapping\+Results (\begin{DoxyParamCaption}\item[{Results\+Table}]{rt,  }\item[{double}]{or,  }\item[{double}]{th,  }\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{trial }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method adds to the given results table, a new row with the given parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rt} & 
+\begin{DoxyItemize}
+\item Results\+Table to be appended. 
+\end{DoxyItemize}\\
+\hline
+{\em or} & 
+\begin{DoxyItemize}
+\item Odds\+Ratio. 
+\end{DoxyItemize}\\
+\hline
+{\em th} & 
+\begin{DoxyItemize}
+\item Threshold used to calculate the given odds\+Ratio. 
+\end{DoxyItemize}\\
+\hline
+{\em trial} & 
+\begin{DoxyItemize}
+\item Trial analysed. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00781}{781} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+\hypertarget{classanalysis_1_1_chemotaxis_a9c90c33405ef04f0e75e5f8dcb56520e}{}\label{classanalysis_1_1_chemotaxis_a9c90c33405ef04f0e75e5f8dcb56520e} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!set\+Indexes\+Results@{set\+Indexes\+Results}}
+\index{set\+Indexes\+Results@{set\+Indexes\+Results}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{set\+Indexes\+Results()}{setIndexesResults()}}
+{\footnotesize\ttfamily void set\+Indexes\+Results (\begin{DoxyParamCaption}\item[{Results\+Table}]{rt,  }\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{trial,  }\item[{float}]{ch\+Idx,  }\item[{float}]{sl\+Idx }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method adds to the given results table, a new row with the given parameters.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rt} & 
+\begin{DoxyItemize}
+\item Results\+Table to be appended. 
+\end{DoxyItemize}\\
+\hline
+{\em trial} & 
+\begin{DoxyItemize}
+\item Trial analysed. 
+\end{DoxyItemize}\\
+\hline
+{\em ch\+Idx} & 
+\begin{DoxyItemize}
+\item Ch-\/\+Index of the given trial. 
+\end{DoxyItemize}\\
+\hline
+{\em sl\+Idx} & 
+\begin{DoxyItemize}
+\item S\+L-\/\+Index of the given trial. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00818}{818} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classanalysis_1_1_chemotaxis_ae0c6f15cfb3c589fb7817738e51998bd}{}\label{classanalysis_1_1_chemotaxis_ae0c6f15cfb3c589fb7817738e51998bd} 
+\index{analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}!analysis@{analysis}}
+\index{analysis@{analysis}!analysis\+::\+Chemotaxis@{analysis\+::\+Chemotaxis}}
+\subsubsection{\texorpdfstring{analysis}{analysis}}
+{\footnotesize\ttfamily \hyperlink{enumanalysis_1_1_chemotaxis_1_1_type_of_analysis}{Type\+Of\+Analysis} analysis = \hyperlink{enumanalysis_1_1_chemotaxis_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{Type\+Of\+Analysis.\+N\+O\+NE}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_chemotaxis_8java_source_l00054}{54} of file \hyperlink{_chemotaxis_8java_source}{Chemotaxis.\+java}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_chemotaxis_8java}{Chemotaxis.\+java}\end{DoxyCompactItemize}

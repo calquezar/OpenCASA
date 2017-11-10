@@ -1,15 +1,15 @@
 var classfunctions_1_1_computer_vision =
 [
-    [ "autoThresholdImagePlus", "classfunctions_1_1_computer_vision.html#a2e8986c5f6706b0a644b252aea5cd041", null ],
-    [ "autoThresholdImagePlus", "classfunctions_1_1_computer_vision.html#a64c86edaf4c0d4847d3e32b5db2dbdcf", null ],
-    [ "convertToGrayscale", "classfunctions_1_1_computer_vision.html#a6756d74ae35c9c9ed0f35b51b7257fba", null ],
-    [ "convertToRGB", "classfunctions_1_1_computer_vision.html#a70eb63f34a34ceceab19157a3a26570b", null ],
-    [ "getBlueChannel", "classfunctions_1_1_computer_vision.html#a68845595c1ffa570fa6d3aaead4ed847", null ],
-    [ "getGreenChannel", "classfunctions_1_1_computer_vision.html#ac7a646d52e5e856a80235f3c9035aa33", null ],
-    [ "getMeanGrayValue", "classfunctions_1_1_computer_vision.html#a7e2d88eabe140248d8ae6ddfdae4582f", null ],
-    [ "getRedChannel", "classfunctions_1_1_computer_vision.html#a6c652c689aa411bd6da3ae7478b1227c", null ],
-    [ "outlineThresholdImage", "classfunctions_1_1_computer_vision.html#aa32901635cb5b18c0edeb63559a330a7", null ],
-    [ "thresholdImagePlus", "classfunctions_1_1_computer_vision.html#ada06ea31d30a536e7ed5dc97fa66e423", null ],
-    [ "thresholdImageProcessor", "classfunctions_1_1_computer_vision.html#af0744bb8e9c2ab1ae9b3cd9d159a4201", null ],
-    [ "thresholdStack", "classfunctions_1_1_computer_vision.html#a4e003eb5581184680940ca7072a71da3", null ]
+    [ "autoThresholdImagePlus", "classfunctions_1_1_computer_vision.html#a93e3c71f7e9e359a377ebed559810c28", null ],
+    [ "autoThresholdImagePlus", "classfunctions_1_1_computer_vision.html#a682b3978d10477ebaf0c32969ff6650b", null ],
+    [ "convertToGrayscale", "classfunctions_1_1_computer_vision.html#a4d0fe516e9ef71c60ba67150cf288030", null ],
+    [ "convertToRGB", "classfunctions_1_1_computer_vision.html#a98a9ec9a4b8c6a28678d649822a73bc8", null ],
+    [ "getBlueChannel", "classfunctions_1_1_computer_vision.html#a8569abc8aa379c890c8332eda42095be", null ],
+    [ "getGreenChannel", "classfunctions_1_1_computer_vision.html#a42b101d8bd6c2d64f663411074910dde", null ],
+    [ "getMeanGrayValue", "classfunctions_1_1_computer_vision.html#af9a3285b7e044506df25989c9f718308", null ],
+    [ "getRedChannel", "classfunctions_1_1_computer_vision.html#a0a2c9c7e45231d1d09b3c8aca3df6511", null ],
+    [ "outlineThresholdImage", "classfunctions_1_1_computer_vision.html#a1272b47ed42c25a4d2d7f7d891d0e42f", null ],
+    [ "thresholdImagePlus", "classfunctions_1_1_computer_vision.html#a75c4bdce2977d9dcfe309e60b16cbf4f", null ],
+    [ "thresholdImageProcessor", "classfunctions_1_1_computer_vision.html#ae1ef4c4258127cb97bae706e7f65fc2e", null ],
+    [ "thresholdStack", "classfunctions_1_1_computer_vision.html#a253912ee71e289051b50b08dcce6376f", null ]
 ];

@@ -1,0 +1,430 @@
+\hypertarget{classanalysis_1_1_motility}{}\section{Motility Class Reference}
+\label{classanalysis_1_1_motility}\index{Motility@{Motility}}
+Inheritance diagram for Motility\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classanalysis_1_1_motility}
+\end{center}
+\end{figure}
+\subsection*{Classes}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{enumanalysis_1_1_motility_1_1_type_of_analysis}{Type\+Of\+Analysis}
+\end{DoxyCompactItemize}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classanalysis_1_1_motility_a7c749f31bb24070f3cb6e9133160eb34}{Motility} ()
+\item 
+void \hyperlink{classanalysis_1_1_motility_aef66a58ab7f95817a68a3429550562fc}{select\+Analysis} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+Boolean \hyperlink{classanalysis_1_1_motility_ab048bf7b5ce8c46bb48b99b8d0999110}{do\+In\+Background} ()  throws Exception 
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classanalysis_1_1_motility_ab3d086d15d667db78ea6785d8fc90223}{analyse\+Directories} ()
+\item 
+void \hyperlink{classanalysis_1_1_motility_ad8447fb7554f7f126822c7a3f3f680ce}{analyse\+Directory} ()
+\item 
+void \hyperlink{classanalysis_1_1_motility_a0b1464e818c4300782cb7e3322448f95}{analyse\+File} ()
+\item 
+void \hyperlink{classanalysis_1_1_motility_afa983ea070fe9739c16c819bd180dac9}{calculate\+Average\+Motility} (Results\+Table rt, \hyperlink{classdata_1_1_trial}{Trial} trial)
+\item 
+void \hyperlink{classanalysis_1_1_motility_a02cd8027747b70728a837c58fdf75cb4}{calculate\+Motility} (Results\+Table rt, \hyperlink{classdata_1_1_trial}{Trial} trial)
+\item 
+void \hyperlink{classanalysis_1_1_motility_a6416a16af8e55569f37168bb76fe7174}{calculate\+Total\+Motility} (Results\+Table rt, String filename)
+\item 
+Map$<$ String, \hyperlink{classdata_1_1_trial}{Trial} $>$ \hyperlink{classanalysis_1_1_motility_a5580224f7f7e9df7d925ad14f9364d98}{get\+Trials} (List$<$ String $>$ filenames)
+\item 
+void \hyperlink{classanalysis_1_1_motility_a20915c32899c4bbe4d08e483bd5eb09c}{reset\+Params} ()
+\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{enumanalysis_1_1_motility_1_1_type_of_analysis}{Type\+Of\+Analysis} \hyperlink{classanalysis_1_1_motility_ae0c6f15cfb3c589fb7817738e51998bd}{analysis} = \hyperlink{enumanalysis_1_1_motility_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{Type\+Of\+Analysis.\+N\+O\+NE}
+\item 
+float \hyperlink{classanalysis_1_1_motility_a4781116c1a5f8316e2cacb2e92dac270}{count\+Progressive\+Sperm} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a35f4543589a6af76e2ba8e813e9c8d15}{total\+\_\+alh\+Max} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a85064380da24660107d26a563b17e002}{total\+\_\+alh\+Mean} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_aa42afc6b771762a4c51d2ac098050a2c}{total\+\_\+bcf} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_aac49177d1bc39508a93db152eb8f8c61}{total\+\_\+dance} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a051b97e22d0b6acb0d861dd7e4e26f94}{total\+\_\+lin} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a5c428e4bdee1a7aa6c30ce2789a781db}{total\+\_\+mad} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_aec24fedb6d4751dbc92852b6b7c467f4}{total\+\_\+motile} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a12c018b723047f29c67110a7bb1134a8}{total\+\_\+non\+Motile} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a2815eaed86c0b1e82e0fa050070546de}{total\+\_\+sperm} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_ae849455f41cc53bf86d72ca509155a83}{total\+\_\+str} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_ae4d5fa9ba9511057ab1b12594029ebd5}{total\+\_\+vap} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a39e3cc2644471738bffd77164ecefa1a}{total\+\_\+vcl} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a9fca6ddbc4e27eaf9181320d32dbd631}{total\+\_\+vsl} = 0
+\item 
+float \hyperlink{classanalysis_1_1_motility_a8884d2acf5fc9ed45c9b8d775da894ce}{total\+\_\+wob} = 0
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+This class implements all the functions related to motility analysis.
+
+\begin{DoxyAuthor}{Author}
+Carlos Alquezar 
+\end{DoxyAuthor}
+
+
+Definition at line \hyperlink{_motility_8java_source_l00046}{46} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classanalysis_1_1_motility_a7c749f31bb24070f3cb6e9133160eb34}{}\label{classanalysis_1_1_motility_a7c749f31bb24070f3cb6e9133160eb34} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!Motility@{Motility}}
+\index{Motility@{Motility}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{Motility()}{Motility()}}
+{\footnotesize\ttfamily \hyperlink{classanalysis_1_1_motility}{Motility} (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00069}{69} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classanalysis_1_1_motility_ab3d086d15d667db78ea6785d8fc90223}{}\label{classanalysis_1_1_motility_ab3d086d15d667db78ea6785d8fc90223} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!analyse\+Directories@{analyse\+Directories}}
+\index{analyse\+Directories@{analyse\+Directories}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{analyse\+Directories()}{analyseDirectories()}}
+{\footnotesize\ttfamily void analyse\+Directories (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method asks user for the directory that contains all subfolders that are going to be analysed. For each subfolder, the average motility parameters will be calculated. The method finish showing a Results\+Table with the motility information. 
+
+Definition at line \hyperlink{_motility_8java_source_l00078}{78} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_ad8447fb7554f7f126822c7a3f3f680ce}{}\label{classanalysis_1_1_motility_ad8447fb7554f7f126822c7a3f3f680ce} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!analyse\+Directory@{analyse\+Directory}}
+\index{analyse\+Directory@{analyse\+Directory}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{analyse\+Directory()}{analyseDirectory()}}
+{\footnotesize\ttfamily void analyse\+Directory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method asks user for the directory that contains all A\+VI files that are going to be analysed. For each file, the individual and average motility parameters will be calculated. The method finish showing the corresponding results tables with the motility information. 
+
+Definition at line \hyperlink{_motility_8java_source_l00107}{107} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a0b1464e818c4300782cb7e3322448f95}{}\label{classanalysis_1_1_motility_a0b1464e818c4300782cb7e3322448f95} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!analyse\+File@{analyse\+File}}
+\index{analyse\+File@{analyse\+File}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{analyse\+File()}{analyseFile()}}
+{\footnotesize\ttfamily void analyse\+File (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method asks user for the file that is going to be analysed, extract the corresponding trial and show results. 
+
+Definition at line \hyperlink{_motility_8java_source_l00129}{129} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_afa983ea070fe9739c16c819bd180dac9}{}\label{classanalysis_1_1_motility_afa983ea070fe9739c16c819bd180dac9} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!calculate\+Average\+Motility@{calculate\+Average\+Motility}}
+\index{calculate\+Average\+Motility@{calculate\+Average\+Motility}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{calculate\+Average\+Motility()}{calculateAverageMotility()}}
+{\footnotesize\ttfamily void calculate\+Average\+Motility (\begin{DoxyParamCaption}\item[{Results\+Table}]{rt,  }\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{trial }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the average motility values for the given trial.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rt} & 
+\begin{DoxyItemize}
+\item Results\+Table where the motility information will be added. 
+\end{DoxyItemize}\\
+\hline
+{\em trial} & 
+\begin{DoxyItemize}
+\item Trial with all trajectories that will be analysed. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_motility_8java_source_l00161}{161} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a02cd8027747b70728a837c58fdf75cb4}{}\label{classanalysis_1_1_motility_a02cd8027747b70728a837c58fdf75cb4} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!calculate\+Motility@{calculate\+Motility}}
+\index{calculate\+Motility@{calculate\+Motility}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{calculate\+Motility()}{calculateMotility()}}
+{\footnotesize\ttfamily void calculate\+Motility (\begin{DoxyParamCaption}\item[{Results\+Table}]{rt,  }\item[{\hyperlink{classdata_1_1_trial}{Trial}}]{trial }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the individual motility values for the given trial.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rt} & 
+\begin{DoxyItemize}
+\item Results\+Table where the motility information will be added. 
+\end{DoxyItemize}\\
+\hline
+{\em trial} & 
+\begin{DoxyItemize}
+\item Trial with all trajectories that will be analysed. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_motility_8java_source_l00223}{223} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a6416a16af8e55569f37168bb76fe7174}{}\label{classanalysis_1_1_motility_a6416a16af8e55569f37168bb76fe7174} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!calculate\+Total\+Motility@{calculate\+Total\+Motility}}
+\index{calculate\+Total\+Motility@{calculate\+Total\+Motility}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{calculate\+Total\+Motility()}{calculateTotalMotility()}}
+{\footnotesize\ttfamily void calculate\+Total\+Motility (\begin{DoxyParamCaption}\item[{Results\+Table}]{rt,  }\item[{String}]{filename }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method calculates the total average motility values for a folder.
+
+
+\begin{DoxyParams}{Parameters}
+{\em rt} & 
+\begin{DoxyItemize}
+\item Results\+Table where the motility information will be added. 
+\end{DoxyItemize}\\
+\hline
+{\em filename} & 
+\begin{DoxyItemize}
+\item the folder name. This information will be added to the results table. 
+\end{DoxyItemize}\\
+\hline
+\end{DoxyParams}
+
+
+Definition at line \hyperlink{_motility_8java_source_l00307}{307} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_ab048bf7b5ce8c46bb48b99b8d0999110}{}\label{classanalysis_1_1_motility_ab048bf7b5ce8c46bb48b99b8d0999110} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!do\+In\+Background@{do\+In\+Background}}
+\index{do\+In\+Background@{do\+In\+Background}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{do\+In\+Background()}{doInBackground()}}
+{\footnotesize\ttfamily Boolean do\+In\+Background (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption}) throws Exception\hspace{0.3cm}{\ttfamily [protected]}}
+
+This method is inherit from Swing\+Worker class and it is the starting point after the execute() method is called. 
+
+Definition at line \hyperlink{_motility_8java_source_l00354}{354} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a5580224f7f7e9df7d925ad14f9364d98}{}\label{classanalysis_1_1_motility_a5580224f7f7e9df7d925ad14f9364d98} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!get\+Trials@{get\+Trials}}
+\index{get\+Trials@{get\+Trials}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{get\+Trials()}{getTrials()}}
+{\footnotesize\ttfamily Map$<$String, \hyperlink{classdata_1_1_trial}{Trial}$>$ get\+Trials (\begin{DoxyParamCaption}\item[{List$<$ String $>$}]{filenames }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method returns all trials extracted from the given set of A\+VI files.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filenames} & List of avi filenames to be analysed. \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+All extracted trials 
+\end{DoxyReturn}
+
+
+Definition at line \hyperlink{_motility_8java_source_l00376}{376} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a20915c32899c4bbe4d08e483bd5eb09c}{}\label{classanalysis_1_1_motility_a20915c32899c4bbe4d08e483bd5eb09c} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!reset\+Params@{reset\+Params}}
+\index{reset\+Params@{reset\+Params}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{reset\+Params()}{resetParams()}}
+{\footnotesize\ttfamily void reset\+Params (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+This method resets all motility parameters of the motility analysis 
+
+Definition at line \hyperlink{_motility_8java_source_l00393}{393} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_aef66a58ab7f95817a68a3429550562fc}{}\label{classanalysis_1_1_motility_aef66a58ab7f95817a68a3429550562fc} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!select\+Analysis@{select\+Analysis}}
+\index{select\+Analysis@{select\+Analysis}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{select\+Analysis()}{selectAnalysis()}}
+{\footnotesize\ttfamily void select\+Analysis (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})}
+
+This method opens a set of dialogs to ask the user which analysis has to be carried on. 
+
+Definition at line \hyperlink{_motility_8java_source_l00415}{415} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classanalysis_1_1_motility_ae0c6f15cfb3c589fb7817738e51998bd}{}\label{classanalysis_1_1_motility_ae0c6f15cfb3c589fb7817738e51998bd} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!analysis@{analysis}}
+\index{analysis@{analysis}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{analysis}{analysis}}
+{\footnotesize\ttfamily \hyperlink{enumanalysis_1_1_motility_1_1_type_of_analysis}{Type\+Of\+Analysis} analysis = \hyperlink{enumanalysis_1_1_motility_1_1_type_of_analysis_a899caa602e4fff675b17cdbab33607ec}{Type\+Of\+Analysis.\+N\+O\+NE}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00052}{52} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a4781116c1a5f8316e2cacb2e92dac270}{}\label{classanalysis_1_1_motility_a4781116c1a5f8316e2cacb2e92dac270} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!count\+Progressive\+Sperm@{count\+Progressive\+Sperm}}
+\index{count\+Progressive\+Sperm@{count\+Progressive\+Sperm}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{count\+Progressive\+Sperm}{countProgressiveSperm}}
+{\footnotesize\ttfamily float count\+Progressive\+Sperm = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00053}{53} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a35f4543589a6af76e2ba8e813e9c8d15}{}\label{classanalysis_1_1_motility_a35f4543589a6af76e2ba8e813e9c8d15} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+alh\+Max@{total\+\_\+alh\+Max}}
+\index{total\+\_\+alh\+Max@{total\+\_\+alh\+Max}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+alh\+Max}{total\_alhMax}}
+{\footnotesize\ttfamily float total\+\_\+alh\+Max = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00054}{54} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a85064380da24660107d26a563b17e002}{}\label{classanalysis_1_1_motility_a85064380da24660107d26a563b17e002} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+alh\+Mean@{total\+\_\+alh\+Mean}}
+\index{total\+\_\+alh\+Mean@{total\+\_\+alh\+Mean}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+alh\+Mean}{total\_alhMean}}
+{\footnotesize\ttfamily float total\+\_\+alh\+Mean = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00055}{55} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_aa42afc6b771762a4c51d2ac098050a2c}{}\label{classanalysis_1_1_motility_aa42afc6b771762a4c51d2ac098050a2c} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+bcf@{total\+\_\+bcf}}
+\index{total\+\_\+bcf@{total\+\_\+bcf}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+bcf}{total\_bcf}}
+{\footnotesize\ttfamily float total\+\_\+bcf = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00056}{56} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_aac49177d1bc39508a93db152eb8f8c61}{}\label{classanalysis_1_1_motility_aac49177d1bc39508a93db152eb8f8c61} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+dance@{total\+\_\+dance}}
+\index{total\+\_\+dance@{total\+\_\+dance}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+dance}{total\_dance}}
+{\footnotesize\ttfamily float total\+\_\+dance = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00057}{57} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a051b97e22d0b6acb0d861dd7e4e26f94}{}\label{classanalysis_1_1_motility_a051b97e22d0b6acb0d861dd7e4e26f94} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+lin@{total\+\_\+lin}}
+\index{total\+\_\+lin@{total\+\_\+lin}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+lin}{total\_lin}}
+{\footnotesize\ttfamily float total\+\_\+lin = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00058}{58} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a5c428e4bdee1a7aa6c30ce2789a781db}{}\label{classanalysis_1_1_motility_a5c428e4bdee1a7aa6c30ce2789a781db} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+mad@{total\+\_\+mad}}
+\index{total\+\_\+mad@{total\+\_\+mad}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+mad}{total\_mad}}
+{\footnotesize\ttfamily float total\+\_\+mad = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00059}{59} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_aec24fedb6d4751dbc92852b6b7c467f4}{}\label{classanalysis_1_1_motility_aec24fedb6d4751dbc92852b6b7c467f4} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+motile@{total\+\_\+motile}}
+\index{total\+\_\+motile@{total\+\_\+motile}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+motile}{total\_motile}}
+{\footnotesize\ttfamily float total\+\_\+motile = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00060}{60} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a12c018b723047f29c67110a7bb1134a8}{}\label{classanalysis_1_1_motility_a12c018b723047f29c67110a7bb1134a8} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+non\+Motile@{total\+\_\+non\+Motile}}
+\index{total\+\_\+non\+Motile@{total\+\_\+non\+Motile}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+non\+Motile}{total\_nonMotile}}
+{\footnotesize\ttfamily float total\+\_\+non\+Motile = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00061}{61} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a2815eaed86c0b1e82e0fa050070546de}{}\label{classanalysis_1_1_motility_a2815eaed86c0b1e82e0fa050070546de} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+sperm@{total\+\_\+sperm}}
+\index{total\+\_\+sperm@{total\+\_\+sperm}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+sperm}{total\_sperm}}
+{\footnotesize\ttfamily float total\+\_\+sperm = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00062}{62} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_ae849455f41cc53bf86d72ca509155a83}{}\label{classanalysis_1_1_motility_ae849455f41cc53bf86d72ca509155a83} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+str@{total\+\_\+str}}
+\index{total\+\_\+str@{total\+\_\+str}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+str}{total\_str}}
+{\footnotesize\ttfamily float total\+\_\+str = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00063}{63} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_ae4d5fa9ba9511057ab1b12594029ebd5}{}\label{classanalysis_1_1_motility_ae4d5fa9ba9511057ab1b12594029ebd5} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+vap@{total\+\_\+vap}}
+\index{total\+\_\+vap@{total\+\_\+vap}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+vap}{total\_vap}}
+{\footnotesize\ttfamily float total\+\_\+vap = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00064}{64} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a39e3cc2644471738bffd77164ecefa1a}{}\label{classanalysis_1_1_motility_a39e3cc2644471738bffd77164ecefa1a} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+vcl@{total\+\_\+vcl}}
+\index{total\+\_\+vcl@{total\+\_\+vcl}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+vcl}{total\_vcl}}
+{\footnotesize\ttfamily float total\+\_\+vcl = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00065}{65} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a9fca6ddbc4e27eaf9181320d32dbd631}{}\label{classanalysis_1_1_motility_a9fca6ddbc4e27eaf9181320d32dbd631} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+vsl@{total\+\_\+vsl}}
+\index{total\+\_\+vsl@{total\+\_\+vsl}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+vsl}{total\_vsl}}
+{\footnotesize\ttfamily float total\+\_\+vsl = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00066}{66} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+\hypertarget{classanalysis_1_1_motility_a8884d2acf5fc9ed45c9b8d775da894ce}{}\label{classanalysis_1_1_motility_a8884d2acf5fc9ed45c9b8d775da894ce} 
+\index{analysis\+::\+Motility@{analysis\+::\+Motility}!total\+\_\+wob@{total\+\_\+wob}}
+\index{total\+\_\+wob@{total\+\_\+wob}!analysis\+::\+Motility@{analysis\+::\+Motility}}
+\subsubsection{\texorpdfstring{total\+\_\+wob}{total\_wob}}
+{\footnotesize\ttfamily float total\+\_\+wob = 0\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line \hyperlink{_motility_8java_source_l00067}{67} of file \hyperlink{_motility_8java_source}{Motility.\+java}.
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{_motility_8java}{Motility.\+java}\end{DoxyCompactItemize}

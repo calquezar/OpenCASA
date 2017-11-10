@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['uynv_5fcompression',['UYNV_COMPRESSION',['../classthird___party_1_1_a_v_i___reader.html#aefc30707c2f9e4d9294f23590613584e',1,'third_Party::AVI_Reader']]],
-  ['uyvy_5fcompression',['UYVY_COMPRESSION',['../classthird___party_1_1_a_v_i___reader.html#afee2b0fe721d4be2e5d6edec9eef0e09',1,'third_Party::AVI_Reader']]]
+  ['x',['x',['../classdata_1_1_spermatozoon.html#ad0da36b2558901e21e7a30f6c227a45e',1,'data::Spermatozoon']]],
+  ['xfactor',['xFactor',['../classgui_1_1_image_analysis_window.html#adb607f30ce4997349a99dca08d813585',1,'gui::ImageAnalysisWindow']]]
 ];

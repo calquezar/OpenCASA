@@ -1,0 +1,73 @@
+\hypertarget{_spermatozoon_8java_source}{}\section{Spermatozoon.\+java}
+\label{_spermatozoon_8java_source}\index{Spermatozoon.\+java@{Spermatozoon.\+java}}
+
+\begin{DoxyCode}
+00001 \textcolor{comment}{/*}
+00002 \textcolor{comment}{ *   OpenCASA software v0.8 for video and image analysis}
+00003 \textcolor{comment}{ *   Copyright (C) 2017  Carlos Alquézar}
+00004 \textcolor{comment}{ *}
+00005 \textcolor{comment}{ *   This program is free software: you can redistribute it and/or modify}
+00006 \textcolor{comment}{ *   it under the terms of the GNU General Public License as published by}
+00007 \textcolor{comment}{ *   the Free Software Foundation, either version 3 of the License, or}
+00008 \textcolor{comment}{ *   (at your option) any later version.}
+00009 \textcolor{comment}{ *}
+00010 \textcolor{comment}{ *   This program is distributed in the hope that it will be useful,}
+00011 \textcolor{comment}{ *   but WITHOUT ANY WARRANTY; without even the implied warranty of}
+00012 \textcolor{comment}{ *   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}
+00013 \textcolor{comment}{ *   GNU General Public License for more details.}
+00014 \textcolor{comment}{ *}
+00015 \textcolor{comment}{ *   You should have received a copy of the GNU General Public License}
+00016 \textcolor{comment}{ *   along with this program.  If not, see <https://www.gnu.org/licenses/>.}
+00017 \textcolor{comment}{*/}    
+00018 
+00019 \textcolor{keyword}{package }data;
+00020 
+00021 \textcolor{keyword}{import} java.io.Serializable;
+00022 
+\hypertarget{_spermatozoon_8java_source_l00027}{}\hyperlink{classdata_1_1_spermatozoon}{00027} \textcolor{keyword}{public} \textcolor{keyword}{class }\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} \textcolor{keyword}{implements} Serializable \{
+00028 
+\hypertarget{_spermatozoon_8java_source_l00032}{}\hyperlink{classdata_1_1_spermatozoon_a3238d314ecdee14d2966760945d00c3b}{00032}   \textcolor{keyword}{private} \textcolor{keyword}{static} \textcolor{keyword}{final} \textcolor{keywordtype}{long} \hyperlink{classdata_1_1_spermatozoon_a3238d314ecdee14d2966760945d00c3b}{serialVersionUID} = 1L;
+\hypertarget{_spermatozoon_8java_source_l00034}{}\hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{00034}   \textcolor{keyword}{public} String \textcolor{keywordtype}{id} = \textcolor{stringliteral}{"*"};
+\hypertarget{_spermatozoon_8java_source_l00036}{}\hyperlink{classdata_1_1_spermatozoon_ab46c49fb62e0ee61b3865f1e9153fdaa}{00036}   \textcolor{keyword}{public} \textcolor{keywordtype}{boolean} \hyperlink{classdata_1_1_spermatozoon_ab46c49fb62e0ee61b3865f1e9153fdaa}{flag} = \textcolor{keyword}{false};
+\hypertarget{_spermatozoon_8java_source_l00038}{}\hyperlink{classdata_1_1_spermatozoon_a204be1963f7e7f07114c1d42360376be}{00038}   \textcolor{keyword}{public} \textcolor{keywordtype}{boolean} \hyperlink{classdata_1_1_spermatozoon_a204be1963f7e7f07114c1d42360376be}{inTrack} = \textcolor{keyword}{false};
+\hypertarget{_spermatozoon_8java_source_l00040}{}\hyperlink{classdata_1_1_spermatozoon_aee0b3af79335b49fe9d9b025cfcde703}{00040}   \textcolor{keyword}{public} \textcolor{keywordtype}{int} \hyperlink{classdata_1_1_spermatozoon_aee0b3af79335b49fe9d9b025cfcde703}{trackNr};
+\hypertarget{_spermatozoon_8java_source_l00042}{}\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{00042}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x};
+\hypertarget{_spermatozoon_8java_source_l00044}{}\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{00044}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y};
+\hypertarget{_spermatozoon_8java_source_l00046}{}\hyperlink{classdata_1_1_spermatozoon_a14f94e529dff0b8bfba8e16fbe9755d6}{00046}   \textcolor{keyword}{public} \textcolor{keywordtype}{int} \hyperlink{classdata_1_1_spermatozoon_a14f94e529dff0b8bfba8e16fbe9755d6}{z};
+00047   \textcolor{comment}{// Boundary data}
+\hypertarget{_spermatozoon_8java_source_l00049}{}\hyperlink{classdata_1_1_spermatozoon_a5c25ae7634a79d11d6679b6b07c240a1}{00049} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_a5c25ae7634a79d11d6679b6b07c240a1}{bx};
+\hypertarget{_spermatozoon_8java_source_l00051}{}\hyperlink{classdata_1_1_spermatozoon_affce45e955f0a114a5569e019b8d8634}{00051}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_affce45e955f0a114a5569e019b8d8634}{by};
+\hypertarget{_spermatozoon_8java_source_l00053}{}\hyperlink{classdata_1_1_spermatozoon_ae426f00e82704fa09578f5446e22d915}{00053}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_ae426f00e82704fa09578f5446e22d915}{width};
+\hypertarget{_spermatozoon_8java_source_l00055}{}\hyperlink{classdata_1_1_spermatozoon_a48083b65ac9a863566dc3e3fff09a5b4}{00055}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00056   \textcolor{comment}{// Selection variables}
+\hypertarget{_spermatozoon_8java_source_l00058}{}\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{00058} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keywordtype}{boolean} \hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected} = \textcolor{keyword}{false};
+00059   \textcolor{comment}{// Morphometrics}
+\hypertarget{_spermatozoon_8java_source_l00061}{}\hyperlink{classdata_1_1_spermatozoon_ac84d85b9355bdffd37cf8632c9f72efe}{00061} \textcolor{comment}{}  \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_ac84d85b9355bdffd37cf8632c9f72efe}{total\_area} = -1;
+\hypertarget{_spermatozoon_8java_source_l00063}{}\hyperlink{classdata_1_1_spermatozoon_a893cd9ee5a9bdc16eecb9891fadd602c}{00063}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_a893cd9ee5a9bdc16eecb9891fadd602c}{total\_perimeter} = -1;
+\hypertarget{_spermatozoon_8java_source_l00065}{}\hyperlink{classdata_1_1_spermatozoon_ab5ab64dc3696466f1e700d20d538e436}{00065}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_ab5ab64dc3696466f1e700d20d538e436}{total\_feret} = -1;
+\hypertarget{_spermatozoon_8java_source_l00067}{}\hyperlink{classdata_1_1_spermatozoon_aea69b99de4cd3bda1fc7c464bb5d842e}{00067}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_aea69b99de4cd3bda1fc7c464bb5d842e}{total\_minFeret} = -1;
+\hypertarget{_spermatozoon_8java_source_l00071}{}\hyperlink{classdata_1_1_spermatozoon_ac4622d389badba1a387ec1e139d35c8e}{00071}   \textcolor{keyword}{public} \textcolor{keywordtype}{void} \hyperlink{classdata_1_1_spermatozoon_ac4622d389badba1a387ec1e139d35c8e}{copy}(\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} source) \{
+00072     this.\textcolor{keywordtype}{id} = source.\hyperlink{classdata_1_1_spermatozoon_a76010eef1edc0406cc2375c25d2a433d}{id};
+00073     this.x = source.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x};
+00074     this.y = source.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y};
+00075     this.z = source.\hyperlink{classdata_1_1_spermatozoon_a14f94e529dff0b8bfba8e16fbe9755d6}{z};
+00076     this.trackNr = source.\hyperlink{classdata_1_1_spermatozoon_aee0b3af79335b49fe9d9b025cfcde703}{trackNr};
+00077     this.inTrack = source.\hyperlink{classdata_1_1_spermatozoon_a204be1963f7e7f07114c1d42360376be}{inTrack};
+00078     this.flag = source.\hyperlink{classdata_1_1_spermatozoon_ab46c49fb62e0ee61b3865f1e9153fdaa}{flag};
+00079     this.bx = source.\hyperlink{classdata_1_1_spermatozoon_a5c25ae7634a79d11d6679b6b07c240a1}{bx};
+00080     this.by = source.\hyperlink{classdata_1_1_spermatozoon_affce45e955f0a114a5569e019b8d8634}{by};
+00081     this.width = source.\hyperlink{classdata_1_1_spermatozoon_ae426f00e82704fa09578f5446e22d915}{width};
+00082     this.height = source.\hyperlink{classdata_1_1_spermatozoon_a48083b65ac9a863566dc3e3fff09a5b4}{height};
+00083     this.selected = source.\hyperlink{classdata_1_1_spermatozoon_a6c5a33868fa92607c84982d696b8e957}{selected};
+00084     this.total\_area = source.\hyperlink{classdata_1_1_spermatozoon_ac84d85b9355bdffd37cf8632c9f72efe}{total\_area};
+00085     this.total\_perimeter = source.\hyperlink{classdata_1_1_spermatozoon_a893cd9ee5a9bdc16eecb9891fadd602c}{total\_perimeter};
+00086     this.total\_feret = source.\hyperlink{classdata_1_1_spermatozoon_ab5ab64dc3696466f1e700d20d538e436}{total\_feret};
+00087     this.total\_minFeret = source.\hyperlink{classdata_1_1_spermatozoon_aea69b99de4cd3bda1fc7c464bb5d842e}{total\_minFeret};
+00088   \}
+00089 
+\hypertarget{_spermatozoon_8java_source_l00095}{}\hyperlink{classdata_1_1_spermatozoon_aaef7a8e7602a08c82ea5fcbb777883e0}{00095}   \textcolor{keyword}{public} \textcolor{keywordtype}{float} \hyperlink{classdata_1_1_spermatozoon_aaef7a8e7602a08c82ea5fcbb777883e0}{distance}(\hyperlink{classdata_1_1_spermatozoon}{Spermatozoon} s) \{
+00096     \textcolor{keywordflow}{return} (\textcolor{keywordtype}{float}) Math.sqrt(Math.pow(\textcolor{keyword}{this}.x - s.\hyperlink{classdata_1_1_spermatozoon_ad0da36b2558901e21e7a30f6c227a45e}{x}, 2) + Math.pow(this.y - s.\hyperlink{classdata_1_1_spermatozoon_aa4f0d3eebc3c443f9be81bf48561a217}{y}, 2));
+00097   \}
+00098 
+00099 \}
+\end{DoxyCode}

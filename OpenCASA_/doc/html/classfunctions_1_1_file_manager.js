@@ -1,17 +1,17 @@
 var classfunctions_1_1_file_manager =
 [
-    [ "FileManager", "classfunctions_1_1_file_manager.html#ae9b482778b867021de8c5996981fdb86", null ],
-    [ "getAVI", "classfunctions_1_1_file_manager.html#a7e812f9d24b43b7c41d40416b30383af", null ],
-    [ "getContent", "classfunctions_1_1_file_manager.html#a8a8165fc0f5f0b31dd20695da79a77d1", null ],
-    [ "getFilename", "classfunctions_1_1_file_manager.html#a5b22bc37a0ada69ed447a34bdef68f6b", null ],
-    [ "getFiles", "classfunctions_1_1_file_manager.html#a252da250b5d0b7b72c22d851cb85f6d6", null ],
-    [ "getParentDirectory", "classfunctions_1_1_file_manager.html#afe655776ad5c59d6b3df6f4d18db1cd0", null ],
-    [ "getSubfolders", "classfunctions_1_1_file_manager.html#acd60931c8cd27cbc3ecc6eaf77950a77", null ],
-    [ "isAVI", "classfunctions_1_1_file_manager.html#a4869c9c7f09b402aeecd0771e46be578", null ],
-    [ "loadImageDirectory", "classfunctions_1_1_file_manager.html#a8c1a041e6eb3ca88747ab9b4b4c5f21c", null ],
-    [ "loadImageDirectory", "classfunctions_1_1_file_manager.html#a985a0a725008ecbd734b7676ea9d49e7", null ],
-    [ "loadImageFile", "classfunctions_1_1_file_manager.html#acecebdab16ca77cab3a3aebc1e0745f2", null ],
-    [ "removeExtension", "classfunctions_1_1_file_manager.html#a400317e6aea5b1fb927bdbd66393a1a4", null ],
-    [ "selectFile", "classfunctions_1_1_file_manager.html#aeb98f0638c58e80aef6382759ba051ef", null ],
-    [ "selectFolder", "classfunctions_1_1_file_manager.html#a01dbb6b5ae72a5d056d62cbeeb3c9622", null ]
+    [ "FileManager", "classfunctions_1_1_file_manager.html#a0ad324c611d51ae061bcf3105c84aef0", null ],
+    [ "getAVI", "classfunctions_1_1_file_manager.html#a140fc635f053a614aecddfb79baf5905", null ],
+    [ "getContent", "classfunctions_1_1_file_manager.html#a8d912a4b181b284e6c05e0f44f541e48", null ],
+    [ "getFilename", "classfunctions_1_1_file_manager.html#ad027758f34214960a7aa800e0f7c19db", null ],
+    [ "getFiles", "classfunctions_1_1_file_manager.html#a3a54a5574abfddd928b2b8675e8affa6", null ],
+    [ "getParentDirectory", "classfunctions_1_1_file_manager.html#aa9e15d838c5a7a0e3906d9ceec253398", null ],
+    [ "getSubfolders", "classfunctions_1_1_file_manager.html#a73efd872c86ccdce535ddb2798aaaea4", null ],
+    [ "isAVI", "classfunctions_1_1_file_manager.html#aef15c5bfadc70a7333a3103e85e7bf65", null ],
+    [ "loadImageDirectory", "classfunctions_1_1_file_manager.html#a0f8b52da290ba020437d01d4873b1d2c", null ],
+    [ "loadImageDirectory", "classfunctions_1_1_file_manager.html#ae7538dc1fbe0b999be0a86e196de6851", null ],
+    [ "loadImageFile", "classfunctions_1_1_file_manager.html#a10f7f3b24be48586ca7455ebac6abcd7", null ],
+    [ "removeExtension", "classfunctions_1_1_file_manager.html#a4053142396d8fa1e3d2a2c1974952124", null ],
+    [ "selectFile", "classfunctions_1_1_file_manager.html#aa741a9e7ac4127ae1a463fb626474edf", null ],
+    [ "selectFolder", "classfunctions_1_1_file_manager.html#af19fd6734ccb746c4f276c83b6a47689", null ]
 ];
