@@ -107,7 +107,7 @@ public class Params {
       ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
       prefs.importPreferences(objectinputstream);
     } catch (Exception e) {
-      IJ.handleException(e);
+//      IJ.handleException(e);
 //      System.out.println("Fallo de lectura");
     }
     if (prefs == null)
