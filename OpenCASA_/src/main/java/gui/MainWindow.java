@@ -95,7 +95,7 @@ public class MainWindow extends JFrame {
       Image img = ImageIO.read(getClass().getResource(iconPath));
       btn.setIcon(new ImageIcon(img));
     } catch (Exception ex) {
-      IJ.handleException(ex);
+//      IJ.handleException(ex);
 //      System.out.println(ex);
     }
     // Add action listener
