@@ -244,7 +244,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
       impGray = impTh.duplicate();
       thresholdImagePlus(impTh);
       VideoRecognition vr = new VideoRecognition();
-      List<Cell>[] sperm = vr.detectSpermatozoa(impTh);
+      List<Cell>[] sperm = vr.detectCells(impTh);
       if (sperm != null)
         spermatozoa = sperm[0];
       // Calculate outlines

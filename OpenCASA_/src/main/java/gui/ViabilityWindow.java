@@ -161,7 +161,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     else if (rgbChannel == Channel.BLUE)
       aliveImpOutline = impTh;
     VideoRecognition vr = new VideoRecognition();
-    List<Cell>[] sperm = vr.detectSpermatozoa(impTh);
+    List<Cell>[] sperm = vr.detectCells(impTh);
     return sperm[0];
   }
 

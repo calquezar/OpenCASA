@@ -85,13 +85,13 @@ public class VideoRecognition implements Measurements {
     // * Record particle positions for each frame in an ArrayList
     // ************************************************************
     System.out.println("detectSpermatozoa...");
-    List[] theParticles =  detectSpermatozoa(imp);
+    List[] theCells =  detectCells(imp);
     // ************************************************************
     // * Now assemble tracks out of the spermatozoa lists
     // * Also record to which track a particle belongs in ArrayLists
     // ************************************************************
     System.out.println("identifyTracks...");
-    SerializableList theTracks = idenfityTracks(theParticles, imp.getStackSize());
+    SerializableList theTracks = idenfityTracks(theCells, imp.getStackSize());
     // Filtering tracks by length
     SignalProcessing sp = new SignalProcessing();
     theTracks = sp.filterTracksByLength(theTracks);
@@ -103,9 +103,9 @@ public class VideoRecognition implements Measurements {
   /**
    * @param imp
    *          ImagePlus
-   * @return 2D-ArrayList with all spermatozoa detected for each frame
+   * @return 2D-ArrayList with all cells detected for each frame
    */
-  public List[] detectSpermatozoa(ImagePlus imp) {
+  public List[] detectCells(ImagePlus imp) {
 
     int nFrames = imp.getStackSize();
     ImageStack stack = imp.getStack();
@@ -161,24 +161,24 @@ public class VideoRecognition implements Measurements {
   }
   /******************************************************/
   /**
-   * @param spermatozoa
-   *          2D-ArrayList with all spermatozoa detected for each frame
+   * @param cells
+   *          2D-ArrayList with all cells detected for each frame
    * @param nFrames
    * @return 2D-ArrayList with all tracks detected
    */
-  public SerializableList idenfityTracks(List[] spermatozoa, int nFrames) {
+  public SerializableList idenfityTracks(List[] cells, int nFrames) {
 
     // int nFrames = imp.getStackSize();
     SerializableList theTracks = new SerializableList();
     int trackCount = 0;
-    if(spermatozoa == null)
+    if(cells == null)
       return theTracks;
     for (int i = 0; i <= (nFrames - 1); i++) {
       IJ.showProgress((double) i / nFrames);
       IJ.showStatus("Calculating Tracks...");
-      if(spermatozoa[i] == null)//no spermatozoa detected in frame i
+      if(cells[i] == null)//no spermatozoa detected in frame i
         continue; //jump to next frame
-      for (ListIterator j = spermatozoa[i].listIterator(); j.hasNext();) {
+      for (ListIterator j = cells[i].listIterator(); j.hasNext();) {
         Cell aCell = (Cell) j.next();
         if (!aCell.inTrack) {
           // This must be the beginning of a new track
@@ -204,7 +204,7 @@ public class VideoRecognition implements Measurements {
             // *
             // * For each Cell in this frame
             // *
-            for (ListIterator jF = spermatozoa[iF].listIterator(); jF.hasNext() && searchOn;) {
+            for (ListIterator jF = cells[iF].listIterator(); jF.hasNext() && searchOn;) {
               Cell testCell = (Cell) jF.next();
               float distance = testCell.distance(oldCell);
               // record a Cell when it is within the search
