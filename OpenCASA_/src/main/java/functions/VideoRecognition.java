@@ -53,7 +53,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.SerializableList;
-import data.Spermatozoon;
+import data.Cell;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -141,20 +141,20 @@ public class VideoRecognition implements Measurements {
       if (sxRes == null) //Nothing detected
         continue;//jump to next frame
       for (int iPart = 0; iPart < sxRes.length; iPart++) {
-        Spermatozoon aSpermatozoon = new Spermatozoon();
-        aSpermatozoon.id = "***";
-        aSpermatozoon.x = sxRes[iPart];
-        aSpermatozoon.y = syRes[iPart];
-        aSpermatozoon.z = iFrame - 1;
-        aSpermatozoon.bx = bxRes[iPart];
-        aSpermatozoon.by = byRes[iPart];
-        aSpermatozoon.width = widthRes[iPart];
-        aSpermatozoon.height = heightRes[iPart];
-        aSpermatozoon.total_area = areaRes[iPart];
-        aSpermatozoon.total_perimeter = perimeterRes[iPart];
-        aSpermatozoon.total_feret = feretRes[iPart];
-        aSpermatozoon.total_minFeret = minFeretRes[iPart];
-        spermatozoa[iFrame - 1].add(aSpermatozoon);
+        Cell aCell = new Cell();
+        aCell.id = "***";
+        aCell.x = sxRes[iPart];
+        aCell.y = syRes[iPart];
+        aCell.z = iFrame - 1;
+        aCell.bx = bxRes[iPart];
+        aCell.by = byRes[iPart];
+        aCell.width = widthRes[iPart];
+        aCell.height = heightRes[iPart];
+        aCell.total_area = areaRes[iPart];
+        aCell.total_perimeter = perimeterRes[iPart];
+        aCell.total_feret = feretRes[iPart];
+        aCell.total_minFeret = minFeretRes[iPart];
+        spermatozoa[iFrame - 1].add(aCell);
       }
     }
     return spermatozoa;
@@ -179,78 +179,78 @@ public class VideoRecognition implements Measurements {
       if(spermatozoa[i] == null)//no spermatozoa detected in frame i
         continue; //jump to next frame
       for (ListIterator j = spermatozoa[i].listIterator(); j.hasNext();) {
-        Spermatozoon aSpermatozoon = (Spermatozoon) j.next();
-        if (!aSpermatozoon.inTrack) {
+        Cell aCell = (Cell) j.next();
+        if (!aCell.inTrack) {
           // This must be the beginning of a new track
           List aTrack = new ArrayList();
           trackCount++;
-          aSpermatozoon.inTrack = true;
-          aSpermatozoon.trackNr = trackCount;
-          aTrack.add(aSpermatozoon);
+          aCell.inTrack = true;
+          aCell.trackNr = trackCount;
+          aTrack.add(aCell);
           // *************************************************************
           // search in next frames for more Spermatozoa to be added to
           // track
           // *************************************************************
           boolean searchOn = true;
-          Spermatozoon oldSpermatozoon = new Spermatozoon();
-          Spermatozoon tmpSpermatozoon = new Spermatozoon();
-          oldSpermatozoon.copy(aSpermatozoon);
+          Cell oldCell = new Cell();
+          Cell tmpCell = new Cell();
+          oldCell.copy(aCell);
           // *
           // * For each frame
           // *
           for (int iF = i + 1; iF <= (nFrames - 1); iF++) {
             boolean foundOne = false;
-            Spermatozoon newSpermatozoon = new Spermatozoon();
+            Cell newCell = new Cell();
             // *
-            // * For each Spermatozoon in this frame
+            // * For each Cell in this frame
             // *
             for (ListIterator jF = spermatozoa[iF].listIterator(); jF.hasNext() && searchOn;) {
-              Spermatozoon testSpermatozoon = (Spermatozoon) jF.next();
-              float distance = testSpermatozoon.distance(oldSpermatozoon);
-              // record a Spermatozoon when it is within the search
+              Cell testCell = (Cell) jF.next();
+              float distance = testCell.distance(oldCell);
+              // record a Cell when it is within the search
               // radius, and when it had not yet been claimed by another
               // track
-              if ((distance < (Params.maxDisplacement / Params.micronPerPixel)) && !testSpermatozoon.inTrack) {
-                // if we had not found a Spermatozoon before, it is easy
+              if ((distance < (Params.maxDisplacement / Params.micronPerPixel)) && !testCell.inTrack) {
+                // if we had not found a Cell before, it is easy
                 if (!foundOne) {
-                  tmpSpermatozoon = testSpermatozoon;
-                  testSpermatozoon.inTrack = true;
-                  testSpermatozoon.trackNr = trackCount;
-                  newSpermatozoon.copy(testSpermatozoon);
+                  tmpCell = testCell;
+                  testCell.inTrack = true;
+                  testCell.trackNr = trackCount;
+                  newCell.copy(testCell);
                   foundOne = true;
                 } else {
                   // if we had one before, we'll take this one if it is
                   // closer. In any case, flag these Spermatozoa
-                  testSpermatozoon.flag = true;
-                  if (distance < newSpermatozoon.distance(oldSpermatozoon)) {
-                    testSpermatozoon.inTrack = true;
-                    testSpermatozoon.trackNr = trackCount;
-                    newSpermatozoon.copy(testSpermatozoon);
-                    tmpSpermatozoon.inTrack = false;
-                    tmpSpermatozoon.trackNr = 0;
-                    tmpSpermatozoon = testSpermatozoon;
+                  testCell.flag = true;
+                  if (distance < newCell.distance(oldCell)) {
+                    testCell.inTrack = true;
+                    testCell.trackNr = trackCount;
+                    newCell.copy(testCell);
+                    tmpCell.inTrack = false;
+                    tmpCell.trackNr = 0;
+                    tmpCell = testCell;
                   } else {
-                    newSpermatozoon.flag = true;
+                    newCell.flag = true;
                   }
                 }
               } else if (distance < (Params.maxDisplacement / Params.micronPerPixel)) {
-                // this Spermatozoon is already in another track but
+                // this Cell is already in another track but
                 // could have been part of this one
                 // We have a number of choices here:
-                // 1. Sort out to which track this Spermatozoon really
+                // 1. Sort out to which track this Cell really
                 // belongs (but how?)
                 // 2. Stop this track
                 // 3. Stop this track, and also delete the remainder of
                 // the other one
-                // 4. Stop this track and flag this Spermatozoon:
-                testSpermatozoon.flag = true;
+                // 4. Stop this track and flag this Cell:
+                testCell.flag = true;
               }
             }
             if (foundOne)
-              aTrack.add(newSpermatozoon);
+              aTrack.add(newCell);
             else
               searchOn = false;
-            oldSpermatozoon.copy(newSpermatozoon);
+            oldCell.copy(newCell);
           }
           theTracks.add(aTrack);
         }

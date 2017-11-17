@@ -42,7 +42,7 @@ import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import javax.swing.event.ChangeListener;
 
-import data.Spermatozoon;
+import data.Cell;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Utils;
@@ -88,7 +88,7 @@ public class ImageAnalysisWindow extends JFrame {
   protected JButton prevBtn;
   protected JButton nextBtn;
 
-  protected List<Spermatozoon> spermatozoa     = new ArrayList<Spermatozoon>();
+  protected List<Cell> spermatozoa     = new ArrayList<Cell>();
   protected double             threshold       = -1.0;
   protected double             redThreshold       = -1.0;
   protected double             greenThreshold       = -1.0;
@@ -156,8 +156,8 @@ public class ImageAnalysisWindow extends JFrame {
    */
   public void deselectAll() {
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
-      Spermatozoon spermatozoon = (Spermatozoon) j.next();
-      spermatozoon.selected = false;
+      Cell cell = (Cell) j.next();
+      cell.selected = false;
     }
   }
   protected void drawImage() {}
@@ -167,8 +167,8 @@ public class ImageAnalysisWindow extends JFrame {
    */
   public void idenfitySperm() {
     int SpermNr = 0;
-    for (ListIterator<Spermatozoon> j = spermatozoa.listIterator(); j.hasNext();) {
-      Spermatozoon sperm = (Spermatozoon) j.next();
+    for (ListIterator<Cell> j = spermatozoa.listIterator(); j.hasNext();) {
+      Cell sperm = (Cell) j.next();
       SpermNr++;
       sperm.id = "" + SpermNr;
     }
@@ -231,10 +231,10 @@ public class ImageAnalysisWindow extends JFrame {
   /**
    * This method deselect all spermatozoa.
    */
-  public void selectAll(List<Spermatozoon> sperm) {
+  public void selectAll(List<Cell> sperm) {
     for (ListIterator j = sperm.listIterator(); j.hasNext();) {
-      Spermatozoon spermatozoon = (Spermatozoon) j.next();
-      spermatozoon.selected = true;
+      Cell cell = (Cell) j.next();
+      cell.selected = true;
     }
   }
 

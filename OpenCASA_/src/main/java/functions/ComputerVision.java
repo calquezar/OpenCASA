@@ -18,7 +18,7 @@
 
 package functions;
 
-import data.Spermatozoon;
+import data.Cell;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -122,7 +122,7 @@ public class ComputerVision {
    * @param impTh
    * @return
    */
-  public  float getMeanGrayValue(Spermatozoon part, ImagePlus impGray, ImagePlus impTh) {
+  public  float getMeanGrayValue(Cell part, ImagePlus impGray, ImagePlus impTh) {
 
     ImageProcessor ipTh = impTh.getProcessor();
     ImageProcessor ipGray = impGray.getProcessor();

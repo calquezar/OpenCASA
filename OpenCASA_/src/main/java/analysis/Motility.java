@@ -26,7 +26,7 @@ import java.util.Map;
 import javax.swing.SwingWorker;
 
 import data.Params;
-import data.Spermatozoon;
+import data.Cell;
 import data.Trial;
 import functions.FileManager;
 import functions.Kinematics;
@@ -161,7 +161,7 @@ public class Motility extends SwingWorker<Boolean, String> {
   private void calculateAverageMotility(ResultsTable rt, Trial trial) {
 
     SignalProcessing sp = new SignalProcessing();
-    List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
+    List<List<Cell>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
     float nTracks = filteredTracks.size(); // Only take into account those who passed the motility test
     float vsl_mean = total_vsl / nTracks;
     float vcl_mean = total_vcl / nTracks;
@@ -225,7 +225,7 @@ public class Motility extends SwingWorker<Boolean, String> {
     SignalProcessing sp = new SignalProcessing();
     Kinematics K = new Kinematics();
     // Only pass from here tracks with a minimum level of motility
-    List<List<Spermatozoon>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
+    List<List<Cell>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
     // Calculate values for each track
     for (ListIterator iT = filteredTracks.listIterator(); iT.hasNext();) {
       List aTrack = (List) iT.next();

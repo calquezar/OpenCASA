@@ -30,7 +30,7 @@ import javax.swing.SwingWorker;
 
 import data.Params;
 import data.SerializableList;
-import data.Spermatozoon;
+import data.Cell;
 import data.Trial;
 import functions.FileManager;
 import functions.Paint;
@@ -184,11 +184,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    *          - 2D-ArrayList with all the tracks
    * @return Ch-Index
    */
-  private float calculateChIndex(List<List<Spermatozoon>> theTracks) {
+  private float calculateChIndex(List<List<Cell>> theTracks) {
     int trackNr = 0; // Number of tracks
     int nTracks = theTracks.size();
     int[] displacements = { 0, 0 };
-    for (List<Spermatozoon> track : theTracks) {
+    for (List<Cell> track : theTracks) {
       IJ.showProgress((double) trackNr / nTracks);
       IJ.showStatus("Calculating Ch-Index...");
       trackNr++;
@@ -220,7 +220,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    *          - 2D-ArrayList that stores all the tracks
    * @return SL-Index
    */
-  private float calculateSLIndex(List<List<Spermatozoon>> theTracks) {
+  private float calculateSLIndex(List<List<Cell>> theTracks) {
 
     float nUpGradient = 0; // Number of shifts in the chemoattractant direction
     float nOtherDirs = 0; // Number of shifts in other direction
@@ -228,12 +228,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     int nTracks = theTracks.size();
     double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
     float ratioSL = 0;
-    for (List<Spermatozoon> aTrack : theTracks) {
+    for (List<Cell> aTrack : theTracks) {
       IJ.showProgress((double) trackNr / nTracks);
       IJ.showStatus("Calculating SL-Index...");
       trackNr++;
-      Spermatozoon first = (Spermatozoon) aTrack.get(1);
-      Spermatozoon last = (Spermatozoon) aTrack.get(aTrack.size() - 1);
+      Cell first = (Cell) aTrack.get(1);
+      Cell last = (Cell) aTrack.get(aTrack.size() - 1);
       double angle = relativeAngle(first, last); // Between [-PI,PI]
       // Check if the angle is upGradient or not
       if (Math.abs(angle) < angleChemotaxis) {
@@ -325,15 +325,15 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return An array containing the total count of angles ([0] - upgradient:
    *         [1] - other directions).
    */
-  private int[] countInstantDisplacements(List<Spermatozoon> track) {
+  private int[] countInstantDisplacements(List<Cell> track) {
     int nUpGradient = 0;
     int nOtherDir = 0;
     int nPoints = track.size();
     double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
     for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
-      Spermatozoon oldSpermatozoon = (Spermatozoon) track.get(j);
-      Spermatozoon newSpermatozoon = (Spermatozoon) track.get(j + Params.angleDelta);
-      double angle = relativeAngle(oldSpermatozoon, newSpermatozoon);// Between interval [-PI,PI]
+      Cell oldCell = (Cell) track.get(j);
+      Cell newCell = (Cell) track.get(j + Params.angleDelta);
+      double angle = relativeAngle(oldCell, newCell);// Between interval [-PI,PI]
       if (Params.compareOppositeDirections) {// We only take into account angles in the gradient and opposite direction
         if (Math.abs(angle) < angleChemotaxis) {
           nUpGradient++;
@@ -477,10 +477,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       List track = (ArrayList) iT.next();
       int nPoints = track.size();
       for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
-        Spermatozoon oldSpermatozoon = (Spermatozoon) track.get(j);
-        Spermatozoon newSpermatozoon = (Spermatozoon) track.get(j + Params.angleDelta);
-        float diffX = newSpermatozoon.x - oldSpermatozoon.x;
-        float diffY = newSpermatozoon.y - oldSpermatozoon.y;
+        Cell oldCell = (Cell) track.get(j);
+        Cell newCell = (Cell) track.get(j + Params.angleDelta);
+        float diffX = newCell.x - oldCell.x;
+        float diffY = newCell.y - oldCell.y;
         double angle = (360 + Math.atan2(diffY, diffX) * 180 / Math.PI) % (360); // Absolute
                                                                                  // angle
         instAngles.add(angle);
@@ -698,7 +698,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    *          - next coordinates of the cell after displacement
    * @return relative angle in the interval [-PI,PI]
    */
-  private double relativeAngle(Spermatozoon previous, Spermatozoon next) { // With
+  private double relativeAngle(Cell previous, Cell next) { // With
                                                                            // gradient
                                                                            // direction
     double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);

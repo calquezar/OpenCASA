@@ -24,7 +24,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.SerializableList;
-import data.Spermatozoon;
+import data.Cell;
 
 /**
  * @author Carlos Alquezar
@@ -65,11 +65,11 @@ public class SignalProcessing {
   public List decimateTrack(List track, int factor) {
     List decimatedTrack = new ArrayList();
     for (ListIterator iT = track.listIterator(); iT.hasNext();) {
-      Spermatozoon p = (Spermatozoon) iT.next();
+      Cell p = (Cell) iT.next();
       decimatedTrack.add(p);
       for (int i = 1; i < factor; i++) {
         if (iT.hasNext())
-          p = (Spermatozoon) iT.next();
+          p = (Cell) iT.next();
       }
     }
     return decimatedTrack;
@@ -166,16 +166,16 @@ public class SignalProcessing {
       int avgX = 0;
       int avgY = 0;
       for (int k = wSize - 1; k >= 0; k--) {
-        Spermatozoon aSpermatozoon = (Spermatozoon) track.get(j - k);
-        avgX += (int) aSpermatozoon.x;
-        avgY += (int) aSpermatozoon.y;
+        Cell aCell = (Cell) track.get(j - k);
+        avgX += (int) aCell.x;
+        avgY += (int) aCell.y;
       }
       avgX = avgX / wSize;
       avgY = avgY / wSize;
-      Spermatozoon newSpermatozoon = new Spermatozoon();
-      newSpermatozoon.x = (float) avgX;
-      newSpermatozoon.y = (float) avgY;
-      avgTrack.add(newSpermatozoon);
+      Cell newCell = new Cell();
+      newCell.x = (float) avgX;
+      newCell.y = (float) avgY;
+      avgTrack.add(newCell);
     }
     return avgTrack;
   }

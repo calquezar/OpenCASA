@@ -28,7 +28,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import data.Params;
-import data.Spermatozoon;
+import data.Cell;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
@@ -43,9 +43,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   }
   private Channel channel = Channel.NONE;
   private ImagePlus            aliveImpOutline;
-  protected List<Spermatozoon> aliveSpermatozoa = new ArrayList<Spermatozoon>();
+  protected List<Cell> aliveSpermatozoa = new ArrayList<Cell>();
   private ImagePlus            deadImpOutline;
-  protected List<Spermatozoon> deadSpermatozoa  = new ArrayList<Spermatozoon>();
+  protected List<Cell> deadSpermatozoa  = new ArrayList<Cell>();
   private boolean              isThresholding   = false;
 
   private ResultsTable results = new ResultsTable();
@@ -132,7 +132,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 
   }
 
-  private List<Spermatozoon> getSpermatozoa(Channel rgbChannel) {
+  private List<Cell> getSpermatozoa(Channel rgbChannel) {
     ComputerVision cv = new ComputerVision();
 
     if (rgbChannel == Channel.RED){
@@ -161,7 +161,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     else if (rgbChannel == Channel.BLUE)
       aliveImpOutline = impTh;
     VideoRecognition vr = new VideoRecognition();
-    List<Spermatozoon>[] sperm = vr.detectSpermatozoa(impTh);
+    List<Cell>[] sperm = vr.detectSpermatozoa(impTh);
     return sperm[0];
   }
 
@@ -200,7 +200,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     aliveSpermatozoa = getSpermatozoa(Channel.GREEN);
     deadSpermatozoa = getSpermatozoa(Channel.RED);
     if (aliveSpermatozoa != null && deadSpermatozoa != null) {
-      spermatozoa = new ArrayList<Spermatozoon>(aliveSpermatozoa);
+      spermatozoa = new ArrayList<Cell>(aliveSpermatozoa);
       spermatozoa.addAll(deadSpermatozoa);
       selectAll();// set as selected all spermatozoa to allow boundary painting
       idenfitySperm();

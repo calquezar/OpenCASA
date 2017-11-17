@@ -36,7 +36,7 @@ import ij.process.ImageProcessor;
  */
 public class OscillatoryWalker extends Simulation {
 
-  class Cell {
+  class SimulatedCell {
 
     float  amplitude;
     float  dist;
@@ -49,7 +49,7 @@ public class OscillatoryWalker extends Simulation {
     double w;
     float  y;
 
-    Cell() {
+    SimulatedCell() {
       sizex = 10;
       sizey = 8;
       t = 0;
@@ -90,10 +90,10 @@ public class OscillatoryWalker extends Simulation {
       // y=(float)
       // ((2*amplitude/Math.PI)*Math.asin(Math.sin(2*Math.PI*t/T)))+height/2;
       dist += distance(prevT, prevY, t, y);
-      // Draw Cell
+      // Draw SimulatedCell
       ip.fillOval((int) t, (int) y, sizex, sizey);
       // Save position
-      Spermatozoon p = new Spermatozoon();
+      Cell p = new Cell();
       p.x = t;
       p.y = y;
       track.add(p);
@@ -107,10 +107,10 @@ public class OscillatoryWalker extends Simulation {
   /**   */
   int    SIMLENGTH = 700;
   /**   */
-  Cell[] sperm     = new Cell[cellCount];
+  SimulatedCell[] sperm     = new SimulatedCell[cellCount];
   // Point[][] tracks = new Point[cellCount][SIMLENGTH];
   /**   */
-  List<Spermatozoon> track = new ArrayList<Spermatozoon>();
+  List<Cell> track = new ArrayList<Cell>();
 
   /**   */
   int width = 800;
@@ -118,7 +118,7 @@ public class OscillatoryWalker extends Simulation {
   /**   */
   public OscillatoryWalker() {
     for (int x = cellCount - 1; x >= 0; x--) {
-      sperm[x] = new Cell();
+      sperm[x] = new SimulatedCell();
     }
   }
 
@@ -139,7 +139,7 @@ public class OscillatoryWalker extends Simulation {
       // System.out.println("Time: "+sperm[x].t);
       double vsl = track.get(0).distance(track.get(track.size() - 1)) / track.size();
       double vcl = sperm[x].dist / sperm[x].t;
-      List<Spermatozoon> avgTrack = sp.movingAverage(track);
+      List<Cell> avgTrack = sp.movingAverage(track);
       double vap = kinematics.vcl(avgTrack);
       double lin = vsl / vcl;
       double wob = vap / vcl;

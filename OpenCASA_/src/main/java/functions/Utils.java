@@ -23,7 +23,7 @@ import java.util.ListIterator;
 
 import javax.swing.JOptionPane;
 
-import data.Spermatozoon;
+import data.Cell;
 import ij.IJ;
 
 /**
@@ -63,16 +63,16 @@ public class Utils {
    * @param spermatozoa
    * @return
    */
-  public Spermatozoon getSpermatozoon(String id, List spermatozoa) {
-    Spermatozoon spermatozoon = null;
+  public Cell getCell(String id, List spermatozoa) {
+    Cell cell = null;
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
-      Spermatozoon candidate = (Spermatozoon) j.next();
+      Cell candidate = (Cell) j.next();
       if (candidate.id.equals(id) && id != "***") {
-        spermatozoon = candidate;
+        cell = candidate;
         break;
       }
     }
-    return spermatozoon;
+    return cell;
   }
 
   /******************************************************/
@@ -100,16 +100,16 @@ public class Utils {
       // keeps track of the current track
       displayTrackNr++;
       ListIterator jT = bTrack.listIterator();
-      Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
-      Spermatozoon firstSpermatozoon = new Spermatozoon();
-      firstSpermatozoon.copy(oldSpermatozoon);
-      // For each instant (Spermatozoon) in the track
+      Cell oldCell = (Cell) jT.next();
+      Cell firstCell = new Cell();
+      firstCell.copy(oldCell);
+      // For each instant (Cell) in the track
       String outputline = "";
       for (; jT.hasNext();) {
-        Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
-        xyPts = "\t" + displayTrackNr + "\t" + frame + "\t" + (int) newSpermatozoon.x + "\t" + (int) newSpermatozoon.y;
+        Cell newCell = (Cell) jT.next();
+        xyPts = "\t" + displayTrackNr + "\t" + frame + "\t" + (int) newCell.x + "\t" + (int) newCell.y;
         frame++;
-        oldSpermatozoon = newSpermatozoon;
+        oldCell = newCell;
         outputline += "\n" + line + xyPts;
         line++;
       }

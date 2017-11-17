@@ -24,7 +24,7 @@ import java.io.Serializable;
  * @author Carlos Alquezar
  *
  */
-public class Spermatozoon implements Serializable {
+public class Cell implements Serializable {
 
   /**
    * 
@@ -66,9 +66,9 @@ public class Spermatozoon implements Serializable {
   /**   */
   public float total_minFeret = -1;
   /**
-   * @param source - Spermatozoon to be copied
+   * @param source - Cell to be copied
    */
-  public void copy(Spermatozoon source) {
+  public void copy(Cell source) {
     this.id = source.id;
     this.x = source.x;
     this.y = source.y;
@@ -89,10 +89,10 @@ public class Spermatozoon implements Serializable {
 
   /**
    * @param s
-   *          - Spermatozoon used as reference to calculate the distance
-   * @return euclidean distance to the Spermatozoon s
+   *          - Cell used as reference to calculate the distance
+   * @return euclidean distance to the Cell s
    */
-  public float distance(Spermatozoon s) {
+  public float distance(Cell s) {
     return (float) Math.sqrt(Math.pow(this.x - s.x, 2) + Math.pow(this.y - s.y, 2));
   }
 

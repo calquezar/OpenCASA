@@ -30,7 +30,7 @@ import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
 import data.Params;
-import data.Spermatozoon;
+import data.Cell;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
@@ -73,12 +73,12 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
     Point click = new Point(x, y);
     Utils utils = new Utils();
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
-      Spermatozoon sperm = (Spermatozoon) j.next();
+      Cell sperm = (Cell) j.next();
       if (isClickInside(sperm, click)) {
         sperm.selected = !sperm.selected;
         if (sperm.selected) {
-          Spermatozoon spermatozoon = utils.getSpermatozoon(sperm.id, spermatozoa);
-          generateResults(spermatozoon);
+          Cell cell = utils.getCell(sperm.id, spermatozoa);
+          generateResults(cell);
         }
         break;
       }
@@ -140,23 +140,23 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    * This method adds the morphometric values of the given spermatozoon to the
    * results table
    * 
-   * @param spermatozoon
+   * @param cell
    */
-  private void generateResults(Spermatozoon spermatozoon) {
+  private void generateResults(Cell cell) {
 
     ComputerVision cv = new ComputerVision();
-    double total_meanGray = (double) cv.getMeanGrayValue(spermatozoon, impGray, impTh);
-    double total_area = spermatozoon.total_area * Math.pow(Params.micronPerPixel, 2);
-    double total_perimeter = spermatozoon.total_perimeter * Params.micronPerPixel;
-    double total_feret = spermatozoon.total_feret * Params.micronPerPixel;
-    double total_minFeret = spermatozoon.total_minFeret * Params.micronPerPixel;
+    double total_meanGray = (double) cv.getMeanGrayValue(cell, impGray, impTh);
+    double total_area = cell.total_area * Math.pow(Params.micronPerPixel, 2);
+    double total_perimeter = cell.total_perimeter * Params.micronPerPixel;
+    double total_feret = cell.total_feret * Params.micronPerPixel;
+    double total_minFeret = cell.total_minFeret * Params.micronPerPixel;
     double total_ellipticity = total_feret / total_minFeret;
     double total_roughness = 4 * Math.PI * total_area / (Math.pow(total_perimeter, 2));
     double total_elongation = (total_feret - total_minFeret) / (total_feret + total_minFeret);
     double total_regularity = (Math.PI * total_feret * total_minFeret) / (4 * total_area);
 
     morphometrics.incrementCounter();
-    morphometrics.addValue("ID", spermatozoon.id);
+    morphometrics.addValue("ID", cell.id);
     morphometrics.addValue("Threshold", threshold);
     morphometrics.addValue("MeanGray", total_meanGray);
     morphometrics.addValue("Area(um^2)", total_area);
@@ -185,13 +185,13 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    * given spermatozoon
    * 
    * @param sperm
-   *          - Spermatozoon
+   *          - Cell
    * @param click
    *          - Point
    * @return True if the point is inside the boundaries of the spermatozoon.
    *         Otherwise, it returns false
    */
-  public boolean isClickInside(Spermatozoon sperm, Point click) {
+  public boolean isClickInside(Cell sperm, Point click) {
     // Get boundaries
     double offsetX = (double) sperm.bx;
     double offsetY = (double) sperm.by;
@@ -244,7 +244,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
       impGray = impTh.duplicate();
       thresholdImagePlus(impTh);
       VideoRecognition vr = new VideoRecognition();
-      List<Spermatozoon>[] sperm = vr.detectSpermatozoa(impTh);
+      List<Cell>[] sperm = vr.detectSpermatozoa(impTh);
       if (sperm != null)
         spermatozoa = sperm[0];
       // Calculate outlines

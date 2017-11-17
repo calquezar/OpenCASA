@@ -56,7 +56,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.SerializableList;
-import data.Spermatozoon;
+import data.Cell;
 import data.Trial;
 import ij.IJ;
 import ij.ImagePlus;
@@ -177,9 +177,9 @@ public class Paint {
         List zTrack = (ArrayList) iT.next();
         displayTrackNr++;
         ListIterator jT = zTrack.listIterator();
-        Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
+        Cell oldCell = (Cell) jT.next();
         for (; jT.hasNext();) {
-          Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
+          Cell newCell = (Cell) jT.next();
           if (kinematics.getVelocityTrackType(zTrack) == "Slow")
             ip.setColor(Color.white);
           else if (kinematics.getVelocityTrackType(zTrack) == "Normal")
@@ -188,18 +188,18 @@ public class Paint {
             ip.setColor(Color.red);
           // ip.setValue(color);
           if (Params.drawOrigTrajectories) {
-            ip.moveTo((int) oldSpermatozoon.x * upRes, (int) oldSpermatozoon.y * upRes);
-            ip.lineTo((int) newSpermatozoon.x * upRes, (int) newSpermatozoon.y * upRes);
+            ip.moveTo((int) oldCell.x * upRes, (int) oldCell.y * upRes);
+            ip.lineTo((int) newCell.x * upRes, (int) newCell.y * upRes);
           }
-          oldSpermatozoon = newSpermatozoon;
+          oldCell = newCell;
           // Draw track numbers
-          if (newSpermatozoon.z == iFrame) {
+          if (newCell.z == iFrame) {
             strPart = "" + displayTrackNr;
             ip.setColor(Color.black);
             // we could do someboundary testing here to place the labels
             // better when we are close to the edge
-            ip.moveTo((int) (oldSpermatozoon.x / Params.pixelWidth + 0),
-                doOffset((int) (oldSpermatozoon.y / Params.pixelHeight), yWidth, 5));
+            ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
+                doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
             ip.setColor(Color.white);
             ip.drawString(strPart);
           }
@@ -221,7 +221,7 @@ public class Paint {
     ImageProcessor ip = imp.getProcessor();
 //    ip.setColor(Color.white);
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
-      Spermatozoon sperm = (Spermatozoon) j.next();
+      Cell sperm = (Cell) j.next();
       ip.setLineWidth(2);
       if (sperm.selected)
         ip.drawRect((int) sperm.bx, (int) sperm.by, (int) sperm.width, (int) sperm.height);
@@ -279,20 +279,20 @@ public class Paint {
     for (ListIterator iT = avgTracks.listIterator(); iT.hasNext();) {
       List zTrack = (ArrayList) iT.next();
       ListIterator jT = zTrack.listIterator();
-      Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
+      Cell oldCell = (Cell) jT.next();
       // Variables used to
-      Spermatozoon firstSpermatozoon = new Spermatozoon();
-      firstSpermatozoon.copy(oldSpermatozoon);
+      Cell firstCell = new Cell();
+      firstCell.copy(oldCell);
       int xLast = xCenter;
       int yLast = yCenter;
       for (; jT.hasNext();) {
-        Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
+        Cell newCell = (Cell) jT.next();
         ipRelTraj.setColor(Color.black);
         ipRelTraj.moveTo(xLast, yLast);
-        xLast = (int) (xCenter + (newSpermatozoon.x - firstSpermatozoon.x));
-        yLast = (int) (yCenter - (newSpermatozoon.y - firstSpermatozoon.y));
+        xLast = (int) (xCenter + (newCell.x - firstCell.x));
+        yLast = (int) (yCenter - (newCell.y - firstCell.y));
         ipRelTraj.lineTo(xLast, yLast);
-        oldSpermatozoon = newSpermatozoon;
+        oldCell = newCell;
       }
       ipRelTraj.drawOval(xLast - 3, yLast, 6, 6);
     }

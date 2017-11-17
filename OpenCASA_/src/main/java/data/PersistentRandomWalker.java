@@ -37,7 +37,7 @@ public class PersistentRandomWalker extends Simulation {
    * @author Carlos Alquezar
    *
    */
-  class Cell {
+  class SimulatedCell {
 
     /**   */
     int sizex;
@@ -58,7 +58,7 @@ public class PersistentRandomWalker extends Simulation {
     /**   */
     double ro;
     /**   */
-    Cell() {
+    SimulatedCell() {
       Random rand = new Random();
       sizex = 10;
       sizey = 8;
@@ -75,7 +75,7 @@ public class PersistentRandomWalker extends Simulation {
      * @param b
      * @param responsiveCells
      */
-    Cell(double b, double responsiveCells) {
+    SimulatedCell(double b, double responsiveCells) {
       Random rand = new Random();
       sizex = 10;
       sizey = 8;
@@ -109,7 +109,7 @@ public class PersistentRandomWalker extends Simulation {
       float dy = (float) (speed * Math.sin(angle));
       x += dx;
       y += dy;
-      // Draw Cell
+      // Draw SimulatedCell
       ip.fillOval((int) x, (int) y, sizex, sizey);
 
     }
@@ -146,7 +146,7 @@ public class PersistentRandomWalker extends Simulation {
   /**   */
   int obstaclesCount = 0;
   /**   */
-  Cell[] sperm = new Cell[cellCount];
+  SimulatedCell[] sperm = new SimulatedCell[cellCount];
   /**   */
   Obstacle[] obstacles = new Obstacle[obstaclesCount];
   /**   */
@@ -157,7 +157,7 @@ public class PersistentRandomWalker extends Simulation {
   public PersistentRandomWalker() {
 
     for (int x = cellCount - 1; x >= 0; x--) {
-      sperm[x] = new Cell();
+      sperm[x] = new SimulatedCell();
     }
     for (int x = obstaclesCount - 1; x >= 0; x--) {
       obstacles[x] = new Obstacle();
@@ -170,7 +170,7 @@ public class PersistentRandomWalker extends Simulation {
    */
   public PersistentRandomWalker(double b, double responsiveCells) {
     for (int x = cellCount - 1; x >= 0; x--) {
-      sperm[x] = new Cell(b, responsiveCells);
+      sperm[x] = new SimulatedCell(b, responsiveCells);
     }
     for (int x = obstaclesCount - 1; x >= 0; x--) {
       obstacles[x] = new Obstacle();
@@ -185,7 +185,7 @@ public class PersistentRandomWalker extends Simulation {
   public PersistentRandomWalker(double b, double responsiveCells, int simlength) {
     SIMLENGTH = simlength;
     for (int x = cellCount - 1; x >= 0; x--) {
-      sperm[x] = new Cell(b, responsiveCells);
+      sperm[x] = new SimulatedCell(b, responsiveCells);
     }
     for (int x = obstaclesCount - 1; x >= 0; x--) {
       obstacles[x] = new Obstacle();

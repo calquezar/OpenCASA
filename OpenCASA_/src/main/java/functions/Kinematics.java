@@ -24,7 +24,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.SerializableList;
-import data.Spermatozoon;
+import data.Cell;
 
 /**
  * @author Carlos Alquezar
@@ -46,9 +46,9 @@ public class Kinematics {
     float alhMax = 0;
     float alhMean = 0;
     for (int i = 0; i < length; i++) {
-      Spermatozoon origSpermatozoon = (Spermatozoon) track.get(i + Params.wSize / 2 - 1);
-      Spermatozoon avgSpermatozoon = (Spermatozoon) avgTrack.get(i);
-      float distance = origSpermatozoon.distance(avgSpermatozoon);
+      Cell origCell = (Cell) track.get(i + Params.wSize / 2 - 1);
+      Cell avgCell = (Cell) avgTrack.get(i);
+      float distance = origCell.distance(avgCell);
       alhMean += distance;
       if (distance > alhMax)
         alhMax = distance;
@@ -77,11 +77,11 @@ public class Kinematics {
   // int intersections=0;
   // // bcf_shift equal to 1 is not enougth to catch all beat-cross
   // for (int i=1;i<length;i=i+1+Params.bcf_shift){
-  // Spermatozoon origP0 =
-  // (Spermatozoon)track.get(i-Params.bcf_shift+Params.wSize/2-1);
-  // Spermatozoon origP1 = (Spermatozoon)track.get(i+Params.wSize/2-1);
-  // Spermatozoon avgP0 = (Spermatozoon)avgTrack.get(i-Params.bcf_shift);
-  // Spermatozoon avgP1 = (Spermatozoon)avgTrack.get(i);
+  // Cell origP0 =
+  // (Cell)track.get(i-Params.bcf_shift+Params.wSize/2-1);
+  // Cell origP1 = (Cell)track.get(i+Params.wSize/2-1);
+  // Cell avgP0 = (Cell)avgTrack.get(i-Params.bcf_shift);
+  // Cell avgP1 = (Cell)avgTrack.get(i);
   // Line2D origLine = new Line2D.Float();
   // origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
   // Line2D avgLine = new Line2D.Float();
@@ -106,8 +106,8 @@ public class Kinematics {
     float[] dists = new float[nAvgPoints];
     int[] xPoints = new int[nAvgPoints];
     for (int i = 0; i < nAvgPoints; i++) {
-      Spermatozoon origS = (Spermatozoon) track.get(i + Params.wSize / 2 - 1);
-      Spermatozoon avgS = (Spermatozoon) avgTrack.get(i);
+      Cell origS = (Cell) track.get(i + Params.wSize / 2 - 1);
+      Cell avgS = (Cell) avgTrack.get(i);
       dists[i] = origS.distance(avgS);
     }
     SignalProcessing sp = new SignalProcessing();
@@ -162,15 +162,15 @@ public class Kinematics {
 
     int length = track.size();
     ListIterator jT = track.listIterator();
-    Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
+    Cell oldCell = (Cell) jT.next();
     float totalDegrees = 0;
     for (int i = 1; i < length; i++) {
-      Spermatozoon newSpermatozoon = (Spermatozoon) track.get(i);
-      float diffX = newSpermatozoon.x - oldSpermatozoon.x;
-      float diffY = newSpermatozoon.y - oldSpermatozoon.y;
+      Cell newCell = (Cell) track.get(i);
+      float diffX = newCell.x - oldCell.x;
+      float diffY = newCell.y - oldCell.y;
       double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI);
       totalDegrees += angle;
-      oldSpermatozoon = newSpermatozoon;
+      oldCell = newCell;
     }
     // mean angle
     float meanAngle = totalDegrees / (length - 1);
@@ -186,9 +186,9 @@ public class Kinematics {
 
     Kinematics K = new Kinematics();
     int nPoints = track.size();
-    Spermatozoon firstSpermatozoon = (Spermatozoon) track.get(0);
-    Spermatozoon lastSpermatozoon = (Spermatozoon) track.get(nPoints - 1);
-    float distance = lastSpermatozoon.distance(firstSpermatozoon);
+    Cell firstCell = (Cell) track.get(0);
+    Cell lastCell = (Cell) track.get(nPoints - 1);
+    float distance = lastCell.distance(firstCell);
     SignalProcessing sp = new SignalProcessing();
     List avgTrack = sp.movingAverage(track);
     float vap = K.vcl(avgTrack) / K.vsl(avgTrack);
@@ -231,12 +231,12 @@ public class Kinematics {
 
     int length = track.size();
     ListIterator jT = track.listIterator();
-    Spermatozoon oldSpermatozoon = (Spermatozoon) jT.next();
+    Cell oldCell = (Cell) jT.next();
     float distance = 0;
     for (; jT.hasNext();) {
-      Spermatozoon newSpermatozoon = (Spermatozoon) jT.next();
-      distance += newSpermatozoon.distance(oldSpermatozoon);
-      oldSpermatozoon = newSpermatozoon;
+      Cell newCell = (Cell) jT.next();
+      distance += newCell.distance(oldCell);
+      oldCell = newCell;
     }
     // convert pixels to micrometers
     distance = distance * (float) Params.micronPerPixel;
@@ -255,8 +255,8 @@ public class Kinematics {
   public float vsl(List track) {
 
     int length = track.size();
-    Spermatozoon first = (Spermatozoon) track.get(0);
-    Spermatozoon last = (Spermatozoon) track.get(length - 1);
+    Cell first = (Cell) track.get(0);
+    Cell last = (Cell) track.get(length - 1);
     // Distance (pixels)
     float distance = last.distance(first);
     // convert pixels to micrometers
