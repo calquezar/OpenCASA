@@ -134,8 +134,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     if (gd.wasCanceled())
       return;
     final double BETA = gd.getNextNumber();
-    final double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be
-                                                           // between [0,1]
+    final double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be between [0,1]
     final int TOTALSIMULATIONS = (int) gd.getNextNumber();
     TrialManager tm = new TrialManager();
     Map<String, Trial> controls = tm.simulateTrials(0, 0, TOTALSIMULATIONS);
