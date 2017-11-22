@@ -105,7 +105,8 @@ public class MainWindow extends JFrame {
           Chemotaxis ch = new Chemotaxis();
           try {
             mw.setVisible(false);
-            ch.selectAnalysis();
+            ch.selectAnalysis();// this method has to be run outside the execute() method because it
+                                // is a GUI method and has to be run on the EDT
             ch.execute();
             mw.setVisible(true);
           } catch (Exception e1) {
