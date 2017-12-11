@@ -160,8 +160,6 @@ public class Paint {
       return;
     }
     int upRes = 1;
-    String strPart;
-    int displayTrackNr = 0;
     SignalProcessing sp = new SignalProcessing();
     SerializableList avgTracks = sp.averageTracks(theTracks);
     Kinematics kinematics = new Kinematics();
@@ -172,10 +170,8 @@ public class Paint {
       int yWidth = stack.getWidth();
       ImageProcessor ip = stack.getProcessor(iFrame);
       ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
-      displayTrackNr = 0;
       for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
         List zTrack = (ArrayList) iT.next();
-        displayTrackNr++;
         ListIterator jT = zTrack.listIterator();
         Cell oldCell = (Cell) jT.next();
         for (; jT.hasNext();) {
@@ -194,15 +190,13 @@ public class Paint {
           oldCell = newCell;
           // Draw track numbers
           if (newCell.z == iFrame) {
-//            strPart = "" + displayTrackNr;
-            strPart = "" + newCell.trackNr;
             ip.setColor(Color.black);
             // we could do some boundary testing here to place the labels
             // better when we are close to the edge
             ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
                 doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
             ip.setColor(Color.white);
-            ip.drawString(strPart);
+            ip.drawString("" + newCell.trackNr);
           }
         }
       }
