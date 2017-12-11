@@ -48,7 +48,7 @@ import ij.measure.ResultsTable;
 public class Chemotaxis extends SwingWorker<Boolean, String> {
 
   private enum TypeOfAnalysis {
-    BOOTSTRAPPING, BOOTSTRAPPINGSIMULATIONS, INDEXESDIRECTORY, INDEXESFILE, INDEXESSIMULATIONS, NONE
+    BOOTSTRAPPING, BOOTSTRAPPINGSIMULATIONS, INDEXESEXPERIMENT, INDEXESFILE, INDEXESSIMULATIONS, NONE
   }
 
   private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
@@ -66,7 +66,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private ResultsTable analyseCondition(Map<String, Trial> controls, Map<String, Trial> tests) {
     ResultsTable rt = new ResultsTable();
     switch (analysis) {
-      case INDEXESDIRECTORY:
+      case INDEXESEXPERIMENT:
       case INDEXESSIMULATIONS:
         rt = indexesAnalysis(controls, tests);
         break;
@@ -85,7 +85,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * "control" with the control videos, and one or more folders corresponding
    * with each condition that user wants to compare with reference controls.
    */
-  private void analyseDirectory() {
+  private void analyseExperiment() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
     Map<String, Trial> cTrials = getControlTrials(folder);
@@ -364,9 +364,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       case INDEXESFILE:
         analyseFile();
         break;
-      case INDEXESDIRECTORY:
+      case INDEXESEXPERIMENT:
       case BOOTSTRAPPING:
-        analyseDirectory();
+        analyseExperiment();
         break;
       case INDEXESSIMULATIONS:
       case BOOTSTRAPPINGSIMULATIONS:
@@ -386,7 +386,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     // switch (analysis) {
     // case INDEXESFILE:
     // break;
-    // case INDEXESDIRECTORY:
+    // case INDEXESEXPERIMENT:
     // break;
     // case BOOTSTRAPPING:
     // break;
@@ -721,12 +721,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * carried on.
    */
   public void selectAnalysis() {
-    // Ask if user wants to analyze a file or directory
-    Object[] options = { "File", "Directory", " Multiple Simulations" };
+    // Ask if user wants to analyze a file or experiment
+    Object[] options = { "File", "Experiment", " Simulated Experiment" };
     String question = "What do you want to analyze?";
     String title = "Choose one analysis...";
     final int FILE = 0;
-    final int DIR = 1;
+    final int EXP = 1;
     final int SIMULATION = 2;
     Utils utils = new Utils();
     int sourceSelection = utils.analysisSelectionDialog(options, question, title);
@@ -736,7 +736,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       analysis = TypeOfAnalysis.INDEXESFILE; // It's not possible to carry on
                                              // bootstrapping analysis in a
                                              // single file
-    } else if (sourceSelection == DIR || sourceSelection == SIMULATION) {// Directory
+    } else if (sourceSelection == EXP || sourceSelection == SIMULATION) {// Experiment
                                                                          // or
                                                                          // simulations
       // Ask user which analysis wants to apply
@@ -748,9 +748,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       final int BOOTSTRAPPING = 1;
       if (analysisSelection < 0)
         return;
-      if (sourceSelection == DIR) {
+      if (sourceSelection == EXP) {
         if (analysisSelection == CHINDEX) {
-          analysis = TypeOfAnalysis.INDEXESDIRECTORY;
+          analysis = TypeOfAnalysis.INDEXESEXPERIMENT;
         } else if (analysisSelection == BOOTSTRAPPING) {
           analysis = TypeOfAnalysis.BOOTSTRAPPING;
         }
