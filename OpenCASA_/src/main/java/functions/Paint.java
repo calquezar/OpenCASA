@@ -194,9 +194,10 @@ public class Paint {
           oldCell = newCell;
           // Draw track numbers
           if (newCell.z == iFrame) {
-            strPart = "" + displayTrackNr;
+//            strPart = "" + displayTrackNr;
+            strPart = "" + newCell.trackNr;
             ip.setColor(Color.black);
-            // we could do someboundary testing here to place the labels
+            // we could do some boundary testing here to place the labels
             // better when we are close to the edge
             ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
                 doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));

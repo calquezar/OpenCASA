@@ -74,6 +74,11 @@ public class Utils {
     }
     return cell;
   }
+  
+  public int getTrackNr(List track){
+	  Cell cell = (Cell) track.get(0);
+	  return cell.trackNr;
+  }
 
   /******************************************************/
   /**

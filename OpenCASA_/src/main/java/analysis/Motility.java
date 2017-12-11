@@ -224,12 +224,14 @@ public class Motility extends SwingWorker<Boolean, String> {
 
     SignalProcessing sp = new SignalProcessing();
     Kinematics K = new Kinematics();
+    Utils util = new Utils();
     // Only pass from here tracks with a minimum level of motility
     List<List<Cell>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
     // Calculate values for each track
     for (ListIterator iT = filteredTracks.listIterator(); iT.hasNext();) {
       List aTrack = (List) iT.next();
       List avgTrack = sp.movingAverage(aTrack);
+      int trackNr = util.getTrackNr(aTrack);
       float length = (float) aTrack.size();
       // VSL
       float vsl_value = K.vsl(aTrack);
@@ -270,6 +272,7 @@ public class Motility extends SwingWorker<Boolean, String> {
       total_mad += mad_value;
 
       rt.incrementCounter();
+      rt.addValue("Track Number", trackNr);
       rt.addValue("Length (frames)", length);
       rt.addValue("VSL (um/s)", vsl_value);
       rt.addValue("VCL (um/s)", vcl_value);
