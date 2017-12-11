@@ -24,6 +24,7 @@ import java.util.Random;
 
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.measure.Calibration;
 import ij.process.ByteProcessor;
 import ij.process.ImageProcessor;
 
@@ -204,7 +205,10 @@ public class PersistentRandomWalker extends Simulation {
       draw(ip);
       imStack.addSlice(ip);
     }
-    return new ImagePlus("PersistentRandomWalker", imStack);
+    ImagePlus imp = new ImagePlus("PersistentRandomWalker", imStack);
+    Calibration c = imp.getCalibration();
+    c.fps=100.0; //Default fps set to 100 frames per second
+    return imp;
   }
 
   /*
