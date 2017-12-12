@@ -113,6 +113,8 @@ public class FileManager {
    */
   public boolean isAVI(String filename) {
     String[] parts = filename.split("\\.");
+    if(parts.length<2)
+      return false;
     if (parts[1].equals("avi"))
       return true;
     else

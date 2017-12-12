@@ -232,9 +232,11 @@ public class ImageAnalysisWindow extends JFrame {
    * This method deselect all spermatozoa.
    */
   public void selectAll(List<Cell> sperm) {
-    for (ListIterator j = sperm.listIterator(); j.hasNext();) {
-      Cell cell = (Cell) j.next();
-      cell.selected = true;
+    if(sperm != null & sperm.size()>0){
+      for (ListIterator j = sperm.listIterator(); j.hasNext();) {
+        Cell cell = (Cell) j.next();
+        cell.selected = true;
+      }
     }
   }
 
