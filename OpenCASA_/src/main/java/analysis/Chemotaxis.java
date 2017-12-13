@@ -718,7 +718,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
                                                                            // direction
     double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
     float diffX = next.x - previous.x;
-    float diffY = -(next.y - previous.y); //it is the negative because the java coordinate system
+    float diffY = -(next.y - previous.y); //it is the negative because the translation 
+    									  //from java coordinate system to user coordinate system
     double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute
                                                                              // angle
     angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative

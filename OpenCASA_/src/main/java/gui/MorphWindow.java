@@ -36,6 +36,7 @@ import functions.FileManager;
 import functions.Paint;
 import functions.Utils;
 import functions.VideoRecognition;
+import ij.IJ;
 import ij.measure.ResultsTable;
 
 /**
@@ -47,6 +48,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
 
   
   private boolean         isThresholding  = false;
+  private boolean		  isProcessing = false;
   /** Resultstable used to show results */
   private ResultsTable       morphometrics = new ResultsTable();
 
@@ -237,26 +239,30 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    *          (true) or a click event (false)
    */
   public void processImage(boolean eventType) {
-    if (eventType || threshold == -1) {// If true, the threshold has changed or it needs to be calculated
-      ComputerVision cv = new ComputerVision();
-      impTh = impOrig.duplicate();
-      cv.convertToGrayscale(impTh);
-      impGray = impTh.duplicate();
-      thresholdImagePlus(impTh);
-      VideoRecognition vr = new VideoRecognition();
-      List<Cell>[] sperm = vr.detectCells(impTh);
-      if (sperm != null)
-        spermatozoa = sperm[0];
-      // Calculate outlines
-      impOutline = impTh.duplicate();
-      cv.outlineThresholdImage(impOutline);
-      idenfitySperm();
+    if(!isProcessing){//else do not disturb
+    	isProcessing=true;
+	    if (eventType || threshold == -1) {// If true, the threshold has changed or it needs to be calculated
+	      ComputerVision cv = new ComputerVision();
+	      impTh = impOrig.duplicate();
+	      cv.convertToGrayscale(impTh);
+	      impGray = impTh.duplicate();
+	      thresholdImagePlus(impTh);
+	      VideoRecognition vr = new VideoRecognition();
+	      List<Cell>[] sperm = vr.detectCells(impTh);
+	      if (sperm != null)
+	        spermatozoa = sperm[0];
+	      // Calculate outlines
+	      impOutline = impTh.duplicate();
+	      cv.outlineThresholdImage(impOutline);
+	      idenfitySperm();
+	    }
+	    impDraw = impOrig.duplicate();
+	    Paint paint = new Paint();
+	    paint.drawOutline(impDraw, impOutline);
+	    paint.drawBoundaries(impDraw, spermatozoa);
+	    setImage();
+	    isProcessing = false;
     }
-    impDraw = impOrig.duplicate();
-    Paint paint = new Paint();
-    paint.drawOutline(impDraw, impOutline);
-    paint.drawBoundaries(impDraw, spermatozoa);
-    setImage();
   }
 
   /** Listen events from slider */
