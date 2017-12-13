@@ -34,6 +34,7 @@ import data.Cell;
 import data.Trial;
 import functions.FileManager;
 import functions.Paint;
+import functions.SignalProcessing;
 import functions.TrialManager;
 import functions.Utils;
 import ij.IJ;
@@ -236,17 +237,17 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       double angle = relativeAngle(first, last); // Between [-PI,PI]
       // Check if the angle is upGradient or not
       if (Params.compareOppositeDirections) {// We only take into account angles in the gradient and opposite direction
-        if (Math.abs(angle) < angleChemotaxis) {
-            nUpGradient++;
-          } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
-            nOtherDir++;
-          }
-        } else {// We take into account all angles in all directions
           if (Math.abs(angle) < angleChemotaxis) {
-            nUpGradient++;
-          } else {
-            nOtherDir++;
-          }
+              nUpGradient++;
+            } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
+              nOtherDir++;
+            }
+        } else {// We take into account all angles in all directions
+            if (Math.abs(angle) < angleChemotaxis) {
+              nUpGradient++;
+            } else {
+              nOtherDir++;
+            }
         }
     }
     if ((nUpGradient + nOtherDir) > 0) {
@@ -414,9 +415,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private void drawResults(Trial trial) {
     if (trial == null)
       return;
-    float chIdx = calculateChIndex(trial.tracks);
-    float slIdx = calculateSLIndex(trial.tracks);
-    int[] hist = circularHistogram(getListOfAngles(trial.tracks), 45);
+    SignalProcessing sp = new SignalProcessing();
+    SerializableList tracks = sp.filterTracksByMotility(trial.tracks);
+    float chIdx = calculateChIndex(tracks);
+    float slIdx = calculateSLIndex(tracks);
+    int[] hist = circularHistogram(getListOfAngles(tracks), 45);
     int radius = trial.fieldWidth;
     Paint paint = new Paint();
     paint.drawChemotaxis(trial, chIdx, slIdx);
@@ -487,9 +490,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         Cell oldCell = (Cell) track.get(j);
         Cell newCell = (Cell) track.get(j + Params.angleDelta);
         float diffX = newCell.x - oldCell.x;
-        float diffY = newCell.y - oldCell.y;
-        double angle = (360 + Math.atan2(diffY, diffX) * 180 / Math.PI) % (360); // Absolute
-                                                                                 // angle
+        float diffY = -(newCell.y - oldCell.y); //it is the negative because the java coordinate system
+        double angle = (360 + Math.atan2(diffY, diffX) * 180 / Math.PI) % (360); // Absolute angle
         instAngles.add(angle);
       }
     }
@@ -583,14 +585,17 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     Set<String> ckeySet = controls.keySet();
     Set<String> tkeySet = tests.keySet();
     ResultsTable rt = new ResultsTable();
+    SignalProcessing sp = new SignalProcessing();
     for (String k : ckeySet) {
       Trial trial = (Trial) controls.get(k);
+      trial.tracks = sp.filterTracksByMotility(trial.tracks);
       float chIdx = calculateChIndex(trial.tracks);
       float slIdx = calculateSLIndex(trial.tracks);
       setIndexesResults(rt, trial, chIdx, slIdx);
     }
     for (String k : tkeySet) {
       Trial trial = (Trial) tests.get(k);
+      trial.tracks = sp.filterTracksByMotility(trial.tracks);
       float chIdx = calculateChIndex(trial.tracks);
       float slIdx = calculateSLIndex(trial.tracks);
       setIndexesResults(rt, trial, chIdx, slIdx);
@@ -648,8 +653,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return Odds Ratio
    */
   private double or(Trial control, Trial test) {
-    SerializableList controlTracks = control.tracks;
-    SerializableList conditionTracks = test.tracks;
+	SignalProcessing sp = new SignalProcessing();
+    SerializableList controlTracks = sp.filterTracksByMotility(control.tracks);
+    SerializableList conditionTracks = sp.filterTracksByMotility(test.tracks);
     double[] numeratorValues = getOddsValues(conditionTracks);// Calculate
                                                               // numerator's
                                                               // odds value
@@ -673,6 +679,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private double orThreshold(Map<String, Trial> controls) {
 
     SerializableList controlTracks = mergeTracks(controls);
+    SignalProcessing sp = new SignalProcessing();
+    controlTracks = sp.filterTracksByMotility(controlTracks);
     List<Double> oRs = new ArrayList<Double>();
     for (int i = 0; i < Params.NUMSAMPLES; i++) {
       IJ.showProgress((double) i / Params.NUMSAMPLES);
@@ -710,7 +718,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
                                                                            // direction
     double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
     float diffX = next.x - previous.x;
-    float diffY = next.y - previous.y;
+    float diffY = -(next.y - previous.y); //it is the negative because the java coordinate system
     double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute
                                                                              // angle
     angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative

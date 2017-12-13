@@ -301,8 +301,8 @@ public class Paint {
         Cell newCell = (Cell) jT.next();
         ipRelTraj.setColor(Color.black);
         ipRelTraj.moveTo(xLast, yLast);
-        xLast = (int) (xCenter + (newCell.x - firstCell.x));
-        yLast = (int) (yCenter - (newCell.y - firstCell.y));
+        xLast = (int) (xCenter + (newCell.x - firstCell.x)); //Be careful with the java coordinate system
+        yLast = (int) (yCenter + (newCell.y - firstCell.y)); //Be careful with the java coordinate system
         ipRelTraj.lineTo(xLast, yLast);
         oldCell = newCell;
       }
