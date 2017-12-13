@@ -33,6 +33,7 @@ import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
 import functions.VideoRecognition;
+import ij.IJ;
 import ij.ImagePlus;
 import ij.measure.ResultsTable;
 
@@ -47,7 +48,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   private ImagePlus            deadImpOutline;
   protected List<Cell> deadSpermatozoa  = new ArrayList<Cell>();
   private boolean              isThresholding   = false;
-
+  private boolean			   isProcessing = false;
   private ResultsTable results = new ResultsTable();
 
   /**
@@ -63,6 +64,10 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     setChangeListener(this,sldRedThreshold);
     setChangeListener(this,sldGreenThreshold);
     setMouseListener(this);
+//    btnOtsu.setVisible(false);
+//    btnMinimum.setVisible(false);
+    nextBtn.setText("Save and Next Image");
+
   }
 
   /**
@@ -95,7 +100,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       impDraw.setColor(Color.red);
       paint.drawBoundaries(impDraw, deadSpermatozoa);
     }else if(channel==Channel.BLUE){
-      //Not used in this version of the module
+      //Not used in this module version
     }else if(channel==Channel.NONE){
       paint.drawOutline(impDraw, aliveImpOutline);
       impDraw.setColor(Color.green);
@@ -185,7 +190,8 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   @Override
   public void mouseReleased(MouseEvent e) {
     channel = channel.NONE;
-    drawImage();
+    if(!isThresholding)
+    	drawImage();
   }
   
   protected void nextAction() {
@@ -194,22 +200,30 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   
 
   protected void processImage(boolean eventType) {
-    // If eventType == true, the threshold has changed or it needs to be
-    // calculated
-    // In that class, eventType is always true
-    aliveSpermatozoa = getSpermatozoa(Channel.GREEN);
-    deadSpermatozoa = getSpermatozoa(Channel.RED);
-    if (aliveSpermatozoa != null && deadSpermatozoa != null) {
-      spermatozoa = new ArrayList<Cell>(aliveSpermatozoa);
-      spermatozoa.addAll(deadSpermatozoa);
+    // In this module, eventType is not used
+    if(!isProcessing){//else do not disturb
+      isProcessing = true;
+  	  aliveSpermatozoa = getSpermatozoa(Channel.GREEN);
+      deadSpermatozoa = getSpermatozoa(Channel.RED);
+      if(aliveSpermatozoa != null){
+      	spermatozoa = new ArrayList<Cell>(aliveSpermatozoa);
+      	if(deadSpermatozoa != null){
+      		spermatozoa.addAll(deadSpermatozoa);
+      	}
+      } else if(deadSpermatozoa != null){
+      	spermatozoa = new ArrayList<Cell>(deadSpermatozoa);
+      }else{
+      	spermatozoa = new ArrayList<Cell>();
+      }
       selectAll();// set as selected all spermatozoa to allow boundary painting
       idenfitySperm();
+      // Calculate outlines
+      ComputerVision cv = new ComputerVision();
+      cv.outlineThresholdImage(aliveImpOutline);
+      cv.outlineThresholdImage(deadImpOutline);
+      drawImage();
+      isProcessing = false;
     }
-    // Calculate outlines
-    ComputerVision cv = new ComputerVision();
-    cv.outlineThresholdImage(aliveImpOutline);
-    cv.outlineThresholdImage(deadImpOutline);
-    drawImage();
   }
 
   @Override

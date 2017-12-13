@@ -155,9 +155,11 @@ public class ImageAnalysisWindow extends JFrame {
    * This method deselect all spermatozoa.
    */
   public void deselectAll() {
-    for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
-      Cell cell = (Cell) j.next();
-      cell.selected = false;
+    if(spermatozoa != null & spermatozoa.size()>0){
+	    for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
+	      Cell cell = (Cell) j.next();
+	      cell.selected = false;
+	    }
     }
   }
   protected void drawImage() {}
@@ -166,11 +168,13 @@ public class ImageAnalysisWindow extends JFrame {
    * spermatozoa list
    */
   public void idenfitySperm() {
-    int SpermNr = 0;
-    for (ListIterator<Cell> j = spermatozoa.listIterator(); j.hasNext();) {
-      Cell sperm = (Cell) j.next();
-      SpermNr++;
-      sperm.id = "" + SpermNr;
+    if(spermatozoa != null & spermatozoa.size()>0){
+    	int SpermNr = 0;
+	    for (ListIterator<Cell> j = spermatozoa.listIterator(); j.hasNext();) {
+	      Cell sperm = (Cell) j.next();
+	      SpermNr++;
+	      sperm.id = "" + SpermNr;
+	    }
     }
   }
 
