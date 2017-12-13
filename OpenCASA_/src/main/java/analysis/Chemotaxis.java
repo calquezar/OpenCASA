@@ -222,7 +222,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private float calculateSLIndex(List<List<Cell>> theTracks) {
 
     float nUpGradient = 0; // Number of shifts in the chemoattractant direction
-    float nOtherDirs = 0; // Number of shifts in other direction
+    float nOtherDir = 0; // Number of shifts in other direction
     int trackNr = 0;
     int nTracks = theTracks.size();
     double angleChemotaxis = (2 * Math.PI + (Params.angleAmplitude / 2) * Math.PI / 180) % (2 * Math.PI);
@@ -235,14 +235,22 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Cell last = (Cell) aTrack.get(aTrack.size() - 1);
       double angle = relativeAngle(first, last); // Between [-PI,PI]
       // Check if the angle is upGradient or not
-      if (Math.abs(angle) < angleChemotaxis) {
-        nUpGradient++;
-      } else {
-        nOtherDirs++;
-      }
+      if (Params.compareOppositeDirections) {// We only take into account angles in the gradient and opposite direction
+        if (Math.abs(angle) < angleChemotaxis) {
+            nUpGradient++;
+          } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
+            nOtherDir++;
+          }
+        } else {// We take into account all angles in all directions
+          if (Math.abs(angle) < angleChemotaxis) {
+            nUpGradient++;
+          } else {
+            nOtherDir++;
+          }
+        }
     }
-    if ((nUpGradient + nOtherDirs) > 0) {
-      ratioSL = nUpGradient / (nUpGradient + nOtherDirs);
+    if ((nUpGradient + nOtherDir) > 0) {
+      ratioSL = nUpGradient / (nUpGradient + nOtherDir);
     } else {
       ratioSL = -1;
     }

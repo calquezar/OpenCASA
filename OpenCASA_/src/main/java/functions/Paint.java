@@ -85,8 +85,7 @@ public class Paint {
     int xCenter = ip.getWidth() / 2;
     int yCenter = ip.getHeight() / 2;
     float upperAngle = (float) (Params.angleDirection + Params.angleAmplitude / 2 + 360) % 360;
-    upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert
-                                                     // to radians
+    upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert to radians
     float lowerAngle = (float) (Params.angleDirection - Params.angleAmplitude / 2 + 360) % 360;
     lowerAngle = lowerAngle * (float) Math.PI / 180; // convert to radians
     // Upper Line
@@ -100,7 +99,25 @@ public class Paint {
     ip.lineTo((int) upperLineX, (int) upperLineY);
     ip.moveTo((int) xCenter, (int) yCenter);
     ip.lineTo((int) lowerLineX, (int) lowerLineY);
-    // Reses line width
+    if(Params.compareOppositeDirections){
+      //Draw opposite cone
+      upperAngle = (float) (Params.angleDirection+180 + Params.angleAmplitude / 2 + 360) % 360;
+      upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert to radians
+      lowerAngle = (float) (Params.angleDirection+180 - Params.angleAmplitude / 2 + 360) % 360;
+      lowerAngle = lowerAngle * (float) Math.PI / 180; // convert to radians
+      // Upper Line
+      upperLineX = xCenter + (int) (1000 * Math.cos(upperAngle));
+      upperLineY = yCenter - (int) (1000 * Math.sin(upperAngle));
+      // Lower Line
+      lowerLineX = xCenter + (int) (1000 * Math.cos(lowerAngle));
+      lowerLineY = yCenter - (int) (1000 * Math.sin(lowerAngle));
+      // Draw Chemotaxis Cone
+      ip.moveTo((int) xCenter, (int) yCenter);
+      ip.lineTo((int) upperLineX, (int) upperLineY);
+      ip.moveTo((int) xCenter, (int) yCenter);
+      ip.lineTo((int) lowerLineX, (int) lowerLineY);
+    }
+    // Reset line width
     ip.setLineWidth(1);
     ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
     ip.moveTo(10, 30);
@@ -417,6 +434,20 @@ public class Paint {
     y = (int) (radius * Math.sin(lowerAngle));
     roseDiagram.moveTo(xCenter, yCenter);
     roseDiagram.lineTo(xCenter + x, yCenter - y);
+    if(Params.compareOppositeDirections){
+	  upperAngle = (360 + Params.angleDirection+180 + Params.angleAmplitude / 2) % 360;
+	  upperAngle *= Math.PI / 180;
+	  x = (int) (radius * Math.cos(upperAngle));
+	  y = (int) (radius * Math.sin(upperAngle));
+	  roseDiagram.moveTo(xCenter, yCenter);
+	  roseDiagram.lineTo(xCenter + x, yCenter - y);
+	  lowerAngle = (360 + Params.angleDirection+180 - Params.angleAmplitude / 2) % 360;
+	  lowerAngle *= Math.PI / 180;
+	  x = (int) (radius * Math.cos(lowerAngle));
+	  y = (int) (radius * Math.sin(lowerAngle));
+	  roseDiagram.moveTo(xCenter, yCenter);
+	  roseDiagram.lineTo(xCenter + x, yCenter - y);
+    }
     // Draw sample info
     roseDiagram.setLineWidth(1);
     roseDiagram.setFont(new Font("SansSerif", Font.PLAIN, 30));
