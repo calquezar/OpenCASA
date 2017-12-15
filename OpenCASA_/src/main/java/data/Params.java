@@ -33,12 +33,12 @@ import ij.IJ;
 public class Params {
 
   /**   */
-  public static float   angleAmplitude       = 90;
+  public static float   angleAmplitude       = 60;
   /**
    * This parameter is used to analyze the directionality angle between instant
    * t and instant (t+angleDelta).
    */
-  public static int     angleDelta           = 4;
+  public static int     angleDelta           = 5;
   /** Angles used to clasify chemotactic trajectories */
   public static float   angleDirection       = 0;
   /** parameters used to compute BCF (equivalent to angleDelta) */
@@ -62,21 +62,21 @@ public class Params {
   /**
    * maximum displacement of one spermatozoon between consecutive frames (um)
    */
-  public static float   maxDisplacement      = 10;   // um
+  public static float   maxDisplacement      = 20;   // um
   /** Used to calculate OR ratios */
   public static int     MAXINSTANGLES        = 20000;
   /** maximum sperm size */
-  public static float   maxSize              = 400;
+  public static float   maxSize              = 100;
   // 10x ==> 0.58
   // 40x ==> 0.1455
   /** Microns per pixel */
-  public static double       micronPerPixel   = 1;    // 0.58; 10x ISAS
+  public static double       micronPerPixel   = 0.483;    // 0.58; 10x ISAS
   /** minimum sperm size */
-  public static float        minSize          = 40;
+  public static float        minSize          = 10;
   /** minimum length of sperm track (in frames) */
-  public static int          minTrackLength   = 15;
+  public static int          minTrackLength   = 10;
   /**   */
-  public static int          NUMSAMPLES       = 100;
+  public static int          NUMSAMPLES       = 10000;
   /**   */
   public static double       pixelHeight      = 1.0;
   /**   */
@@ -91,13 +91,13 @@ public class Params {
   /** Parameter used to determine progressive motility sperm */
   public static float        progressMotility = 80;
   /**   */
-  public static float        vclLowerTh       = 45;
+  public static float        vclLowerTh       = 25;
   /** Motility filter for motile and non motile sperm */
-  public static float        vclMin           = 70;
+  public static float        vclMin           = 10;
   /**   */
-  public static float        vclUpperTh       = 75;
+  public static float        vclUpperTh       = 95;
   /** Window size for moving average method (um) */
-  public static int          wSize            = 9;
+  public static int          wSize            = 5;
 
   /**   */
   public static void resetParams() {
