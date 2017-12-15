@@ -66,6 +66,10 @@ public class ImageAnalysisWindow extends JFrame {
   private List<ImagePlus>      images;
   private int                  imgIndex;
   private JLabel               imgLabel;
+  protected JLabel               genericLabel1;
+  protected JLabel               genericLabel2;
+  protected JLabel               genericLabel3;
+  
   /** ImagePlus used to draw over them */
   protected ImagePlus          impDraw         = null;
   /** ImagePlus used to calculate mean gray values */
@@ -95,11 +99,10 @@ public class ImageAnalysisWindow extends JFrame {
   protected double             blueThreshold       = -1.0;
   protected String             thresholdMethod = "Otsu";
   private JLabel               title;
-  /** */
-  protected double             xFactor;
 
-  /** */
-  protected double yFactor;
+  protected double             xFactor;
+  protected double             yFactor;
+  
 
   public ImageAnalysisWindow() {
     imgLabel = new JLabel();
@@ -125,6 +128,10 @@ public class ImageAnalysisWindow extends JFrame {
     btnGroup = new ButtonGroup();
     prevBtn = new JButton("Previous");
     nextBtn = new JButton("Next");
+    genericLabel1 = new JLabel();
+    genericLabel2 = new JLabel();
+    genericLabel3 = new JLabel();
+    
   }
 
   private int analyseDirectory() {
@@ -156,10 +163,10 @@ public class ImageAnalysisWindow extends JFrame {
    */
   public void deselectAll() {
     if(spermatozoa != null & spermatozoa.size()>0){
-	    for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
-	      Cell cell = (Cell) j.next();
-	      cell.selected = false;
-	    }
+      for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
+        Cell cell = (Cell) j.next();
+        cell.selected = false;
+      }
     }
   }
   protected void drawImage() {}
@@ -169,12 +176,12 @@ public class ImageAnalysisWindow extends JFrame {
    */
   public void idenfitySperm() {
     if(spermatozoa != null & spermatozoa.size()>0){
-    	int SpermNr = 0;
-	    for (ListIterator<Cell> j = spermatozoa.listIterator(); j.hasNext();) {
-	      Cell sperm = (Cell) j.next();
-	      SpermNr++;
-	      sperm.id = "" + SpermNr;
-	    }
+      int SpermNr = 0;
+      for (ListIterator<Cell> j = spermatozoa.listIterator(); j.hasNext();) {
+        Cell sperm = (Cell) j.next();
+        SpermNr++;
+        sperm.id = "" + SpermNr;
+      }
     }
   }
 
@@ -417,19 +424,44 @@ public class ImageAnalysisWindow extends JFrame {
     title = new JLabel();
     c.gridx = 2;
     c.gridy = 7;
-    c.gridwidth = 6;
+    c.gridwidth = 1;
     c.gridheight = 1;
-    c.ipady = 10;
+    c.ipadx = 20;
+//    c.ipady = 10;
     panel.add(title, c);
 
+    c.gridx = 3;
+    c.gridy = 7;
+    c.gridwidth = 1;
+    c.gridheight = 1;
+    c.ipadx = 20;
+//    c.ipady = 10;
+    panel.add(genericLabel1, c);
+    
+    c.gridx = 4;
+    c.gridy = 7;
+    c.gridwidth = 1;
+    c.gridheight = 1;
+    c.ipadx = 20;
+//    c.ipady = 10;
+    panel.add(genericLabel2, c);   
+    
+    c.gridx = 5;
+    c.gridy = 7;
+    c.gridwidth = 1;
+    c.gridheight = 1;
+    c.ipadx = 20;
+//    c.ipady = 10;
+    panel.add(genericLabel3, c);   
+    
     c.gridx = 2;
     c.gridy = 8;
-    c.gridwidth = 6;
+    c.gridwidth = 7;
     c.gridheight = 1;
     c.ipady = 10;
     panel.add(imgLabel, c);
-    initImage(); // Initialization with the first image available
-
+    initImage(); // Initialization with the first image available 
+    
     c.gridx = 0;
     c.gridy = 9;
     c.gridwidth = 10;

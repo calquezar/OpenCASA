@@ -24,6 +24,7 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
@@ -51,6 +52,10 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   private boolean			   isProcessing = false;
   private ResultsTable results = new ResultsTable();
 
+  private int totalCells = 0;
+  private int nViableCells = 0;
+  private int nNonViableCells = 0;
+  
   /**
    * Constructor
    */
@@ -67,9 +72,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 //    btnOtsu.setVisible(false);
 //    btnMinimum.setVisible(false);
     nextBtn.setText("Save and Next Image");
+    setGenericLabels();
 
   }
-
   /**
    * This method refreshes the showed image after changing the threshold with
    * the sliderbar
@@ -109,9 +114,19 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       impDraw.setColor(Color.red);
       paint.drawBoundaries(impDraw, deadSpermatozoa);
     }
+    nViableCells = aliveSpermatozoa.size();
+    nNonViableCells = deadSpermatozoa.size();
+    totalCells = nViableCells + nNonViableCells;
+    setGenericLabels();
     setImage();
   }
 
+  private void setGenericLabels(){
+    genericLabel1.setText("Total cells: "+totalCells);
+    genericLabel2.setText("Viable cells: "+nViableCells);
+    genericLabel3.setText("Non-viable cells: "+nNonViableCells);
+  }
+  
   private void generateResults() {
 
     int aliveCount = aliveSpermatozoa.size();
