@@ -121,7 +121,6 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     setImage();
   }
 
-  
   private void setGenericLabels(){
     genericLabel1.setText("Total cells: "+totalCells);
     genericLabel2.setText("Viable cells: "+nViableCells);
