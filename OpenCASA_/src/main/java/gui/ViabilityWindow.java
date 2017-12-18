@@ -73,6 +73,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 //    btnMinimum.setVisible(false);
     nextBtn.setText("Save and Next Image");
     setGenericLabels();
+    results.showRowNumbers(false);
 
   }
   /**

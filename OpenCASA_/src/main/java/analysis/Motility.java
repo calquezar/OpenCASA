@@ -95,6 +95,7 @@ public class Motility extends SwingWorker<Boolean, String> {
       calculateTotalMotility(rtTotal, s);
       resetParams();
     }
+    rtTotal.showRowNumbers(false);
     rtTotal.show("Total Motility");
   }
 
@@ -118,7 +119,9 @@ public class Motility extends SwingWorker<Boolean, String> {
       calculateAverageMotility(rtAverage, trial);
       resetParams();
     }
+    rtIndividual.showRowNumbers(false);
     rtIndividual.show("Individual motility");
+    rtAverage.showRowNumbers(false);
     rtAverage.show("Average motility");
   }
 
