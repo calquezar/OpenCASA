@@ -140,7 +140,9 @@ public class Motility extends SwingWorker<Boolean, String> {
     calculateMotility(rtIndividual, trial);
     calculateAverageMotility(rtAverage, trial);
     // Show results
+    rtIndividual.showRowNumbers(false);
     rtIndividual.show("Individual Motility");
+    rtAverage.showRowNumbers(false);
     rtAverage.show("Average Motility");
     // Draw trajectories
     ImagePlus imp = fm.getAVI(file);

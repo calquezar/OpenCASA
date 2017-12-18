@@ -177,8 +177,6 @@ public class Paint {
       return;
     }
     int upRes = 1;
-    SignalProcessing sp = new SignalProcessing();
-    SerializableList avgTracks = sp.averageTracks(theTracks);
     Kinematics kinematics = new Kinematics();
     // Draw on each frame
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
@@ -188,36 +186,48 @@ public class Paint {
       ImageProcessor ip = stack.getProcessor(iFrame);
       ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
       for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
-        List zTrack = (ArrayList) iT.next();
-        ListIterator jT = zTrack.listIterator();
+        List aTrack = (ArrayList) iT.next();
+        ListIterator jT = aTrack.listIterator();
         Cell oldCell = (Cell) jT.next();
-        for (; jT.hasNext();) {
-          Cell newCell = (Cell) jT.next();
-          if (kinematics.getVelocityTrackType(zTrack) == "Slow")
-            ip.setColor(Color.white);
-          else if (kinematics.getVelocityTrackType(zTrack) == "Normal")
-            ip.setColor(Color.yellow);
-          else if (kinematics.getVelocityTrackType(zTrack) == "Fast")
-            ip.setColor(Color.red);
-          // ip.setValue(color);
-          if (Params.drawOrigTrajectories) {
+        boolean isMotile = kinematics.motilityTest(aTrack);
+        if(isMotile){
+          for (; jT.hasNext();) {
+            Cell newCell = (Cell) jT.next();
+            if (kinematics.getVelocityTrackType(aTrack) == "Slow")
+              ip.setColor(Color.white);
+            else if (kinematics.getVelocityTrackType(aTrack) == "Normal")
+              ip.setColor(Color.yellow);
+            else if (kinematics.getVelocityTrackType(aTrack) == "Fast")
+              ip.setColor(Color.red);
+            // ip.setValue(color);
             ip.moveTo((int) oldCell.x * upRes, (int) oldCell.y * upRes);
             ip.lineTo((int) newCell.x * upRes, (int) newCell.y * upRes);
+            oldCell = newCell;
+            // Draw track numbers
+            if (newCell.z == iFrame) {
+              // we could do some boundary testing here to place the labels
+              // better when we are close to the edge
+              ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
+                  doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
+              ip.setColor(Color.white);
+              ip.drawString("" + newCell.trackNr);
+            }
           }
-          oldCell = newCell;
-          // Draw track numbers
-          if (newCell.z == iFrame) {
-            ip.setColor(Color.black);
-            // we could do some boundary testing here to place the labels
-            // better when we are close to the edge
-            ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
-                doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
-            ip.setColor(Color.white);
-            ip.drawString("" + newCell.trackNr);
+        } else {
+          for (; jT.hasNext();) {
+            Cell newCell = (Cell) jT.next();
+            if (newCell.z == iFrame) {
+              ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
+                  doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
+              ip.setColor(Color.white);
+              ip.drawString("**");
+            }
           }
         }
+        
+        
+
       }
-//      System.out.println("Drawind frame: " + iFrame);
     }
     imp.updateAndRepaintWindow();
   }

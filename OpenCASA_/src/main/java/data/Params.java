@@ -49,10 +49,6 @@ public class Params {
   public static boolean compareOppositeDirections = false;
   /**   */
   public static String  date                 = "";
-  /** Draw original trajectories over the ImagePlus */
-  public static boolean drawAvgTrajectories  = true;
-  /** Draw original trajectories over the ImagePlus */
-  public static boolean drawOrigTrajectories = true;
   /** frame rate */
   public static float   frameRate            = 100;
   /**   */

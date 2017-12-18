@@ -140,16 +140,13 @@ public class Kinematics {
    * @return
    */
   public String getVelocityTrackType(List track) {
-
     SignalProcessing sp = new SignalProcessing();
-    List avgTrack = sp.movingAverage(track);
-    float vap = vcl(avgTrack);
-    if ((vsl(track) < Params.vclLowerTh) || (vcl(track) < Params.vclLowerTh) || (vap < Params.vclLowerTh))
+    if (vcl(track) < Params.vclLowerTh)
       return "Slow";
-    else if ((vsl(track) > Params.vclUpperTh) || (vcl(track) > Params.vclUpperTh) || (vap > Params.vclUpperTh))
+    else if (vcl(track) > Params.vclUpperTh)
       return "Fast";
     else
-      return "Normal";
+      return "Normal"; 
   }
 
   /******************************************************/
