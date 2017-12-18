@@ -63,8 +63,8 @@ public class ImageAnalysisWindow extends JFrame {
   private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
 
   /** */
-  private List<ImagePlus>      images;
-  private int                  imgIndex;
+  protected List<ImagePlus>      images;
+  protected int                  imgIndex;
   private JLabel               imgLabel;
   protected JLabel               genericLabel1;
   protected JLabel               genericLabel2;

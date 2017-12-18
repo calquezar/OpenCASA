@@ -43,16 +43,16 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     BLUE, GREEN, RED, NONE
   }
   private Channel channel = Channel.NONE;
-  private ImagePlus            aliveImpOutline;
-  protected List<Cell> aliveSpermatozoa = new ArrayList<Cell>();
-  private ImagePlus            deadImpOutline;
-  protected List<Cell> deadSpermatozoa  = new ArrayList<Cell>();
+  private ImagePlus            viableImpOutline;
+  protected List<Cell> viableSpermatozoa = new ArrayList<Cell>();
+  private ImagePlus            nonViableImpOutline;
+  protected List<Cell> nonViableSpermatozoa  = new ArrayList<Cell>();
   private boolean              isThresholding   = false;
   private boolean forceChannelNone = true; 
   private boolean			   isProcessing = false;
   private ResultsTable results = new ResultsTable();
 
-  private int totalCells = 0;
+  private int numberOfCells = 0;
   private int nViableCells = 0;
   private int nNonViableCells = 0;
   
@@ -98,48 +98,48 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     impDraw = impOrig.duplicate();
     Paint paint = new Paint();
     if(channel==Channel.GREEN){
-      paint.drawOutline(impDraw, aliveImpOutline);
+      paint.drawOutline(impDraw, viableImpOutline);
       impDraw.setColor(Color.green);
-      paint.drawBoundaries(impDraw, aliveSpermatozoa);
+      paint.drawBoundaries(impDraw, viableSpermatozoa);
     }else if(channel==Channel.RED){
-      paint.drawOutline(impDraw, deadImpOutline);
+      paint.drawOutline(impDraw, nonViableImpOutline);
       impDraw.setColor(Color.red);
-      paint.drawBoundaries(impDraw, deadSpermatozoa);
+      paint.drawBoundaries(impDraw, nonViableSpermatozoa);
     }else if(channel==Channel.BLUE){
       //Not used in this module version
     }else if(channel==Channel.NONE){
-      paint.drawOutline(impDraw, aliveImpOutline);
+      paint.drawOutline(impDraw, viableImpOutline);
       impDraw.setColor(Color.green);
-      paint.drawBoundaries(impDraw, aliveSpermatozoa);
-      paint.drawOutline(impDraw, deadImpOutline);
+      paint.drawBoundaries(impDraw, viableSpermatozoa);
+      paint.drawOutline(impDraw, nonViableImpOutline);
       impDraw.setColor(Color.red);
-      paint.drawBoundaries(impDraw, deadSpermatozoa);
+      paint.drawBoundaries(impDraw, nonViableSpermatozoa);
     }
-    nViableCells = aliveSpermatozoa.size();
-    nNonViableCells = deadSpermatozoa.size();
-    totalCells = nViableCells + nNonViableCells;
+    nViableCells = viableSpermatozoa.size();
+    nNonViableCells = nonViableSpermatozoa.size();
+    numberOfCells = nViableCells + nNonViableCells;
     setGenericLabels();
     setImage();
   }
 
   private void setGenericLabels(){
-    genericLabel1.setText("Total cells: "+totalCells);
+    genericLabel1.setText("Total cells: "+numberOfCells);
     genericLabel2.setText("Viable cells: "+nViableCells);
     genericLabel3.setText("Non-viable cells: "+nNonViableCells);
   }
   
   private void generateResults() {
 
-    int aliveCount = aliveSpermatozoa.size();
-    int deadCount = deadSpermatozoa.size();
+    int viableCount = viableSpermatozoa.size();
+    int nonViableCount = nonViableSpermatozoa.size();
     results.incrementCounter();
-    results.addValue("Alives", aliveCount);
-    results.addValue("Deads", deadCount);
-    int total = aliveCount + deadCount;
+    int total = viableCount + nonViableCount;
     results.addValue("Total", total);
-    float percAlives = ((float) aliveCount) / ((float) total) * 100;
-    results.addValue("% Alives", percAlives);
-    results.addValue("% Deads", 100-percAlives);
+    results.addValue("Viable", viableCount);
+    results.addValue("Non-Viable", nonViableCount);
+    float percAlives = ((float) viableCount) / ((float) total) * 100;
+    results.addValue("% Viable", percAlives);
+    results.addValue("% Non-Viable", 100-percAlives);
     FileManager fm = new FileManager();
     results.addValue("Sample", fm.getParentDirectory(impOrig.getTitle()));
     results.addValue("Filename", fm.getFilename(impOrig.getTitle()));
@@ -149,8 +149,35 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       results.addValue("Date", Params.date);
     if (!Params.genericField.isEmpty())
       results.addValue("Generic Field", Params.genericField);
+    results.addValue("----", "");
+    results.addValue("-----", "");
+    results.addValue("Total Cells", "");
+    results.addValue("Total Viable", "");
+    results.addValue("Total Non-Viable", "");
+    results.addValue("% Total Viable", "");
+    results.addValue("% Total Non-Viable", "");
+    generateAverageResults();
     results.show("Viability results");
 
+  }
+  
+  private void generateAverageResults(){
+    
+    int nRows = results.size();
+    int totalCells = 0;
+    int totalViableCells = 0;
+    int totalNonViableCells = 0;
+    for(int i=0;i<nRows;i++){
+      totalViableCells += results.getValue("Viable", i);
+      totalNonViableCells += results.getValue("Non-Viable", i);
+    }
+    totalCells = totalViableCells + totalNonViableCells;
+    results.setValue("Total Cells", 0,  ""+totalCells );
+    results.setValue("Total Viable", 0, ""+totalViableCells);
+    results.setValue("Total Non-Viable", 0, ""+totalNonViableCells);
+    
+    results.setValue("% Total Viable", 0, (100*totalViableCells/(double)totalCells));
+    results.setValue("% Total Non-Viable", 0, (100*totalNonViableCells/(double)totalCells));
   }
 
   private List<Cell> getSpermatozoa(Channel rgbChannel) {
@@ -176,11 +203,11 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     thresholdImagePlus(impTh);
     // this will be useful for painting outlines later
     if (rgbChannel == Channel.RED)
-      deadImpOutline = impTh;
+      nonViableImpOutline = impTh;
     else if (rgbChannel == Channel.GREEN)
-      aliveImpOutline = impTh;
+      viableImpOutline = impTh;
     else if (rgbChannel == Channel.BLUE)
-      aliveImpOutline = impTh;
+      viableImpOutline = impTh;
     VideoRecognition vr = new VideoRecognition();
     List<Cell>[] sperm = vr.detectCells(impTh);
     return sperm[0];
@@ -222,15 +249,15 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     // In this module, eventType is not used
     if(!isProcessing){//else do not disturb
       isProcessing = true;
-  	  aliveSpermatozoa = getSpermatozoa(Channel.GREEN);
-      deadSpermatozoa = getSpermatozoa(Channel.RED);
-      if(aliveSpermatozoa != null){
-      	spermatozoa = new ArrayList<Cell>(aliveSpermatozoa);
-      	if(deadSpermatozoa != null){
-      		spermatozoa.addAll(deadSpermatozoa);
+  	  viableSpermatozoa = getSpermatozoa(Channel.GREEN);
+      nonViableSpermatozoa = getSpermatozoa(Channel.RED);
+      if(viableSpermatozoa != null){
+      	spermatozoa = new ArrayList<Cell>(viableSpermatozoa);
+      	if(nonViableSpermatozoa != null){
+      		spermatozoa.addAll(nonViableSpermatozoa);
       	}
-      } else if(deadSpermatozoa != null){
-      	spermatozoa = new ArrayList<Cell>(deadSpermatozoa);
+      } else if(nonViableSpermatozoa != null){
+      	spermatozoa = new ArrayList<Cell>(nonViableSpermatozoa);
       }else{
       	spermatozoa = new ArrayList<Cell>();
       }
@@ -238,8 +265,8 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       idenfitySperm();
       // Calculate outlines
       ComputerVision cv = new ComputerVision();
-      cv.outlineThresholdImage(aliveImpOutline);
-      cv.outlineThresholdImage(deadImpOutline);
+      cv.outlineThresholdImage(viableImpOutline);
+      cv.outlineThresholdImage(nonViableImpOutline);
       if(forceChannelNone){
         channel = Channel.NONE;
         forceChannelNone=false;
