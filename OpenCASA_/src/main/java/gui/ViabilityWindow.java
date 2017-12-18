@@ -24,12 +24,11 @@ import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.swing.JPanel;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import data.Params;
 import data.Cell;
+import data.Params;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
@@ -49,6 +48,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
   private ImagePlus            deadImpOutline;
   protected List<Cell> deadSpermatozoa  = new ArrayList<Cell>();
   private boolean              isThresholding   = false;
+  private boolean forceChannelNone = true; 
   private boolean			   isProcessing = false;
   private ResultsTable results = new ResultsTable();
 
@@ -205,12 +205,16 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 
   @Override
   public void mouseReleased(MouseEvent e) {
-    channel = channel.NONE;
+    channel = Channel.NONE;
     if(!isThresholding)
     	drawImage();
   }
   
+  protected void previousAction(){
+    forceChannelNone=true;
+  }
   protected void nextAction() {
+    forceChannelNone=true;
     generateResults();
   }
   
@@ -237,11 +241,19 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
       ComputerVision cv = new ComputerVision();
       cv.outlineThresholdImage(aliveImpOutline);
       cv.outlineThresholdImage(deadImpOutline);
+      if(forceChannelNone){
+        channel = Channel.NONE;
+        forceChannelNone=false;
+      }
       drawImage();
       isProcessing = false;
     }
   }
 
+  protected void genericRadioButtonsAction(){
+    forceChannelNone=true;
+  }
+  
   @Override
   public void stateChanged(ChangeEvent e) {
     Object auxWho = e.getSource();

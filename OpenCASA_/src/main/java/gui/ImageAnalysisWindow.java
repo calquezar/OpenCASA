@@ -191,7 +191,7 @@ public class ImageAnalysisWindow extends JFrame {
   public void initImage() {
     setImage(0); // Initialization with the first image available
     processImage(false);
-    drawImage();
+//    drawImage();
   }
 
   protected void nextAction() {
@@ -373,8 +373,9 @@ public class ImageAnalysisWindow extends JFrame {
       public void actionPerformed(ActionEvent e) {
         threshold = -1.0;
         thresholdMethod = "Otsu";
-        processImage(false);
         genericRadioButtonsAction();
+        processImage(false);
+        
       }
     });
     
@@ -382,8 +383,8 @@ public class ImageAnalysisWindow extends JFrame {
       public void actionPerformed(ActionEvent e) {
         threshold = -1.0;
         thresholdMethod = "Minimum";
-        processImage(false);   
         genericRadioButtonsAction();
+        processImage(false);   
       }
     });
     // Group the radio buttons.
