@@ -218,7 +218,6 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     generateResults();
   }
   
-
   protected void processImage(boolean eventType) {
     // In this module, eventType is not used
     if(!isProcessing){//else do not disturb
