@@ -836,8 +836,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    */
   private void setIndexesResults(ResultsTable rt, Trial trial, float chIdx, float slIdx) {
     int nTracks = trial.tracks.size();
+    int[] angles = countAngles(trial.tracks);
     rt.incrementCounter();
     rt.addValue("nTracks", nTracks);
+    rt.addValue("Chemotactic displacements", ""+angles[0]);
+    rt.addValue("Other displacements", ""+angles[1]);
     rt.addValue("Ch-Index", chIdx);
     rt.addValue("Sl-Index", slIdx);
     rt.addValue("Type", trial.type);
