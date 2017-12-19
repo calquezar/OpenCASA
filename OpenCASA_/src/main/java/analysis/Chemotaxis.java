@@ -100,8 +100,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Map<String, Trial> tTrials = getTrials(tests);
       ResultsTable rt = analyseCondition(cTrials, tTrials);
       String condition = fm.getFilename(f);
-      if(rt!=null)
+      if(rt!=null){
+        rt.showRowNumbers(false);
         rt.show(condition);
+      }
     }
   }
 
@@ -141,6 +143,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     Map<String, Trial> controls = tm.simulateTrials(0, 0, TOTALSIMULATIONS);
     Map<String, Trial> tests = tm.simulateTrials(BETA, RESPONSIVENESS, TOTALSIMULATIONS);
     ResultsTable rt = analyseCondition(controls, tests);
+    rt.showRowNumbers(false);
     rt.show("Results from Simulation (Beta: " + BETA + ",Responsiveness: " + RESPONSIVENESS + ")");
   }
 
