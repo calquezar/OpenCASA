@@ -527,7 +527,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       values[0] += (double) countInstDirections[0]; // number of instantaneous
                                                     // angles in the positive
                                                     // direction
-      values[1] += (double) (countInstDirections[0] + countInstDirections[1]);
+//      values[1] += (double) (countInstDirections[0] + countInstDirections[1]);
+      values[1] += (double)countInstDirections[1];
       index++;
     }
     return values;
@@ -656,7 +657,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return Odds Ratio
    */
   private double or(Trial control, Trial test) {
-	SignalProcessing sp = new SignalProcessing();
+	  SignalProcessing sp = new SignalProcessing();
     SerializableList controlTracks = sp.filterTracksByMotility(control.tracks);
     SerializableList conditionTracks = sp.filterTracksByMotility(test.tracks);
     double[] numeratorValues = getOddsValues(conditionTracks);// Calculate
@@ -700,7 +701,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       double denominatorRatio = denominatorValues[0] / denominatorValues[1];
       double oddsRatio = numeratorRatio / denominatorRatio;
       oRs.add(oddsRatio);
-      // IJ.log(""+oddsRatio);
+//      IJ.log(""+oddsRatio);
     }
     Collections.sort(oRs);
     return oRs.get((int) (Params.NUMSAMPLES * 0.95));
