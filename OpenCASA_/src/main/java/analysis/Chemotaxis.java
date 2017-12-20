@@ -594,15 +594,15 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Trial trial = (Trial) controls.get(k);
       trial.tracks = sp.filterTracksByMotility(trial.tracks);
       float chIdx = calculateChIndex(trial.tracks);
-      float slIdx = calculateSLIndex(trial.tracks);
-      setIndexesResults(rt, trial, chIdx, slIdx);
+//      float slIdx = calculateSLIndex(trial.tracks);
+      setIndexesResults(rt, trial, chIdx);
     }
     for (String k : tkeySet) {
       Trial trial = (Trial) tests.get(k);
       trial.tracks = sp.filterTracksByMotility(trial.tracks);
       float chIdx = calculateChIndex(trial.tracks);
-      float slIdx = calculateSLIndex(trial.tracks);
-      setIndexesResults(rt, trial, chIdx, slIdx);
+//      float slIdx = calculateSLIndex(trial.tracks);
+      setIndexesResults(rt, trial, chIdx);
     }
     return rt;
   }
@@ -835,7 +835,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @param slIdx
    *          - SL-Index of the given trial.
    */
-  private void setIndexesResults(ResultsTable rt, Trial trial, float chIdx, float slIdx) {
+  private void setIndexesResults(ResultsTable rt, Trial trial, float chIdx) {
     int nTracks = trial.tracks.size();
     int[] angles = countAngles(trial.tracks);
     rt.incrementCounter();
@@ -843,7 +843,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     rt.addValue("Chemotactic displacements", ""+angles[0]);
     rt.addValue("Other displacements", ""+angles[1]);
     rt.addValue("Ch-Index", chIdx);
-    rt.addValue("Sl-Index", slIdx);
+//    rt.addValue("Sl-Index", slIdx);
     rt.addValue("Type", trial.type);
     rt.addValue("Direction (Degrees)", Params.angleDirection);
     rt.addValue("ArcChemotaxis (Degrees)", Params.angleAmplitude);

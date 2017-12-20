@@ -138,12 +138,13 @@ public class Paint {
 //    ip.moveTo(70, 70);
 //    ip.setColor(Color.black);
 //    ip.drawString("" + chIdx);
-    ip.moveTo(10, 70);
-    ip.setColor(new Color(34, 146, 234));
-    ip.drawString("SL-Index: ");
-    ip.moveTo(80, 70);
-    ip.setColor(Color.black);
-    ip.drawString("" + slIdx);
+    
+//    ip.moveTo(10, 70);
+//    ip.setColor(new Color(34, 146, 234));
+//    ip.drawString("SL-Index: ");
+//    ip.moveTo(80, 70);
+//    ip.setColor(Color.black);
+//    ip.drawString("" + slIdx);
   }
 
   /**
@@ -318,7 +319,7 @@ public class Paint {
       }
       ipRelTraj.drawOval(xLast - 3, yLast, 6, 6);
     }
-    new ImagePlus("Chemotactic Ratios", ipRelTraj).show();
+    new ImagePlus("Relative trajectories", ipRelTraj).show();
   }
 
   /******************************************************/
