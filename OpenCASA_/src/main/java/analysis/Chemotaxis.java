@@ -208,7 +208,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     if ((nUpGradient + nOtherDirs) > 0) {
       chIdx = nUpGradient / (nUpGradient + nOtherDirs); // (nUpGradient+nOtherDirs)
                                                         // = Total number of
-                                                        // shifts
+                                                        // displacements taken into account
     } else {
       chIdx = -1;
     }
