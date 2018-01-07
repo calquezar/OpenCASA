@@ -18,6 +18,7 @@
 
 package functions;
 
+import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
@@ -71,68 +72,30 @@ public class Kinematics {
    *          -
    * @return BCF (Hz)
    */
-  // public float bcf(List track,List avgTrack){
-  //
-  // int length = avgTrack.size();
-  // int intersections=0;
-  // // bcf_shift equal to 1 is not enougth to catch all beat-cross
-  // for (int i=1;i<length;i=i+1+Params.bcf_shift){
-  // Cell origP0 =
-  // (Cell)track.get(i-Params.bcf_shift+Params.wSize/2-1);
-  // Cell origP1 = (Cell)track.get(i+Params.wSize/2-1);
-  // Cell avgP0 = (Cell)avgTrack.get(i-Params.bcf_shift);
-  // Cell avgP1 = (Cell)avgTrack.get(i);
-  // Line2D origLine = new Line2D.Float();
-  // origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
-  // Line2D avgLine = new Line2D.Float();
-  // avgLine.setLine(avgP0.x,avgP0.y,avgP1.x,avgP1.y);
-  //
-  // boolean intersection = origLine.intersectsLine(avgLine);
-  // if(intersection)
-  // intersections++;
-  // }
-  // float bcf_value = (float)intersections*Params.frameRate/(float)length;
-  //
-  // return bcf_value;
-  // }
-  /**
-   * @param track
-   * @param avgTrack
-   * @return
-   */
-  public float bcf(List track, List avgTrack) {
-
-    int nAvgPoints = avgTrack.size();
-    float[] dists = new float[nAvgPoints];
-    int[] xPoints = new int[nAvgPoints];
-    for (int i = 0; i < nAvgPoints; i++) {
-      Cell origS = (Cell) track.get(i + Params.wSize / 2 - 1);
-      Cell avgS = (Cell) avgTrack.get(i);
-      dists[i] = origS.distance(avgS);
-    }
-    SignalProcessing sp = new SignalProcessing();
-    dists = sp.movingAverage(dists, 2);
-    int intersections = countLocalMaximas(dists);
-    float bcf_value = (float) intersections * Params.frameRate / (float) nAvgPoints;
-    return bcf_value;
-  }
-
-  /**
-   * @param points
-   * @return
-   */
-  int countLocalMaximas(float[] points) {
-    int nPoints = points.length;
-    int count = 0;
-    for (int i = 2; i < nPoints; i++) {
-      float x0 = points[i - 2];
-      float x1 = points[i - 1];
-      float x2 = points[i];
-      if (((x1 > x0) & (x1 > x2)) || ((x1 < x0) & (x1 < x2)))
-        count++;
-    }
-    return count;
-  }
+   public float bcf(List track,List avgTrack){
+     
+     int intersections=0;
+     for (int i=0;i<track.size()-1;i++){
+       Cell origP0 = (Cell)track.get(i);
+       Cell origP1 = (Cell)track.get(i+1);
+       Line2D origLine = new Line2D.Float();
+       origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
+       for (int j=0;j<avgTrack.size()-1;j++){
+         Cell avgP0 = (Cell)avgTrack.get(j);
+         Cell avgP1 = (Cell)avgTrack.get(j+1);
+         Line2D avgLine = new Line2D.Float();
+         avgLine.setLine(avgP0.x,avgP0.y,avgP1.x,avgP1.y);
+         boolean intersection = origLine.intersectsLine(avgLine);
+         if(intersection){
+           intersections++;
+           break; 
+         }
+       }
+     }
+     int length = avgTrack.size();
+     float bcf_value = (float)intersections*Params.frameRate/(float)(length-1);
+     return bcf_value;
+   }
 
   /******************************************************/
   /**
