@@ -46,7 +46,7 @@ public class Kinematics {
     float alhMax = 0;
     float alhMean = 0;
     for (int i = 0; i < length; i++) {
-      Cell origCell = (Cell) track.get(i + Params.wSize / 2 - 1);
+      Cell origCell = (Cell) track.get(i + Params.wSize - 1);
       Cell avgCell = (Cell) avgTrack.get(i);
       float distance = origCell.distance(avgCell);
       alhMean += distance;
@@ -156,21 +156,18 @@ public class Kinematics {
    * @return MAD - (degrees)
    */
   public float mad(List track) {
-
-    int length = track.size();
-    ListIterator jT = track.listIterator();
-    Cell oldCell = (Cell) jT.next();
+    int nPoints = track.size();
     float totalDegrees = 0;
-    for (int i = 1; i < length; i++) {
-      Cell newCell = (Cell) track.get(i);
+    for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
+      Cell oldCell = (Cell) track.get(j);
+      Cell newCell = (Cell) track.get(j + Params.angleDelta);
       float diffX = newCell.x - oldCell.x;
-      float diffY = newCell.y - oldCell.y;
-      double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI);
+      float diffY = -(newCell.y - oldCell.y); //it is the negative because the java coordinate system
+      double angle = (360 + Math.atan2(diffY, diffX) * 180 / Math.PI) % (360); // Absolute angle
       totalDegrees += angle;
-      oldCell = newCell;
     }
     // mean angle
-    float meanAngle = totalDegrees / (length - 1);
+    float meanAngle = totalDegrees / (nPoints - Params.angleDelta);
     return meanAngle;
   }
 
