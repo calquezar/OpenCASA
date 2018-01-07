@@ -19,6 +19,7 @@
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
+import functions.Kinematics;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImageJ;
@@ -48,6 +49,6 @@ public class OpenCASA_ implements PlugIn {
    **/
   @Override
   public void run(String arg) {
-    (new MainWindow("OpenCASA")).setVisible(true);
+    (new MainWindow("OpenCASA")).setVisible(true);    
   }
 }

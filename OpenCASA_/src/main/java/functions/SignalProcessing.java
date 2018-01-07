@@ -163,8 +163,8 @@ public class SignalProcessing {
     int nPoints = track.size();
     List avgTrack = new ArrayList();
     for (int j = wSize - 1; j < nPoints; j++) {
-      int avgX = 0;
-      int avgY = 0;
+      float avgX = 0;
+      float avgY = 0;
       for (int k = wSize - 1; k >= 0; k--) {
         Cell aCell = (Cell) track.get(j - k);
         avgX += (int) aCell.x;

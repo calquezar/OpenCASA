@@ -18,6 +18,7 @@
 
 package functions;
 
+import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ import java.util.ListIterator;
 
 import data.Params;
 import data.SerializableList;
+import ij.IJ;
 import data.Cell;
 
 /**
@@ -97,6 +99,52 @@ public class Kinematics {
      return bcf_value;
    }
 
+   public void test_bcf(){
+     
+     List track = new ArrayList();
+     int N = 10;
+     for(int i=0;i<N;i++){
+       Cell c = new Cell();
+       c.x=i;
+       c.y=2*(i%2)-1;
+       IJ.log(c.x +"  "+c.y);
+       track.add(c);
+     }
+     IJ.log("----------------------------");
+     IJ.log("----------------------------");
+     SignalProcessing s = new SignalProcessing();
+     List avgTrack = s.movingAverage(track,3);
+     
+     for(int i=0;i<avgTrack.size();i++){
+       Cell c = (Cell) avgTrack.get(i);
+       System.out.println(c.x +"  "+c.y);
+       IJ.log(c.x +"  "+c.y);
+     }
+     IJ.log("----------------------------");
+     IJ.log("----------------------------");
+     int intersections=0;
+     for (int i=0;i<track.size()-1;i++){
+       Cell origP0 = (Cell)track.get(i);
+       Cell origP1 = (Cell)track.get(i+1);
+       Line2D origLine = new Line2D.Float();
+       origLine.setLine(origP0.x,origP0.y,origP1.x,origP1.y);
+       for (int j=0;j<avgTrack.size()-1;j++){
+         Cell avgP0 = (Cell)avgTrack.get(j);
+         Cell avgP1 = (Cell)avgTrack.get(j+1);
+         Line2D avgLine = new Line2D.Float();
+         avgLine.setLine(avgP0.x,avgP0.y,avgP1.x,avgP1.y);
+         boolean intersection = origLine.intersectsLine(avgLine);
+         if(intersection){
+           intersections++;
+           break; 
+         }
+       }
+     }
+     int length = avgTrack.size();
+     float bcf_value = (float)intersections*Params.frameRate/(float)(length-1);
+     IJ.log("BCF: "+bcf_value);
+     IJ.log("Frame rate: "+Params.frameRate);
+   }
   /******************************************************/
   /**
    * @param track
