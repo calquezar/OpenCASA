@@ -29,10 +29,6 @@ import data.SerializableList;
 import ij.IJ;
 import data.Cell;
 
-import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
-import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
-import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
-
 /**
  * @author Carlos Alquezar
  *
@@ -48,7 +44,7 @@ public class Kinematics {
    */
   public float[] alh(List track, List avgTrack) {
 
-    LinearInterpolator interpol = new LinearInterpolator();
+//    LinearInterpolator interpol = new LinearInterpolator();
     //track interpolation
     double[] trackX = new double[track.size()];
     double[] trackY = new double[track.size()];
@@ -58,8 +54,8 @@ public class Kinematics {
       trackX[i]=(double)((Cell)track.get(i)).x;
       trackY[i]=(double)((Cell)track.get(i)).y;
     }
-    PolynomialSplineFunction trackInterpolX = interpol.interpolate(index,trackX);
-    PolynomialSplineFunction trackInterpolY = interpol.interpolate(index,trackY);
+//    PolynomialSplineFunction trackInterpolX = interpol.interpolate(index,trackX);
+//    PolynomialSplineFunction trackInterpolY = interpol.interpolate(index,trackY);
     
     //Average path interpolation
     double[] avgX = new double[avgTrack.size()];
@@ -97,12 +93,12 @@ public class Kinematics {
   }
   
   public void test_alh(){
-    SplineInterpolator l = new SplineInterpolator();
+//    SplineInterpolator l = new SplineInterpolator();
     
     double[] x = {1.0,10.0,20.0};
     double[] y = {1.0,20.0,40.0};
-    PolynomialSplineFunction p = l.interpolate(x,y);
-    IJ.log("x=15; y= "+p.value(15)); 
+//    PolynomialSplineFunction p = l.interpolate(x,y);
+//    IJ.log("x=15; y= "+p.value(15)); 
     
   }
 
