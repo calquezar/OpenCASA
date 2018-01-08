@@ -29,6 +29,10 @@ import data.SerializableList;
 import ij.IJ;
 import data.Cell;
 
+import org.apache.commons.math3.analysis.interpolation.LinearInterpolator;
+import org.apache.commons.math3.analysis.interpolation.SplineInterpolator;
+import org.apache.commons.math3.analysis.polynomials.PolynomialSplineFunction;
+
 /**
  * @author Carlos Alquezar
  *
@@ -44,25 +48,62 @@ public class Kinematics {
    */
   public float[] alh(List track, List avgTrack) {
 
-    int length = avgTrack.size();
-    float alh[] = new float[2];
-    float alhMax = 0;
-    float alhMean = 0;
-    for (int i = 0; i < length; i++) {
-      Cell origCell = (Cell) track.get(i + Params.wSize - 1);
-      Cell avgCell = (Cell) avgTrack.get(i);
-      float distance = origCell.distance(avgCell);
-      alhMean += distance;
-      if (distance > alhMax)
-        alhMax = distance;
+    LinearInterpolator interpol = new LinearInterpolator();
+    //track interpolation
+    double[] trackX = new double[track.size()];
+    double[] trackY = new double[track.size()];
+    double[] index = new double[track.size()];
+    for(int i=0;i<track.size();i++){
+      index[i] = (double)i;
+      trackX[i]=(double)((Cell)track.get(i)).x;
+      trackY[i]=(double)((Cell)track.get(i)).y;
     }
-    // Mean value
-    alhMean = alhMean / length;
-    // convert pixels to micrometers
-    alh[0] = alhMean * (float) Params.micronPerPixel;
-    alh[1] = alhMax * (float) Params.micronPerPixel;
+    PolynomialSplineFunction trackInterpolX = interpol.interpolate(index,trackX);
+    PolynomialSplineFunction trackInterpolY = interpol.interpolate(index,trackY);
+    
+    //Average path interpolation
+    double[] avgX = new double[avgTrack.size()];
+    double[] avgY = new double[avgTrack.size()];
+    for(int i=0;i<avgTrack.size();i++){
+      avgX[i]=((Cell)avgTrack.get(i)).x;
+      avgY[i]=((Cell)avgTrack.get(i)).y;
+    }
+//    PolynomialSplineFunction avg = s.interpolate(avgX,avgY);
+    
+//    int length = avgTrack.size();
+    float alh[] = new float[2];
+//    float alhMax = 0;
+//    float alhMean = 0;
+//    for (int i = 0; i < length; i++) {
+////      Cell origCell = (Cell) track.get(i + Params.wSize - 1);
+//      Cell avgCell = (Cell) avgTrack.get(i);
+//      Cell trackCell = new Cell();
+//      trackCell.x = (float) trackInterpolX.value((double)avgCell.x);
+//      trackCell.y = (float) trackInterpolY.value((double)avgCell.y);
+//      float distance = trackCell.distance(avgCell);
+//      alhMean += distance;
+//      if (distance > alhMax)
+//        alhMax = distance;
+//    }
+//    // Mean value
+//    alhMean = alhMean / length;
+//    // convert pixels to micrometers
+//    alh[0] = alhMean * (float) Params.micronPerPixel;
+//    alh[1] = alhMax * (float) Params.micronPerPixel;
 
+    alh[0]=0;
+    alh[1]=1;
     return alh;
+  }
+  
+  public void test_alh(){
+    SplineInterpolator l = new SplineInterpolator();
+    
+    double[] x = {1.0,10.0,20.0};
+    double[] y = {1.0,20.0,40.0};
+    PolynomialSplineFunction p = l.interpolate(x,y);
+    IJ.log("x=15; y= "+p.value(15)); 
+    
   }
 
   /******************************************************/
