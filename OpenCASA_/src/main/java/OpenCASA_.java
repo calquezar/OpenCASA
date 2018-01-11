@@ -49,9 +49,8 @@ public class OpenCASA_ implements PlugIn {
    **/
   @Override
   public void run(String arg) {
-//    (new MainWindow("OpenCASA")).setVisible(true);  
-    Kinematics k = new Kinematics();
+    (new MainWindow("OpenCASA")).setVisible(true);  
+//    Kinematics k = new Kinematics();
 //    k.test_alh();
-    k.testPerpendicularIntersection();
   }
 }
