@@ -51,8 +51,8 @@ public class Motility extends SwingWorker<Boolean, String> {
 
   private TypeOfAnalysis analysis              = TypeOfAnalysis.NONE;
   private float          countProgressiveSperm = 0;
-  private float          total_alhMax          = 0;
-  private float          total_alhMean         = 0;
+  private double         total_alhMax          = 0;
+  private double         total_alhMean         = 0;
   private float          total_bcf             = 0;
   private float          total_dance           = 0;
   private float          total_lin             = 0;
@@ -174,8 +174,8 @@ public class Motility extends SwingWorker<Boolean, String> {
     float lin_mean = total_lin / nTracks;
     float wob_mean = total_wob / nTracks;
     float str_mean = total_str / nTracks;
-    float alhMean_mean = total_alhMean / nTracks;
-    float alhMax_mean = total_alhMax / nTracks;
+    double alhMean_mean = total_alhMean / nTracks;
+    double alhMax_mean = total_alhMax / nTracks;
     float bcf_mean = total_bcf / nTracks;
     float dance_mean = total_dance / nTracks;
     float mad_mean = total_mad / nTracks;
@@ -257,7 +257,7 @@ public class Motility extends SwingWorker<Boolean, String> {
       float str_value = (vsl_value / vap_value) * 100;
       total_str += str_value;
       // Amplitude of lateral head
-      float[] alh_values = K.alh(aTrack, avgTrack);
+      double[] alh_values = K.alh(aTrack, avgTrack);
       total_alhMean += alh_values[0];
       total_alhMax += alh_values[1];
       // Beat-cross frequency
@@ -270,7 +270,7 @@ public class Motility extends SwingWorker<Boolean, String> {
         countProgressiveSperm++;
       }
       // DANCE
-      float dance_value = vcl_value * alh_values[0];// vcl*alh_mean
+      double dance_value = vcl_value * alh_values[0];// vcl*alh_mean
       total_dance += dance_value;
       // MAD
       float mad_value = K.mad(aTrack);
@@ -320,8 +320,8 @@ public class Motility extends SwingWorker<Boolean, String> {
     float lin_mean = total_lin / total_sperm;
     float wob_mean = total_wob / total_sperm;
     float str_mean = total_str / total_sperm;
-    float alhMean_mean = total_alhMean / total_sperm;
-    float alhMax_mean = total_alhMax / total_sperm;
+    double alhMean_mean = total_alhMean / total_sperm;
+    double alhMax_mean = total_alhMax / total_sperm;
     float bcf_mean = total_bcf / total_sperm;
     float dance_mean = total_dance / total_sperm;
     float mad_mean = total_mad / total_sperm;

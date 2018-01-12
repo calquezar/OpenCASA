@@ -62,7 +62,7 @@ public class Kinematics {
    * perpendicular straight line of the segment {q1=>q2} that cross it in the middle point of the segment
    */
   private double distanceBetweenSegments(double[] p1, double[] p2, double[] q1, double[] q2){
-   
+    
     Orientation segmentP_Orientation;
     Orientation segmentQ_Orientation;
     //vp = directional vector of the segment
@@ -75,7 +75,7 @@ public class Kinematics {
         segmentP_Orientation = Orientation.VERTICAL;
       else{
         segmentP_Orientation = Orientation.NULL; //the segment is actually a point
-        return -1.0;
+        return 0.0;
       }
     }else{//dx!=0
       if(vp[1]==0)
@@ -94,7 +94,7 @@ public class Kinematics {
         segmentQ_Orientation = Orientation.VERTICAL;
       else{
         segmentQ_Orientation = Orientation.NULL; //the segment is actually a point
-        return -1.0;
+        return 0.0;
       }
     }else{//dx!=0
       if(vq[1]==0)
@@ -105,7 +105,7 @@ public class Kinematics {
     
     if(((segmentP_Orientation == Orientation.VERTICAL)&&(segmentQ_Orientation == Orientation.HORIZONTAL))
       || ((segmentP_Orientation == Orientation.HORIZONTAL)&&(segmentQ_Orientation == Orientation.VERTICAL)))
-      return -1.0; // the segments are perpendicular, so the straight line perpendicular 
+      return 0.0; // the segments are perpendicular, so the straight line perpendicular 
                    // to one segment is parallel to the other
     
     ////We calculate the straight line that contains the segment {p1=>p2}
@@ -129,7 +129,7 @@ public class Kinematics {
     if(segmentQ_Orientation!=Orientation.HORIZONTAL){// Horizontal because we are calculating 
                                                      // the perpendicular straigh line, i.e. Vertical
                                                      
-      // we calculate the slope of th straight line perperndicular to segment1
+      // we calculate the slope of the straight line perperndicular to segment1
       mq = -vq[0]/vq[1];
       //we calculate the independent term of the straight line
       nq = qm[1]-mq*qm[0];
@@ -143,7 +143,7 @@ public class Kinematics {
        return distance(intersection,qm);
      }
      else
-       return -1.0;
+       return 0.0;
     }else if((segmentP_Orientation == Orientation.OBLIQUE) && (segmentQ_Orientation == Orientation.HORIZONTAL)){
       double xi = qm[0];
       double yi = mp*xi+np;
@@ -151,10 +151,10 @@ public class Kinematics {
       if(isInTheSegmentRange(xi, yi, p1, p2))
         return distance(intersection,qm);
       else
-        return -1.0;
+        return 0.0;
     }else {
       if(mp==mq) 
-        return -1.0; //The lines are parallels
+        return 0.0; //The lines are parallels
       else{ 
         //// we calculate the intersection point between the two straight lines
         double xi = (nq-np)/(mp-mq);
@@ -164,7 +164,7 @@ public class Kinematics {
         if(isInTheSegmentRange(xi, yi, p1, p2))
           return distance(intersection,qm);
         else
-          return -1.0;
+          return 0.0;
       }
     }
   }
@@ -173,10 +173,10 @@ public class Kinematics {
     return Math.sqrt(Math.pow(p2[0]-p1[0], 2)+ Math.pow(p2[1]-p1[1], 2));
   }
   
-  public float[] alh(List track, List avgTrack){
-    float alh[] = new float[2];
-    float alhMax = 0;
-    float alhMean = 0;
+  public double[] alh(List track, List avgTrack){
+    double alh[] = new double[2];
+    double alhMax = 0;
+    double alhMean = 0;
     for (int j = 0; j < avgTrack.size()-1; j++) {
       Cell avgCell1 = (Cell)avgTrack.get(j);
       Cell avgCell2 = (Cell)avgTrack.get(j+1);
@@ -190,28 +190,72 @@ public class Kinematics {
         double[] point1 = {(double)cell1.x,(double)cell1.y};
         double[] point2 = {(double)cell2.x,(double)cell2.y};
         double dist = distanceBetweenSegments(point1, point2, avgPoint1, avgPoint2);
-        if(dist>=0 && dist<minDist)
+        if(dist>0 && dist<minDist){
             minDist=dist;
+        }
       }
       if(minDist < 999999){
-        alhMean+=minDist/(avgTrack.size()-1);
+        alhMean+=minDist/(double)(avgTrack.size()-1);
         if(minDist>alhMax)
-          alhMax=(float)minDist;
+          alhMax=minDist;
       }
     }
+    alh[0] = alhMean * Params.micronPerPixel;
+    alh[1] = alhMax * Params.micronPerPixel;
     
-    alh[0] = alhMean * (float) Params.micronPerPixel;
-    alh[1] = alhMax * (float) Params.micronPerPixel;
     return alh;
     
   }
   public void test_alh(){
-//    SplineInterpolator l = new SplineInterpolator();
+
+    List<Cell> track = new ArrayList<Cell>();
+    /////////////////////////
+    Cell c = new Cell();
+    c.x=1;
+    c.y=1;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=2;
+    c.y=3;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=3;
+    c.y=3;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=4;
+    c.y=6;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=5;
+    c.y=4;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=7;
+    c.y=10;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=9;
+    c.y=5;
+    track.add(c);
+    /////////////////////////
+    c = new Cell();
+    c.x=12;
+    c.y=15;
+    track.add(c);
+    /////////////////////////
+    SignalProcessing sp = new SignalProcessing();
+    List<Cell> avgTrack = sp.movingAverage(track,5);      
     
-//    double[] x = {1.0,10.0,20.0};
-//    double[] y = {1.0,20.0,40.0};
-//    PolynomialSplineFunction p = l.interpolate(x,y);
-//    IJ.log("x=15; y= "+p.value(15)); 
+    double[] alhRes = alh(track,avgTrack);
+    IJ.log("alhMean: "+alhRes[0]/Params.micronPerPixel+"; alhMax: "+alhRes[1]/Params.micronPerPixel);
+
     
   }
 
