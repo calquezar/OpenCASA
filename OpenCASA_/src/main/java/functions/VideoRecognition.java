@@ -157,6 +157,7 @@ public class VideoRecognition implements Measurements {
         spermatozoa[iFrame - 1].add(aCell);
       }
     }
+    IJ.showProgress(2); // To remove progresBar
     return spermatozoa;
   }
   /******************************************************/
@@ -256,6 +257,7 @@ public class VideoRecognition implements Measurements {
         }
       }
     }
+    IJ.showProgress(2); // To remove progresBar
     return theTracks;
   }  
 

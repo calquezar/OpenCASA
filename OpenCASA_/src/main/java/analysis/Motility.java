@@ -95,6 +95,7 @@ public class Motility extends SwingWorker<Boolean, String> {
       calculateTotalMotility(rtTotal, s);
       resetParams();
     }
+    IJ.showProgress(2); // To remove progresBar
     rtTotal.showRowNumbers(false);
     rtTotal.show("Total Motility");
   }

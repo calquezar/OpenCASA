@@ -230,6 +230,7 @@ public class Paint {
 
       }
     }
+    IJ.showProgress(2); // To remove progresBar
     imp.updateAndRepaintWindow();
   }
 

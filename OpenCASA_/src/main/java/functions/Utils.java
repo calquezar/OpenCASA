@@ -120,6 +120,7 @@ public class Utils {
       }
       output += outputline;
     }
+    IJ.showProgress(2); // To remove progresBar
     return output;
   }
   

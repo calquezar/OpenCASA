@@ -199,6 +199,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       displacements[0] += instD[0];
       displacements[1] += instD[1];
     }
+    IJ.showProgress(2); // To remove progresBar
     float nUpGradient = displacements[0]; // Number of displacements in the
                                           // gradient direction
     float nOtherDirs = displacements[1]; // Number of displacements in other
@@ -253,6 +254,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
             }
         }
     }
+    IJ.showProgress(2); // To remove progresBar
     if ((nUpGradient + nOtherDir) > 0) {
       ratioSL = nUpGradient / (nUpGradient + nOtherDir);
     } else {
@@ -703,6 +705,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       oRs.add(oddsRatio);
 //      IJ.log(""+oddsRatio);
     }
+    IJ.showProgress(2); // To remove progresBar
     Collections.sort(oRs);
     return oRs.get((int) (Params.NUMSAMPLES * 0.95));
   }

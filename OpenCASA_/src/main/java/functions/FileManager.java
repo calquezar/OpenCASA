@@ -156,6 +156,7 @@ public class FileManager {
       }
       // else - possibly the file is not an image nor AVI
     }
+    IJ.showProgress(2); // To remove progresBar
     if (images.size() < 1) {
       JOptionPane.showMessageDialog(null, "Please, select a valid folder.");
       return null;

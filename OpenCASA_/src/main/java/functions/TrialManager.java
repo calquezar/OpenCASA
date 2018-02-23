@@ -163,6 +163,7 @@ public class TrialManager {
       Trial tr = simulateTrial(Integer.toString(i),beta,responsiveCells);
       trials.put(tr.ID, tr);
     }
+    IJ.showProgress(2); // To remove progresBar
     return trials;
   }
 
