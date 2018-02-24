@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package gui;
 
@@ -43,30 +43,30 @@ import data.Params;
  */
 public class SettingsWindow extends JFrame {
 
-  JTextField     angleAmplitudeTF      = new JTextField("" + Params.angleAmplitude, 4);
-  JTextField     angleDeltaTF          = new JTextField("" + Params.angleDelta, 4);
-  JTextField     angleDirectionTF      = new JTextField("" + Params.angleDirection, 4);
-  //JTextField     bcfShiftTF            = new JTextField("" + Params.bcf_shift, 4);
-  JButton        cancelBtn;
-  JCheckBox      compareOppositeDirCB  = new JCheckBox();
-  JTextField     dateTF                = new JTextField(Params.date, 8);
-  JTextField     frameRateTF           = new JTextField("" + Params.frameRate, 4);
-  JTextField     genericTF             = new JTextField(Params.genericField, 8);
-  JTextField     maleTF                = new JTextField(Params.male, 8);
-  JTextField     maxDisplacementTF     = new JTextField("" + Params.maxDisplacement, 4);
-  JTextField     maxSizeTF             = new JTextField("" + Params.maxSize, 4);
-  JTextField     micronPerPixelTF      = new JTextField("" + Params.micronPerPixel, 4);
-  JTextField     minSizeTF             = new JTextField("" + Params.minSize, 4);
-  JTextField     minTrackLengthTF      = new JTextField("" + Params.minTrackLength, 4);
-  JTextField     numSamplesBootsTF     = new JTextField("" + Params.NUMSAMPLES, 4);
-  JCheckBox      printXYCB             = new JCheckBox();
-  JTextField     progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
-  JButton        saveBtn;
+  JTextField angleAmplitudeTF = new JTextField("" + Params.angleAmplitude, 4);
+  JTextField angleDeltaTF = new JTextField("" + Params.angleDelta, 4);
+  JTextField angleDirectionTF = new JTextField("" + Params.angleDirection, 4);
+  // JTextField bcfShiftTF = new JTextField("" + Params.bcf_shift, 4);
+  JButton cancelBtn;
+  JCheckBox compareOppositeDirCB = new JCheckBox();
+  JTextField dateTF = new JTextField(Params.date, 8);
+  JTextField frameRateTF = new JTextField("" + Params.frameRate, 4);
+  JTextField genericTF = new JTextField(Params.genericField, 8);
+  JTextField maleTF = new JTextField(Params.male, 8);
+  JTextField maxDisplacementTF = new JTextField("" + Params.maxDisplacement, 4);
+  JTextField maxSizeTF = new JTextField("" + Params.maxSize, 4);
+  JTextField micronPerPixelTF = new JTextField("" + Params.micronPerPixel, 4);
+  JTextField minSizeTF = new JTextField("" + Params.minSize, 4);
+  JTextField minTrackLengthTF = new JTextField("" + Params.minTrackLength, 4);
+  JTextField numSamplesBootsTF = new JTextField("" + Params.NUMSAMPLES, 4);
+  JCheckBox printXYCB = new JCheckBox();
+  JTextField progressiveMotilityTF = new JTextField("" + Params.progressMotility, 4);
+  JButton saveBtn;
   SettingsWindow sw; // Self reference used in action listeners
-  JTextField     vclLowerThTF          = new JTextField("" + Params.vclLowerTh, 4);
-  JTextField     vclMinTF              = new JTextField("" + Params.vclMin, 4);
-  JTextField     vclUpperThTF          = new JTextField("" + Params.vclUpperTh, 4);
-  JTextField     windowSizeTF          = new JTextField("" + Params.wSize, 4);
+  JTextField vclLowerThTF = new JTextField("" + Params.vclLowerTh, 4);
+  JTextField vclMinTF = new JTextField("" + Params.vclMin, 4);
+  JTextField vclUpperThTF = new JTextField("" + Params.vclUpperTh, 4);
+  JTextField windowSizeTF = new JTextField("" + Params.wSize, 4);
 
   /**
    * @param title
@@ -81,7 +81,7 @@ public class SettingsWindow extends JFrame {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int w = (int) screenSize.getWidth();
     int h = (int) screenSize.getHeight();
-    this.setMinimumSize(new Dimension(w/2, h/2));
+    this.setMinimumSize(new Dimension(w / 2, h / 2));
   }
 
   private JTabbedPane addTabPane() {
@@ -150,7 +150,7 @@ public class SettingsWindow extends JFrame {
     box.add(label, c);
     c.gridx = 1;
     box.add(angleDeltaTF, c);
-    ///////////////    
+    ///////////////
     c.gridy += 1;
     label = new JLabel("Compare opposite directions: ");
     c.gridx = 0;
@@ -260,10 +260,10 @@ public class SettingsWindow extends JFrame {
     c.gridx = 0;
     c.gridy = 0;
     ///////////////
-//    JLabel label = new JLabel("Minimum shift for BCF (frames): ");
-//    box.add(label, c);
-//    c.gridx = 1;
-//    box.add(bcfShiftTF, c);
+    // JLabel label = new JLabel("Minimum shift for BCF (frames): ");
+    // box.add(label, c);
+    // c.gridx = 1;
+    // box.add(bcfShiftTF, c);
     ///////////////
     c.gridy += 1;
     JLabel label = new JLabel("Progressive motility (STR>%): ");
@@ -292,7 +292,7 @@ public class SettingsWindow extends JFrame {
     box.add(label, c);
     c.gridx = 1;
     box.add(vclUpperThTF, c);
-    ///////////////    
+    ///////////////
     // box.setBorder(BorderFactory.createTitledBorder("Motility"));
 
     return box;
@@ -343,7 +343,7 @@ public class SettingsWindow extends JFrame {
     c.gridx = 1;
     printXYCB.setSelected(Params.printXY);
     box.add(printXYCB, c);
-    ///////////////    
+    ///////////////
     // box.setBorder(BorderFactory.createTitledBorder("Recognition"));
 
     return box;
@@ -362,7 +362,9 @@ public class SettingsWindow extends JFrame {
     Params.minSize = Float.parseFloat(minSizeTF.getText());
     Params.maxSize = Float.parseFloat(maxSizeTF.getText());
     Params.minTrackLength = Integer.parseInt(minTrackLengthTF.getText());
-    Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um => pixels
+    Params.maxDisplacement = Float.parseFloat(maxDisplacementTF.getText()); // um
+                                                                            // =>
+                                                                            // pixels
     Params.wSize = Integer.parseInt(windowSizeTF.getText());
     Params.vclMin = Float.parseFloat(vclMinTF.getText());
     Params.vclLowerTh = Float.parseFloat(vclLowerThTF.getText());
@@ -372,7 +374,7 @@ public class SettingsWindow extends JFrame {
     Params.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
     Params.NUMSAMPLES = Integer.parseInt(numSamplesBootsTF.getText());
     Params.compareOppositeDirections = compareOppositeDirCB.isSelected();
-//    Params.bcf_shift = Integer.parseInt(bcfShiftTF.getText());
+    // Params.bcf_shift = Integer.parseInt(bcfShiftTF.getText());
     Params.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());
     Params.printXY = printXYCB.isSelected();
   }

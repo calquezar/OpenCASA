@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquezar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package functions;
 
@@ -22,9 +22,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import data.Cell;
 import data.Params;
 import data.SerializableList;
-import data.Cell;
 
 /**
  * @author Carlos Alquezar
@@ -79,8 +79,10 @@ public class SignalProcessing {
   /**
    * Function to decimate all tracks
    * 
-   * @param theTracks - 2D-ArrayList with all the tracks
-   * @param factor - decimation factor
+   * @param theTracks
+   *          - 2D-ArrayList with all the tracks
+   * @param factor
+   *          - decimation factor
    * @return 2D-ArrayList with all the tracks decimated
    */
   public List decimateTracks(List theTracks, int factor) {
@@ -94,7 +96,8 @@ public class SignalProcessing {
 
   /******************************************************/
   /**
-   * @param theTracks - 2D-ArrayList with all the tracks
+   * @param theTracks
+   *          - 2D-ArrayList with all the tracks
    * @return 2D-ArrayList with all the tracks that have passed the filter
    */
   public SerializableList filterTracksByLength(SerializableList theTracks) {
@@ -109,7 +112,8 @@ public class SignalProcessing {
 
   /******************************************************/
   /**
-   * @param theTracks - 2D-ArrayList with all the tracks
+   * @param theTracks
+   *          - 2D-ArrayList with all the tracks
    * @return 2D-ArrayList with all the tracks that have passed the filter
    */
   public SerializableList filterTracksByMotility(SerializableList theTracks) {

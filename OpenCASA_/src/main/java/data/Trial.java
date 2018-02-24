@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package data;
 
@@ -33,7 +33,7 @@ public class Trial implements Serializable {
   public String ID = "";
   /**   */
   public String type = "";
-  /** source's filename  */
+  /** source's filename */
   public String source = "";
   /**   */
   public SerializableList tracks = null;
@@ -41,9 +41,11 @@ public class Trial implements Serializable {
   public int fieldWidth = 0;
   /**   */
   public int fieldHeight = 0;
+
   /**   */
   public Trial() {
   }
+
   /**
    * @param ID
    * @param type
@@ -56,6 +58,7 @@ public class Trial implements Serializable {
     this.source = source;
     this.tracks = t;
   }
+
   /**
    * @param ID
    * @param type
@@ -64,7 +67,7 @@ public class Trial implements Serializable {
    * @param imp
    * @param motileSperm
    */
-  public Trial(String ID, String type, String source, SerializableList t,int width, int height) {
+  public Trial(String ID, String type, String source, SerializableList t, int width, int height) {
     this.ID = ID;
     this.type = type;
     this.source = source;

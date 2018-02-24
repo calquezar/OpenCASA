@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ HAS BEEN ADVISED OF THE POSSIBILITY OF SUCH DAMAGE. THE  INSTITUTION SPECIFICALL
 BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE. THE SOFTWARE 
 PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE  INSTITUTION HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, 
 UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
-*/    
+*/
 
 package functions;
 
@@ -51,9 +51,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import data.Cell;
 import data.Params;
 import data.SerializableList;
-import data.Cell;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -63,8 +63,9 @@ import ij.plugin.filter.ParticleAnalyzer;
 
 public class VideoRecognition implements Measurements {
 
-  public VideoRecognition() {}
-  
+  public VideoRecognition() {
+  }
+
   /**
    * @param ImagePlus
    *          imp
@@ -85,7 +86,7 @@ public class VideoRecognition implements Measurements {
     // * Record particle positions for each frame in an ArrayList
     // ************************************************************
     System.out.println("detectSpermatozoa...");
-    List[] theCells =  detectCells(imp);
+    List[] theCells = detectCells(imp);
     // ************************************************************
     // * Now assemble tracks out of the spermatozoa lists
     // * Also record to which track a particle belongs in ArrayLists
@@ -97,8 +98,8 @@ public class VideoRecognition implements Measurements {
     theTracks = sp.filterTracksByLength(theTracks);
     // IJ.saveString(Utils.printXYCoords(theTracks),"");
     return theTracks;
-  }  
-  
+  }
+
   /******************************************************/
   /**
    * @param imp
@@ -123,7 +124,7 @@ public class VideoRecognition implements Measurements {
     // *************************************************************/
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
       IJ.showProgress((double) iFrame / nFrames);
-      IJ.showStatus("Identifying spermatozoa per frame...");      
+      IJ.showStatus("Identifying spermatozoa per frame...");
       spermatozoa[iFrame - 1] = new ArrayList();
       rt.reset();
       ParticleAnalyzer pa = new ParticleAnalyzer(options, measurements, rt, minSize, maxSize);
@@ -138,8 +139,8 @@ public class VideoRecognition implements Measurements {
       float[] perimeterRes = rt.getColumn(ResultsTable.PERIMETER);
       float[] feretRes = rt.getColumn(ResultsTable.FERET);
       float[] minFeretRes = rt.getColumn(ResultsTable.MIN_FERET);
-      if (sxRes == null) //Nothing detected
-        continue;//jump to next frame
+      if (sxRes == null) // Nothing detected
+        continue;// jump to next frame
       for (int iPart = 0; iPart < sxRes.length; iPart++) {
         Cell aCell = new Cell();
         aCell.id = "***";
@@ -160,6 +161,7 @@ public class VideoRecognition implements Measurements {
     IJ.showProgress(2); // To remove progresBar
     return spermatozoa;
   }
+
   /******************************************************/
   /**
    * @param cells
@@ -172,13 +174,13 @@ public class VideoRecognition implements Measurements {
     // int nFrames = imp.getStackSize();
     SerializableList theTracks = new SerializableList();
     int trackCount = 0;
-    if(cells == null)
+    if (cells == null)
       return theTracks;
     for (int i = 0; i <= (nFrames - 1); i++) {
       IJ.showProgress((double) i / nFrames);
       IJ.showStatus("Calculating Tracks...");
-      if(cells[i] == null)//no spermatozoa detected in frame i
-        continue; //jump to next frame
+      if (cells[i] == null)// no spermatozoa detected in frame i
+        continue; // jump to next frame
       for (ListIterator j = cells[i].listIterator(); j.hasNext();) {
         Cell aCell = (Cell) j.next();
         if (!aCell.inTrack) {
@@ -259,6 +261,6 @@ public class VideoRecognition implements Measurements {
     }
     IJ.showProgress(2); // To remove progresBar
     return theTracks;
-  }  
+  }
 
 }

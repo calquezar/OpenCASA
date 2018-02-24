@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package data;
 
@@ -23,15 +23,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author Carlos Alquezar
- * This class extends ArrayList to make it serializable
+ * @author Carlos Alquezar This class extends ArrayList to make it serializable
  */
 public class SerializableList extends ArrayList implements Serializable {
 
   /**
    * 
    */
-  public SerializableList() {}
+  public SerializableList() {
+  }
 
   /**
    * @param c

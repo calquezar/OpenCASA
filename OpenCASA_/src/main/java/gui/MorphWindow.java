@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package gui;
 
@@ -29,14 +29,13 @@ import java.util.ListIterator;
 import javax.swing.event.ChangeEvent;
 import javax.swing.event.ChangeListener;
 
-import data.Params;
 import data.Cell;
+import data.Params;
 import functions.ComputerVision;
 import functions.FileManager;
 import functions.Paint;
 import functions.Utils;
 import functions.VideoRecognition;
-import ij.IJ;
 import ij.measure.ResultsTable;
 
 /**
@@ -46,11 +45,10 @@ import ij.measure.ResultsTable;
  */
 public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, MouseListener {
 
-  
-  private boolean         isThresholding  = false;
-  private boolean		  isProcessing = false;
+  private boolean isThresholding = false;
+  private boolean isProcessing = false;
   /** Resultstable used to show results */
-  private ResultsTable       morphometrics = new ResultsTable();
+  private ResultsTable morphometrics = new ResultsTable();
 
   /**
    * Constructor. The main graphical user interface is created.
@@ -58,7 +56,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
   public MorphWindow() throws HeadlessException {
     super();
     sldThreshold.setVisible(true);
-    setChangeListener(this,sldThreshold);
+    setChangeListener(this, sldThreshold);
     setMouseListener(this);
     morphometrics.showRowNumbers(false);
   }
@@ -92,8 +90,10 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    * This method closes all ImagePlus.
    */
   public void close() {
-    impOrig.changes = false; // This is necessary to avoid Save changes? dialog when closing
-    impDraw.changes = false; // This is necessary to avoid Save changes? dialog when closing
+    impOrig.changes = false; // This is necessary to avoid Save changes? dialog
+                             // when closing
+    impDraw.changes = false; // This is necessary to avoid Save changes? dialog
+                             // when closing
     impOrig.close();
     impDraw.close();
   }
@@ -225,10 +225,18 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
     checkSelection(realX, realY);
     doMouseRefresh();
   }
-  public void mouseEntered(MouseEvent e) {}
-  public void mouseExited(MouseEvent e) {}
-  public void mousePressed(MouseEvent e) {}
-  public void mouseReleased(MouseEvent e) {}
+
+  public void mouseEntered(MouseEvent e) {
+  }
+
+  public void mouseExited(MouseEvent e) {
+  }
+
+  public void mousePressed(MouseEvent e) {
+  }
+
+  public void mouseReleased(MouseEvent e) {
+  }
 
   /******************************************************/
   /**
@@ -240,29 +248,30 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
    *          (true) or a click event (false)
    */
   public void processImage(boolean eventType) {
-    if(!isProcessing){//else do not disturb
-    	isProcessing=true;
-	    if (eventType || threshold == -1) {// If true, the threshold has changed or it needs to be calculated
-	      ComputerVision cv = new ComputerVision();
-	      impTh = impOrig.duplicate();
-	      cv.convertToGrayscale(impTh);
-	      impGray = impTh.duplicate();
-	      thresholdImagePlus(impTh);
-	      VideoRecognition vr = new VideoRecognition();
-	      List<Cell>[] sperm = vr.detectCells(impTh);
-	      if (sperm != null)
-	        spermatozoa = sperm[0];
-	      // Calculate outlines
-	      impOutline = impTh.duplicate();
-	      cv.outlineThresholdImage(impOutline);
-	      idenfitySperm();
-	    }
-	    impDraw = impOrig.duplicate();
-	    Paint paint = new Paint();
-	    paint.drawOutline(impDraw, impOutline);
-	    paint.drawBoundaries(impDraw, spermatozoa);
-	    setImage();
-	    isProcessing = false;
+    if (!isProcessing) {// else do not disturb
+      isProcessing = true;
+      if (eventType || threshold == -1) {// If true, the threshold has changed
+                                         // or it needs to be calculated
+        ComputerVision cv = new ComputerVision();
+        impTh = impOrig.duplicate();
+        cv.convertToGrayscale(impTh);
+        impGray = impTh.duplicate();
+        thresholdImagePlus(impTh);
+        VideoRecognition vr = new VideoRecognition();
+        List<Cell>[] sperm = vr.detectCells(impTh);
+        if (sperm != null)
+          spermatozoa = sperm[0];
+        // Calculate outlines
+        impOutline = impTh.duplicate();
+        cv.outlineThresholdImage(impOutline);
+        idenfitySperm();
+      }
+      impDraw = impOrig.duplicate();
+      Paint paint = new Paint();
+      paint.drawOutline(impDraw, impOutline);
+      paint.drawBoundaries(impDraw, spermatozoa);
+      setImage();
+      isProcessing = false;
     }
   }
 

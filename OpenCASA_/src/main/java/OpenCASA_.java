@@ -1,6 +1,7 @@
+
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,12 +15,11 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/        
+*/
 
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 
-import functions.Kinematics;
 import gui.MainWindow;
 import ij.IJ;
 import ij.ImageJ;
@@ -49,8 +49,6 @@ public class OpenCASA_ implements PlugIn {
    **/
   @Override
   public void run(String arg) {
-    (new MainWindow("OpenCASA")).setVisible(true);  
-//    Kinematics k = new Kinematics();
-//    k.test_alh();
+    (new MainWindow("OpenCASA")).setVisible(true);
   }
 }

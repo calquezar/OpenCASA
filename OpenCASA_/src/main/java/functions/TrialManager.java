@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package functions;
 
@@ -40,13 +40,12 @@ import ij.ImagePlus;
  *
  */
 public class TrialManager {
-  
 
   /**
    * @param analysis
    * @param path
    * @return
-   */    
+   */
   public Trial getTrialFromAVI(String path) {
     if (path == null)
       return null;
@@ -71,21 +70,28 @@ public class TrialManager {
     // It's necessary to duplicate the ImagePlus if
     // we want to draw later sperm trajectories in the original video
     ImagePlus imp = impOrig.duplicate();
-    //Extract trajectories
+    // Extract trajectories
     VideoRecognition vr = new VideoRecognition();
     SerializableList tracks = vr.analyzeVideo(imp);
-    //Set metadata
+    // Set metadata
     FileManager fm = new FileManager();
     String filename = fm.getFilename(path);
     String ID = filename.toLowerCase();
-    String type = fm.getParentDirectory(path).toLowerCase();// the call toLowerCase() is to avoid user mistakes
-                                                                    // while naming folders. This variable is useful 
-                                                                    // in directory analysis
-    //Create and return trial
-    Trial trial =  new Trial(ID, type, path, tracks, impOrig.getWidth(), impOrig.getHeight());
+    String type = fm.getParentDirectory(path).toLowerCase();// the call
+                                                            // toLowerCase() is
+                                                            // to avoid user
+                                                            // mistakes
+                                                            // while naming
+                                                            // folders. This
+                                                            // variable is
+                                                            // useful
+                                                            // in directory
+                                                            // analysis
+    // Create and return trial
+    Trial trial = new Trial(ID, type, path, tracks, impOrig.getWidth(), impOrig.getHeight());
     return trial;
   }
-  
+
   /**
    * @return
    */
@@ -100,11 +106,11 @@ public class TrialManager {
       ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
       trials = (HashMap<String, Trial>) objectinputstream.readObject();
     } catch (Exception e) {
-//      e.printStackTrace();
+      // e.printStackTrace();
       IJ.handleException(e);
     }
     return trials;
-  } 
+  }
 
   /**
    * @param trials
@@ -133,7 +139,7 @@ public class TrialManager {
       ioe.printStackTrace();
     }
   }
-  
+
   /**
    * @param trialID
    * @param beta
@@ -143,9 +149,9 @@ public class TrialManager {
   public Trial simulateTrial(String trialID, double beta, double responsiveCells) {
     Simulation sim = new PersistentRandomWalker(beta, responsiveCells);
     ImagePlus imp = sim.createSimulation();
-    String trialType = "Beta: "+Double.toString(beta)+";Resp: "+Double.toString(responsiveCells);
-    String simName = trialType+"\\"+trialID;
-    Trial tr = getTrialFromImp(imp,simName);
+    String trialType = "Beta: " + Double.toString(beta) + ";Resp: " + Double.toString(responsiveCells);
+    String simName = trialType + "\\" + trialID;
+    Trial tr = getTrialFromImp(imp, simName);
     return tr;
   }
 
@@ -155,12 +161,12 @@ public class TrialManager {
    * @param MAXSIMULATIONS
    * @return
    */
-  public Map<String, Trial> simulateTrials(double beta, double responsiveCells,int MAXSIMULATIONS) {
+  public Map<String, Trial> simulateTrials(double beta, double responsiveCells, int MAXSIMULATIONS) {
     Map<String, Trial> trials = new HashMap<String, Trial>();
     for (int i = 0; i < MAXSIMULATIONS; i++) {
-      IJ.showProgress((double) i / (double)MAXSIMULATIONS);
-      IJ.showStatus("Simulating trial "+i+"...");
-      Trial tr = simulateTrial(Integer.toString(i),beta,responsiveCells);
+      IJ.showProgress((double) i / (double) MAXSIMULATIONS);
+      IJ.showStatus("Simulating trial " + i + "...");
+      Trial tr = simulateTrial(Integer.toString(i), beta, responsiveCells);
       trials.put(tr.ID, tr);
     }
     IJ.showProgress(2); // To remove progresBar

@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package data;
 
@@ -58,6 +58,7 @@ public class PersistentRandomWalker extends Simulation {
     double beta;
     /**   */
     double ro;
+
     /**   */
     SimulatedCell() {
       Random rand = new Random();
@@ -154,6 +155,7 @@ public class PersistentRandomWalker extends Simulation {
   int SIMLENGTH = 500;
   /**   */
   Point[][] tracks = new Point[cellCount][SIMLENGTH];
+
   /**   */
   public PersistentRandomWalker() {
 
@@ -207,7 +209,7 @@ public class PersistentRandomWalker extends Simulation {
     }
     ImagePlus imp = new ImagePlus("PersistentRandomWalker", imStack);
     Calibration c = imp.getCalibration();
-    c.fps=100.0; //Default fps set to 100 frames per second
+    c.fps = 100.0; // Default fps set to 100 frames per second
     return imp;
   }
 

@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package data;
 
@@ -65,8 +65,10 @@ public class Cell implements Serializable {
   public float total_feret = -1;
   /**   */
   public float total_minFeret = -1;
+
   /**
-   * @param source - Cell to be copied
+   * @param source
+   *          - Cell to be copied
    */
   public void copy(Cell source) {
     this.id = source.id;

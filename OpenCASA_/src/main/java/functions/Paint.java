@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquezar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -43,7 +43,7 @@ BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A 
 PROVIDED HEREUNDER IS ON AN "AS IS" BASIS, AND THE  INSTITUTION HAS NO OBLIGATIONS TO PROVIDE MAINTENANCE, SUPPORT, 
 UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 
-*/    
+*/
 
 package functions;
 
@@ -54,9 +54,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
+import data.Cell;
 import data.Params;
 import data.SerializableList;
-import data.Cell;
 import data.Trial;
 import ij.IJ;
 import ij.ImagePlus;
@@ -85,7 +85,8 @@ public class Paint {
     int xCenter = ip.getWidth() / 2;
     int yCenter = ip.getHeight() / 2;
     float upperAngle = (float) (Params.angleDirection + Params.angleAmplitude / 2 + 360) % 360;
-    upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert to radians
+    upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert to
+                                                     // radians
     float lowerAngle = (float) (Params.angleDirection - Params.angleAmplitude / 2 + 360) % 360;
     lowerAngle = lowerAngle * (float) Math.PI / 180; // convert to radians
     // Upper Line
@@ -99,11 +100,12 @@ public class Paint {
     ip.lineTo((int) upperLineX, (int) upperLineY);
     ip.moveTo((int) xCenter, (int) yCenter);
     ip.lineTo((int) lowerLineX, (int) lowerLineY);
-    if(Params.compareOppositeDirections){
-      //Draw opposite cone
-      upperAngle = (float) (Params.angleDirection+180 + Params.angleAmplitude / 2 + 360) % 360;
-      upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert to radians
-      lowerAngle = (float) (Params.angleDirection+180 - Params.angleAmplitude / 2 + 360) % 360;
+    if (Params.compareOppositeDirections) {
+      // Draw opposite cone
+      upperAngle = (float) (Params.angleDirection + 180 + Params.angleAmplitude / 2 + 360) % 360;
+      upperAngle = upperAngle * (float) Math.PI / 180; // calculate and convert
+                                                       // to radians
+      lowerAngle = (float) (Params.angleDirection + 180 - Params.angleAmplitude / 2 + 360) % 360;
       lowerAngle = lowerAngle * (float) Math.PI / 180; // convert to radians
       // Upper Line
       upperLineX = xCenter + (int) (1000 * Math.cos(upperAngle));
@@ -132,19 +134,19 @@ public class Paint {
     ip.moveTo(135, 50);
     ip.setColor(Color.black);
     ip.drawString("" + numTracks);
-//    ip.moveTo(10, 70);
-//    ip.setColor(Color.red);
-//    ip.drawString("Ch-Index: ");
-//    ip.moveTo(70, 70);
-//    ip.setColor(Color.black);
-//    ip.drawString("" + chIdx);
-    
-//    ip.moveTo(10, 70);
-//    ip.setColor(new Color(34, 146, 234));
-//    ip.drawString("SL-Index: ");
-//    ip.moveTo(80, 70);
-//    ip.setColor(Color.black);
-//    ip.drawString("" + slIdx);
+    // ip.moveTo(10, 70);
+    // ip.setColor(Color.red);
+    // ip.drawString("Ch-Index: ");
+    // ip.moveTo(70, 70);
+    // ip.setColor(Color.black);
+    // ip.drawString("" + chIdx);
+
+    // ip.moveTo(10, 70);
+    // ip.setColor(new Color(34, 146, 234));
+    // ip.drawString("SL-Index: ");
+    // ip.moveTo(80, 70);
+    // ip.setColor(Color.black);
+    // ip.drawString("" + slIdx);
   }
 
   /**
@@ -182,7 +184,7 @@ public class Paint {
     // Draw on each frame
     for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
       IJ.showProgress((double) iFrame / nFrames);
-      IJ.showStatus("Drawing Tracks (frame "+iFrame+"/"+nFrames+")...");
+      IJ.showStatus("Drawing Tracks (frame " + iFrame + "/" + nFrames + ")...");
       int yWidth = stack.getWidth();
       ImageProcessor ip = stack.getProcessor(iFrame);
       ip.setFont(new Font("SansSerif", Font.PLAIN, 16));
@@ -191,7 +193,7 @@ public class Paint {
         ListIterator jT = aTrack.listIterator();
         Cell oldCell = (Cell) jT.next();
         boolean isMotile = kinematics.motilityTest(aTrack);
-        if(isMotile){
+        if (isMotile) {
           for (; jT.hasNext();) {
             Cell newCell = (Cell) jT.next();
             if (kinematics.getVelocityTrackType(aTrack) == "Slow")
@@ -225,8 +227,6 @@ public class Paint {
             }
           }
         }
-        
-        
 
       }
     }
@@ -243,7 +243,7 @@ public class Paint {
     int yWidth = imp.getWidth();
     IJ.showStatus("Drawing boundaries...");
     ImageProcessor ip = imp.getProcessor();
-//    ip.setColor(Color.white);
+    // ip.setColor(Color.white);
     for (ListIterator j = spermatozoa.listIterator(); j.hasNext();) {
       Cell sperm = (Cell) j.next();
       ip.setLineWidth(2);
@@ -258,7 +258,7 @@ public class Paint {
       try {
         ip.drawString("" + sperm.id);
       } catch (Exception e) {
-//        IJ.handleException(e);
+        // IJ.handleException(e);
         e.printStackTrace();
         // ip.drawString throws eventually an exception.
         // Possibly it is a bug in the ImageProcessor implementation of this
@@ -313,8 +313,16 @@ public class Paint {
         Cell newCell = (Cell) jT.next();
         ipRelTraj.setColor(Color.black);
         ipRelTraj.moveTo(xLast, yLast);
-        xLast = (int) (xCenter + (newCell.x - firstCell.x)); //Be careful with the java coordinate system and the user CS
-        yLast = (int) (yCenter + (newCell.y - firstCell.y)); //Be careful with the java coordinate system and the user CS
+        xLast = (int) (xCenter + (newCell.x - firstCell.x)); // Be careful with
+                                                             // the java
+                                                             // coordinate
+                                                             // system and the
+                                                             // user CS
+        yLast = (int) (yCenter + (newCell.y - firstCell.y)); // Be careful with
+                                                             // the java
+                                                             // coordinate
+                                                             // system and the
+                                                             // user CS
         ipRelTraj.lineTo(xLast, yLast);
         oldCell = newCell;
       }
@@ -446,19 +454,19 @@ public class Paint {
     y = (int) (radius * Math.sin(lowerAngle));
     roseDiagram.moveTo(xCenter, yCenter);
     roseDiagram.lineTo(xCenter + x, yCenter - y);
-    if(Params.compareOppositeDirections){
-	  upperAngle = (360 + Params.angleDirection+180 + Params.angleAmplitude / 2) % 360;
-	  upperAngle *= Math.PI / 180;
-	  x = (int) (radius * Math.cos(upperAngle));
-	  y = (int) (radius * Math.sin(upperAngle));
-	  roseDiagram.moveTo(xCenter, yCenter);
-	  roseDiagram.lineTo(xCenter + x, yCenter - y);
-	  lowerAngle = (360 + Params.angleDirection+180 - Params.angleAmplitude / 2) % 360;
-	  lowerAngle *= Math.PI / 180;
-	  x = (int) (radius * Math.cos(lowerAngle));
-	  y = (int) (radius * Math.sin(lowerAngle));
-	  roseDiagram.moveTo(xCenter, yCenter);
-	  roseDiagram.lineTo(xCenter + x, yCenter - y);
+    if (Params.compareOppositeDirections) {
+      upperAngle = (360 + Params.angleDirection + 180 + Params.angleAmplitude / 2) % 360;
+      upperAngle *= Math.PI / 180;
+      x = (int) (radius * Math.cos(upperAngle));
+      y = (int) (radius * Math.sin(upperAngle));
+      roseDiagram.moveTo(xCenter, yCenter);
+      roseDiagram.lineTo(xCenter + x, yCenter - y);
+      lowerAngle = (360 + Params.angleDirection + 180 - Params.angleAmplitude / 2) % 360;
+      lowerAngle *= Math.PI / 180;
+      x = (int) (radius * Math.cos(lowerAngle));
+      y = (int) (radius * Math.sin(lowerAngle));
+      roseDiagram.moveTo(xCenter, yCenter);
+      roseDiagram.lineTo(xCenter + x, yCenter - y);
     }
     // Draw sample info
     roseDiagram.setLineWidth(1);

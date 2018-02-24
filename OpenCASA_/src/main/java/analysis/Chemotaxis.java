@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/         
+*/
 
 package analysis;
 
@@ -28,9 +28,9 @@ import java.util.Set;
 
 import javax.swing.SwingWorker;
 
+import data.Cell;
 import data.Params;
 import data.SerializableList;
-import data.Cell;
 import data.Trial;
 import functions.FileManager;
 import functions.Paint;
@@ -67,15 +67,15 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private ResultsTable analyseCondition(Map<String, Trial> controls, Map<String, Trial> tests) {
     ResultsTable rt = new ResultsTable();
     switch (analysis) {
-      case INDEXESEXPERIMENT:
-      case INDEXESSIMULATIONS:
-        rt = indexesAnalysis(controls, tests);
-        break;
-      case BOOTSTRAPPING:
-      case BOOTSTRAPPINGSIMULATIONS:
-        rt = bootstrappingAnalysis(controls, tests);
-        break;
-      default:
+    case INDEXESEXPERIMENT:
+    case INDEXESSIMULATIONS:
+      rt = indexesAnalysis(controls, tests);
+      break;
+    case BOOTSTRAPPING:
+    case BOOTSTRAPPINGSIMULATIONS:
+      rt = bootstrappingAnalysis(controls, tests);
+      break;
+    default:
     }
     return rt;
   }
@@ -91,7 +91,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     String folder = fm.selectFolder();
     Map<String, Trial> cTrials = getControlTrials(folder);
     List<String> testFolders = getTestFolders(folder);
-    if(testFolders.size()==0){
+    if (testFolders.size() == 0) {
       IJ.showMessage("No \"test\" folders have been found");
       return;
     }
@@ -100,7 +100,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Map<String, Trial> tTrials = getTrials(tests);
       ResultsTable rt = analyseCondition(cTrials, tTrials);
       String condition = fm.getFilename(f);
-      if(rt!=null){
+      if (rt != null) {
         rt.showRowNumbers(false);
         rt.show(condition);
       }
@@ -117,9 +117,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     TrialManager tm = new TrialManager();
     Trial trial = tm.getTrialFromAVI(file);
     drawResults(trial);
-    if(Params.printXY){
+    if (Params.printXY) {
       Utils utils = new Utils();
-      IJ.saveString(utils.printXYCoords(trial.tracks),"");
+      IJ.saveString(utils.printXYCoords(trial.tracks), "");
     }
   }
 
@@ -137,7 +137,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     if (gd.wasCanceled())
       return;
     final double BETA = gd.getNextNumber();
-    final double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be between [0,1]
+    final double RESPONSIVENESS = gd.getNextNumber() / 100;// value must be
+                                                           // between [0,1]
     final int TOTALSIMULATIONS = (int) gd.getNextNumber();
     TrialManager tm = new TrialManager();
     Map<String, Trial> controls = tm.simulateTrials(0, 0, TOTALSIMULATIONS);
@@ -162,10 +163,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     final int tMin = minSampleSize(tests);
     Params.MAXINSTANGLES = Math.min(cMin, tMin);
     ResultsTable rt = new ResultsTable();
-    if(!checkPairs(controls,tests)){
-       String condition = ((Trial) tests.values().toArray()[0]).type;
-       IJ.showMessage("No pairs (control-"+condition+") with the same ID have been found");
-       return null;
+    if (!checkPairs(controls, tests)) {
+      String condition = ((Trial) tests.values().toArray()[0]).type;
+      IJ.showMessage("No pairs (control-" + condition + ") with the same ID have been found");
+      return null;
     }
     // Calculating OR threshold via resampling
     double thControl = orThreshold(controls);
@@ -179,6 +180,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     }
     return rt;
   }
+
   /******************************************************/
   /**
    * This method calculates the CH-index for the given set of trajectories.
@@ -209,7 +211,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     if ((nUpGradient + nOtherDirs) > 0) {
       chIdx = nUpGradient / (nUpGradient + nOtherDirs); // (nUpGradient+nOtherDirs)
                                                         // = Total number of
-                                                        // displacements taken into account
+                                                        // displacements taken
+                                                        // into account
     } else {
       chIdx = -1;
     }
@@ -240,19 +243,21 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Cell last = (Cell) aTrack.get(aTrack.size() - 1);
       double angle = relativeAngle(first, last); // Between [-PI,PI]
       // Check if the angle is upGradient or not
-      if (Params.compareOppositeDirections) {// We only take into account angles in the gradient and opposite direction
-          if (Math.abs(angle) < angleChemotaxis) {
-              nUpGradient++;
-            } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
-              nOtherDir++;
-            }
-        } else {// We take into account all angles in all directions
-            if (Math.abs(angle) < angleChemotaxis) {
-              nUpGradient++;
-            } else {
-              nOtherDir++;
-            }
+      if (Params.compareOppositeDirections) {// We only take into account angles
+                                             // in the gradient and opposite
+                                             // direction
+        if (Math.abs(angle) < angleChemotaxis) {
+          nUpGradient++;
+        } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
+          nOtherDir++;
         }
+      } else {// We take into account all angles in all directions
+        if (Math.abs(angle) < angleChemotaxis) {
+          nUpGradient++;
+        } else {
+          nOtherDir++;
+        }
+      }
     }
     IJ.showProgress(2); // To remove progresBar
     if ((nUpGradient + nOtherDir) > 0) {
@@ -264,18 +269,23 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   }
 
   /**
-   * This method checks if at least exists one trial in each Hashmap with the same ID
-   * @param controls - Set of control trials
-   * @param tests - Set of test trials
-   * @return true if the method finds at least one pair with the same ID. Otherwise it returns false. 
+   * This method checks if at least exists one trial in each Hashmap with the
+   * same ID
+   * 
+   * @param controls
+   *          - Set of control trials
+   * @param tests
+   *          - Set of test trials
+   * @return true if the method finds at least one pair with the same ID.
+   *         Otherwise it returns false.
    */
-  private boolean checkPairs(Map<String, Trial> controls, Map<String, Trial> tests){
+  private boolean checkPairs(Map<String, Trial> controls, Map<String, Trial> tests) {
     boolean ok = false;
     for (String cKey : controls.keySet()) {
       Trial cTrial = (Trial) controls.get(cKey);
       Trial tTrial = findTrial(cTrial.ID, tests);
       if (tTrial != null) {
-        ok=true;
+        ok = true;
         return ok;
       }
     }
@@ -346,8 +356,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     for (int j = 0; j < (nPoints - Params.angleDelta); j++) {
       Cell oldCell = (Cell) track.get(j);
       Cell newCell = (Cell) track.get(j + Params.angleDelta);
-      double angle = relativeAngle(oldCell, newCell);// Between interval [-PI,PI]
-      if (Params.compareOppositeDirections) {// We only take into account angles in the gradient and opposite direction
+      double angle = relativeAngle(oldCell, newCell);// Between interval
+                                                     // [-PI,PI]
+      if (Params.compareOppositeDirections) {// We only take into account angles
+                                             // in the gradient and opposite
+                                             // direction
         if (Math.abs(angle) < angleChemotaxis) {
           nUpGradient++;
         } else if (Math.abs(angle) > (Math.PI - angleChemotaxis)) {
@@ -375,17 +388,17 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   public Boolean doInBackground() {
 
     switch (analysis) {
-      case INDEXESFILE:
-        analyseFile();
-        break;
-      case INDEXESEXPERIMENT:
-      case BOOTSTRAPPING:
-        analyseExperiment();
-        break;
-      case INDEXESSIMULATIONS:
-      case BOOTSTRAPPINGSIMULATIONS:
-        analyseSimulations();
-        break;
+    case INDEXESFILE:
+      analyseFile();
+      break;
+    case INDEXESEXPERIMENT:
+    case BOOTSTRAPPING:
+      analyseExperiment();
+      break;
+    case INDEXESSIMULATIONS:
+    case BOOTSTRAPPINGSIMULATIONS:
+      analyseSimulations();
+      break;
     }
 
     return null;
@@ -462,7 +475,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         break;
       }
     }
-    if(controlFolder==null){
+    if (controlFolder == null) {
       IJ.showMessage("No \"control\" folder has been found");
       return new HashMap<String, Trial>();
     }
@@ -495,8 +508,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
         Cell oldCell = (Cell) track.get(j);
         Cell newCell = (Cell) track.get(j + Params.angleDelta);
         float diffX = newCell.x - oldCell.x;
-        float diffY = -(newCell.y - oldCell.y); //it is the negative because the java coordinate system
-        double angle = (360 + Math.atan2(diffY, diffX) * 180 / Math.PI) % (360); // Absolute angle
+        float diffY = -(newCell.y - oldCell.y); // it is the negative because
+                                                // the java coordinate system
+        double angle = (360 + Math.atan2(diffY, diffX) * 180 / Math.PI) % (360); // Absolute
+                                                                                 // angle
         instAngles.add(angle);
       }
     }
@@ -529,8 +544,9 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       values[0] += (double) countInstDirections[0]; // number of instantaneous
                                                     // angles in the positive
                                                     // direction
-//      values[1] += (double) (countInstDirections[0] + countInstDirections[1]);
-      values[1] += (double)countInstDirections[1];
+      // values[1] += (double) (countInstDirections[0] +
+      // countInstDirections[1]);
+      values[1] += (double) countInstDirections[1];
       index++;
     }
     return values;
@@ -596,14 +612,14 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       Trial trial = (Trial) controls.get(k);
       trial.tracks = sp.filterTracksByMotility(trial.tracks);
       float chIdx = calculateChIndex(trial.tracks);
-//      float slIdx = calculateSLIndex(trial.tracks);
+      // float slIdx = calculateSLIndex(trial.tracks);
       setIndexesResults(rt, trial, chIdx);
     }
     for (String k : tkeySet) {
       Trial trial = (Trial) tests.get(k);
       trial.tracks = sp.filterTracksByMotility(trial.tracks);
       float chIdx = calculateChIndex(trial.tracks);
-//      float slIdx = calculateSLIndex(trial.tracks);
+      // float slIdx = calculateSLIndex(trial.tracks);
       setIndexesResults(rt, trial, chIdx);
     }
     return rt;
@@ -659,7 +675,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return Odds Ratio
    */
   private double or(Trial control, Trial test) {
-	  SignalProcessing sp = new SignalProcessing();
+    SignalProcessing sp = new SignalProcessing();
     SerializableList controlTracks = sp.filterTracksByMotility(control.tracks);
     SerializableList conditionTracks = sp.filterTracksByMotility(test.tracks);
     double[] numeratorValues = getOddsValues(conditionTracks);// Calculate
@@ -703,7 +719,7 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
       double denominatorRatio = denominatorValues[0] / denominatorValues[1];
       double oddsRatio = numeratorRatio / denominatorRatio;
       oRs.add(oddsRatio);
-//      IJ.log(""+oddsRatio);
+      // IJ.log(""+oddsRatio);
     }
     IJ.showProgress(2); // To remove progresBar
     Collections.sort(oRs);
@@ -721,12 +737,13 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
    * @return relative angle in the interval [-PI,PI]
    */
   private double relativeAngle(Cell previous, Cell next) { // With
-                                                                           // gradient
-                                                                           // direction
+                                                           // gradient
+                                                           // direction
     double angleDirection = (2 * Math.PI + Params.angleDirection * Math.PI / 180) % (2 * Math.PI);
     float diffX = next.x - previous.x;
-    float diffY = -(next.y - previous.y); //it is the negative because the translation 
-    									  //from java coordinate system to user coordinate system
+    float diffY = -(next.y - previous.y); // it is the negative because the
+                                          // translation
+    // from java coordinate system to user coordinate system
     double angle = (2 * Math.PI + Math.atan2(diffY, diffX)) % (2 * Math.PI); // Absolute
                                                                              // angle
     angle = (2 * Math.PI + angle - angleDirection) % (2 * Math.PI); // Relative
@@ -843,10 +860,10 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     int[] angles = countAngles(trial.tracks);
     rt.incrementCounter();
     rt.addValue("nTracks", nTracks);
-    rt.addValue("Chemotactic displacements", ""+angles[0]);
-    rt.addValue("Other displacements", ""+angles[1]);
+    rt.addValue("Chemotactic displacements", "" + angles[0]);
+    rt.addValue("Other displacements", "" + angles[1]);
     rt.addValue("Ch-Index", chIdx);
-//    rt.addValue("Sl-Index", slIdx);
+    // rt.addValue("Sl-Index", slIdx);
     rt.addValue("Type", trial.type);
     rt.addValue("Direction (Degrees)", Params.angleDirection);
     rt.addValue("ArcChemotaxis (Degrees)", Params.angleAmplitude);

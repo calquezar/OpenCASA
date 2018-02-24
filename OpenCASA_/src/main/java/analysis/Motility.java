@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/      
+*/
 
 package analysis;
 
@@ -25,8 +25,8 @@ import java.util.Map;
 
 import javax.swing.SwingWorker;
 
-import data.Params;
 import data.Cell;
+import data.Params;
 import data.Trial;
 import functions.FileManager;
 import functions.Kinematics;
@@ -49,22 +49,22 @@ public class Motility extends SwingWorker<Boolean, String> {
     DIRECTORIES, DIRECTORY, FILE, NONE
   }
 
-  private TypeOfAnalysis analysis              = TypeOfAnalysis.NONE;
-  private float          countProgressiveSperm = 0;
-  private double         total_alhMax          = 0;
-  private double         total_alhMean         = 0;
-  private float          total_bcf             = 0;
-  private float          total_dance           = 0;
-  private float          total_lin             = 0;
-  private float          total_mad             = 0;
-  private float          total_motile          = 0;
-  private float          total_nonMotile       = 0;
-  private float          total_sperm           = 0;
-  private float          total_str             = 0;
-  private float          total_vap             = 0;
-  private float          total_vcl             = 0;
-  private float          total_vsl             = 0;
-  private float          total_wob             = 0;
+  private TypeOfAnalysis analysis = TypeOfAnalysis.NONE;
+  private float countProgressiveSperm = 0;
+  private double total_alhMax = 0;
+  private double total_alhMean = 0;
+  private float total_bcf = 0;
+  private float total_dance = 0;
+  private float total_lin = 0;
+  private float total_mad = 0;
+  private float total_motile = 0;
+  private float total_nonMotile = 0;
+  private float total_sperm = 0;
+  private float total_str = 0;
+  private float total_vap = 0;
+  private float total_vcl = 0;
+  private float total_vsl = 0;
+  private float total_wob = 0;
 
   public Motility() {
   }
@@ -150,9 +150,9 @@ public class Motility extends SwingWorker<Boolean, String> {
     Paint paint = new Paint();
     paint.draw(imp, trial.tracks);
     imp.show();
-    if(Params.printXY){
+    if (Params.printXY) {
       Utils utils = new Utils();
-      IJ.saveString(utils.printXYCoords(trial.tracks),"");
+      IJ.saveString(utils.printXYCoords(trial.tracks), "");
     }
   }
 
@@ -168,7 +168,8 @@ public class Motility extends SwingWorker<Boolean, String> {
 
     SignalProcessing sp = new SignalProcessing();
     List<List<Cell>> filteredTracks = sp.filterTracksByMotility(trial.tracks);
-    float nTracks = filteredTracks.size(); // Only take into account those who passed the motility test
+    float nTracks = filteredTracks.size(); // Only take into account those who
+                                           // passed the motility test
     float vsl_mean = total_vsl / nTracks;
     float vcl_mean = total_vcl / nTracks;
     float vap_mean = total_vap / nTracks;
@@ -362,15 +363,15 @@ public class Motility extends SwingWorker<Boolean, String> {
   @Override
   protected Boolean doInBackground() throws Exception {
     switch (analysis) {
-      case FILE:
-        analyseFile();
-        break;
-      case DIRECTORY:
-        analyseDirectory();
-        break;
-      case DIRECTORIES:
-        analyseDirectories();
-        break;
+    case FILE:
+      analyseFile();
+      break;
+    case DIRECTORY:
+      analyseDirectory();
+      break;
+    case DIRECTORIES:
+      analyseDirectories();
+      break;
     }
     return null;
   }

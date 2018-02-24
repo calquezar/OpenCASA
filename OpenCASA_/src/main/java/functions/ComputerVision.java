@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package functions;
 
@@ -37,7 +37,7 @@ import ij.process.ImageStatistics;
 public class ComputerVision {
 
   /******************************************************/
-  
+
   /**
    * @param imp
    * @return
@@ -93,8 +93,6 @@ public class ComputerVision {
     ic.convertToRGB();
   }
 
-
-
   /******************************************************/
   /**
    * @param impColor
@@ -110,7 +108,7 @@ public class ComputerVision {
    * @param impColor
    * @return
    */
-  public  ImagePlus getGreenChannel(ImagePlus impColor) {
+  public ImagePlus getGreenChannel(ImagePlus impColor) {
     ImagePlus[] images = ChannelSplitter.split(impColor);
     return images[1];
   }
@@ -122,7 +120,7 @@ public class ComputerVision {
    * @param impTh
    * @return
    */
-  public  float getMeanGrayValue(Cell part, ImagePlus impGray, ImagePlus impTh) {
+  public float getMeanGrayValue(Cell part, ImagePlus impGray, ImagePlus impTh) {
 
     ImageProcessor ipTh = impTh.getProcessor();
     ImageProcessor ipGray = impGray.getProcessor();
@@ -200,8 +198,8 @@ public class ComputerVision {
 
   /******************************************************/
   /**
-   * @param ImagePlus This function makes binary 'imp' applying an statistical
-   *          threshold
+   * @param ImagePlus
+   *          This function makes binary 'imp' applying an statistical threshold
    */
   public void thresholdStack(ImagePlus imp) {
 

@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquezar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package functions;
 
@@ -39,17 +39,36 @@ public class FileManager {
   /**   */
   public FileManager() {
   }
-/**
- * 
- * @param path
- * @return
- */
-  public ImagePlus getAVI(String path){
+
+  /**
+   * 
+   * @param path
+   * @return
+   */
+  public ImagePlus getAVI(String path) {
     AVI_Reader ar = new AVI_Reader();
     ar.run(path);
     ImagePlus imp = ar.getImagePlus();
     return imp;
   }
+
+  /**
+   * @param dir
+   * @return
+   */
+  public String[] getContent(String path) {
+    if (path == null)
+      return null;
+    File folder = new File(path);
+    File[] listOfFiles = folder.listFiles();
+    if (listOfFiles.length <= 0)
+      return null;
+    String[] listOfNames = new String[listOfFiles.length];
+    for (int i = 0; i < listOfFiles.length; i++)
+      listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
+    return listOfNames;
+  }
+
   /**
    * @param path
    * @return
@@ -58,46 +77,18 @@ public class FileManager {
     String[] parts = path.split("\\\\");
     return removeExtension(parts[parts.length - 1]);
   }
-  
-  /**
-   * @param dir
-   * @return
-   */
-  public String[] getContent(String path) {
-    if(path==null)
-      return null;
-    File folder = new File(path);
-    File[] listOfFiles = folder.listFiles();
-    if(listOfFiles.length<=0)
-      return null;
-    String[] listOfNames = new String[listOfFiles.length];
-    for (int i = 0; i < listOfFiles.length; i++)
-      listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
-    return listOfNames;
-  }
-  
-  public List<String> getFiles(String path){
+
+  public List<String> getFiles(String path) {
     String[] content = getContent(path);
     List<String> files = new ArrayList<String>();
-    for(int i=0;i<content.length;i++){
-      if(new File(content[i]).isFile()){
+    for (int i = 0; i < content.length; i++) {
+      if (new File(content[i]).isFile()) {
         files.add(content[i]);
       }
     }
-    return files;    
+    return files;
   }
-  
-  public List<String> getSubfolders(String path){
-    
-    String[] content = getContent(path);
-    List<String> subfolders = new ArrayList<String>();
-    for(int i=0;i<content.length;i++){
-      if(new File(content[i]).isDirectory()){
-        subfolders.add(content[i]);
-      }
-    }
-    return subfolders;
-  }
+
   /**
    * @param path
    * @return
@@ -106,29 +97,42 @@ public class FileManager {
     String[] parts = path.split("\\\\");
     return parts[parts.length - 2];
   }
-  
+
+  public List<String> getSubfolders(String path) {
+
+    String[] content = getContent(path);
+    List<String> subfolders = new ArrayList<String>();
+    for (int i = 0; i < content.length; i++) {
+      if (new File(content[i]).isDirectory()) {
+        subfolders.add(content[i]);
+      }
+    }
+    return subfolders;
+  }
+
   /**
    * @param filename
    * @return
    */
   public boolean isAVI(String filename) {
     String[] parts = filename.split("\\.");
-    if(parts.length<2)
+    if (parts.length < 2)
       return false;
     if (parts[1].equals("avi"))
       return true;
     else
       return false;
   }
+
   /**
    * 
    * @return
-   */  
+   */
   public List<ImagePlus> loadImageDirectory() {
     String dir = selectFolder();
     return loadImageDirectory(dir);
   }
-  
+
   /**
    * 
    * @return
@@ -144,9 +148,9 @@ public class FileManager {
     List<ImagePlus> images = new ArrayList<ImagePlus>();
     for (int i = 0; i < listOfFiles.length; i++) {
       IJ.showProgress((double) i / listOfFiles.length);
-      IJ.showStatus("Loading image "+ i +"...");
+      IJ.showStatus("Loading image " + i + "...");
       String absoluteFilePath = listOfFiles[i];
-      if(isAVI(absoluteFilePath))
+      if (isAVI(absoluteFilePath))
         continue;
       String parentsDirectory = getParentDirectory(absoluteFilePath);
       ImagePlus imp = IJ.openImage(absoluteFilePath);
@@ -163,17 +167,18 @@ public class FileManager {
     }
     return images;
   }
+
   /**
    * 
-   * @return an array with only one ImagePlus, compatible with
-   * the input specification of other functions
+   * @return an array with only one ImagePlus, compatible with the input
+   *         specification of other functions
    */
   public List<ImagePlus> loadImageFile() {
     String absoluteFilePath = selectFile();
     if (absoluteFilePath == null) {
       return null;
     }
-    if(isAVI(absoluteFilePath)){
+    if (isAVI(absoluteFilePath)) {
       JOptionPane.showMessageDialog(null, "Please, select a valid file.");
       return null;
     }
@@ -188,27 +193,28 @@ public class FileManager {
     images.add(imp);
     return images;
   }
-  
-  public String removeExtension(String filename){
+
+  public String removeExtension(String filename) {
     String[] parts = filename.split("\\.");
     return parts[0];
   }
-//  /**
-//   * 
-//   * @return
-//   */
-//  public List<ImagePlus> loadImages() {
-//    // Ask user which analysis wants to apply
-//    int userSelection = dialog();
-//    if (userSelection < 0)
-//      return null;
-//    if (userSelection == 0)
-//      return loadImageFile();
-//    else if (userSelection == 1)
-//      return loadImageDirectory();
-//    else
-//      return null;
-//  }
+
+  // /**
+  // *
+  // * @return
+  // */
+  // public List<ImagePlus> loadImages() {
+  // // Ask user which analysis wants to apply
+  // int userSelection = dialog();
+  // if (userSelection < 0)
+  // return null;
+  // if (userSelection == 0)
+  // return loadImageFile();
+  // else if (userSelection == 1)
+  // return loadImageDirectory();
+  // else
+  // return null;
+  // }
   /**
    * @return
    */
@@ -222,7 +228,7 @@ public class FileManager {
       return file.getAbsolutePath();
     }
     return null;
-  } 
+  }
 
   /**
    * @return
@@ -230,5 +236,5 @@ public class FileManager {
   public String selectFolder() {
     DirectoryChooser dc = new DirectoryChooser("Select folder...");
     return dc.getDirectory();
-  }  
+  }
 }

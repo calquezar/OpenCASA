@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package functions;
 
@@ -46,6 +46,7 @@ public class Utils {
         options[0]); // default button title
     return n;
   }
+
   /**
    * @param orig
    * @return
@@ -74,10 +75,10 @@ public class Utils {
     }
     return cell;
   }
-  
-  public int getTrackNr(List track){
-	  Cell cell = (Cell) track.get(0);
-	  return cell.trackNr;
+
+  public int getTrackNr(List track) {
+    Cell cell = (Cell) track.get(0);
+    return cell.trackNr;
   }
 
   /******************************************************/
@@ -123,5 +124,5 @@ public class Utils {
     IJ.showProgress(2); // To remove progresBar
     return output;
   }
-  
+
 }

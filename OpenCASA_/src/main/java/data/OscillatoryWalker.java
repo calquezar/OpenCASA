@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v0.8 for video and image analysis
- *   Copyright (C) 2017  Carlos Alquézar
+ *   OpenCASA software v1.0 for video and image analysis
+ *   Copyright (C) 2018  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -14,7 +14,7 @@
  *
  *   You should have received a copy of the GNU General Public License
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
-*/    
+*/
 
 package data;
 
@@ -38,16 +38,16 @@ public class OscillatoryWalker extends Simulation {
 
   class SimulatedCell {
 
-    float  amplitude;
-    float  dist;
+    float amplitude;
+    float dist;
     double f;
     double phi;
-    int    sizex;
-    int    sizey;
-    float  t;
+    int sizex;
+    int sizey;
+    float t;
     double T;
     double w;
-    float  y;
+    float y;
 
     SimulatedCell() {
       sizex = 10;
@@ -101,13 +101,13 @@ public class OscillatoryWalker extends Simulation {
   }
 
   /**   */
-  int    cellCount = 1;
+  int cellCount = 1;
   /**   */
-  int    height    = 800;
+  int height = 800;
   /**   */
-  int    SIMLENGTH = 700;
+  int SIMLENGTH = 700;
   /**   */
-  SimulatedCell[] sperm     = new SimulatedCell[cellCount];
+  SimulatedCell[] sperm = new SimulatedCell[cellCount];
   // Point[][] tracks = new Point[cellCount][SIMLENGTH];
   /**   */
   List<Cell> track = new ArrayList<Cell>();
