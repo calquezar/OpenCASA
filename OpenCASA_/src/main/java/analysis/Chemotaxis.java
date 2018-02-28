@@ -116,6 +116,8 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     String file = fm.selectFile();
     TrialManager tm = new TrialManager();
     Trial trial = tm.getTrialFromAVI(file);
+    SignalProcessing sp = new SignalProcessing();
+    trial.tracks = sp.filterTracksByMotility(trial.tracks);
     drawResults(trial);
     if (Params.printXY) {
       Utils utils = new Utils();
@@ -485,8 +487,11 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     for (int i = 0; i < controlFiles.size(); i++) {
       String file = controlFiles.get(i);
       Trial trial = tm.getTrialFromAVI(file);
-      if (trial != null)
+      if (trial != null){
+        SignalProcessing sp = new SignalProcessing();
+        trial.tracks = sp.filterTracksByMotility(trial.tracks);
         cTrials.put(trial.type + "-_-" + trial.ID, trial);
+      }
     }
     return cTrials;
   }
@@ -586,9 +591,12 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
     for (int i = 0; i < filenames.size(); i++) {
       String file = filenames.get(i);
       Trial trial = tm.getTrialFromAVI(file);
-      if (trial != null)
+      if (trial != null){
+        SignalProcessing sp = new SignalProcessing();
+        trial.tracks = sp.filterTracksByMotility(trial.tracks);
         trials.put(trial.type + "-_-" + trial.ID, trial); // Expression "-_-" is
                                                           // just a separator
+      }
     }
     return trials;
   }
