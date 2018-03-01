@@ -1,5 +1,5 @@
 # OpenCASA
-
+An open-source tool for sperm quality analysis
 ## Specifications
 
 This program has been developed and tested on Windows 7 (64-bit) using  Imagej v1.49q and Java 1.8.0_101 (64-bit). There are no specific requierements to use this plugin but a special attention of RAM memory is suggested when video analysis is carried on. At least 5GB of heap memory size is recommended, but it depends on the size of the files. One good estimation could be to use a heap memory size of 2.5 times the size of the heaviest file that is going to be analyzed. Information about how to increase memory on ImageJ can be found following this link: https://imagej.net/Troubleshooting#OutOfMemoryError. For all tests, only videos in AVI format and images in JPEG or PNG format were used. The plugin has not been tested on Linux or MAC platforms.
