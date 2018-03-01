@@ -19,6 +19,8 @@ To develop with ImageJ in Eclipse, it is recommended to follow the instructions 
 3.	Clone the source code
 4.	Import the source code
 
+Note: the source code is included in the .jar file. It is possible to extract it using a common software like 7zip or WinRAR. Once the source code has been extracted, for small changes, the plugin can be modified and compiled using the embedded java compiler in ImageJ located on the Plugins menu (in order to be sure that all changes have been updated, it is recommended to remove, previously the compilation, all .class files included in both folder and subfolders of OpenCASA plugin).
+
 Tip: In order to increase the heap memory in eclipse, after the project has been set up, in the menu bar go to  Run->Run Configuration, find the name of the class you have been running, select it, click the Arguments tab and then add:
 -Xms5120M –Xmx5120M
 where 5120 is the 5 gigabytes of memory that you want to assign (in megabytes). Remember that a heap memory size of 2.5 times the size of the heaviest file that is going to be analyzed is recommended.
