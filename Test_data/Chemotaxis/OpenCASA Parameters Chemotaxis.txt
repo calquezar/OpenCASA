@@ -1,0 +1,28 @@
+The value of the parameters set to analyze the motility videos were:
+
+General
+
+	Microns per Pixel - 0.481
+	Minimum cell size - 10
+	Maximum cell size - 100
+
+Video
+
+	Frame rate - 100
+	Minimum Track Length - 50
+	Maximum displacement between frames - 20
+	Window Size - 5	
+
+Chemotaxis
+
+	Chemotaxis direction - 0
+	Chemotactic cone's amplitude - 60
+	Number of bootstrapping resamples - 10000
+	Angle Delta = 5
+
+Motility
+
+	Progressive motility - 80
+	Minimum vcl - 10
+	vcl lowre threshold - 45
+	vcl upper threshold - 75
