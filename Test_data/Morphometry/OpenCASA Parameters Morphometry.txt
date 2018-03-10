@@ -1,0 +1,21 @@
+The value of the parameters set to analyze the motility videos were:
+
+General
+
+	Microns per Pixel - 0.081
+	Minimum cell size - 10
+	Maximum cell size - 100
+
+Video
+
+	Frame rate - 60
+	Minimum Track Length - 10
+	Maximum displacement between frames - 20
+	Window Size - 5	
+
+Motility
+
+	Progressive motility - 80
+	Minimum vcl - 10
+	vcl lowre threshold - 45
+	vcl upper threshold - 75
