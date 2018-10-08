@@ -13,7 +13,7 @@
 	</parent>
 
 	<groupId>biozar</groupId>
-	<artifactId>OpenCASA_</artifactId>
+	<artifactId>OpenCASA_GitHub</artifactId>
 	<version>0.1.0-SNAPSHOT</version>
 
 	<name>plugins/OpenCASA_.jar</name>
