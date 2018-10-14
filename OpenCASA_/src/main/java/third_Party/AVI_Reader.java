@@ -111,8 +111,10 @@ import ij.process.ShortProcessor;
  *      - Creates a unique window name.
  *      - Opens MJPG files also if they do not contain Huffman tables
  *   2017-09-28
- *   - Commented line 1448 (in current file) from the original plugin to hide dialog
+ *   - Commented line 1465 (in current file) from the original plugin to hide dialog
  *   - in order to apply the plugin automatically (by Carlos Alquézar)
+ *   2018-10-14
+ *   - Added setInterval(int,int) function to allow the selection of specific video intervals
  *   
  * The AVI format looks like this:
  * RIFF AVI                 RIFF HEADER, AVI CHUNK                  
@@ -1499,6 +1501,10 @@ public class AVI_Reader extends VirtualStack implements PlugIn {
       imp.getCalibration().fps = 1e6 / dwMicroSecPerFrame;
   }
 
+  public void setInterval(int first, int last){
+    firstFrame = first;
+    lastFrame = last;
+  }
   /** Parameters dialog, returns false on cancel */
   private boolean showDialog(String fileName) {
     if (lastFrame != -1)

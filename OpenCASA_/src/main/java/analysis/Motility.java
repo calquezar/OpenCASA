@@ -65,6 +65,7 @@ public class Motility extends SwingWorker<Boolean, String> {
   private float total_vcl = 0;
   private float total_vsl = 0;
   private float total_wob = 0;
+  private float total_fractal = 0;
 
   public Motility() {
   }
@@ -181,6 +182,7 @@ public class Motility extends SwingWorker<Boolean, String> {
     float bcf_mean = total_bcf / nTracks;
     float dance_mean = total_dance / nTracks;
     float mad_mean = total_mad / nTracks;
+    float fractal_mean = total_fractal / nTracks;
     // % progressive Motile sperm
     float progressiveMotPercent = countProgressiveSperm / (float) nTracks;
     // % motility
@@ -206,8 +208,15 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("BCF Mean (Hz)", bcf_mean);
     rt.addValue("DANCE Mean (um^2/s)", dance_mean);
     rt.addValue("MAD Mean (degrees)", mad_mean);
+    rt.addValue("Fractal mean", fractal_mean);
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
+    if(Params.lastFrame>0)
+      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+","+Params.lastFrame/Params.frameRate+")");
+    else if(Params.firstFrame>1)
+      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+",)");
+    else
+      rt.addValue("Interval(firstSec,lastSec)", "(,)");
     rt.addValue("Sample", trial.type);
     rt.addValue("ID", trial.ID);
     rt.addValue("Source", trial.source);
@@ -278,6 +287,9 @@ public class Motility extends SwingWorker<Boolean, String> {
       float mad_value = K.mad(aTrack);
       total_mad += mad_value;
 
+      float fractal_value = K.fractalDimension(aTrack);
+      total_fractal += fractal_value;
+      
       rt.incrementCounter();
       rt.addValue("Track Number", trackNr);
       rt.addValue("Length (frames)", length);
@@ -292,7 +304,14 @@ public class Motility extends SwingWorker<Boolean, String> {
       rt.addValue("BCF (Hz)", bcf_value);
       rt.addValue("DANCE (um^2/s)", dance_value);
       rt.addValue("MAD (degrees)", mad_value);
+      rt.addValue("FractalD", fractal_value);
       rt.addValue("Progress Motility", progressMotility_value);
+      if(Params.lastFrame>0)
+        rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+","+Params.lastFrame/Params.frameRate+")");
+      else if(Params.firstFrame>1)
+        rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+",)");
+      else
+        rt.addValue("Interval(firstSec,lastSec)", "(,)");
       rt.addValue("Sample", trial.type);
       rt.addValue("ID", trial.ID);
       rt.addValue("Source", trial.source);
@@ -327,6 +346,7 @@ public class Motility extends SwingWorker<Boolean, String> {
     float bcf_mean = total_bcf / total_sperm;
     float dance_mean = total_dance / total_sperm;
     float mad_mean = total_mad / total_sperm;
+    float fractal_mean = total_fractal / total_sperm;
     // % progressive Motile sperm
     float progressiveMotPercent = countProgressiveSperm / (float) total_sperm;
     // % motility
@@ -345,8 +365,15 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("BCF Mean (Hz)", bcf_mean);
     rt.addValue("DANCE Mean (um^2/s)", dance_mean);
     rt.addValue("MAD Mean (degrees)", mad_mean);
+    rt.addValue("Fractal Mean", fractal_mean);
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
+    if(Params.lastFrame>0)
+      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+","+Params.lastFrame/Params.frameRate+")");
+    else if(Params.firstFrame>1)
+      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+",)");
+    else
+      rt.addValue("Interval(firstSec,lastSec)", "(,)");
     rt.addValue("Filename", filename);
     if (!Params.male.isEmpty())
       rt.addValue("Male", Params.male);
@@ -413,6 +440,7 @@ public class Motility extends SwingWorker<Boolean, String> {
     total_bcf = 0;
     total_dance = 0;
     total_mad = 0;
+    total_fractal = 0;
     total_motile = 0;
     total_nonMotile = 0;
     countProgressiveSperm = 0;

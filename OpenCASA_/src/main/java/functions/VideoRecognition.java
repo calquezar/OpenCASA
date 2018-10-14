@@ -74,24 +74,24 @@ public class VideoRecognition implements Measurements {
   public SerializableList analyzeVideo(ImagePlus imp) {
     if (imp == null)
       return new SerializableList();
-    System.out.println("converToGrayScale...");
+    //System.out.println("converToGrayScale...");
     ComputerVision cv = new ComputerVision();
     cv.convertToGrayscale(imp);
     // ************************************************************
     // * Automatic Thresholding
     // ************************************************************
-    System.out.println("thresholdStack...");
+    //System.out.println("thresholdStack...");
     cv.thresholdStack(imp);
     // ************************************************************
     // * Record particle positions for each frame in an ArrayList
     // ************************************************************
-    System.out.println("detectSpermatozoa...");
+    //System.out.println("detectSpermatozoa...");
     List[] theCells = detectCells(imp);
     // ************************************************************
     // * Now assemble tracks out of the spermatozoa lists
     // * Also record to which track a particle belongs in ArrayLists
     // ************************************************************
-    System.out.println("identifyTracks...");
+    //System.out.println("identifyTracks...");
     SerializableList theTracks = idenfityTracks(theCells, imp.getStackSize());
     // Filtering tracks by length
     SignalProcessing sp = new SignalProcessing();

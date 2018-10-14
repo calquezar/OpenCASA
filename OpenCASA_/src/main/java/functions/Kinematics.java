@@ -18,6 +18,8 @@
 
 package functions;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.geom.Line2D;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +29,8 @@ import data.Cell;
 import data.Params;
 import data.SerializableList;
 import ij.IJ;
+import ij.gui.Plot;
+import ij.gui.PlotWindow;
 
 /**
  * @author Carlos Alquezar
@@ -38,39 +42,107 @@ public class Kinematics {
     VERTICAL, HORIZONTAL, OBLIQUE, NULL
   }
 
+  public double riser(int j,List track,List avgTrack){
+    
+    Cell avgCell1 = (Cell) avgTrack.get(j);
+    Cell avgCell2 = (Cell) avgTrack.get(j + 1);
+    double[] avgPoint1 = { (double) avgCell1.x, (double) avgCell1.y };
+    double[] avgPoint2 = { (double) avgCell2.x, (double) avgCell2.y };
+    double minDist = 999999;
+    for (int k = j; k < j + Params.wSize - 1; k++) {
+      Cell cell1 = (Cell) track.get(k);
+      Cell cell2 = (Cell) track.get(k + 1);
+      double[] point1 = { (double) cell1.x, (double) cell1.y };
+      double[] point2 = { (double) cell2.x, (double) cell2.y };
+      double dist = distanceBetweenSegments(point1, point2, avgPoint1, avgPoint2);
+      if (dist > 0 && dist < minDist) {
+        minDist = dist;
+      }
+    }
+    return minDist;
+  }
   public double[] alh(List track, List avgTrack) {
     double alh[] = new double[2];
     double alhMax = 0;
     double alhMean = 0;
-    for (int j = 0; j < avgTrack.size() - 1; j++) {
-      Cell avgCell1 = (Cell) avgTrack.get(j);
-      Cell avgCell2 = (Cell) avgTrack.get(j + 1);
-      double[] avgPoint1 = { (double) avgCell1.x, (double) avgCell1.y };
-      double[] avgPoint2 = { (double) avgCell2.x, (double) avgCell2.y };
-      double minDist = 999999;
-
-      for (int k = j; k < j + Params.wSize - 1; k++) {
-        Cell cell1 = (Cell) track.get(k);
-        Cell cell2 = (Cell) track.get(k + 1);
-        double[] point1 = { (double) cell1.x, (double) cell1.y };
-        double[] point2 = { (double) cell2.x, (double) cell2.y };
-        double dist = distanceBetweenSegments(point1, point2, avgPoint1, avgPoint2);
-        if (dist > 0 && dist < minDist) {
-          minDist = dist;
+    double nRisers = 0;
+    for (int j = 0; j < avgTrack.size() - 3; j++) {
+      double dist0 = riser(j,track,avgTrack);
+      double dist1 = riser(j+1,track,avgTrack);
+      double dist2 = riser(j+2,track,avgTrack);
+      if (dist0 < 999999 && dist1 < 999999 && dist2 < 999999 ) {
+        if(dist1 > dist0 && dist1 > dist2){//it means the point dist1 is a relative maximum
+          alhMean += dist1;
+          nRisers++;
+          if (dist1 > alhMax)
+            alhMax = dist1;
         }
       }
-      if (minDist < 999999) {
-        alhMean += minDist / (double) (avgTrack.size() - 1);
-        if (minDist > alhMax)
-          alhMax = minDist;
-      }
     }
-    alh[0] = alhMean * Params.micronPerPixel;
-    alh[1] = alhMax * Params.micronPerPixel;
+    if(nRisers!=0)
+      alhMean = alhMean/nRisers;
+    
+    alh[0] = 2*alhMean * Params.micronPerPixel;
+    alh[1] = 2*alhMax * Params.micronPerPixel;
 
     return alh;
 
   }
+  
+  
+  private void plot(float[] x,float[] y){
+
+    PlotWindow.noGridLines = false; // draw grid lines
+    Plot plot = new Plot("Example Plot","X Axis","Y Axis",x,y);
+    plot.setLimits(0, x.length, 0,15);
+    plot.setLineWidth(2);
+
+    // add label
+    plot.setColor(Color.black);
+    plot.changeFont(new Font("Helvetica", Font.PLAIN, 24));
+    plot.addLabel(0.15, 0.95, "This is a label");
+
+    plot.changeFont(new Font("Helvetica", Font.PLAIN, 16));
+    plot.setColor(Color.blue);
+    plot.show();
+  }
+  /*
+  public double[] alh(List track, List avgTrack) {
+
+    int length = avgTrack.size();
+    double alh[] = new double[2];
+    double alhMax = 0;
+    double alhMean = 0;
+    double nPoints = 0;
+    for (int i = 1; i < length-1; i++) {
+      Cell origCell0 = (Cell) track.get(i - 1 + Params.wSize -1);
+      Cell origCell1 = (Cell) track.get(i + Params.wSize -1);
+      Cell origCell2 = (Cell) track.get(i + 1 + Params.wSize -1);
+      Cell avgCell0 = (Cell) avgTrack.get(i-1);
+      Cell avgCell1 = (Cell) avgTrack.get(i);
+      Cell avgCell2 = (Cell) avgTrack.get(i+1);
+      
+      double distance0 = origCell0.distance(avgCell0);
+      double distance1 = origCell1.distance(avgCell1);
+      double distance2 = origCell2.distance(avgCell2);
+      
+      if(distance1 > distance0 && distance1 > distance2){
+        alhMean += distance1;
+        nPoints++;
+        if (distance1 > alhMax)
+          alhMax = distance1;
+      }
+    }
+    // Mean value
+    alhMean = alhMean / nPoints;
+    // convert pixels to micrometers
+    alh[0] = alhMean * Params.micronPerPixel;
+    alh[1] = alhMax  * Params.micronPerPixel;
+
+    System.out.println(alhMean);
+    return alh;
+  }
+  */
 
   /**
    * @param track
@@ -109,9 +181,10 @@ public class Kinematics {
   }
 
   /**
-   * This function returns the intersection point between the segment {p1=>p2}
-   * and the perpendicular straight line of the segment {q1=>q2} that cross it
-   * in the middle point of the segment
+   * This function calculates the perpendicular straight line to the segment {q1=>q2}
+   * that cross it at the middle point (Mp). Also calculates at which point (P) this line crosses
+   * the segment {p1=>p2}. The function returns the distance between the points Mp and P.
+   * In case that the straight line does not cross the segment {p1=>p2}, the function returns 0.
    */
   private double distanceBetweenSegments(double[] p1, double[] p2, double[] q1, double[] q2) {
 
@@ -226,7 +299,23 @@ public class Kinematics {
       }
     }
   }
-
+  
+  public float fractalDimension(List track) {
+    
+    Cell origCell = (Cell) track.get(0);
+    Cell cell0 = origCell;
+    double n = (double)track.size()-1;
+    double curvL = 0;
+    double d = 0;
+    for (int i = 1; i < track.size(); i++) {
+      Cell cell1 = (Cell) track.get(i);
+      curvL=curvL+(double)cell0.distance(cell1);
+      double dist = (double)origCell.distance(cell1);
+      if(dist>d){d=dist;}
+      cell0=cell1;
+    }
+    return (float)(Math.log(n)/(Math.log(n)+Math.log(d/curvL)));
+  }
   /******************************************************/
   /**
    * @param track
@@ -427,6 +516,32 @@ public class Kinematics {
     float bcf_value = (float) intersections * Params.frameRate / (float) (length - 1);
     IJ.log("BCF: " + bcf_value);
     IJ.log("Frame rate: " + Params.frameRate);
+  }
+  
+  public void test_fractal() {
+
+    List<Cell> track = new ArrayList<Cell>();
+    Cell c = new Cell();
+    c.x = (int)(Math.random()*100);
+    c.y = (int)(Math.random()*100);
+    track.add(c);
+    int x0 = (int) c.x;
+    int y0 = (int) c.y;
+    int L = 100;
+    for(int i=0;i<L;i++){
+      int dx = (int)(Math.random()*10)-5;
+      int dy = (int)(Math.random()*10)-5;
+      Cell c2 = new Cell();
+      c2.x=x0+dx;
+      c2.y=y0+dy;
+      track.add(c2);
+      x0=(int) c2.x;
+      y0=(int) c2.y;
+    }
+
+    float fd = fractalDimension(track);
+    IJ.log("FD: "+fd);
+
   }
 
   /******************************************************/

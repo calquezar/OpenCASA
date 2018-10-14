@@ -39,12 +39,10 @@ public class Params {
    * t and instant (t+angleDelta).
    */
   public static int angleDelta = 5;
-  /** Angles used to clasify chemotactic trajectories */
+  /** Angles used to classify chemotactic trajectories */
   public static float angleDirection = 0;
   /** parameters used to compute BCF (equivalent to angleDelta) */
   // public static int bcf_shift = 0;
-  /**   */
-  public static float borderSize = 20;
   /** */
   public static boolean compareOppositeDirections = false;
   /**   */
@@ -63,10 +61,8 @@ public class Params {
   public static int MAXINSTANGLES = 20000;
   /** maximum sperm size */
   public static float maxSize = 100;
-  // 10x ==> 0.58
-  // 40x ==> 0.1455
   /** Microns per pixel */
-  public static double micronPerPixel = 0.483; // 0.58; 10x ISAS
+  public static double micronPerPixel = 0.481;
   /** minimum sperm size */
   public static float minSize = 10;
   /** minimum length of sperm track (in frames) */
@@ -94,80 +90,32 @@ public class Params {
   public static float vclUpperTh = 95;
   /** Window size for moving average method (um) */
   public static int wSize = 5;
-
-  /**   */
-  public static void resetParams() {
-
-    try {
-      FileInputStream streamIn = new FileInputStream(System.getProperty("user.dir") + "\\prefs.config");
-      ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
-      prefs.importPreferences(objectinputstream);
-    } catch (Exception e) {
-      // IJ.handleException(e);
-      // System.out.println("Fallo de lectura");
-    }
-    if (prefs == null)
-      prefs = Preferences.userNodeForPackage(Params.class);
-    minSize = prefs.getFloat("minSize", minSize);
-    maxSize = prefs.getFloat("maxSize", maxSize);
-    minTrackLength = prefs.getInt("minTrackLength", minTrackLength);
-    maxDisplacement = prefs.getFloat("maxDisplacement", maxDisplacement);
-    wSize = prefs.getInt("wSize", wSize);
-    vclMin = prefs.getFloat("vclMin", vclMin);
-    vclLowerTh = prefs.getFloat("vclLowerTh", vclLowerTh);
-    vclUpperTh = prefs.getFloat("vclUpperTh", vclUpperTh);
-    angleDelta = prefs.getInt("angleDelta", angleDelta);
-    angleDirection = prefs.getFloat("angleDirection", angleDirection);
-    angleAmplitude = prefs.getFloat("angleAmplitude", angleAmplitude);
-    compareOppositeDirections = prefs.getBoolean("compareOppositeDirections", compareOppositeDirections);
-    printXY = prefs.getBoolean("printXY", printXY);
-    frameRate = prefs.getFloat("frameRate", frameRate);
-    // male = prefs.get("male", male);
-    // date = prefs.get("date", date);
-    // genericField = prefs.get("genericField", genericField);
-    // bcf_shift = prefs.getInt("bcf_shift", bcf_shift);
-    progressMotility = prefs.getFloat("progressMotility", progressMotility);
-    micronPerPixel = prefs.getDouble("micronPerPixel", micronPerPixel);
-    NUMSAMPLES = prefs.getInt("NUMSAMPLES", NUMSAMPLES);
-  }
-
-  /**
-   * 
-   */
-  public static void saveParams() {
-
-    prefs = Preferences.userNodeForPackage(Params.class);
-    prefs.putFloat("minSize", minSize);
-    prefs.putFloat("maxSize", maxSize);
-    prefs.putInt("minTrackLength", minTrackLength);
-    prefs.putFloat("maxDisplacement", maxDisplacement);
-    prefs.putInt("wSize", wSize);
-    prefs.putFloat("vclMin", vclMin);
-    prefs.putFloat("vclLowerTh", vclLowerTh);
-    prefs.putFloat("vclUpperTh", vclUpperTh);
-    prefs.putInt("angleDelta", angleDelta);
-    prefs.putFloat("angleDirection", angleDirection);
-    prefs.putFloat("angleAmplitude", angleAmplitude);
-    prefs.putBoolean("compareOppositeDirections", compareOppositeDirections);
-    prefs.putBoolean("printXY", printXY);
-    prefs.putFloat("frameRate", frameRate);
-    // prefs.put("male", male);
-    // prefs.put("date", date);
-    // prefs.put("genericField", genericField);
-    // prefs.putInt("bcf_shift", bcf_shift);
-    prefs.putFloat("progressMotility", progressMotility);
-    prefs.putDouble("micronPerPixel", micronPerPixel);
-    prefs.putInt("NUMSAMPLES", NUMSAMPLES);
-
-    try {
-      FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "\\prefs.config");
-      ObjectOutputStream oos = new ObjectOutputStream(fos);
-      prefs.exportSubtree(oos);
-      oos.close();
-      fos.close();
-    } catch (Exception e) {
-      IJ.handleException(e);
-      // e.printStackTrace();
-    }
+  
+  public static int firstFrame = 1;
+  public static int lastFrame = -1;
+  
+  
+  public static void printParams(){
+    System.out.println("---------- PARAMETERS ---------");
+    System.out.println("Params.minSize: "+Params.minSize);
+    System.out.println("Params.maxSize: "+Params.maxSize);
+    System.out.println("Params.minTrackLength: "+Params.minTrackLength);
+    System.out.println("Params.maxDisplacement: "+Params.maxDisplacement);
+    System.out.println("Params.wSize: "+Params.wSize);
+    System.out.println("Params.vclMin: "+Params.vclMin);
+    System.out.println("Params.vclLowerTh: "+Params.vclLowerTh);
+    System.out.println("Params.vclUpperTh: "+Params.vclUpperTh);
+    System.out.println("Params.progressMotility: "+Params.progressMotility);    
+    System.out.println("Params.angleDelta: "+Params.angleDelta);
+    System.out.println("Params.angleDirection: "+Params.angleDirection);
+    System.out.println("Params.angleAmplitude: "+Params.angleAmplitude);
+    System.out.println("Params.compareOppositeDirections: "+Params.compareOppositeDirections);
+    System.out.println("Params.printXY: "+Params.printXY);
+    System.out.println("Params.frameRate: "+Params.frameRate);
+    System.out.println("Params.micronPerPixel: "+Params.micronPerPixel);
+    System.out.println("Params.NUMSAMPLES: "+Params.NUMSAMPLES);
+    System.out.println("Params.firstFrame: "+Params.firstFrame);
+    System.out.println("Params.lastFrame: "+Params.lastFrame);
+    
   }
 }

@@ -35,9 +35,13 @@ import javax.swing.JPanel;
 
 import analysis.Chemotaxis;
 import analysis.Motility;
+import data.ChemotaxisParams;
+import data.MorphometryParams;
+import data.MotilityParams;
 import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
+import data.ViabilityParams;
 import ij.IJ;
 import ij.gui.GenericDialog;
 
@@ -72,7 +76,11 @@ public class MainWindow extends JFrame {
     this.setVisible(true);
     this.setLocationRelativeTo(null);
     mw = this;
-    Params.resetParams();
+    
+    MotilityParams.resetParams();
+    ChemotaxisParams.resetParams();
+    ViabilityParams.resetParams();
+    MorphometryParams.resetParams();
   }
 
   /**
@@ -116,6 +124,9 @@ public class MainWindow extends JFrame {
         if (label.equals("Chemotaxis")) {
           Chemotaxis ch = new Chemotaxis();
           try {
+            ChemotaxisParams.setGlobalParams();
+            ChemotaxisParams.printParams();
+            Params.printParams();
             mw.setVisible(false);
             ch.selectAnalysis();// this method has to be run outside the
                                 // execute() method because it
@@ -128,6 +139,9 @@ public class MainWindow extends JFrame {
         } else if (label.equals("Motility")) {
           Motility mot = new Motility();
           try {
+            MotilityParams.setGlobalParams();
+            MotilityParams.printParams();
+            Params.printParams();
             mw.setVisible(false);
             mot.selectAnalysis();
             mot.execute();
@@ -136,6 +150,9 @@ public class MainWindow extends JFrame {
             IJ.handleException(e1);
           }
         } else if (label.equals("Viability")) {
+          ViabilityParams.setGlobalParams();
+          ViabilityParams.printParams();
+          Params.printParams();
           mw.setVisible(false);
           ViabilityWindow viabilityW = new ViabilityWindow();
           viabilityW.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -150,6 +167,9 @@ public class MainWindow extends JFrame {
             mw.setVisible(true);
           }
         } else if (label.equals("Morphometry")) {
+          MorphometryParams.setGlobalParams();
+          MorphometryParams.printParams();
+          Params.printParams();
           mw.setVisible(false);
           MorphWindow morphW = new MorphWindow();
           morphW.addWindowListener(new java.awt.event.WindowAdapter() {

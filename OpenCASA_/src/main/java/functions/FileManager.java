@@ -25,6 +25,7 @@ import java.util.List;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 
+import data.Params;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.DirectoryChooser;
@@ -47,6 +48,7 @@ public class FileManager {
    */
   public ImagePlus getAVI(String path) {
     AVI_Reader ar = new AVI_Reader();
+    ar.setInterval(Params.firstFrame, Params.lastFrame);
     ar.run(path);
     ImagePlus imp = ar.getImagePlus();
     return imp;
