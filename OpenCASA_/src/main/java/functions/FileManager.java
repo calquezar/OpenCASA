@@ -48,7 +48,13 @@ public class FileManager {
    */
   public ImagePlus getAVI(String path) {
     AVI_Reader ar = new AVI_Reader();
-    ar.setInterval(Params.firstFrame, Params.lastFrame);
+    int first = (int) (Params.firstFrame*Params.frameRate+1);
+    int last;
+    if(Params.lastFrame>0)
+      last = (int) (Params.lastFrame*Params.frameRate+1);
+    else
+      last = -1;
+    ar.setInterval(first, last);
     ar.run(path);
     ImagePlus imp = ar.getImagePlus();
     return imp;

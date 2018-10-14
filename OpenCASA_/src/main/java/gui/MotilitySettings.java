@@ -49,11 +49,11 @@ public class MotilitySettings extends JPanel {
   
   public MotilitySettings() {
     super();
-    firstFrameTF.setText(""+(MotilityParams.firstFrame-1)/MotilityParams.frameRate);
+    firstFrameTF.setText(""+MotilityParams.firstFrame);
     if(MotilityParams.lastFrame<0)
       lastFrameTF.setText("-1");
     else
-      lastFrameTF.setText(""+MotilityParams.lastFrame/MotilityParams.frameRate);
+      lastFrameTF.setText(""+MotilityParams.lastFrame);
   }
   
   public JPanel createGUI() {
@@ -230,13 +230,8 @@ public class MotilitySettings extends JPanel {
     MotilityParams.vclUpperTh = Float.parseFloat(vclUpperThTF.getText());
     MotilityParams.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());
     MotilityParams.printXY = printXYCB.isSelected();
-    float first = Float.parseFloat(firstFrameTF.getText());
-    float last = Float.parseFloat(lastFrameTF.getText());
-    MotilityParams.firstFrame=(int) (first*MotilityParams.frameRate+1);
-    if(last==-1)
-      MotilityParams.lastFrame=-1;
-    else if(last>0)
-      MotilityParams.lastFrame=(int) (last*MotilityParams.frameRate);
+    MotilityParams.firstFrame=Float.parseFloat(firstFrameTF.getText());
+    MotilityParams.lastFrame=Float.parseFloat(lastFrameTF.getText());
     
     MotilityParams.saveParams();
   }

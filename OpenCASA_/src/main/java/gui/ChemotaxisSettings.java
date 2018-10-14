@@ -55,11 +55,11 @@ public class ChemotaxisSettings extends JPanel {
   
   public ChemotaxisSettings() {
     super();
-    firstFrameTF.setText(""+(ChemotaxisParams.firstFrame-1)/ChemotaxisParams.frameRate);
+    firstFrameTF.setText(""+ChemotaxisParams.firstFrame);
     if(ChemotaxisParams.lastFrame<0)
       lastFrameTF.setText("-1");
     else
-      lastFrameTF.setText(""+ChemotaxisParams.lastFrame/ChemotaxisParams.frameRate);
+      lastFrameTF.setText(""+ChemotaxisParams.lastFrame);
   }
   
   public JPanel createGUI() {
@@ -251,13 +251,8 @@ public class ChemotaxisSettings extends JPanel {
     ChemotaxisParams.angleAmplitude = Float.parseFloat(angleAmplitudeTF.getText());
     ChemotaxisParams.NUMSAMPLES = Integer.parseInt(numSamplesBootsTF.getText());
     ChemotaxisParams.compareOppositeDirections = compareOppositeDirCB.isSelected();
-    float first = Float.parseFloat(firstFrameTF.getText());
-    float last = Float.parseFloat(lastFrameTF.getText());
-    ChemotaxisParams.firstFrame=(int) (first*ChemotaxisParams.frameRate+1);
-    if(last==-1)
-      ChemotaxisParams.lastFrame=-1;
-    else if(last>0)
-      ChemotaxisParams.lastFrame=(int) (last*ChemotaxisParams.frameRate);    
+    ChemotaxisParams.firstFrame=Float.parseFloat(firstFrameTF.getText());
+    ChemotaxisParams.lastFrame=Float.parseFloat(lastFrameTF.getText());
     ChemotaxisParams.saveParams();
   }
 

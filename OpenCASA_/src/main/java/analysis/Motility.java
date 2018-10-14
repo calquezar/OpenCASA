@@ -212,9 +212,9 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
     if(Params.lastFrame>0)
-      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+","+Params.lastFrame/Params.frameRate+")");
-    else if(Params.firstFrame>1)
-      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+",)");
+      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+","+Params.lastFrame+")");
+    else if(Params.firstFrame>0)
+      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+",)");
     else
       rt.addValue("Interval(firstSec,lastSec)", "(,)");
     rt.addValue("Sample", trial.type);
@@ -307,9 +307,9 @@ public class Motility extends SwingWorker<Boolean, String> {
       rt.addValue("FractalD", fractal_value);
       rt.addValue("Progress Motility", progressMotility_value);
       if(Params.lastFrame>0)
-        rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+","+Params.lastFrame/Params.frameRate+")");
-      else if(Params.firstFrame>1)
-        rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+",)");
+        rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+","+Params.lastFrame+")");
+      else if(Params.firstFrame>0)
+        rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+",)");
       else
         rt.addValue("Interval(firstSec,lastSec)", "(,)");
       rt.addValue("Sample", trial.type);
@@ -369,9 +369,9 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
     if(Params.lastFrame>0)
-      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+","+Params.lastFrame/Params.frameRate+")");
-    else if(Params.firstFrame>1)
-      rt.addValue("Interval(firstSec,lastSec)", "("+(Params.firstFrame-1)/Params.frameRate+",)");
+      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+","+Params.lastFrame+")");
+    else if(Params.firstFrame>0)
+      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+",)");
     else
       rt.addValue("Interval(firstSec,lastSec)", "(,)");
     rt.addValue("Filename", filename);

@@ -68,7 +68,7 @@ public class SettingsWindow extends JFrame {
     Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
     int w = (int) screenSize.getWidth();
     int h = (int) screenSize.getHeight();
-    this.setMinimumSize(new Dimension(w / 3, h));
+    this.setMinimumSize(new Dimension(w / 2, h));
   }
 
   private JTabbedPane addTabPane() {

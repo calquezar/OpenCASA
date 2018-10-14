@@ -77,8 +77,8 @@ public class MotilityParams {
   /** Window size for moving average method (um) */
   public static int wSize = 5;
   
-  public static int firstFrame = 1;
-  public static int lastFrame = -1;
+  public static float firstFrame = 0;
+  public static float lastFrame = -1;
 
   
   private static void setDefault(){
@@ -99,7 +99,7 @@ public class MotilityParams {
     MotilityParams.vclMin = 10;
     MotilityParams.vclUpperTh = 200;
     MotilityParams.wSize = 5; 
-    MotilityParams.firstFrame = 1;
+    MotilityParams.firstFrame = 0;
     MotilityParams.lastFrame = -1;
   }
   /**   */

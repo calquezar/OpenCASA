@@ -91,8 +91,8 @@ public class Params {
   /** Window size for moving average method (um) */
   public static int wSize = 5;
   
-  public static int firstFrame = 1;
-  public static int lastFrame = -1;
+  public static float firstFrame = 0;
+  public static float lastFrame = -1;
   
   
   public static void printParams(){
