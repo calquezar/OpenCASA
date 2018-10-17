@@ -51,7 +51,7 @@ public class FileManager {
     int first = (int) (Params.firstFrame*Params.frameRate+1);
     int last;
     if(Params.lastFrame>0)
-      last = (int) (Params.lastFrame*Params.frameRate+1);
+      last = (int) (Params.lastFrame*Params.frameRate);
     else
       last = -1;
     ar.setInterval(first, last);
