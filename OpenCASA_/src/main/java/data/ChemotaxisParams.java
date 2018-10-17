@@ -87,8 +87,8 @@ public class ChemotaxisParams {
   /** Window size for moving average method (um) */
   public static int wSize = 5;
   
-  public static float firstFrame = 0;
-  public static float lastFrame = -1;
+  public static float firstFrame = 0; //in seconds
+  public static float lastFrame = -1; //in seconds
 
   private static void setDefault(){
     ChemotaxisParams.angleAmplitude = 60;
