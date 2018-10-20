@@ -206,7 +206,7 @@ public class MainWindow extends JFrame {
    * @brief This method creates the main user interface.
    */
   private void createGUI() {
-    String parentDir = "";
+    //String parentDir = "";
     //String parentDir = "/resources";
     JPanel panel = new JPanel(new GridBagLayout());
     addButton("Motility", 0, 0, new Color(255, 255, 255), parentDir + "/motility.png", panel);
