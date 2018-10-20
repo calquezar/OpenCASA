@@ -125,8 +125,8 @@ public class MainWindow extends JFrame {
           Chemotaxis ch = new Chemotaxis();
           try {
             ChemotaxisParams.setGlobalParams();
-            ChemotaxisParams.printParams();
-            Params.printParams();
+            //ChemotaxisParams.printParams();
+            //Params.printParams();
             mw.setVisible(false);
             ch.selectAnalysis();// this method has to be run outside the
                                 // execute() method because it
@@ -140,8 +140,8 @@ public class MainWindow extends JFrame {
           Motility mot = new Motility();
           try {
             MotilityParams.setGlobalParams();
-            MotilityParams.printParams();
-            Params.printParams();
+            //MotilityParams.printParams();
+            //Params.printParams();
             mw.setVisible(false);
             mot.selectAnalysis();
             mot.execute();
@@ -151,8 +151,8 @@ public class MainWindow extends JFrame {
           }
         } else if (label.equals("Viability")) {
           ViabilityParams.setGlobalParams();
-          ViabilityParams.printParams();
-          Params.printParams();
+          //ViabilityParams.printParams();
+          //Params.printParams();
           mw.setVisible(false);
           ViabilityWindow viabilityW = new ViabilityWindow();
           viabilityW.addWindowListener(new java.awt.event.WindowAdapter() {
@@ -168,8 +168,8 @@ public class MainWindow extends JFrame {
           }
         } else if (label.equals("Morphometry")) {
           MorphometryParams.setGlobalParams();
-          MorphometryParams.printParams();
-          Params.printParams();
+          //MorphometryParams.printParams();
+          //Params.printParams();
           mw.setVisible(false);
           MorphWindow morphW = new MorphWindow();
           morphW.addWindowListener(new java.awt.event.WindowAdapter() {
