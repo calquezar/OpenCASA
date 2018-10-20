@@ -41,7 +41,7 @@ public class OpenCASA_ implements PlugIn {
     final Class<?> clazz = OpenCASA_.class;
     new ImageJ();// start ImageJ
     IJ.runPlugIn(clazz.getName(), "");// run the plugin
-  }
+  }  
 
   /**
    * This method overrides the superclass run's method. Start point of the

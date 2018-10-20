@@ -88,61 +88,6 @@ public class Kinematics {
     return alh;
 
   }
-  
-  
-  private void plot(float[] x,float[] y){
-
-    PlotWindow.noGridLines = false; // draw grid lines
-    Plot plot = new Plot("Example Plot","X Axis","Y Axis",x,y);
-    plot.setLimits(0, x.length, 0,15);
-    plot.setLineWidth(2);
-
-    // add label
-    plot.setColor(Color.black);
-    plot.changeFont(new Font("Helvetica", Font.PLAIN, 24));
-    plot.addLabel(0.15, 0.95, "This is a label");
-
-    plot.changeFont(new Font("Helvetica", Font.PLAIN, 16));
-    plot.setColor(Color.blue);
-    plot.show();
-  }
-  /*
-  public double[] alh(List track, List avgTrack) {
-
-    int length = avgTrack.size();
-    double alh[] = new double[2];
-    double alhMax = 0;
-    double alhMean = 0;
-    double nPoints = 0;
-    for (int i = 1; i < length-1; i++) {
-      Cell origCell0 = (Cell) track.get(i - 1 + Params.wSize -1);
-      Cell origCell1 = (Cell) track.get(i + Params.wSize -1);
-      Cell origCell2 = (Cell) track.get(i + 1 + Params.wSize -1);
-      Cell avgCell0 = (Cell) avgTrack.get(i-1);
-      Cell avgCell1 = (Cell) avgTrack.get(i);
-      Cell avgCell2 = (Cell) avgTrack.get(i+1);
-      
-      double distance0 = origCell0.distance(avgCell0);
-      double distance1 = origCell1.distance(avgCell1);
-      double distance2 = origCell2.distance(avgCell2);
-      
-      if(distance1 > distance0 && distance1 > distance2){
-        alhMean += distance1;
-        nPoints++;
-        if (distance1 > alhMax)
-          alhMax = distance1;
-      }
-    }
-    // Mean value
-    alhMean = alhMean / nPoints;
-    // convert pixels to micrometers
-    alh[0] = alhMean * Params.micronPerPixel;
-    alh[1] = alhMax  * Params.micronPerPixel;
-
-    System.out.println(alhMean);
-    return alh;
-  }
-  */
 
   /**
    * @param track
