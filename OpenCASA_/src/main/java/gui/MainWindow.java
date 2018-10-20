@@ -207,7 +207,7 @@ public class MainWindow extends JFrame {
    */
   private void createGUI() {
     String parentDir = "";
-    //String parentDir = "/resources";
+    String parentDir = "/resources";
     JPanel panel = new JPanel(new GridBagLayout());
     addButton("Motility", 0, 0, new Color(255, 255, 255), parentDir + "/motility.png", panel);
     addButton("Chemotaxis", 1, 0, new Color(255, 255, 255), parentDir + "/chemotaxis.png", panel);
