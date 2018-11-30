@@ -335,7 +335,7 @@ public class Kinematics {
     SignalProcessing sp = new SignalProcessing();
     List avgTrack = sp.movingAverage(track);
     // Kinematics filter
-    double minPixelDistance = 10;
+    double minPixelDistance = 10; // just to be sure that the first and the last points are different
     if (K.vcl(track) > Params.vclMin  &&  (distance > minPixelDistance)){
       return true;
     }
