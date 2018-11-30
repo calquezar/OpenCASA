@@ -82,7 +82,7 @@ public class Params {
   public static boolean printXY = false;
   /** Parameter used to determine progressive motility sperm */
   public static float strProgressMotility = 85;
-  public static float vapProgressMotility = 130;
+  public static float vapProgressMotility = 120;
   /**   */
   public static float vclLowerTh = 25;
   /** Motility filter for motile and non motile sperm */
