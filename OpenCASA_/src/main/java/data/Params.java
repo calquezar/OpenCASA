@@ -81,7 +81,8 @@ public class Params {
    */
   public static boolean printXY = false;
   /** Parameter used to determine progressive motility sperm */
-  public static float progressMotility = 80;
+  public static float strProgressMotility = 85;
+  public static float vapProgressMotility = 130;
   /**   */
   public static float vclLowerTh = 25;
   /** Motility filter for motile and non motile sperm */
@@ -105,7 +106,8 @@ public class Params {
     System.out.println("Params.vclMin: "+Params.vclMin);
     System.out.println("Params.vclLowerTh: "+Params.vclLowerTh);
     System.out.println("Params.vclUpperTh: "+Params.vclUpperTh);
-    System.out.println("Params.progressMotility: "+Params.progressMotility);    
+    System.out.println("Params.strProgressMotility: "+Params.strProgressMotility);
+    System.out.println("Params.vapProgressMotility: "+Params.vapProgressMotility);   
     System.out.println("Params.angleDelta: "+Params.angleDelta);
     System.out.println("Params.angleDirection: "+Params.angleDirection);
     System.out.println("Params.angleAmplitude: "+Params.angleAmplitude);

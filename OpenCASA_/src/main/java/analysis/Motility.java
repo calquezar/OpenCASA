@@ -276,7 +276,7 @@ public class Motility extends SwingWorker<Boolean, String> {
       total_bcf += bcf_value;
       // Progressive motility
       String progressMotility_value = "NO";
-      if (str_value > Params.progressMotility) {
+      if ((str_value > Params.strProgressMotility) && (vap_value > Params.vapProgressMotility) ) {
         progressMotility_value = "YES";
         countProgressiveSperm++;
       }

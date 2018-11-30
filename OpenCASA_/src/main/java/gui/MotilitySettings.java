@@ -41,7 +41,8 @@ public class MotilitySettings extends JPanel {
   JTextField minSizeTF = new JTextField("" + MotilityParams.minSize, 4);
   JTextField minTrackLengthTF = new JTextField("" + MotilityParams.minTrackLength, 4);
   JCheckBox printXYCB = new JCheckBox();
-  JTextField progressiveMotilityTF = new JTextField("" + MotilityParams.progressMotility, 4);
+  JTextField strProgressiveMotilityTF = new JTextField("" + MotilityParams.strProgressMotility, 4);
+  JTextField vapProgressiveMotilityTF = new JTextField("" + MotilityParams.vapProgressMotility, 4);
   JTextField vclLowerThTF = new JTextField("" + MotilityParams.vclLowerTh, 4);
   JTextField vclMinTF = new JTextField("" + MotilityParams.vclMin, 4);
   JTextField vclUpperThTF = new JTextField("" + MotilityParams.vclUpperTh, 4);
@@ -102,7 +103,14 @@ public class MotilitySettings extends JPanel {
     c.gridx = 1;
     this.add(label, c);
     c.gridx = 2;
-    this.add(progressiveMotilityTF, c);
+    this.add(strProgressiveMotilityTF, c);
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Progressive motility (VAP>): ");
+    c.gridx = 1;
+    this.add(label, c);
+    c.gridx = 2;
+    this.add(vapProgressiveMotilityTF, c);
     ///////////////
     c.gridy += 1;
     label = new JLabel("Minimum vcl (um/s): ");
@@ -228,7 +236,8 @@ public class MotilitySettings extends JPanel {
     MotilityParams.vclMin = Float.parseFloat(vclMinTF.getText());
     MotilityParams.vclLowerTh = Float.parseFloat(vclLowerThTF.getText());
     MotilityParams.vclUpperTh = Float.parseFloat(vclUpperThTF.getText());
-    MotilityParams.progressMotility = Float.parseFloat(progressiveMotilityTF.getText());
+    MotilityParams.strProgressMotility = Float.parseFloat(strProgressiveMotilityTF.getText());
+    MotilityParams.vapProgressMotility = Float.parseFloat(vapProgressiveMotilityTF.getText());
     MotilityParams.printXY = printXYCB.isSelected();
     MotilityParams.firstFrame=Float.parseFloat(firstFrameTF.getText());
     MotilityParams.lastFrame=Float.parseFloat(lastFrameTF.getText());
