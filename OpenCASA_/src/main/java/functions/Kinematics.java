@@ -334,11 +334,11 @@ public class Kinematics {
     float distance = lastCell.distance(firstCell);
     SignalProcessing sp = new SignalProcessing();
     List avgTrack = sp.movingAverage(track);
-    float aux = K.vcl(avgTrack) / K.vsl(avgTrack);
     // Kinematics filter
-    double minPixelDistance = 10;// 10/Params.micronPerPixel;
-    if (K.vcl(track) > Params.vclMin && (distance > minPixelDistance) && (aux > 0))
+    double minPixelDistance = 10;
+    if (K.vcl(track) > Params.vclMin  &&  (distance > minPixelDistance)){
       return true;
+    }
     else
       return false;
   }
