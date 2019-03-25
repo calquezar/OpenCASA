@@ -21,6 +21,7 @@ package gui;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -41,11 +42,15 @@ public class MotilitySettings extends JPanel {
   JTextField minSizeTF = new JTextField("" + MotilityParams.minSize, 4);
   JTextField minTrackLengthTF = new JTextField("" + MotilityParams.minTrackLength, 4);
   JCheckBox printXYCB = new JCheckBox();
+  JCheckBox saveVideoCB = new JCheckBox();
   JTextField strProgressiveMotilityTF = new JTextField("" + MotilityParams.strProgressMotility, 4);
   JTextField vapProgressiveMotilityTF = new JTextField("" + MotilityParams.vapProgressMotility, 4);
   JTextField vclLowerThTF = new JTextField("" + MotilityParams.vclLowerTh, 4);
   JTextField vclMinTF = new JTextField("" + MotilityParams.vclMin, 4);
   JTextField vclUpperThTF = new JTextField("" + MotilityParams.vclUpperTh, 4);
+  JComboBox<String> vclSlowColorCB;
+  JComboBox<String> vclNormalColorCB;
+  JComboBox<String> vclFastColorCB;
   JTextField windowSizeTF = new JTextField("" + MotilityParams.wSize, 4);
   
   public MotilitySettings() {
@@ -55,6 +60,14 @@ public class MotilitySettings extends JPanel {
       lastFrameTF.setText("-1");
     else
       lastFrameTF.setText(""+MotilityParams.lastFrame);
+    // Initialize combo boxes
+    String[] choices = {"Red","Yellow","Green","Blue","White"};
+    vclSlowColorCB = new JComboBox<String>(choices);
+    vclSlowColorCB.setSelectedItem(MotilityParams.vclSlowColor);
+    vclNormalColorCB = new JComboBox<String>(choices);
+    vclNormalColorCB.setSelectedItem(MotilityParams.vclNormalColor);
+    vclFastColorCB = new JComboBox<String>(choices);
+    vclFastColorCB.setSelectedItem(MotilityParams.vclFastColor);
   }
   
   public JPanel createGUI() {
@@ -133,6 +146,27 @@ public class MotilitySettings extends JPanel {
     c.gridx = 2;
     this.add(vclUpperThTF, c);    
     ///////////////
+    c.gridy += 1;
+    label = new JLabel("Color for Slow trajectories: ");
+    c.gridx = 1;
+    this.add(label, c);
+    c.gridx = 2;
+    this.add(vclSlowColorCB, c);    
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Color for Normal trajectories: ");
+    c.gridx = 1;
+    this.add(label, c);
+    c.gridx = 2;
+    this.add(vclNormalColorCB, c);    
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Color for Fast trajectories: ");
+    c.gridx = 1;
+    this.add(label, c);
+    c.gridx = 2;
+    this.add(vclFastColorCB, c);    
+    ///////////////
     ///////////////
     c.gridy += 1;
     label = new JLabel("Frame Rate (frames/s): ");
@@ -169,6 +203,14 @@ public class MotilitySettings extends JPanel {
     c.gridx = 2;
     printXYCB.setSelected(MotilityParams.printXY);
     this.add(printXYCB, c);
+    ///////////////
+    c.gridy += 1;
+    label = new JLabel("Save Video Output: ");
+    c.gridx = 1;
+    this.add(label, c);
+    c.gridx = 2;
+    saveVideoCB.setSelected(MotilityParams.saveVideo);
+    this.add(saveVideoCB, c);
     ///////////////
     c.gridy += 1;
     label = new JLabel("-------------------------------- ");
@@ -239,9 +281,12 @@ public class MotilitySettings extends JPanel {
     MotilityParams.strProgressMotility = Float.parseFloat(strProgressiveMotilityTF.getText());
     MotilityParams.vapProgressMotility = Float.parseFloat(vapProgressiveMotilityTF.getText());
     MotilityParams.printXY = printXYCB.isSelected();
+    MotilityParams.saveVideo = saveVideoCB.isSelected();
     MotilityParams.firstFrame=Float.parseFloat(firstFrameTF.getText());
     MotilityParams.lastFrame=Float.parseFloat(lastFrameTF.getText());
-    
+    MotilityParams.vclSlowColor = (String) vclSlowColorCB.getSelectedItem();
+    MotilityParams.vclNormalColor = (String) vclNormalColorCB.getSelectedItem();
+    MotilityParams.vclFastColor = (String) vclFastColorCB.getSelectedItem();
     MotilityParams.saveParams();
   }
 

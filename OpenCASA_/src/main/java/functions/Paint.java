@@ -70,6 +70,20 @@ import ij.process.ImageProcessor;
  */
 public class Paint {
 
+  
+
+  private Color getColor(String color){
+    if(color.equalsIgnoreCase("red"))
+      return Color.red;
+    else if(color.equalsIgnoreCase("yellow"))
+      return Color.yellow;
+    else if (color.equalsIgnoreCase("green"))
+      return Color.green;
+    else if (color.equalsIgnoreCase("blue"))
+      return Color.cyan;
+    else //if (color.equalsIgnoreCase("white"))
+      return Color.white;
+  }
   /******************************************************/
   /**
    * @param ip
@@ -197,11 +211,11 @@ public class Paint {
           for (; jT.hasNext();) {
             Cell newCell = (Cell) jT.next();
             if (kinematics.getVelocityTrackType(aTrack) == "Slow")
-              ip.setColor(Color.white);
+              ip.setColor(getColor(Params.vclSlowColor));
             else if (kinematics.getVelocityTrackType(aTrack) == "Normal")
-              ip.setColor(Color.yellow);
+              ip.setColor(getColor(Params.vclNormalColor));
             else if (kinematics.getVelocityTrackType(aTrack) == "Fast")
-              ip.setColor(Color.red);
+              ip.setColor(getColor(Params.vclFastColor));
             // ip.setValue(color);
             ip.moveTo((int) oldCell.x * upRes, (int) oldCell.y * upRes);
             ip.lineTo((int) newCell.x * upRes, (int) newCell.y * upRes);
@@ -220,8 +234,10 @@ public class Paint {
           for (; jT.hasNext();) {
             Cell newCell = (Cell) jT.next();
             if (newCell.z == iFrame) {
+              //ip.moveTo((int) ((oldCell.x+oldCell.width/2) / Params.pixelWidth + 0),
+               //   doOffset((int) ((oldCell.y+oldCell.height/2) / Params.pixelHeight), yWidth, 5));
               ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
-                  doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
+                  (int) ((oldCell.y+oldCell.height) / Params.pixelHeight));              
               ip.setColor(Color.white);
               ip.drawString("**");
             }

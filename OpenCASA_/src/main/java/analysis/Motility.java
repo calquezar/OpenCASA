@@ -18,6 +18,9 @@
 
 package analysis;
 
+import java.io.File;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.List;
 import java.util.ListIterator;
@@ -27,6 +30,7 @@ import javax.swing.SwingWorker;
 
 import data.Cell;
 import data.Params;
+import data.SerializableList;
 import data.Trial;
 import functions.FileManager;
 import functions.Kinematics;
@@ -92,6 +96,8 @@ public class Motility extends SwingWorker<Boolean, String> {
         // Motility results
         calculateMotility(new ResultsTable(), trial);
         calculateAverageMotility(new ResultsTable(), trial);
+        if(Params.saveVideo)
+          saveVideoTracks(trial);
       }
       calculateTotalMotility(rtTotal, s);
       resetParams();
@@ -120,6 +126,8 @@ public class Motility extends SwingWorker<Boolean, String> {
       calculateMotility(rtIndividual, trial);
       calculateAverageMotility(rtAverage, trial);
       resetParams();
+      if(Params.saveVideo)
+        saveVideoTracks(trial);
     }
     rtIndividual.showRowNumbers(false);
     rtIndividual.show("Individual motility");
@@ -151,6 +159,8 @@ public class Motility extends SwingWorker<Boolean, String> {
     Paint paint = new Paint();
     paint.draw(imp, trial.tracks);
     imp.show();
+    if(Params.saveVideo)
+      saveVideoTracks(trial);
     if (Params.printXY) {
       Utils utils = new Utils();
       IJ.saveString(utils.printXYCoords(trial.tracks), "");
@@ -446,6 +456,19 @@ public class Motility extends SwingWorker<Boolean, String> {
     countProgressiveSperm = 0;
   }
 
+  private void saveVideoTracks(Trial trial){
+    FileManager fm = new FileManager();
+    ImagePlus imp = fm.getAVI(trial.source);
+    Paint paint = new Paint();
+    paint.draw(imp, trial.tracks);
+    //rename the new avi file
+    Path filename = Paths.get(trial.source);
+    Path parent = filename.getParent();
+    new File(parent.toString()+File.separator+"video_output").mkdirs();
+    String newFname = parent.toString()+File.separator+"video_output"+File.separator+trial.ID+".avi";
+    IJ.save(imp, newFname);
+  }
+  
   /**
    * This method opens a set of dialogs to ask the user which analysis has to be
    * carried on.

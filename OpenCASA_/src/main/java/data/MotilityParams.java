@@ -66,6 +66,7 @@ public class MotilityParams {
    * values).
    */
   public static boolean printXY = false;
+  public static boolean saveVideo = false;
   /** Parameter used to determine progressive motility sperm */
   public static float strProgressMotility = 85;
   public static float vapProgressMotility = 120;
@@ -75,6 +76,9 @@ public class MotilityParams {
   public static float vclMin = 10;
   /**   */
   public static float vclUpperTh = 200;
+  public static String vclSlowColor = "White";
+  public static String vclNormalColor = "Yellow";
+  public static String vclFastColor = "Red";
   /** Window size for moving average method (um) */
   public static int wSize = 4;
   
@@ -95,11 +99,15 @@ public class MotilityParams {
     MotilityParams.pixelHeight = 1.0;
     MotilityParams.pixelWidth = 1.0;
     MotilityParams.printXY = false;
+    MotilityParams.saveVideo = false;
     MotilityParams.strProgressMotility = 85;
     MotilityParams.vapProgressMotility = 120;
     MotilityParams.vclLowerTh = 100;
     MotilityParams.vclMin = 10;
     MotilityParams.vclUpperTh = 200;
+    MotilityParams.vclSlowColor = "White";
+    MotilityParams.vclNormalColor = "Yellow";
+    MotilityParams.vclFastColor = "Red";
     MotilityParams.wSize = 4; 
     MotilityParams.firstFrame = 0;
     MotilityParams.lastFrame = -1;
@@ -132,7 +140,11 @@ public class MotilityParams {
     MotilityParams.vclMin = MotilityParams.prefs.getFloat("Mot_vclMin", MotilityParams.vclMin);
     MotilityParams.vclLowerTh = MotilityParams.prefs.getFloat("Mot_vclLowerTh", MotilityParams.vclLowerTh);
     MotilityParams.vclUpperTh = MotilityParams.prefs.getFloat("Mot_vclUpperTh", MotilityParams.vclUpperTh);
+    MotilityParams.vclSlowColor = MotilityParams.prefs.get("Mot_vclSlowColor", MotilityParams.vclSlowColor);
+    MotilityParams.vclNormalColor = MotilityParams.prefs.get("Mot_vclNormalColor", MotilityParams.vclNormalColor);
+    MotilityParams.vclFastColor = MotilityParams.prefs.get("Mot_vclFastColor", MotilityParams.vclFastColor);    
     MotilityParams.printXY = MotilityParams.prefs.getBoolean("Mot_printXY", MotilityParams.printXY);
+    MotilityParams.saveVideo = MotilityParams.prefs.getBoolean("Mot_saveVideo", MotilityParams.saveVideo);
     MotilityParams.frameRate = MotilityParams.prefs.getFloat("Mot_frameRate", MotilityParams.frameRate);
     MotilityParams.strProgressMotility = MotilityParams.prefs.getFloat("Mot_strProgressMotility", MotilityParams.strProgressMotility);
     MotilityParams.vapProgressMotility = MotilityParams.prefs.getFloat("Mot_vapProgressMotility", MotilityParams.vapProgressMotility);
@@ -154,7 +166,11 @@ public class MotilityParams {
     MotilityParams.prefs.putFloat("Mot_vclMin", MotilityParams.vclMin);
     MotilityParams.prefs.putFloat("Mot_vclLowerTh", MotilityParams.vclLowerTh);
     MotilityParams.prefs.putFloat("Mot_vclUpperTh", MotilityParams.vclUpperTh);
+    MotilityParams.prefs.put("Mot_vclSlowColor", MotilityParams.vclSlowColor);
+    MotilityParams.prefs.put("Mot_vclNormalColor", MotilityParams.vclNormalColor);
+    MotilityParams.prefs.put("Mot_vclFastColor", MotilityParams.vclFastColor);
     MotilityParams.prefs.putBoolean("Mot_printXY", MotilityParams.printXY);
+    MotilityParams.prefs.putBoolean("Mot_saveVideo", MotilityParams.saveVideo);
     MotilityParams.prefs.putFloat("Mot_frameRate", MotilityParams.frameRate);
     MotilityParams.prefs.putFloat("Mot_strProgressMotility", MotilityParams.strProgressMotility);
     MotilityParams.prefs.putFloat("Mot_vapProgressMotility", MotilityParams.vapProgressMotility);
@@ -182,9 +198,13 @@ public class MotilityParams {
     Params.vclMin = MotilityParams.vclMin;
     Params.vclLowerTh = MotilityParams.vclLowerTh;
     Params.vclUpperTh = MotilityParams.vclUpperTh;
+    Params.vclSlowColor = MotilityParams.vclSlowColor;
+    Params.vclNormalColor = MotilityParams.vclNormalColor;
+    Params.vclFastColor = MotilityParams.vclFastColor;
     Params.strProgressMotility = MotilityParams.strProgressMotility;
     Params.vapProgressMotility = MotilityParams.vapProgressMotility;
     Params.printXY = MotilityParams.printXY;
+    Params.saveVideo = MotilityParams.saveVideo;
     Params.frameRate = MotilityParams.frameRate;
     Params.micronPerPixel = MotilityParams.micronPerPixel;
     Params.date = MotilityParams.date;
@@ -204,9 +224,13 @@ public class MotilityParams {
     System.out.println("MotilityParams.vclMin: "+MotilityParams.vclMin);
     System.out.println("MotilityParams.vclLowerTh: "+MotilityParams.vclLowerTh);
     System.out.println("MotilityParams.vclUpperTh: "+MotilityParams.vclUpperTh);
+    System.out.print("MotilityParams.vclSlowColor: "+MotilityParams.vclSlowColor);
+    System.out.print("MotilityParams.vclNormalColor: "+MotilityParams.vclNormalColor);
+    System.out.print("MotilityParams.vclFastColor: "+MotilityParams.vclFastColor);
     System.out.println("MotilityParams.strProgressMotility: "+MotilityParams.strProgressMotility);
     System.out.println("MotilityParams.vapProgressMotility: "+MotilityParams.vapProgressMotility);
     System.out.println("MotilityParams.printXY: "+MotilityParams.printXY);
+    System.out.println("MotilityParams.saveVideo: "+MotilityParams.saveVideo);
     System.out.println("MotilityParams.frameRate: "+MotilityParams.frameRate);
     System.out.println("MotilityParams.micronPerPixel: "+MotilityParams.micronPerPixel);
     System.out.println("MotilityParams.firstFrame: "+MotilityParams.firstFrame);

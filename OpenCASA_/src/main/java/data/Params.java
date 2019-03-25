@@ -80,6 +80,7 @@ public class Params {
    * values).
    */
   public static boolean printXY = false;
+  public static boolean saveVideo = false;
   /** Parameter used to determine progressive motility sperm */
   public static float strProgressMotility = 85;
   public static float vapProgressMotility = 120;
@@ -89,6 +90,9 @@ public class Params {
   public static float vclMin = 10;
   /**   */
   public static float vclUpperTh = 95;
+  public static String vclSlowColor = "White";
+  public static String vclNormalColor = "Yellow";
+  public static String vclFastColor = "Red";
   /** Window size for moving average method (um) */
   public static int wSize = 5;
   
@@ -113,6 +117,7 @@ public class Params {
     System.out.println("Params.angleAmplitude: "+Params.angleAmplitude);
     System.out.println("Params.compareOppositeDirections: "+Params.compareOppositeDirections);
     System.out.println("Params.printXY: "+Params.printXY);
+    System.out.println("Params.saveVideo: "+Params.saveVideo);
     System.out.println("Params.frameRate: "+Params.frameRate);
     System.out.println("Params.micronPerPixel: "+Params.micronPerPixel);
     System.out.println("Params.NUMSAMPLES: "+Params.NUMSAMPLES);
