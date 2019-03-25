@@ -80,7 +80,7 @@ public class Paint {
     else if (color.equalsIgnoreCase("green"))
       return Color.green;
     else if (color.equalsIgnoreCase("blue"))
-      return Color.cyan;
+      return Color.blue;
     else //if (color.equalsIgnoreCase("white"))
       return Color.white;
   }
