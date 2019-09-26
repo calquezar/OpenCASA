@@ -29,6 +29,7 @@ import data.Params;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.io.DirectoryChooser;
+import ij.measure.ResultsTable;
 import third_Party.AVI_Reader;
 
 /**
@@ -73,7 +74,7 @@ public class FileManager {
       return null;
     String[] listOfNames = new String[listOfFiles.length];
     for (int i = 0; i < listOfFiles.length; i++)
-      listOfNames[i] = folder.getAbsolutePath() + "\\" + listOfFiles[i].getName();
+      listOfNames[i] = folder.getAbsolutePath() + File.separator + listOfFiles[i].getName();
     return listOfNames;
   }
 
@@ -82,7 +83,12 @@ public class FileManager {
    * @return
    */
   public String getFilename(String path) {
-    String[] parts = path.split("\\\\");
+    String os = System.getProperty("os.name").toLowerCase();
+    String[] parts;
+    if(os.indexOf("win") >= 0)
+      parts = path.split(File.separator+File.separator);
+    else
+      parts = path.split(File.separator);
     return removeExtension(parts[parts.length - 1]);
   }
 
@@ -102,7 +108,12 @@ public class FileManager {
    * @return
    */
   public String getParentDirectory(String path) {
-    String[] parts = path.split("\\\\");
+    String os = System.getProperty("os.name").toLowerCase();
+    String[] parts;
+    if(os.indexOf("win") >= 0)
+      parts = path.split(File.separator+File.separator);
+    else
+      parts = path.split(File.separator);
     return parts[parts.length - 2];
   }
 
@@ -163,7 +174,7 @@ public class FileManager {
       String parentsDirectory = getParentDirectory(absoluteFilePath);
       ImagePlus imp = IJ.openImage(absoluteFilePath);
       if (imp != null) {
-        imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
+        imp.setTitle(parentsDirectory + File.separator + imp.getTitle());
         images.add(imp);
       }
       // else - possibly the file is not an image nor AVI
@@ -196,12 +207,19 @@ public class FileManager {
       JOptionPane.showMessageDialog(null, "Please, select a valid file.");
       return null;
     }
-    imp.setTitle(parentsDirectory + "\\" + imp.getTitle());
+    imp.setTitle(parentsDirectory + File.separator + imp.getTitle());
     List<ImagePlus> images = new ArrayList<ImagePlus>();
     images.add(imp);
     return images;
   }
 
+  public ResultsTable loadResultsTable(){
+    String path = selectFile();
+    if(path==null)
+      return null;
+    return ResultsTable.open2(path);
+  }
+  
   public String removeExtension(String filename) {
     String[] parts = filename.split("\\.");
     return parts[0];
@@ -227,22 +245,24 @@ public class FileManager {
    * @return
    */
   public String selectFile() {
-    JFileChooser chooser = new JFileChooser();
+    /*JFileChooser chooser = new JFileChooser();
     chooser.setDialogTitle("Select a file...");
     chooser.setFileSelectionMode(JFileChooser.FILES_ONLY);
     chooser.setAcceptAllFileFilterUsed(false);
     if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) {
       File file = chooser.getSelectedFile();
       return file.getAbsolutePath();
-    }
-    return null;
+    }*/
+    return IJ.getFilePath("Select file...");
+    //return null;
   }
 
   /**
    * @return
    */
   public String selectFolder() {
-    DirectoryChooser dc = new DirectoryChooser("Select folder...");
-    return dc.getDirectory();
+    return IJ.getDirectory("Select folder...");
+    //DirectoryChooser dc = new DirectoryChooser("Select folder...");
+    //return dc.getDirectory();
   }
 }

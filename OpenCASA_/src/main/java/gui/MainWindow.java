@@ -26,12 +26,17 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import org.omg.CORBA.DoubleSeqHelper;
 
 import analysis.Chemotaxis;
 import analysis.Motility;
@@ -42,8 +47,11 @@ import data.Params;
 import data.PersistentRandomWalker;
 import data.Simulation;
 import data.ViabilityParams;
+import functions.FileManager;
+import functions.Paint;
 import ij.IJ;
 import ij.gui.GenericDialog;
+import ij.measure.ResultsTable;
 
 /**
  * This window shows all functional modules available.
@@ -70,7 +78,7 @@ public class MainWindow extends JFrame {
   public MainWindow(String title) throws HeadlessException {
     super(title);
     createGUI();
-    this.setPreferredSize(new Dimension(600, 300));
+    this.setPreferredSize(new Dimension(450, 600));
     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
     this.pack();
     this.setVisible(true);
@@ -108,6 +116,9 @@ public class MainWindow extends JFrame {
     c.gridx = gridx;
     c.gridy = gridy;
     JButton btn = new JButton(label);
+    btn.setOpaque(false);
+    btn.setContentAreaFilled(false);
+    btn.setBorderPainted(false);
     btn.setBackground(background);
     try {
       // Image img =
@@ -196,7 +207,9 @@ public class MainWindow extends JFrame {
           });
           mw.setVisible(false);
           // sw.run();
-        }
+        } else if (label.equals("Scatter Plot")) {
+          scatter();
+        } 
       }
     });
     panel.add(btn, c);
@@ -207,15 +220,32 @@ public class MainWindow extends JFrame {
    */
   private void createGUI() {
     String parentDir = "";
-    //String parentDir = "/resources";
+    //String parentDir = File.separator+"resources";
     JPanel panel = new JPanel(new GridBagLayout());
-    addButton("Motility", 0, 0, new Color(255, 255, 255), parentDir + "/motility.png", panel);
-    addButton("Chemotaxis", 1, 0, new Color(255, 255, 255), parentDir + "/chemotaxis.png", panel);
-    addButton("Viability", 0, 1, new Color(255, 255, 255), parentDir + "/viability.png", panel);
-    addButton("Morphometry", 1, 1, new Color(255, 255, 255), parentDir + "/morphometry.png", panel);
-    addButton("Simulation", 0, 2, new Color(255, 255, 255), parentDir + "/settings.png", panel);
-    addButton("Settings", 1, 2, new Color(255, 204, 153), parentDir + "/settings.png", panel);
+    int x = -1;
+    int y = -1;
+    // accumulation icon made by Freepik from www.flaticon.com
+    addButton("Accumulation", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/accumulation.png", panel);    
+    // chemotaxis icon made by Those Icons from www.flaticon.com
+    addButton("Chemotaxis", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/chemotaxis.png", panel);   
+    // concentration icon made by xnimrodx from www.flaticon.com
+    addButton("Concentration",++x%2,++y/2, new Color(255, 204, 153), parentDir + "/concentration.png", panel);
+    // morphometry icon made by Cursor Creative from www.flaticon.com
+    addButton("Morphometry", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/morphometry.png", panel);   
+    // motility icon made by Freepik from www.flaticon.com
+    addButton("Motility",++x%2,++y/2, new Color(255, 255, 255), parentDir + "/motility.png", panel);   
+    // multifluo icon made by Prosymbols from www.flaticon.com
+    addButton("Multifluo", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/multifluo.png", panel);    
+    // scatter icon made by Flat Icons from www.flaticon.com
+    addButton("Scatter Plot", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/scatter.png", panel);
+    // simulation icon made by Freepik from www.flaticon.com
+    addButton("Simulation", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/simulation.png", panel);
+    // viability icon made by Freepik from www.flaticon.com
+    addButton("Viability", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/viability.png", panel);
+    // settings icon made by Freepik from www.flaticon.com
+    addButton("Settings", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/settings.png", panel);
     this.setContentPane(panel);
+    panel.setBackground(Color.white);
   }
 
   /**
@@ -241,5 +271,20 @@ public class MainWindow extends JFrame {
       IJ.handleException(e1);
       // e1.printStackTrace();
     }
+  }
+  
+  private void scatter(){
+    FileManager fm = new FileManager();
+    ResultsTable rt = fm.loadResultsTable();
+    if(rt==null)
+      return;
+    int c1 = 3;
+    int c2 = 7;
+    List<Double> x = new ArrayList<Double>();
+    for(double d:rt.getColumnAsDoubles(c1)) x.add(d);
+    List<Double> y = new ArrayList<Double>();
+    for(double d:rt.getColumnAsDoubles(c2)) y.add(d);   
+    Paint p = new Paint();
+    p.drawScatterPlot(x,y, "Scatter Plot", rt.getColumnHeading(c1), rt.getColumnHeading(c2));
   }
 }

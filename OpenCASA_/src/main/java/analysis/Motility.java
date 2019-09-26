@@ -89,20 +89,31 @@ public class Motility extends SwingWorker<Boolean, String> {
     for (String s : subfolders) {
       IJ.showProgress((double) i / subfolders.size());
       IJ.showStatus("Analizing folder " + i++ + "...");
+      ResultsTable rtIndividual = new ResultsTable();
+      ResultsTable rtAverage = new ResultsTable();
       List<String> files = fm.getFiles(s);
       Map<String, Trial> trials = getTrials(files);
       for (String key : trials.keySet()) {
         Trial trial = (Trial) trials.get(key);
         // Motility results
-        calculateMotility(new ResultsTable(), trial);
-        calculateAverageMotility(new ResultsTable(), trial);
+        calculateMotility(rtIndividual, trial);
+        calculateAverageMotility(rtAverage, trial);
         if(Params.saveVideo)
           saveVideoTracks(trial);
       }
       calculateTotalMotility(rtTotal, s);
+      // Save results
+      Path path = Paths.get(s).getParent();
+      String folder_name = fm.getFilename(s);
+      saveResults(path,folder_name,"Individual_Motility", rtIndividual);
+      saveResults(path,folder_name,"Average_Motility", rtAverage);
       resetParams();
     }
     IJ.showProgress(2); // To remove progresBar
+    // Save results
+    Path parent = Paths.get(folder);
+    saveResults(parent,"Total_Motility", rtTotal);
+    // Show results
     rtTotal.showRowNumbers(false);
     rtTotal.show("Total Motility");
   }
@@ -129,6 +140,11 @@ public class Motility extends SwingWorker<Boolean, String> {
       if(Params.saveVideo)
         saveVideoTracks(trial);
     }
+    // Save results
+    Path parent = Paths.get(folder);
+    saveResults(parent,"Individual_Motility", rtIndividual);
+    saveResults(parent, "Average_Motility", rtAverage);
+    // Show Results
     rtIndividual.showRowNumbers(false);
     rtIndividual.show("Individual motility");
     rtAverage.showRowNumbers(false);
@@ -149,6 +165,10 @@ public class Motility extends SwingWorker<Boolean, String> {
     ResultsTable rtAverage = new ResultsTable();
     calculateMotility(rtIndividual, trial);
     calculateAverageMotility(rtAverage, trial);
+//    // Save results
+//    Path parent = Paths.get(trial.source).getParent();
+//    saveResults(parent,"Individual_Motility", rtIndividual);
+//    saveResults(parent, "Average_Motility", rtAverage);
     // Show results
     rtIndividual.showRowNumbers(false);
     rtIndividual.show("Individual Motility");
@@ -455,7 +475,20 @@ public class Motility extends SwingWorker<Boolean, String> {
     total_nonMotile = 0;
     countProgressiveSperm = 0;
   }
-
+  
+  private void saveResults(Path path, String id, String type, ResultsTable rt){
+    saveResults(path, id+"_"+type, rt);
+  }
+  
+  private void saveResults(Path path, String filename, ResultsTable rt){
+//    FileManager fm = new FileManager();
+//    Path filename = Paths.get(trial.source);
+//    Path parent = filename.getParent();
+    new File(path.toString()+File.separator+"Results").mkdirs();
+    String newFname = path.toString()+File.separator+"Results"+File.separator+filename+".csv";
+    rt.save(newFname);
+  }
+  
   private void saveVideoTracks(Trial trial){
     FileManager fm = new FileManager();
     ImagePlus imp = fm.getAVI(trial.source);
@@ -464,8 +497,8 @@ public class Motility extends SwingWorker<Boolean, String> {
     //rename the new avi file
     Path filename = Paths.get(trial.source);
     Path parent = filename.getParent();
-    new File(parent.toString()+File.separator+"video_output").mkdirs();
-    String newFname = parent.toString()+File.separator+"video_output"+File.separator+trial.ID+".avi";
+    new File(parent.toString()+File.separator+"Results").mkdirs();
+    String newFname = parent.toString()+File.separator+"Results"+File.separator+trial.ID+".avi";
     IJ.save(imp, newFname);
   }
   

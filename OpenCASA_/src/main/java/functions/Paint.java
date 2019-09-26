@@ -51,6 +51,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.Polygon;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -61,6 +63,7 @@ import data.Trial;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
+import ij.process.ByteProcessor;
 import ij.process.ColorProcessor;
 import ij.process.ImageProcessor;
 
@@ -494,6 +497,73 @@ public class Paint {
     roseDiagram.drawString("Ch-Index: " + chIdx);
 
     new ImagePlus("Chemotactic Ratios", roseDiagram).show();
+  }
+  
+  public void drawScatterPlot(List<Double> x, List<Double> y, String title,String xLabel, String yLabel) {
+    
+    double nSteps = 10;
+   
+    double minX = Collections.min(x);
+    double maxX = Collections.max(x);
+    double stepX = 1.1*maxX/nSteps;
+    double minY = Collections.min(y);
+    double maxY = Collections.max(y);
+    double stepY = 1.1*maxY/nSteps;
+    
+    ByteProcessor plot = new ByteProcessor(800,800);
+    plot.setColor(Color.white);
+    plot.fill();
+    plot.setLineWidth(4);
+    plot.setColor(Color.black);
+    //draw axes
+    int maxAxis = 700;
+    int minAxis = 150;
+    int origX = minAxis;
+    int origY = maxAxis;
+    int shift = 60;
+    plot.moveTo(minAxis, maxAxis);
+    plot.lineTo(maxAxis, maxAxis);
+    plot.moveTo(minAxis, minAxis);
+    plot.lineTo(minAxis, maxAxis);
+
+    plot.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    for(int i=1;i<10;i++){
+      int pos = origX+i*shift;
+      plot.moveTo(pos,origY);
+      plot.lineTo(pos, origY+20);
+      plot.moveTo(pos-10, origY+50);
+      plot.drawString("" + i*(int)stepX);
+    }
+    for(int i=1;i<10;i++){
+      int pos = origY-i*shift;
+      plot.moveTo(origX,pos);
+      plot.lineTo(origX-20, pos);
+      plot.moveTo(origX-70,pos+10);
+      plot.drawString("" + i*(int)stepY);
+    }
+    plot.moveTo(440,790);
+    plot.drawString("" + xLabel);
+    plot = (ByteProcessor) plot.rotateRight();
+    plot.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    plot.setLineWidth(4);
+    plot.setColor(Color.black);
+    plot.moveTo(400,50);
+    plot.drawString("" + yLabel);
+    plot = (ByteProcessor) plot.rotateLeft();
+    plot.setFont(new Font("SansSerif", Font.PLAIN, 20));
+    plot.setLineWidth(4);
+    plot.setColor(Color.black);
+    plot.setLineWidth(5);
+    int L = x.size();
+    for(int i=0;i<L;i++){
+      //double[] x = {10,60};
+      //double[] y = {50,500};
+      int posX = origX+(int)((x.get(i)/stepX)*shift);
+      int posY = origY-(int)((y.get(i)/stepY)*shift);
+      plot.drawOval(posX,posY, 5,5);
+      System.out.println(x.get(i)/stepX+" "+y.get(i)/stepY);
+    }
+    new ImagePlus(title,plot).show();
   }
 
 }
