@@ -20,6 +20,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
@@ -28,7 +29,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
+import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -49,8 +52,11 @@ import data.Simulation;
 import data.ViabilityParams;
 import functions.FileManager;
 import functions.Paint;
+import functions.Utils;
 import ij.IJ;
 import ij.gui.GenericDialog;
+import ij.gui.Plot;
+import ij.gui.PlotWindow;
 import ij.measure.ResultsTable;
 
 /**
@@ -208,7 +214,7 @@ public class MainWindow extends JFrame {
           mw.setVisible(false);
           // sw.run();
         } else if (label.equals("Scatter Plot")) {
-          scatter();
+          Utils.scatter();
         } 
       }
     });
@@ -273,18 +279,4 @@ public class MainWindow extends JFrame {
     }
   }
   
-  private void scatter(){
-    FileManager fm = new FileManager();
-    ResultsTable rt = fm.loadResultsTable();
-    if(rt==null)
-      return;
-    int c1 = 3;
-    int c2 = 7;
-    List<Double> x = new ArrayList<Double>();
-    for(double d:rt.getColumnAsDoubles(c1)) x.add(d);
-    List<Double> y = new ArrayList<Double>();
-    for(double d:rt.getColumnAsDoubles(c2)) y.add(d);   
-    Paint p = new Paint();
-    p.drawScatterPlot(x,y, "Scatter Plot", rt.getColumnHeading(c1), rt.getColumnHeading(c2));
-  }
 }
