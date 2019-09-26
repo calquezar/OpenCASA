@@ -18,6 +18,8 @@
 
 package functions;
 
+import java.awt.Color;
+import java.awt.Font;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -25,6 +27,9 @@ import javax.swing.JOptionPane;
 
 import data.Cell;
 import ij.IJ;
+import ij.gui.GenericDialog;
+import ij.gui.Plot;
+import ij.measure.ResultsTable;
 
 /**
  * @author Carlos Alquezar
@@ -74,6 +79,27 @@ public class Utils {
       }
     }
     return cell;
+  }
+  public static double getMinDouble(double[] x){
+    Double min = null;
+    for (double val : x) {
+      if (min==null)
+        min = val;
+      else if (min>val)
+        min = val;
+    }
+    return min.doubleValue();
+  }
+  
+  public static double getMaxDouble(double[] x){
+    Double max = null;
+    for (double val : x) {
+      if (max==null)
+        max = val;
+      else if (max<val)
+        max = val;
+    }
+    return max.doubleValue();
   }
 
   public int getTrackNr(List track) {
@@ -125,4 +151,49 @@ public class Utils {
     return output;
   }
 
+public static void scatter(){
+    
+    FileManager fm = new FileManager();
+    ResultsTable rt = fm.loadResultsTable();
+    if(rt==null)
+      return;
+    
+    String[] headings = rt.getHeadings();
+    GenericDialog gd = new GenericDialog("Set Simulation parameters");
+    gd.addChoice("Select X data", headings, "");
+    gd.addChoice("Select Y data", headings, "");
+    gd.showDialog();
+    if (gd.wasCanceled())
+      return;
+    
+    String xColumn = gd.getNextChoice();
+    String yColumn = gd.getNextChoice();
+    
+    int xColInt = rt.getColumnIndex(xColumn);
+    int yColInt = rt.getColumnIndex(yColumn);
+    
+    //Get data for columns
+    double[] x = rt.getColumnAsDoubles(xColInt);
+    double[] y = rt.getColumnAsDoubles(yColInt);
+
+    double xmin = Utils.getMinDouble(x);
+    double ymin = Utils.getMinDouble(y);
+    double xmax = Utils.getMaxDouble(x);
+    double ymax = Utils.getMaxDouble(y);
+
+    //PlotWindow.noGridLines = false; // draw grid lines
+    Plot plot = new Plot("Scatter Plot",xColumn, yColumn);
+    plot.setLimits(xmin,xmax,ymin,ymax);
+    plot.setColor(Color.black);
+    plot.setLineWidth(4);
+    plot.addPoints(x, y, Plot.DOT);
+    // add label
+    //plot.setColor(Color.black);
+    //plot.changeFont(new Font("Helvetica", Font.PLAIN, 24));
+    //plot.addLabel(0.15, 0.95, "This is a label");
+
+    plot.changeFont(new Font("Helvetica", Font.PLAIN, 16));
+    //plot.setColor(Color.blue);
+    plot.show();
+  }
 }

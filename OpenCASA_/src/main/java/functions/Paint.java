@@ -499,7 +499,7 @@ public class Paint {
     new ImagePlus("Chemotactic Ratios", roseDiagram).show();
   }
   
-  public void drawScatterPlot(List<Double> x, List<Double> y, String title,String xLabel, String yLabel) {
+  /*public void drawScatterPlot(List<Double> x, List<Double> y, String title,String xLabel, String yLabel) {
     
     double nSteps = 10;
    
@@ -564,6 +564,6 @@ public class Paint {
       System.out.println(x.get(i)/stepX+" "+y.get(i)/stepY);
     }
     new ImagePlus(title,plot).show();
-  }
+  }*/
 
 }
