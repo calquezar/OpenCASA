@@ -59,6 +59,7 @@ public class MorphWindow extends ImageAnalysisWindow implements ChangeListener, 
     setChangeListener(this, sldThreshold);
     setMouseListener(this);
     morphometrics.showRowNumbers(false);
+    saveBtn.setVisible(false);
   }
 
   /******************************************************/

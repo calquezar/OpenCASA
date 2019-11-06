@@ -211,8 +211,9 @@ public class Paint {
         Cell oldCell = (Cell) jT.next();
         boolean isMotile = kinematics.motilityTest(aTrack);
         if (isMotile) {
+          Cell newCell = null;
           for (; jT.hasNext();) {
-            Cell newCell = (Cell) jT.next();
+            newCell = (Cell) jT.next();
             if (kinematics.getVelocityTrackType(aTrack) == "Slow")
               ip.setColor(getColor(Params.vclSlowColor));
             else if (kinematics.getVelocityTrackType(aTrack) == "Normal")
@@ -222,16 +223,24 @@ public class Paint {
             // ip.setValue(color);
             ip.moveTo((int) oldCell.x * upRes, (int) oldCell.y * upRes);
             ip.lineTo((int) newCell.x * upRes, (int) newCell.y * upRes);
-            oldCell = newCell;
             // Draw track numbers
-            if (newCell.z == iFrame) {
+            if (oldCell.z == iFrame) {
               // we could do some boundary testing here to place the labels
               // better when we are close to the edge
               ip.moveTo((int) (oldCell.x / Params.pixelWidth + 0),
                   doOffset((int) (oldCell.y / Params.pixelHeight), yWidth, 5));
               ip.setColor(Color.white);
-              ip.drawString("" + newCell.trackNr);
+              ip.drawString("" + oldCell.trackNr);
             }
+            oldCell = newCell;
+          }
+          if ((newCell!=null)&(newCell.z == iFrame)) {
+            // we could do some boundary testing here to place the labels
+            // better when we are close to the edge
+            ip.moveTo((int) (newCell.x / Params.pixelWidth + 0),
+                doOffset((int) (newCell.y / Params.pixelHeight), yWidth, 5));
+            ip.setColor(Color.white);
+            ip.drawString("" + newCell.trackNr);
           }
         } else {
           for (; jT.hasNext();) {
@@ -370,6 +379,27 @@ public class Paint {
         if (pixel == 0)// It's background
           ipOrig.drawPixel(x, y);
       }
+    }
+  }
+  /******************************************************/
+  /**
+   * @param imp
+   * @param impTh
+   */  
+  public void drawType(ImagePlus imp,List spermatozoa){
+    int xHeight=imp.getHeight();
+    int yWidth=imp.getWidth();  
+    IJ.showStatus("Drawing types...");
+    ImageProcessor ip = imp.getProcessor();
+    ip.setColor(Color.white);
+    for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
+      Cell cell=(Cell) j.next(); 
+      //ip.drawRect((int)aParticle.bx,(int)aParticle.by,(int)aParticle.width,(int)aParticle.height);
+      //Draw numbers
+      ip.setFont(new Font("SansSerif", Font.PLAIN, 25));
+      // we could do someboundary testing here to place the labels better when we are close to the edge
+      ip.moveTo((int)(cell.x/Params.pixelWidth+0),doOffset((int)(cell.y/Params.pixelHeight),yWidth,5) );
+      ip.drawString(cell.type);
     }
   }
 

@@ -1,6 +1,6 @@
 /*
- *   OpenCASA software v1.0 for video and image analysis
- *   Copyright (C) 2018  Carlos Alquézar
+ *   OpenCASA software v2.0 for video and image analysis
+ *   Copyright (C) 2019  Carlos Alquézar
  *
  *   This program is free software: you can redistribute it and/or modify
  *   it under the terms of the GNU General Public License as published by
@@ -28,18 +28,8 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 
 import javax.swing.JButton;
-import javax.swing.JCheckBox;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JPanel;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
-
-import data.ChemotaxisParams;
-import data.MorphometryParams;
-import data.MotilityParams;
-import data.Params;
-import data.ViabilityParams;
 
 /**
  * @author Carlos Alquezar
@@ -54,6 +44,7 @@ public class SettingsWindow extends JFrame {
   ChemotaxisSettings cs;
   MorphometrySettings mphs;
   ViabilitySettings vs;
+  MultifluoSettings mtfs;
 
   public SettingsWindow(String title) throws HeadlessException {
     super(title);
@@ -62,6 +53,7 @@ public class SettingsWindow extends JFrame {
     cs = new ChemotaxisSettings();
     mphs = new MorphometrySettings();
     vs = new ViabilitySettings();
+    mtfs = new MultifluoSettings();
     createGUI();
     this.setVisible(true);
     //this.setLocationRelativeTo(null);
@@ -77,6 +69,7 @@ public class SettingsWindow extends JFrame {
     tabbedPane.addTab("Chemotaxis Module", cs.createGUI());
     tabbedPane.addTab("Morphometry Module",mphs.createGUI());
     tabbedPane.addTab("Viability Module", vs.createGUI());
+    tabbedPane.addTab("Multifluo Module", mtfs.createGUI());
     return tabbedPane;
   }
 
@@ -126,5 +119,6 @@ public class SettingsWindow extends JFrame {
     cs.setParameters();
     mphs.setParameters();
     vs.setParameters();
+    mtfs.setParameters();
   }
 }

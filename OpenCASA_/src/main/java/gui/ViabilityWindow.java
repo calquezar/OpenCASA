@@ -71,7 +71,7 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
     setMouseListener(this);
     // btnOtsu.setVisible(false);
     // btnMinimum.setVisible(false);
-    nextBtn.setText("Save and Next Image");
+//    nextBtn.setText("Next");
     setGenericLabels();
     results.showRowNumbers(false);
 
@@ -236,6 +236,9 @@ public class ViabilityWindow extends ImageAnalysisWindow implements ChangeListen
 
   protected void nextAction() {
     forceChannelNone = true;
+  }
+  
+  protected void saveAction(){
     generateResults();
   }
 

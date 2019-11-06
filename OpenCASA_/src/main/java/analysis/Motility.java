@@ -226,6 +226,8 @@ public class Motility extends SwingWorker<Boolean, String> {
     total_sperm += nTracks;
 
     rt.incrementCounter();
+    rt.addValue("Sample", trial.type);
+    rt.addValue("ID", trial.ID);
     rt.addValue("Motile trajectories", nTracks);
     rt.addValue("VSL Mean (um/s)", vsl_mean);
     rt.addValue("VCL Mean (um/s)", vcl_mean);
@@ -241,14 +243,13 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("Fractal mean", fractal_mean);
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
+    String sep = ":";
     if(Params.lastFrame>0)
-      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+","+Params.lastFrame+")");
+      rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+Params.firstFrame+sep+Params.lastFrame+")");
     else if(Params.firstFrame>0)
-      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+",)");
+      rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+Params.firstFrame+sep+")");
     else
-      rt.addValue("Interval(firstSec,lastSec)", "(,)");
-    rt.addValue("Sample", trial.type);
-    rt.addValue("ID", trial.ID);
+      rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+sep+")");
     rt.addValue("Source", trial.source);
     if (!Params.male.isEmpty())
       rt.addValue("Male", Params.male);
@@ -279,6 +280,10 @@ public class Motility extends SwingWorker<Boolean, String> {
       List avgTrack = sp.movingAverage(aTrack);
       int trackNr = util.getTrackNr(aTrack);
       float length = (float) aTrack.size();
+      //Get first frame that this track appears
+      Cell c = (Cell) aTrack.get(0);
+      int firstFrame = c.z;
+      int lastFrame = firstFrame + (int)length -1;
       // VSL
       float vsl_value = K.vsl(aTrack);
       total_vsl += vsl_value;
@@ -321,6 +326,8 @@ public class Motility extends SwingWorker<Boolean, String> {
       total_fractal += fractal_value;
       
       rt.incrementCounter();
+      rt.addValue("Sample", trial.type);
+      rt.addValue("ID", trial.ID);
       rt.addValue("Track Number", trackNr);
       rt.addValue("Length (frames)", length);
       rt.addValue("VSL (um/s)", vsl_value);
@@ -336,14 +343,16 @@ public class Motility extends SwingWorker<Boolean, String> {
       rt.addValue("MAD (degrees)", mad_value);
       rt.addValue("FractalD", fractal_value);
       rt.addValue("Progress Motility", progressMotility_value);
+      String sep = ":";
       if(Params.lastFrame>0)
-        rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+","+Params.lastFrame+")");
+        rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+Params.firstFrame+sep+Params.lastFrame+")");
       else if(Params.firstFrame>0)
-        rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+",)");
+        rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+Params.firstFrame+sep+")");
       else
-        rt.addValue("Interval(firstSec,lastSec)", "(,)");
-      rt.addValue("Sample", trial.type);
-      rt.addValue("ID", trial.ID);
+        rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+sep+")");
+     
+      rt.addValue("First frame", firstFrame);
+      rt.addValue("Last frame", lastFrame);
       rt.addValue("Source", trial.source);
       if (!Params.male.isEmpty())
         rt.addValue("Male", Params.male);
@@ -398,12 +407,13 @@ public class Motility extends SwingWorker<Boolean, String> {
     rt.addValue("Fractal Mean", fractal_mean);
     rt.addValue("Progressive Motility (%)", progressiveMotPercent * 100);
     rt.addValue("Motility (%)", motility_value * 100);
+    String sep = ":";
     if(Params.lastFrame>0)
-      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+","+Params.lastFrame+")");
+      rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+Params.firstFrame+sep+Params.lastFrame+")");
     else if(Params.firstFrame>0)
-      rt.addValue("Interval(firstSec,lastSec)", "("+Params.firstFrame+",)");
+      rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+Params.firstFrame+sep+")");
     else
-      rt.addValue("Interval(firstSec,lastSec)", "(,)");
+      rt.addValue("Interval(firstSec"+sep+"lastSec)", "("+sep+")");
     rt.addValue("Filename", filename);
     if (!Params.male.isEmpty())
       rt.addValue("Male", Params.male);

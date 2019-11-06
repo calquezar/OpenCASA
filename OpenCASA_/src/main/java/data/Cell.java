@@ -33,6 +33,8 @@ public class Cell implements Serializable {
   /**   */
   public String id = "*";
   /**   */
+  public String type = "Unknown";
+  /**   */
   public boolean flag = false;
   /**   */
   public boolean inTrack = false;
@@ -72,6 +74,7 @@ public class Cell implements Serializable {
    */
   public void copy(Cell source) {
     this.id = source.id;
+    this.type = source.type;
     this.x = source.x;
     this.y = source.y;
     this.z = source.z;

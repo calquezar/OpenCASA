@@ -91,6 +91,7 @@ public class ImageAnalysisWindow extends JFrame {
   protected ButtonGroup btnGroup;
   protected JButton prevBtn;
   protected JButton nextBtn;
+  protected JButton saveBtn;
 
   protected List<Cell> spermatozoa = new ArrayList<Cell>();
   protected double threshold = -1.0;
@@ -127,6 +128,7 @@ public class ImageAnalysisWindow extends JFrame {
     btnGroup = new ButtonGroup();
     prevBtn = new JButton("Previous");
     nextBtn = new JButton("Next");
+    saveBtn = new JButton("Save");
     genericLabel1 = new JLabel();
     genericLabel2 = new JLabel();
     genericLabel3 = new JLabel();
@@ -209,6 +211,10 @@ public class ImageAnalysisWindow extends JFrame {
   }
 
   protected void nextAction() {
+  }
+  
+  protected void saveAction(){
+    
   }
 
   protected void previousAction() {
@@ -505,6 +511,18 @@ public class ImageAnalysisWindow extends JFrame {
     c.gridheight = 1;
     panel.add(prevBtn, c);
 
+    // Add action listener
+    saveBtn.addActionListener(new ActionListener() {
+      public void actionPerformed(ActionEvent e) {
+        saveAction();
+      }
+    });
+    c.gridx = 8;
+    c.gridy = 10;
+    c.gridwidth = 1;
+    c.gridheight = 1;
+    panel.add(saveBtn, c);
+    
     // Add action listener
     nextBtn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {

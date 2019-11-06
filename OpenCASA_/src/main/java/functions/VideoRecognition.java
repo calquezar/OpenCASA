@@ -146,7 +146,7 @@ public class VideoRecognition implements Measurements {
         aCell.id = "***";
         aCell.x = sxRes[iPart];
         aCell.y = syRes[iPart];
-        aCell.z = iFrame - 1;
+        aCell.z = iFrame;
         aCell.bx = bxRes[iPart];
         aCell.by = byRes[iPart];
         aCell.width = widthRes[iPart];

@@ -20,18 +20,12 @@ package gui;
 
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.File;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Vector;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -39,25 +33,18 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import org.omg.CORBA.DoubleSeqHelper;
-
 import analysis.Chemotaxis;
 import analysis.Motility;
 import data.ChemotaxisParams;
 import data.MorphometryParams;
 import data.MotilityParams;
-import data.Params;
+import data.MultifluoParams;
 import data.PersistentRandomWalker;
 import data.Simulation;
 import data.ViabilityParams;
-import functions.FileManager;
-import functions.Paint;
 import functions.Utils;
 import ij.IJ;
 import ij.gui.GenericDialog;
-import ij.gui.Plot;
-import ij.gui.PlotWindow;
-import ij.measure.ResultsTable;
 
 /**
  * This window shows all functional modules available.
@@ -95,6 +82,7 @@ public class MainWindow extends JFrame {
     ChemotaxisParams.resetParams();
     ViabilityParams.resetParams();
     MorphometryParams.resetParams();
+    MultifluoParams.resetParams();
   }
 
   /**
@@ -197,6 +185,23 @@ public class MainWindow extends JFrame {
             }
           });
           int out = morphW.run();
+          if (out < 0) {
+            mw.setVisible(true);
+          }
+        }else if (label.equals("Multifluo")) {
+          MultifluoParams.setGlobalParams();
+          //MultifluoParams.printParams();
+          //Params.printParams();
+          mw.setVisible(false);
+          MultifluoWindow multiFluoW = new MultifluoWindow();
+          multiFluoW.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+              if (mw != null)
+                mw.setVisible(true);
+            }
+          });
+          int out = multiFluoW.run();
           if (out < 0) {
             mw.setVisible(true);
           }
