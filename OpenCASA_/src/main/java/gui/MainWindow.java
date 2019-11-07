@@ -26,6 +26,7 @@ import java.awt.HeadlessException;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -231,7 +232,7 @@ public class MainWindow extends JFrame {
    */
   private void createGUI() {
     String parentDir = "";
-    //String parentDir = File.separator+"resources";
+    //String parentDir = "/resources";
     JPanel panel = new JPanel(new GridBagLayout());
     int x = -1;
     int y = -1;
