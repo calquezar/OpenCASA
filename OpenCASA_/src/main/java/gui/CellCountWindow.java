@@ -184,7 +184,6 @@ public class CellCountWindow extends JFrame {
 		prevBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (imgIndex > 0) {
-					this.setTitle(impOrig.getTitle());
 					nextBtn.setEnabled(true);
 					imgIndex--;
 					setImage();
@@ -221,7 +220,6 @@ public class CellCountWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (imgIndex < (images.size() - 1)) {
 					prevBtn.setEnabled(true);
-					this.setTitle(impOrig.getTitle());
 					if (impDraw.size() > ++imgIndex) {
 						// Se evita procesar una imagen dos veces
 						setImage();
@@ -403,6 +401,8 @@ public class CellCountWindow extends JFrame {
 		imp.setProcessor(ip);
 		imgLabel.setIcon(new ImageIcon(imp.getImage()));
 		imgLabel.repaint();
+    ImagePlus impOrig = images.get(imgIndex);
+    this.setTitle(impOrig.getTitle());
 	}
 
 	/**
