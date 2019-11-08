@@ -63,6 +63,7 @@ public class MultifluoWindow extends ImageAnalysisWindow implements ChangeListen
     setChangeListener(this, sldThreshold);
     setMouseListener(this);
     multifluometrics.showRowNumbers(false);
+    resizeFactor=0.8;
   }
 
   /******************************************************/

@@ -81,7 +81,7 @@ public class ImageAnalysisWindow extends JFrame {
   /** ImagePlus used to identify spermatozoa */
   protected ImagePlus impTh = null;
   /** */
-  private double resizeFactor;
+  protected double resizeFactor;
   protected JSlider sldThreshold;
   protected JSlider sldRedThreshold;
   protected JSlider sldGreenThreshold;
@@ -108,7 +108,7 @@ public class ImageAnalysisWindow extends JFrame {
     imgLabel = new JLabel();
     imgIndex = 0;
     // The size of the showed image will be set to 60% of the screen size
-    resizeFactor = 0.6;
+    resizeFactor = 0.7;
     // its necessary to initialize here the slider bar in order to enable
     // the change listener selection for an inherit class
     sldThreshold = new JSlider(JSlider.HORIZONTAL, 0, 255, 60);
