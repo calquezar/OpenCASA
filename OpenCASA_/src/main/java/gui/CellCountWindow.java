@@ -184,6 +184,7 @@ public class CellCountWindow extends JFrame {
 		prevBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (imgIndex > 0) {
+					this.setTitle(impOrig.getTitle());
 					nextBtn.setEnabled(true);
 					imgIndex--;
 					setImage();
@@ -220,6 +221,7 @@ public class CellCountWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				if (imgIndex < (images.size() - 1)) {
 					prevBtn.setEnabled(true);
+					this.setTitle(impOrig.getTitle());
 					if (impDraw.size() > ++imgIndex) {
 						// Se evita procesar una imagen dos veces
 						setImage();
@@ -325,7 +327,6 @@ public class CellCountWindow extends JFrame {
 		ComputerVision cv = new ComputerVision();
 		VideoRecognition vr = new VideoRecognition();
 		ImagePlus impOrig = images.get(imgIndex);
-		this.setTitle(impOrig.getTitle());
 		ImagePlus imp = impOrig.duplicate();
 		ImagePlus impDraw = imp.duplicate();
 		cv.convertToRGB(impDraw);
