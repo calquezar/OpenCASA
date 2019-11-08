@@ -54,6 +54,7 @@ import java.util.ListIterator;
 import data.Cell;
 import data.Params;
 import data.SerializableList;
+import data.Square;
 import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
@@ -262,5 +263,124 @@ public class VideoRecognition implements Measurements {
     IJ.showProgress(2); // To remove progresBar
     return theTracks;
   }
+  
+  /**
+   * @param imp ImagePlus with cells and squares
+   * @return 2D-ArrayList with all cells detected for each frame
+   */
+  public List[] detectCellsSquares(ImagePlus imp) {
+    int nFrames = imp.getStackSize();
+    ImageStack stack = imp.getStack();
+    int options = 0;
+    int measurements = MEAN + CENTROID + RECT + AREA + PERIMETER + FERET;
+    // Initialize results table
+    ResultsTable rt = new ResultsTable();
+    rt.reset();
+    int minSize = (int) (Params.minSize * Math.pow((1 / Params.micronPerPixel), 2));
+    int maxSize = (int) (Params.maxSize * Math.pow((1 / Params.micronPerPixel), 2));
+    // create storage for Spermatozoa positions
+    List[] spermatozoa = new ArrayList[nFrames];
+    // *************************************************************
+    // * Record spermatozoa positions for each frame in an ArrayList
+    // *************************************************************/
+    for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
+      IJ.showProgress((double) iFrame / nFrames);
+      IJ.showStatus("Identifying spermatozoa per frame...");
+      spermatozoa[iFrame - 1] = new ArrayList();
+      rt.reset();
+      ParticleAnalyzer pa = new ParticleAnalyzer(options, measurements, rt, minSize, maxSize);
+      pa.analyze(imp, stack.getProcessor(iFrame));
+      float[] sxRes = rt.getColumn(ResultsTable.X_CENTROID);
+      float[] syRes = rt.getColumn(ResultsTable.Y_CENTROID);
+      float[] bxRes = rt.getColumn(ResultsTable.ROI_X);
+      float[] byRes = rt.getColumn(ResultsTable.ROI_Y);
+      float[] widthRes = rt.getColumn(ResultsTable.ROI_WIDTH);
+      float[] heightRes = rt.getColumn(ResultsTable.ROI_HEIGHT);
+      float[] areaRes = rt.getColumn(ResultsTable.AREA);
+      float[] perimeterRes = rt.getColumn(ResultsTable.PERIMETER);
+      float[] feretRes = rt.getColumn(ResultsTable.FERET);
+      float[] minFeretRes = rt.getColumn(ResultsTable.MIN_FERET);
+      if (sxRes == null) // Nothing detected
+        continue;// jump to next frame
+      for (int iPart = 0; iPart < sxRes.length; iPart++) {
+        int dif = (int) (100
+            * Math.abs((widthRes[iPart] - heightRes[iPart]) / Math.max(widthRes[iPart], heightRes[iPart])));
+        if (dif < 75) { // Filter each particle with height and width difference
+          Cell aCell = new Cell();
+          aCell.id = "***";
+          aCell.x = sxRes[iPart];
+          aCell.y = syRes[iPart];
+          aCell.z = iFrame - 1;
+          aCell.bx = bxRes[iPart];
+          aCell.by = byRes[iPart];
+          aCell.width = widthRes[iPart];
+          aCell.height = heightRes[iPart];
+          aCell.total_area = areaRes[iPart];
+          aCell.total_perimeter = perimeterRes[iPart];
+          aCell.total_feret = feretRes[iPart];
+          aCell.total_minFeret = minFeretRes[iPart];
+          spermatozoa[iFrame - 1].add(aCell);
+        }
+      }
+    }
+    IJ.showProgress(2); // To remove progresBar
+    return spermatozoa;
+  }
+  
+  /**
+   * @param imp ImagePlus
+   * @return 2D-ArrayList with all squares detected for each frame
+   */
+  public List[] detectSquares(ImagePlus imp) {
+
+    int nFrames = imp.getStackSize();
+    ImageStack stack = imp.getStack();
+    int options = ParticleAnalyzer.EXCLUDE_EDGE_PARTICLES + ParticleAnalyzer.INCLUDE_HOLES;
+    int measurements = RECT + AREA;
+    // Initialize results table
+    ResultsTable rt = new ResultsTable();
+    rt.reset();
+    float sideR = (float) (Params.sideS / Params.micronPerPixel);
+    float areaS = sideR * sideR;
+    int minSize = (int) (areaS * 0.75);
+    int maxSize = (int) (areaS * 1.25);
+    // create storage for Square positions
+    List[] square = new ArrayList[nFrames];
+    // *************************************************************
+    // * Record square positions for each frame in an ArrayList
+    // *************************************************************/
+    for (int iFrame = 1; iFrame <= nFrames; iFrame++) {
+      IJ.showProgress((double) iFrame / nFrames);
+      IJ.showStatus("Identifying square per frame...");
+      square[iFrame - 1] = new ArrayList();
+      rt.reset();
+      ParticleAnalyzer pa = new ParticleAnalyzer(options, measurements, rt, minSize, maxSize);
+      pa.analyze(imp, stack.getProcessor(iFrame));
+      float[] bxRes = rt.getColumn(ResultsTable.ROI_X);
+      float[] byRes = rt.getColumn(ResultsTable.ROI_Y);
+      float[] widthRes = rt.getColumn(ResultsTable.ROI_WIDTH);
+      float[] heightRes = rt.getColumn(ResultsTable.ROI_HEIGHT);
+      float[] areaRes = rt.getColumn(ResultsTable.AREA);
+      if (bxRes == null) // Nothing detected
+        continue;// jump to next frame
+      for (int i = 0; i < bxRes.length; i++) {
+        // Filter each particle with square side length
+        if ((widthRes[i] <= 1.25 * sideR && widthRes[i] >= 0.75 * sideR) && heightRes[i] <= 1.25 * sideR
+            && heightRes[i] >= .75 * sideR) {
+          Square aSquare = new Square();
+          aSquare.id = "***";
+          aSquare.x = bxRes[i];
+          aSquare.y = byRes[i];
+          aSquare.width = widthRes[i];
+          aSquare.height = heightRes[i];
+          aSquare.area = areaRes[i];
+          square[iFrame - 1].add(aSquare);
+        }
+      }
+    }
+    IJ.showProgress(2); // To remove progresBar
+    return square;
+  }
+  
 
 }

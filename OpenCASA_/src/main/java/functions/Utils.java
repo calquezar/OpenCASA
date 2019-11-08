@@ -31,6 +31,9 @@ import ij.gui.GenericDialog;
 import ij.gui.Plot;
 import ij.measure.ResultsTable;
 
+import net.sf.javaml.core.kdtree.KDTree;
+
+
 /**
  * @author Carlos Alquezar
  *
@@ -196,4 +199,24 @@ public static void scatter(){
     //plot.setColor(Color.blue);
     plot.show();
   }
+
+  /**
+   * 
+   * @param cells
+   * @return KDTree array containing each cells component
+   */
+  public KDTree[] getKDTree(List[] cells) {
+    KDTree res[] = new KDTree[cells.length];
+    for (int i = 0; i < cells.length; i++) {
+      res[i] = new KDTree(2);
+      if (cells[i] != null) {
+        for (ListIterator j = cells[i].listIterator(); j.hasNext();) {
+          Cell c = (Cell) j.next();
+          res[i].insert(new double[] { (int) c.x, (int) c.y }, c);
+        }
+      }
+    }
+    return res;
+  }
+
 }

@@ -27,6 +27,8 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.net.URL;
+import java.util.Scanner;
 
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -34,8 +36,11 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
+import analysis.Accumulation;
 import analysis.Chemotaxis;
 import analysis.Motility;
+import data.AccumulationParams;
+import data.CellCountParams;
 import data.ChemotaxisParams;
 import data.MorphometryParams;
 import data.MotilityParams;
@@ -46,6 +51,7 @@ import data.ViabilityParams;
 import functions.Utils;
 import ij.IJ;
 import ij.gui.GenericDialog;
+import ij.process.LUT;
 
 /**
  * This window shows all functional modules available.
@@ -84,6 +90,8 @@ public class MainWindow extends JFrame {
     ViabilityParams.resetParams();
     MorphometryParams.resetParams();
     MultifluoParams.resetParams();
+    AccumulationParams.resetParams();
+    CellCountParams.resetParams();
   }
 
   /**
@@ -127,7 +135,35 @@ public class MainWindow extends JFrame {
     // Add action listener
     btn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
-        if (label.equals("Chemotaxis")) {
+        if (label.equals("Accumulation")) {
+          LUT lut = getLut(getClass().getResource("/Jet.lut"));
+          Accumulation ac = new Accumulation(lut);
+          try {
+            AccumulationParams.setGlobalParams();
+            mw.setVisible(false);
+            ac.selectAnalysis();
+            ac.execute();
+            mw.setVisible(true);
+          } catch (Exception e1) {
+            IJ.handleException(e1);
+          }
+        } else if (label.equals("Concentration")) {
+          CellCountParams.setGlobalParams();
+          mw.setVisible(false);
+          CellCountWindow ccW = new CellCountWindow();
+          ccW.addWindowListener(new java.awt.event.WindowAdapter() {
+            @Override
+            public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+              if (mw != null) {
+                mw.setVisible(true);
+              }
+            }
+          });
+          int out = ccW.run();
+          if (out < 0) {
+            mw.setVisible(true);
+          }
+        } else if (label.equals("Chemotaxis")) {
           Chemotaxis ch = new Chemotaxis();
           try {
             ChemotaxisParams.setGlobalParams();
@@ -283,6 +319,30 @@ public class MainWindow extends JFrame {
       IJ.handleException(e1);
       // e1.printStackTrace();
     }
+  }
+  
+  /**
+   * 
+   * @param url
+   * @return
+   */
+  private LUT getLut(URL url) {
+    byte r[] = new byte[256], g[] = new byte[256], b[] = new byte[256];
+    try {
+      Scanner sc = new Scanner(url.openStream());
+
+      while (sc.hasNextInt()) {
+        int i = sc.nextInt();
+        r[i] = (byte) sc.nextInt();
+        g[i] = (byte) sc.nextInt();
+        b[i] = (byte) sc.nextInt();
+      }
+
+      sc.close();
+    } catch (Exception e) {
+      IJ.handleException(e);
+    }
+    return new LUT(r, g, b);
   }
   
 }

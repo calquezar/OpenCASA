@@ -45,6 +45,8 @@ public class SettingsWindow extends JFrame {
   MorphometrySettings mphs;
   ViabilitySettings vs;
   MultifluoSettings mtfs;
+  AccumulationSettings ac;
+  CellCountSettings ccs;
 
   public SettingsWindow(String title) throws HeadlessException {
     super(title);
@@ -54,6 +56,8 @@ public class SettingsWindow extends JFrame {
     mphs = new MorphometrySettings();
     vs = new ViabilitySettings();
     mtfs = new MultifluoSettings();
+    ac = new AccumulationSettings();
+    ccs = new CellCountSettings();
     createGUI();
     this.setVisible(true);
     //this.setLocationRelativeTo(null);
@@ -70,6 +74,8 @@ public class SettingsWindow extends JFrame {
     tabbedPane.addTab("Morphometry Module",mphs.createGUI());
     tabbedPane.addTab("Viability Module", vs.createGUI());
     tabbedPane.addTab("Multifluo Module", mtfs.createGUI());
+    tabbedPane.addTab("Accumulation Module", ac.createGUI());
+    tabbedPane.addTab("Cell Count Module", ccs.createGUI());
     return tabbedPane;
   }
 
@@ -120,5 +126,7 @@ public class SettingsWindow extends JFrame {
     mphs.setParameters();
     vs.setParameters();
     mtfs.setParameters();
+    ac.setParameters();
+    ccs.setParameters();
   }
 }

@@ -23,6 +23,7 @@ import ij.IJ;
 import ij.ImagePlus;
 import ij.ImageStack;
 import ij.plugin.ChannelSplitter;
+import ij.plugin.ContrastEnhancer;
 import ij.process.AutoThresholder;
 import ij.process.BinaryProcessor;
 import ij.process.ByteProcessor;
@@ -92,7 +93,16 @@ public class ComputerVision {
     ImageConverter ic = new ImageConverter(imp);
     ic.convertToRGB();
   }
-
+  /**
+   * Equalize imp histogram
+   * 
+   * @param imp
+   */
+  public void equalize(ImagePlus imp) {
+    ContrastEnhancer c = new ContrastEnhancer();
+    c.equalize(imp);
+  }
+  
   /******************************************************/
   /**
    * @param impColor

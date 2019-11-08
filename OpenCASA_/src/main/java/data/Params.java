@@ -99,6 +99,23 @@ public class Params {
   public static float firstFrame = 0; //in seconds
   public static float lastFrame = -1; //in seconds
   
+  /** Frame number to interpolate */
+  public static int frameInt = 10;
+  /** Radious to analyze */
+  public static int radius = 100;
+  /** Opacity */
+  public static int opacity = 50;
+  /** Window size */
+  public static int window = 1;
+  /** Side length of each Square (um) */
+  public static float sideS = 100;
+  /** Depth of the camera (um) */
+  public static float depthC = 10;
+  /** Max constant accumulation */
+  public static boolean maxConstant = false;
+  /** Max constant accumulation value */
+  public static int maxConstantV = -1;
+  
   
   public static void printParams(){
     System.out.println("---------- PARAMETERS ---------");
@@ -123,6 +140,14 @@ public class Params {
     System.out.println("Params.NUMSAMPLES: "+Params.NUMSAMPLES);
     System.out.println("Params.firstFrame: "+Params.firstFrame);
     System.out.println("Params.lastFrame: "+Params.lastFrame);
+    System.out.println("Params.sideS: " + Params.sideS);
+    System.out.println("Params.depthC: " + Params.depthC);
+    System.out.println("Params.frameInt: " + Params.frameInt);
+    System.out.println("Params.radius: " + Params.radius);
+    System.out.println("Params.opacity: " + Params.opacity);
+    System.out.println("Params.window: " + Params.window);
+    System.out.println("Params.maxConstant: " + Params.maxConstant);
+    System.out.println("Params.maxConstantV: " + Params.maxConstantV);
     
   }
 }
