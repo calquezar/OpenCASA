@@ -314,7 +314,7 @@ public class MultifluoWindow extends ImageAnalysisWindow implements ChangeListen
       if(greenRate<10)
         p.type="DAIM";//"Blue"
       else if(blueRate<10)
-        p.type="Green";//"Green"
+        p.type="IFI";//"Green"
       else
         p.type="IAIM";//"Green-Blue"
     else if(blueRate<10)
@@ -334,7 +334,7 @@ public class MultifluoWindow extends ImageAnalysisWindow implements ChangeListen
     int iadmCounter = 0;
     int daimCounter = 0;
     int dadmCounter = 0;
-    int greenCounter = 0;
+    int ifiCounter = 0;
     int unknownCounter = 0;
     int total = 0;
     for (ListIterator j=spermatozoa.listIterator();j.hasNext();) {
@@ -348,12 +348,12 @@ public class MultifluoWindow extends ImageAnalysisWindow implements ChangeListen
         daimCounter++;
       else if(cell.type=="DADM")
         dadmCounter++;
-      else if(cell.type=="Green")
-        greenCounter++;
+      else if(cell.type=="IFI")
+        ifiCounter++;
       else
         unknownCounter++;
     }
-    total = iaimCounter+iadmCounter+daimCounter+dadmCounter+greenCounter+unknownCounter;
+    total = iaimCounter+iadmCounter+daimCounter+dadmCounter+ifiCounter+unknownCounter;
     
     multifluometrics.incrementCounter();
     FileManager fm = new FileManager();
@@ -369,21 +369,21 @@ public class MultifluoWindow extends ImageAnalysisWindow implements ChangeListen
     multifluometrics.addValue("IADM",iadmCounter);
     multifluometrics.addValue("DAIM",daimCounter);
     multifluometrics.addValue("DADM",dadmCounter);
-    multifluometrics.addValue("Green",greenCounter);
+    multifluometrics.addValue("IFI",ifiCounter);
     multifluometrics.addValue("Unknown",unknownCounter);
     multifluometrics.addValue("Total",total);
     float percIAIM = ((float)iaimCounter/(float)total)*100;
     float percIADM = ((float)iadmCounter/(float)total)*100;
     float percDAIM = ((float)daimCounter/(float)total)*100;
     float percDADM = ((float)dadmCounter/(float)total)*100;
-    float percGreen = ((float)greenCounter/(float)total)*100;
+    float percIFI = ((float)ifiCounter/(float)total)*100;
     multifluometrics.addValue("% IAIM",percIAIM);
     multifluometrics.addValue("% IADM",percIADM);
     multifluometrics.addValue("% DAIM",percDAIM);
     multifluometrics.addValue("% DADM",percDADM);
-    multifluometrics.addValue("% Green",percGreen);
+    multifluometrics.addValue("% IFI",percIFI);
     
-    float percIM = ((float)(iaimCounter+daimCounter+greenCounter)/(float)total)*100;
+    float percIM = ((float)(iaimCounter+daimCounter+ifiCounter)/(float)total)*100;
     float percDM = ((float)(iadmCounter+dadmCounter)/(float)total)*100;
     float percIA = ((float)(iaimCounter+iadmCounter)/(float)total)*100;
     float percDA = ((float)(daimCounter+dadmCounter)/(float)total)*100;

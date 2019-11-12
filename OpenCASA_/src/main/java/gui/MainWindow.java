@@ -272,24 +272,25 @@ public class MainWindow extends JFrame {
     JPanel panel = new JPanel(new GridBagLayout());
     int x = -1;
     int y = -1;
+    
+    // concentration icon made by xnimrodx from www.flaticon.com
+    addButton("Concentration",++x%2,++y/2, new Color(255, 204, 153), parentDir + "/concentration.png", panel);
+    // motility icon made by Freepik from www.flaticon.com
+    addButton("Motility",++x%2,++y/2, new Color(255, 255, 255), parentDir + "/motility.png", panel);   
+    // viability icon made by Freepik from www.flaticon.com
+    addButton("Viability", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/viability.png", panel);
+    // Functionality icon made by Prosymbols from www.flaticon.com
+    addButton("Functionality", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/multifluo.png", panel);  
+ // morphometry icon made by Cursor Creative from www.flaticon.com
+    addButton("Morphometry", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/morphometry.png", panel); 
     // accumulation icon made by Freepik from www.flaticon.com
     addButton("Accumulation", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/accumulation.png", panel);    
     // chemotaxis icon made by Those Icons from www.flaticon.com
     addButton("Chemotaxis", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/chemotaxis.png", panel);   
-    // concentration icon made by xnimrodx from www.flaticon.com
-    addButton("Concentration",++x%2,++y/2, new Color(255, 204, 153), parentDir + "/concentration.png", panel);
-    // morphometry icon made by Cursor Creative from www.flaticon.com
-    addButton("Morphometry", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/morphometry.png", panel);   
-    // motility icon made by Freepik from www.flaticon.com
-    addButton("Motility",++x%2,++y/2, new Color(255, 255, 255), parentDir + "/motility.png", panel);   
-    // multifluo icon made by Prosymbols from www.flaticon.com
-    addButton("Multifluo", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/multifluo.png", panel);    
     // scatter icon made by Flat Icons from www.flaticon.com
     addButton("Scatter Plot", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/scatter.png", panel);
     // simulation icon made by Freepik from www.flaticon.com
     addButton("Simulation", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/simulation.png", panel);
-    // viability icon made by Freepik from www.flaticon.com
-    addButton("Viability", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/viability.png", panel);
     // settings icon made by Freepik from www.flaticon.com
     addButton("Settings", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/settings.png", panel);
     this.setContentPane(panel);
