@@ -393,7 +393,7 @@ public class CellCountWindow extends JFrame {
 		setConc(Double.parseDouble(diluc.getText()));
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double w = screenSize.getWidth();
-		int targetWidth = (int) (w * 0.75);
+		int targetWidth = (int) (w * 0.65);
 		ImagePlus imp = cuadricula.isSelected() ? impDraw.get(imgIndex) : images.get(imgIndex);
 		ImageProcessor ip = imp.getProcessor();
 		ip.setInterpolationMethod(ImageProcessor.BILINEAR);

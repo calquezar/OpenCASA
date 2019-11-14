@@ -106,7 +106,7 @@ public class Motility extends SwingWorker<Boolean, String> {
       Path path = Paths.get(s).getParent();
       String folder_name = fm.getFilename(s);
       saveResults(path,folder_name,"Individual_Motility", rtIndividual);
-      saveResults(path,folder_name,"Average_Motility", rtAverage);
+      //saveResults(path,folder_name,"Average_Motility", rtAverage);
       resetParams();
     }
     IJ.showProgress(2); // To remove progresBar
