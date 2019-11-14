@@ -73,9 +73,9 @@ public class SettingsWindow extends JFrame {
     tabbedPane.addTab("Chemotaxis Module", cs.createGUI());
     tabbedPane.addTab("Morphometry Module",mphs.createGUI());
     tabbedPane.addTab("Viability Module", vs.createGUI());
-    tabbedPane.addTab("Multifluo Module", mtfs.createGUI());
+    tabbedPane.addTab("Functionality Module", mtfs.createGUI());
     tabbedPane.addTab("Accumulation Module", ac.createGUI());
-    tabbedPane.addTab("Cell Count Module", ccs.createGUI());
+    tabbedPane.addTab("Concentration Module", ccs.createGUI());
     return tabbedPane;
   }
 
