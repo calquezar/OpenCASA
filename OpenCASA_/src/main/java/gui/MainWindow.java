@@ -225,7 +225,7 @@ public class MainWindow extends JFrame {
           if (out < 0) {
             mw.setVisible(true);
           }
-        }else if (label.equals("Multifluo")) {
+        }else if (label.equals("Functionality")) {
           MultifluoParams.setGlobalParams();
           //MultifluoParams.printParams();
           //Params.printParams();
