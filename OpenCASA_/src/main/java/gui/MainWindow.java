@@ -147,6 +147,7 @@ public class MainWindow extends JFrame {
           } catch (Exception e1) {
             IJ.handleException(e1);
           }
+          
         } else if (label.equals("Concentration")) {
           CellCountParams.setGlobalParams();
           mw.setVisible(false);
