@@ -28,5 +28,13 @@ where 5120 is the 5 gigabytes of memory that you want to assign (in megabytes). 
 
 ## Icons Credits
 
-Markup : * concentration icon made by xnimrodx from www.flaticon.com
+* concentration icon made by xnimrodx from www.flaticon.com
 * motility icon made by Freepik from www.flaticon.com
+* viability icon made by Freepik from www.flaticon.com
+* Functionality icon made by Prosymbols from www.flaticon.com
+* morphometry icon made by Cursor Creative from www.flaticon.com
+* accumulation icon made by Freepik from www.flaticon.com
+* chemotaxis icon made by Those Icons from www.flaticon.com 
+* scatter icon made by Flat Icons from www.flaticon.com
+* simulation icon made by Freepik from www.flaticon.com
+* settings icon made by Freepik from www.flaticon.com
