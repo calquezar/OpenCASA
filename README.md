@@ -24,3 +24,9 @@ Note: the source code is included in the .jar file. It is possible to extract it
 Tip: In order to increase the heap memory in eclipse, after the project has been set up, in the menu bar go to  Run->Run Configuration, find the name of the class you have been running, select it, click the Arguments tab and then add:
 -Xms5120M –Xmx5120M
 where 5120 is the 5 gigabytes of memory that you want to assign (in megabytes). Remember that a heap memory size of 2.5 times the size of the heaviest file that is going to be analyzed is recommended.
+
+
+## Icons Credits
+
+Markup : * concentration icon made by xnimrodx from www.flaticon.com
+* motility icon made by Freepik from www.flaticon.com
