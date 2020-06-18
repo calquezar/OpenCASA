@@ -2,7 +2,7 @@
 An open-source tool for sperm quality analysis
 
 ## Version 1.0
- See https://github.com/calquezar/OpenCASA/tree/b71936668093a7d9052466b4f97e5537a8ef49ed in order to download the source code of OpenCASA v1.0.
+Go to https://github.com/calquezar/OpenCASA/tree/b71936668093a7d9052466b4f97e5537a8ef49ed in order to download the source code of OpenCASA v1.0.
  
 ## Specifications
 
