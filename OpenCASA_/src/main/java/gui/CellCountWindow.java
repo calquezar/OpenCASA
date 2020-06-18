@@ -31,14 +31,18 @@ import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JRadioButton;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
 
 import data.Cell;
 import data.Params;
@@ -82,16 +86,21 @@ public class CellCountWindow extends JFrame {
 	/** TextField to write the dilution of the current image */
 	private JTextField diluc;
 	private int imgIndex;
-	/** Cell count of each image on list */
-	private double[] conc;
-	/** Image list which have been processed */
-	private ArrayList<ImagePlus> impDraw;
-	/** Number of squares detected in each image */
-	private int[] squares;
-	/** Number of spermatozoa detected in each image */
-	private int[] spermatozoa;
-	
+	/** Cell count of image */
+	private double conc;
+	/** Image which have been processed */
+	private ImagePlus impDraw;
+	/** Number of squares detected in image */
+	private int squares;
+	/** Number of spermatozoa detected in image */
+	private int spermatozoa;
+
 	private ResultsTable results;
+
+	private JRadioButton btnOtsu;
+	private JRadioButton btnRenyiEntropy;
+	private ButtonGroup btnGroup;
+	private String thresholdMethod = "Otsu";
 
 	/**
 	 * Constructor
@@ -104,9 +113,12 @@ public class CellCountWindow extends JFrame {
 		saveBtn = new JButton("Save");
 		cuadricula = new JButton("Squares");
 		diluc = new JTextField("1", 4);
+		btnGroup = new ButtonGroup();
+		btnOtsu = new JRadioButton("Otsu");
+		btnRenyiEntropy = new JRadioButton("RenyiEntropy");
 		imgIndex = 0;
-		conc = null;
-		squares = null;
+		conc = 0;
+		squares = 0;
 		results = new ResultsTable();
 	}
 
@@ -114,6 +126,27 @@ public class CellCountWindow extends JFrame {
 	 * This method creates and shows the window.
 	 */
 	private void showWindow() {
+		// Group radio buttons
+		btnGroup.add(btnOtsu);
+		btnGroup.add(btnRenyiEntropy);
+		btnOtsu.setSelected(true);
+
+		btnOtsu.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				thresholdMethod = "Otsu";
+				processImage();
+			}
+		});
+
+		btnRenyiEntropy.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				thresholdMethod = "RenyiEntropy";
+				processImage();
+			}
+		});
+
 		JPanel panel = new JPanel(new GridBagLayout());
 		GridBagConstraints c = new GridBagConstraints();
 		c.fill = GridBagConstraints.HORIZONTAL;
@@ -121,29 +154,71 @@ public class CellCountWindow extends JFrame {
 		c.gridy = 0;
 		c.gridx = 0;
 		c.gridheight = 1;
+		c.gridwidth = 1;
+		panel.add(btnOtsu, c);
+		c.gridy++;
+		panel.add(btnRenyiEntropy, c);
+
+		c.gridx++;
+		c.gridy = 0;
+		c.gridheight = 2;
+		c.weightx = 1;
+		c.fill = GridBagConstraints.VERTICAL;
+		panel.add(new JSeparator(SwingConstants.VERTICAL), c);
+
+		c.gridy = 0;
+		c.gridx = 2;
+		c.gridheight = 1;
 		c.gridwidth = 3;
 		c.weightx = 1;
+		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(concLabel, c);
 
 		JLabel label = new JLabel("Dilution: 1/");
-		label.setHorizontalAlignment(SwingConstants.RIGHT);
-		c.gridy += 1;
+		label.setHorizontalAlignment(SwingConstants.LEFT);
+		c.gridy = 1;
 		c.gridwidth = 1;
 		c.anchor = GridBagConstraints.CENTER;
 		panel.add(label, c);
 
-		c.gridx = 1;
-		c.weightx = 1;
-		diluc.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				double dis = Double.parseDouble(((JTextField) e.getSource()).getText());
-				setConc(dis);
+		c.gridx = 3;
+		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.WEST;
+		c.weightx = 0;
+
+		diluc.getDocument().addDocumentListener(new DocumentListener() {
+			@Override
+			public void removeUpdate(DocumentEvent e) {
+				try {
+					double dis = Double.parseDouble(diluc.getText());
+					setConc(dis);
+				} catch (Exception e1) {
+				}
+			}
+
+			@Override
+			public void insertUpdate(DocumentEvent e) {
+				try {
+					double dis = Double.parseDouble(diluc.getText());
+					setConc(dis);
+				} catch (Exception e1) {
+				}
+			}
+
+			@Override
+			public void changedUpdate(DocumentEvent e) {
+				try {
+					double dis = Double.parseDouble(diluc.getText());
+					setConc(dis);
+				} catch (Exception e1) {
+				}
 			}
 		});
 		panel.add(diluc, c);
 
-		c.gridx = 2;
+		c.gridx = 4;
 		c.fill = GridBagConstraints.NONE;
+		c.anchor = GridBagConstraints.CENTER;
 		cuadricula.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				cuadricula.setSelected(!cuadricula.isSelected());
@@ -154,15 +229,14 @@ public class CellCountWindow extends JFrame {
 		panel.add(cuadricula, c);
 
 		c.gridy += 1;
-		c.ipadx = 0;
 		c.gridx = 0;
-		c.gridwidth = 4;
+		c.gridwidth = 6;
 		c.gridheight = 1;
 		c.weightx = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		panel.add(new JSeparator(SwingConstants.HORIZONTAL), c);
 
-		c.gridx = 2;
+		c.gridx = 4;
 		c.gridy += 1;
 		c.gridwidth = 1;
 		c.gridheight = 1;
@@ -174,7 +248,7 @@ public class CellCountWindow extends JFrame {
 
 		c.gridy += 1;
 		c.gridx = 0;
-		c.gridwidth = 4;
+		c.gridwidth = 6;
 		c.gridheight = 1;
 		c.weighty = 0;
 		c.anchor = GridBagConstraints.NORTH;
@@ -186,14 +260,14 @@ public class CellCountWindow extends JFrame {
 				if (imgIndex > 0) {
 					nextBtn.setEnabled(true);
 					imgIndex--;
-					setImage();
+					processImage();
 				} else if (imgIndex == 0) {
 					prevBtn.setEnabled(false);
 				}
 			}
 		});
 		c.gridy += 1;
-		c.gridwidth = 1;
+		c.gridwidth = 4;
 		c.gridheight = 1;
 		c.fill = GridBagConstraints.HORIZONTAL;
 		c.weightx = 1;
@@ -202,36 +276,33 @@ public class CellCountWindow extends JFrame {
 		prevBtn.setEnabled(false);
 		panel.add(prevBtn, c);
 
-    saveBtn.addActionListener(new ActionListener() {
-      public void actionPerformed(ActionEvent e) {
-         ImagePlus impOrig = images.get(imgIndex);
-         results.incrementCounter();
-         FileManager fm = new FileManager();
-         results.addValue("Sample", fm.getParentDirectory(impOrig.getTitle()));
-         results.addValue("Filename", fm.getFilename(impOrig.getTitle()));
-         results.addValue("Concentration", conc[imgIndex]);
-         results.show("Results");
-      }
-    });
-    c.gridx = 2;
-    panel.add(saveBtn, c);
-    
+		saveBtn.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ImagePlus impOrig = images.get(imgIndex);
+				results.incrementCounter();
+				FileManager fm = new FileManager();
+				results.addValue("Sample", fm.getParentDirectory(impOrig.getTitle()));
+				results.addValue("Filename", fm.getFilename(impOrig.getTitle()));
+				results.addValue("Concentration", conc * Double.parseDouble(diluc.getText()));
+				results.show("Results");
+			}
+		});
+		c.gridx = 4;
+		c.gridwidth = 1;
+		panel.add(saveBtn, c);
+
 		nextBtn.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if (imgIndex < (images.size() - 1)) {
 					prevBtn.setEnabled(true);
-					if (impDraw.size() > ++imgIndex) {
-						// Se evita procesar una imagen dos veces
-						setImage();
-					} else {
-						processImage();
-					}
+					imgIndex++;
+					processImage();
 				} else if (imgIndex == (images.size() - 1)) {
 					nextBtn.setEnabled(false);
 				}
 			}
 		});
-		c.gridx = 3;
+		c.gridx = 5;
 		panel.add(nextBtn, c);
 
 		this.setContentPane(panel);
@@ -310,12 +381,8 @@ public class CellCountWindow extends JFrame {
 	 * 
 	 * @param i
 	 */
-	public void setImages(List<ImagePlus> i) {
-		images = i;
-		impDraw = new ArrayList<ImagePlus>(i.size());
-		conc = new double[i.size()];
-		squares = new int[i.size()];
-		spermatozoa = new int[i.size()];
+	public void setImages(List<ImagePlus> list) {
+		images = list;
 	}
 
 	/**
@@ -334,11 +401,11 @@ public class CellCountWindow extends JFrame {
 		cv.autoThresholdImagePlus(imp, "Otsu");
 		imp.getProcessor().invertLut();
 		List<Square> squares = vr.detectSquares(imp)[0];
-		this.squares[imgIndex] = squares.size();
+		this.squares = squares.size();
 		imp = impOrig.duplicate();
 		cv.convertToGrayscale(imp);
-		cv.equalize(imp);
-		cv.autoThresholdImagePlus(imp, "RenyiEntropy");
+		// cv.equalize(imp);
+		cv.autoThresholdImagePlus(imp, thresholdMethod);
 		List[] spermatozoa = squares.size() == 0 ? vr.detectCells(imp) : vr.detectCellsSquares(imp);
 		double acum = spermatozoa[0].size();
 		if (squares != null && !squares.isEmpty()) {
@@ -366,14 +433,14 @@ public class CellCountWindow extends JFrame {
 				acum = inside.size() / (squares.size() * volume * 1e6);
 			}
 		} else {
-			this.spermatozoa[imgIndex] = (int) acum;
+			this.spermatozoa = (int) acum;
 			double volume = Params.micronPerPixel * impDraw.getWidth() * Params.micronPerPixel * impDraw.getHeight()
 					* Params.depthC / 1e12;
 			acum = acum / (volume * 1e6);
 		}
 		// Draw a rectangle for each detected cell
 		ImageProcessor ip = impDraw.getProcessor();
-		ip.setColor(Color.white);
+		ip.setColor(Color.blue);
 		ip.setLineWidth(4);
 		List cells = spermatozoa[0];
 		for (int i = 0; i < cells.size(); i++) {
@@ -381,8 +448,8 @@ public class CellCountWindow extends JFrame {
 			ip.drawRect((int) c.bx, (int) c.by, (int) c.width, (int) c.height);
 		}
 
-		conc[imgIndex] = acum;
-		this.impDraw.add(impDraw);
+		conc = acum;
+		this.impDraw = impDraw;
 		setImage();
 	}
 
@@ -393,16 +460,18 @@ public class CellCountWindow extends JFrame {
 		setConc(Double.parseDouble(diluc.getText()));
 		Dimension screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		double w = screenSize.getWidth();
-		int targetWidth = (int) (w * 0.65);
-		ImagePlus imp = cuadricula.isSelected() ? impDraw.get(imgIndex) : images.get(imgIndex);
+		double h = screenSize.getHeight();
+		int targetWidth = (int) (w * 0.7);
+		int targetHeight = (int) (h * 0.7);
+		ImagePlus imp = cuadricula.isSelected() ? impDraw.duplicate() : images.get(imgIndex).duplicate();
 		ImageProcessor ip = imp.getProcessor();
 		ip.setInterpolationMethod(ImageProcessor.BILINEAR);
-		ip = ip.resize(targetWidth);
+		ip = ip.resize(targetWidth, targetHeight);
 		imp.setProcessor(ip);
 		imgLabel.setIcon(new ImageIcon(imp.getImage()));
 		imgLabel.repaint();
-    ImagePlus impOrig = images.get(imgIndex);
-    this.setTitle(impOrig.getTitle());
+		ImagePlus impOrig = images.get(imgIndex);
+		this.setTitle(impOrig.getTitle());
 	}
 
 	/**
@@ -411,11 +480,11 @@ public class CellCountWindow extends JFrame {
 	 * @param d
 	 */
 	private void setConc(double d) {
-		double aux = Math.round(100 * conc[imgIndex] * d) / 100.0;
-		if (squares[imgIndex] > 0) {
-			concLabel.setText(aux + " Mespermatozoa / ml (" + squares[imgIndex] + " squares)");
+		double aux = Math.round(100 * conc * d) / 100.0;
+		if (squares > 0) {
+			concLabel.setText(aux + " Mespermatozoa / ml (" + squares + " squares)");
 		} else {
-			concLabel.setText(aux + " Mespermatozoa / ml (" + spermatozoa[imgIndex] + " spermatozoa)");
+			concLabel.setText(aux + " Mespermatozoa / ml (" + spermatozoa + " spermatozoa)");
 		}
 	}
 
