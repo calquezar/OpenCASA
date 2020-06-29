@@ -1,5 +1,9 @@
 # OpenCASA
 An open-source tool for sperm quality analysis
+
+## Version 1.0
+Go to https://github.com/calquezar/OpenCASA/tree/b71936668093a7d9052466b4f97e5537a8ef49ed in order to download the source code of OpenCASA v1.0.
+ 
 ## Specifications
 
 This program has been developed and tested on Windows 7 (64-bit) using  Imagej v1.49q and Java 1.8.0_101 (64-bit). There are no specific requierements to use this plugin but a special attention of RAM memory is suggested when video analysis is carried on. At least 5GB of heap memory size is recommended, but it depends on the size of the files. One good estimation could be to use a heap memory size of 2.5 times the size of the heaviest file that is going to be analyzed. Information about how to increase memory on ImageJ can be found following this link: https://imagej.net/Troubleshooting#OutOfMemoryError. For all tests, only videos in AVI format and images in JPEG or PNG format were used. The plugin has not been tested on Linux or MAC platforms.
@@ -24,3 +28,17 @@ Note: the source code is included in the .jar file. It is possible to extract it
 Tip: In order to increase the heap memory in eclipse, after the project has been set up, in the menu bar go to  Run->Run Configuration, find the name of the class you have been running, select it, click the Arguments tab and then add:
 -Xms5120M –Xmx5120M
 where 5120 is the 5 gigabytes of memory that you want to assign (in megabytes). Remember that a heap memory size of 2.5 times the size of the heaviest file that is going to be analyzed is recommended.
+
+
+## Icons Credits
+
+* concentration icon made by xnimrodx from www.flaticon.com
+* motility icon made by Freepik from www.flaticon.com
+* viability icon made by Freepik from www.flaticon.com
+* Functionality icon made by Prosymbols from www.flaticon.com
+* morphometry icon made by Cursor Creative from www.flaticon.com
+* accumulation icon made by Freepik from www.flaticon.com
+* chemotaxis icon made by Those Icons from www.flaticon.com 
+* scatter icon made by Flat Icons from www.flaticon.com
+* simulation icon made by Freepik from www.flaticon.com
+* settings icon made by Freepik from www.flaticon.com
