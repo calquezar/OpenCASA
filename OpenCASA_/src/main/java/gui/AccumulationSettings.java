@@ -119,7 +119,7 @@ public class AccumulationSettings extends JPanel {
 		this.add(frameRateTF, c);
 		//////////
 		c.gridy += 1;
-		label = new JLabel("Frames to interpolate: ");
+		label = new JLabel("Sampling factor: ");
 		c.gridx = 1;
 		this.add(label, c);
 		c.gridx = 2;
