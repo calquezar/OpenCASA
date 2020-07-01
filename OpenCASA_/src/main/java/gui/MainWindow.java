@@ -136,7 +136,7 @@ public class MainWindow extends JFrame {
     btn.addActionListener(new ActionListener() {
       public void actionPerformed(ActionEvent e) {
         if (label.equals("Accumulation")) {
-          LUT lut = getLut(getClass().getResource("/Jet.lut"));
+          LUT lut = Utils.getLut(getClass().getResource("/Jet.lut"));
           Accumulation ac = new Accumulation(lut);
           try {
             AccumulationParams.setGlobalParams();
@@ -255,9 +255,9 @@ public class MainWindow extends JFrame {
           });
           mw.setVisible(false);
           // sw.run();
-        } else if (label.equals("Scatter Plot")) {
+        }/* else if (label.equals("Scatter Plot")) {
           Utils.scatter();
-        } 
+        } */
       }
     });
     panel.add(btn, c);
@@ -288,7 +288,7 @@ public class MainWindow extends JFrame {
     // chemotaxis icon made by Those Icons from www.flaticon.com
     addButton("Chemotaxis", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/chemotaxis.png", panel);   
     // scatter icon made by Flat Icons from www.flaticon.com
-    addButton("Scatter Plot", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/scatter.png", panel);
+   // addButton("Scatter Plot", ++x%2,++y/2, new Color(255, 204, 153), parentDir + "/scatter.png", panel);
     // simulation icon made by Freepik from www.flaticon.com
     addButton("Simulation", ++x%2,++y/2, new Color(255, 255, 255), parentDir + "/simulation.png", panel);
     // settings icon made by Freepik from www.flaticon.com
@@ -320,30 +320,6 @@ public class MainWindow extends JFrame {
       IJ.handleException(e1);
       // e1.printStackTrace();
     }
-  }
-  
-  /**
-   * 
-   * @param url
-   * @return
-   */
-  private LUT getLut(URL url) {
-    byte r[] = new byte[256], g[] = new byte[256], b[] = new byte[256];
-    try {
-      Scanner sc = new Scanner(url.openStream());
-
-      while (sc.hasNextInt()) {
-        int i = sc.nextInt();
-        r[i] = (byte) sc.nextInt();
-        g[i] = (byte) sc.nextInt();
-        b[i] = (byte) sc.nextInt();
-      }
-
-      sc.close();
-    } catch (Exception e) {
-      IJ.handleException(e);
-    }
-    return new LUT(r, g, b);
   }
   
 }

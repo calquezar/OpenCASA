@@ -16,17 +16,14 @@
  *   along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-/* New version
- * Finished:
+/* Changes in version 2.0
  * 
+ * - Accumulation module
+ * - Concentration module
+ * - Functionality module
  * - Save video output in motility settings
  * - Choose track colors in motility settings
- * - Paint.drawScatterPlot() function
  * - Changed FileManager to use the specific "pathSeparator" of each OS
- * 
- * In working progress:
- * - Multiplatform validation (MacOS and Linux)
- * - New module to plot data taking a file as input (Scatter module)
  * 
  */
 import javax.swing.UIManager;

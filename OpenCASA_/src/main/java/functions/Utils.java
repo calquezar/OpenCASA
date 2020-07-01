@@ -20,8 +20,10 @@ package functions;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.net.URL;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -30,7 +32,7 @@ import ij.IJ;
 import ij.gui.GenericDialog;
 import ij.gui.Plot;
 import ij.measure.ResultsTable;
-
+import ij.process.LUT;
 import net.sf.javaml.core.kdtree.KDTree;
 
 
@@ -83,6 +85,31 @@ public class Utils {
     }
     return cell;
   }
+  
+  /**
+   * 
+   * @param url
+   * @return
+   */
+  public static LUT getLut(URL url) {
+    byte r[] = new byte[256], g[] = new byte[256], b[] = new byte[256];
+    try {
+      Scanner sc = new Scanner(url.openStream());
+
+      while (sc.hasNextInt()) {
+        int i = sc.nextInt();
+        r[i] = (byte) sc.nextInt();
+        g[i] = (byte) sc.nextInt();
+        b[i] = (byte) sc.nextInt();
+      }
+
+      sc.close();
+    } catch (Exception e) {
+      IJ.handleException(e);
+    }
+    return new LUT(r, g, b);
+  }
+  
   public static double getMinDouble(double[] x){
     Double min = null;
     for (double val : x) {
