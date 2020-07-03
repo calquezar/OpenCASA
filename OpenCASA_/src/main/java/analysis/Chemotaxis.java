@@ -114,8 +114,6 @@ public class Chemotaxis extends SwingWorker<Boolean, String> {
   private void analyseFile() {
     FileManager fm = new FileManager();
     String file = fm.selectFile();
-    if (file == null)
-      return;
     TrialManager tm = new TrialManager();
     Trial trial = tm.getTrialFromAVI(file);
     SignalProcessing sp = new SignalProcessing();

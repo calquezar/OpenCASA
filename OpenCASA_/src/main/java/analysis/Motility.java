@@ -83,8 +83,6 @@ public class Motility extends SwingWorker<Boolean, String> {
   private void analyseDirectories() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
-    if (folder == null)
-      return;
     List<String> subfolders = fm.getSubfolders(folder);
     ResultsTable rtTotal = new ResultsTable();
     int i = 0;
@@ -129,8 +127,6 @@ public class Motility extends SwingWorker<Boolean, String> {
   private void analyseDirectory() {
     FileManager fm = new FileManager();
     String folder = fm.selectFolder();
-    if (folder == null)
-      return;
     List<String> files = fm.getFiles(folder);
     Map<String, Trial> trials = getTrials(files);
     ResultsTable rtIndividual = new ResultsTable();
@@ -162,8 +158,6 @@ public class Motility extends SwingWorker<Boolean, String> {
   private void analyseFile() {
     FileManager fm = new FileManager();
     String file = fm.selectFile();
-    if (file == null)
-      return;
     TrialManager tm = new TrialManager();
     Trial trial = tm.getTrialFromAVI(file);
     // Calculate motility
