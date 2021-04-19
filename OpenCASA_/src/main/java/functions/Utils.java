@@ -149,9 +149,8 @@ public class Utils {
     String xyPts = " ";
     // initialize variables
     int trackNr = 0;
-    int displayTrackNr = 0;
     int line = 1;
-    String output = "Line" + "\tTrack" + "\tRelative_Frame" + "\tX" + "\tY";
+    String output = "Line" + "\tTrackID" + "\tDisplayedTrackNumber"+ "\tRelative_Frame" + "\tX" + "\tY";
     // loop through all sperm tracks
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       int frame = 0;
@@ -159,19 +158,12 @@ public class Utils {
       IJ.showProgress((double) trackNr / nTracks);
       IJ.showStatus("Analyzing Tracks...");
       List bTrack = (List) iT.next();
-      // keeps track of the current track
-      displayTrackNr++;
       ListIterator jT = bTrack.listIterator();
-      Cell oldCell = (Cell) jT.next();
-      Cell firstCell = new Cell();
-      firstCell.copy(oldCell);
-      // For each instant (Cell) in the track
       String outputline = "";
       for (; jT.hasNext();) {
         Cell newCell = (Cell) jT.next();
-        xyPts = "\t" + displayTrackNr + "\t" + frame + "\t" + (int) newCell.x + "\t" + (int) newCell.y;
+        xyPts = "\t" + trackNr + "\t" + newCell.trackNr + "\t" + frame + "\t" +  newCell.x + "\t" +  newCell.y;
         frame++;
-        oldCell = newCell;
         outputline += "\n" + line + xyPts;
         line++;
       }
