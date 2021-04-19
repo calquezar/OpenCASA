@@ -137,7 +137,7 @@ public class FileManager {
     String[] parts = filename.split("\\.");
     if (parts.length < 2)
       return false;
-    if (parts[1].equals("avi"))
+    if (parts[parts.length-1].equals("avi"))
       return true;
     else
       return false;

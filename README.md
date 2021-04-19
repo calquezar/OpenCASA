@@ -1,5 +1,8 @@
 # OpenCASA
-An open-source tool for sperm quality analysis
+An open-source tool for sperm quality analysis. See this article for more details: https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1006691
+
+## Version 2.0
+Go to https://github.com/calquezar/OpenCASA/tree/51d10244d0cbab2bfba61628f7e43eb2e060057e in order to download the source code of OpenCASA v2.0.
 
 ## Version 1.0
 Go to https://github.com/calquezar/OpenCASA/tree/b71936668093a7d9052466b4f97e5537a8ef49ed in order to download the source code of OpenCASA v1.0.

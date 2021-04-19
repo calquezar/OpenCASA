@@ -18,6 +18,7 @@
 
 package data;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
@@ -73,7 +74,14 @@ public class MorphometryParams {
       e1.printStackTrace();
     }       
     try {
-      FileInputStream streamIn = new FileInputStream(System.getProperty("user.dir") + "\\settings.config");
+      String os = System.getProperty("os.name").toLowerCase();
+      String fSeparator = "";
+      if(os.indexOf("win") >= 0)
+        fSeparator = File.separator+File.separator;
+      else
+        fSeparator = File.separator;
+      String settingsPath = System.getProperty("user.dir") + fSeparator + "settings.config";
+      FileInputStream streamIn = new FileInputStream(settingsPath);
       ObjectInputStream objectinputstream = new ObjectInputStream(streamIn);
       Preferences.importPreferences(objectinputstream);
     } catch (Exception e) {
@@ -99,7 +107,14 @@ public class MorphometryParams {
     MorphometryParams.prefs.putDouble("Morph_micronPerPixel", MorphometryParams.micronPerPixel);
 
     try {
-      FileOutputStream fos = new FileOutputStream(System.getProperty("user.dir") + "\\settings.config");
+      String os = System.getProperty("os.name").toLowerCase();
+      String fSeparator = "";
+      if(os.indexOf("win") >= 0)
+        fSeparator = File.separator+File.separator;
+      else
+        fSeparator = File.separator;
+      String settingsPath = System.getProperty("user.dir") + fSeparator + "settings.config";
+      FileOutputStream fos = new FileOutputStream(settingsPath);
       ObjectOutputStream oos = new ObjectOutputStream(fos);
       MorphometryParams.prefs.exportSubtree(oos);
       oos.close();

@@ -20,8 +20,10 @@ package functions;
 
 import java.awt.Color;
 import java.awt.Font;
+import java.net.URL;
 import java.util.List;
 import java.util.ListIterator;
+import java.util.Scanner;
 
 import javax.swing.JOptionPane;
 
@@ -30,7 +32,7 @@ import ij.IJ;
 import ij.gui.GenericDialog;
 import ij.gui.Plot;
 import ij.measure.ResultsTable;
-
+import ij.process.LUT;
 import net.sf.javaml.core.kdtree.KDTree;
 
 
@@ -83,6 +85,31 @@ public class Utils {
     }
     return cell;
   }
+  
+  /**
+   * 
+   * @param url
+   * @return
+   */
+  public static LUT getLut(URL url) {
+    byte r[] = new byte[256], g[] = new byte[256], b[] = new byte[256];
+    try {
+      Scanner sc = new Scanner(url.openStream());
+
+      while (sc.hasNextInt()) {
+        int i = sc.nextInt();
+        r[i] = (byte) sc.nextInt();
+        g[i] = (byte) sc.nextInt();
+        b[i] = (byte) sc.nextInt();
+      }
+
+      sc.close();
+    } catch (Exception e) {
+      IJ.handleException(e);
+    }
+    return new LUT(r, g, b);
+  }
+  
   public static double getMinDouble(double[] x){
     Double min = null;
     for (double val : x) {
@@ -122,9 +149,8 @@ public class Utils {
     String xyPts = " ";
     // initialize variables
     int trackNr = 0;
-    int displayTrackNr = 0;
     int line = 1;
-    String output = "Line" + "\tTrack" + "\tRelative_Frame" + "\tX" + "\tY";
+    String output = "Line" + "\tTrackID" + "\tDisplayedTrackNumber"+ "\tRelative_Frame" + "\tX" + "\tY";
     // loop through all sperm tracks
     for (ListIterator iT = theTracks.listIterator(); iT.hasNext();) {
       int frame = 0;
@@ -132,19 +158,12 @@ public class Utils {
       IJ.showProgress((double) trackNr / nTracks);
       IJ.showStatus("Analyzing Tracks...");
       List bTrack = (List) iT.next();
-      // keeps track of the current track
-      displayTrackNr++;
       ListIterator jT = bTrack.listIterator();
-      Cell oldCell = (Cell) jT.next();
-      Cell firstCell = new Cell();
-      firstCell.copy(oldCell);
-      // For each instant (Cell) in the track
       String outputline = "";
       for (; jT.hasNext();) {
         Cell newCell = (Cell) jT.next();
-        xyPts = "\t" + displayTrackNr + "\t" + frame + "\t" + (int) newCell.x + "\t" + (int) newCell.y;
+        xyPts = "\t" + trackNr + "\t" + newCell.trackNr + "\t" + frame + "\t" +  newCell.x + "\t" +  newCell.y;
         frame++;
-        oldCell = newCell;
         outputline += "\n" + line + xyPts;
         line++;
       }
