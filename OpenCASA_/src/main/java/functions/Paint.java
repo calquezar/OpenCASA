@@ -158,12 +158,12 @@ public class Paint {
     // ip.setColor(Color.black);
     // ip.drawString("" + chIdx);
 
-    // ip.moveTo(10, 70);
-    // ip.setColor(new Color(34, 146, 234));
-    // ip.drawString("SL-Index: ");
-    // ip.moveTo(80, 70);
-    // ip.setColor(Color.black);
-    // ip.drawString("" + slIdx);
+     ip.moveTo(10, 70);
+     ip.setColor(new Color(34, 146, 234));
+     ip.drawString("SL-Index: ");
+     ip.moveTo(80, 70);
+     ip.setColor(Color.black);
+     ip.drawString("" + slIdx);
   }
 
   /**
@@ -252,6 +252,7 @@ public class Paint {
                   (int) ((oldCell.y+oldCell.height) / Params.pixelHeight));              
               ip.setColor(Color.white);
               ip.drawString("**");
+              //ip.drawString("" + newCell.trackNr);
             }
           }
         }
