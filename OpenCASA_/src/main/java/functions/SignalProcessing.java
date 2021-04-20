@@ -125,7 +125,7 @@ public class SignalProcessing {
         filteredTracks.add(aTrack);
     }
     return filteredTracks;
-  }
+  } 
 
   /**
    * @param points
